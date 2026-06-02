@@ -4030,10 +4030,29 @@ function bacProcesar(text, filename) {
         }
       });
       try { localStorage.setItem('bac_v4', JSON.stringify(BAC_STATE)); } catch(_) {}
+      // Subir estado al equipo via GitHub sync
+      try {
+        fetch(CLOUD + '?type=state', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(BAC_STATE)
+        }).then(() => {
+          const syncEl = document.getElementById('bac-sync');
+          if (syncEl) syncEl.textContent = '✓ Sincronizado con el equipo';
+        }).catch(()=>{});
+      } catch(_) {}
+      // Subir tickets al equipo
+      try {
+        fetch(CLOUD + '?type=tickets', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(BAC_T)
+        }).catch(()=>{});
+      } catch(_) {}
       bacRender(BAC_T);
       bacStats();
       const syncEl = document.getElementById('bac-sync');
-      if (syncEl) syncEl.textContent = `✓ ${BAC_T.length} tickets · ${autoResolved} auto-resueltos`;
+      if (syncEl) syncEl.textContent = `✓ ${BAC_T.length} tickets · ${autoResolved} resueltos · subiendo al equipo...`;
     }
     notifCheckBAC(BAC_T);
     bacLoadCloud();
