@@ -4021,7 +4021,6 @@ function bacProcesar(text, filename) {
     if (!filename.endsWith('.json')) {
       const numsEnCSV = new Set(newTickets.map(t => t.num));
       let autoResolved = 0;
-      console.log('[BAC] CSV import: BAC_T=', BAC_T.length, 'numsEnCSV=', [...numsEnCSV], 'newTickets=', newTickets.length);
       BAC_T.forEach(t => {
         if (!numsEnCSV.has(t.num)) {
           if (!BAC_STATE[t.num]) BAC_STATE[t.num] = {};
@@ -4030,7 +4029,6 @@ function bacProcesar(text, filename) {
           autoResolved++;
         }
       });
-      console.log('[BAC] autoResolved=', autoResolved, 'BAC_STATE keys=', Object.keys(BAC_STATE).length);
       try { localStorage.setItem('bac_v4', JSON.stringify(BAC_STATE)); } catch(_) {}
       bacRender(BAC_T);
       bacStats();
