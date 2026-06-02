@@ -87,7 +87,7 @@
   #subnav-procesos button.activo { color: var(--teal); border-bottom-color: var(--teal); font-weight: 700; }
 
   /* MAIN */
-  main { max-width: 100%; margin: 0; padding: 16px 24px 60px; }
+  main { max-width: 1440px; margin: 0 auto; padding: 16px 32px 60px; }
   .tab-content { display: none; }
   .tab-content.activo { display: block; }
   .sub-content { display: none; }
@@ -473,6 +473,36 @@ nav.nav-principal button[data-tab="mantis"].activo { color: #b91c1c; border-bott
 nav.nav-principal { scroll-behavior: smooth; }
 nav.nav-principal::-webkit-scrollbar { height: 3px; }
 nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+
+
+/* Center all tab content areas */
+.tab-content.activo > *:not(.subnav-wrap):not([class*="subnav"]) {
+  /* handled per section */
+}
+.tab-section-centered {
+  max-width: 960px;
+  margin: 0 auto;
+}
+/* Tabs that need full centering */
+#tab-inicio .hero,
+#tab-inicio .panel-grid,
+#tab-procesos .panel-grid,
+#tab-testing .panel-grid,
+#tab-drive .panel-grid {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* ── Centering por tab ── */
+#tab-procesos .panel, #tab-procesos .panel-grid,
+#tab-testing  .panel, #tab-testing  .panel-grid,
+#tab-drive    .panel, #tab-drive    .panel-grid {
+  max-width: 900px; margin-left: auto; margin-right: auto;
+}
+#tab-inicio > div { max-width: 960px; margin-left: auto; margin-right: auto; }
+#tab-instructivos .sub-content > div { max-width: 960px; margin-left: auto; margin-right: auto; }
 
 </style>
 </head>
@@ -3039,6 +3069,17 @@ function ir(tab, sub) {
 }
 
 // ── INVENTARIO ───────────────────────────────────────────────
+function parseFecha(s) {
+  if (!s) return 0;
+  // formats: DD/MM/YYYY or YYYY-MM-DD
+  const p = s.split(/[\/\-]/);
+  if (p.length === 3) {
+    return p[0].length === 4
+      ? new Date(p[0], p[1]-1, p[2]).getTime()
+      : new Date(p[2], p[1]-1, p[0]).getTime();
+  }
+  return 0;
+}
 function filtrarInv() {
   const q = (document.getElementById('inv-buscar')||{value:''}).value.toLowerCase();
   const st = (document.getElementById('inv-estado')||{value:''}).value;
@@ -3619,6 +3660,8 @@ function bacProcesar(text, filename) {
       descripcion:     t.descripcion || t.description || t.Summary || '',
     })).filter(t => t.num);
 
+    // Persistir en localStorage
+    try { localStorage.setItem('bac_tickets', JSON.stringify(BAC_T)); } catch(_) {}
     // Poblar filtro módulos
     const sel = document.getElementById('bac-fm');
     if (sel) {
@@ -3692,6 +3735,21 @@ function bacExportar() {
 // ── INIT ─────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   cargarMantisProxy();
+  // Restaurar tickets BA Colaborativa desde localStorage
+  try {
+    const saved = localStorage.getItem('bac_tickets');
+    if (saved) {
+      BAC_T = JSON.parse(saved);
+      const sel = document.getElementById('bac-fm');
+      if (sel) {
+        sel.innerHTML = '<option value="">Todos los módulos</option>';
+        [...new Set(BAC_T.map(t => t.modulo).filter(Boolean))].sort().forEach(m => {
+          const o = document.createElement('option'); o.value = m; o.textContent = m; sel.append(o);
+        });
+      }
+      bacLoadCloud();
+    }
+  } catch(_) {}
   filtrarInv();
   var activeTab = document.querySelector('nav.nav-principal button.activo');
   if (activeTab) {
