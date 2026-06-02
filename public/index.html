@@ -4021,15 +4021,21 @@ function bacProcesar(text, filename) {
     // Si es CSV de BA Colaborativa (solo abiertos) → marcar el resto como resueltos
     if (!filename.endsWith('.json')) {
       const numsEnCSV = new Set(newTickets.map(t => t.num));
+      let autoResolved = 0;
       BAC_T.forEach(t => {
         if (!numsEnCSV.has(t.num)) {
-          if (!BAC_STATE[t.num]) BAC_STATE[t.num] = { r: false, resp: '' };
-          if (!BAC_STATE[t.num].r) {
-            BAC_STATE[t.num].r = true; // auto-resolver
-          }
+          if (!BAC_STATE[t.num]) BAC_STATE[t.num] = {};
+          BAC_STATE[t.num].r = true;
+          if (!BAC_STATE[t.num].resp) BAC_STATE[t.num].resp = '';
+          autoResolved++;
         }
       });
       try { localStorage.setItem('bac_v4', JSON.stringify(BAC_STATE)); } catch(_) {}
+      // Render inmediato con estado actualizado (no esperar async)
+      bacRender(BAC_T);
+      bacStats();
+      const syncEl = document.getElementById('bac-sync');
+      if (syncEl) syncEl.textContent = `✓ ${BAC_T.length} tickets · ${autoResolved} auto-resueltos`;
     }
     notifCheckBAC(BAC_T);
     document.getElementById('bac-sync').textContent = `✓ ${BAC_T.length} tickets importados`;
