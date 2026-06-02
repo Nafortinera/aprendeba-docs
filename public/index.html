@@ -3516,9 +3516,52 @@ function bacProcesar(text, filename) {
 function bacParseCSV(text) {
   const lines = text.split(/\r?\n/).filter(l => l.trim());
   if (lines.length < 2) return [];
-  const splitL = line => { const f=[]; let c='',q=false; for(const ch of line){if(ch==='"'){q=!q}else if(ch===','&&!q){f.push(c);c=''}else c+=ch}; f.push(c); return f.map(x=>x.trim()); };
+  const splitL = line => {
+    const f=[]; let c='',q=false;
+    for(const ch of line){if(ch==='"'){q=!q}else if(ch===','&&!q){f.push(c);c=''}else c+=ch}
+    f.push(c); return f.map(x=>x.trim().replace(/^"|"$/g,''));
+  };
   const headers = splitL(lines[0]);
-  return lines.slice(1).map(line => { const v=splitL(line); const o={}; headers.forEach((h,i)=>o[h]=v[i]||''); return o; });
+  const rawRows = lines.slice(1).map(line => {
+    const v=splitL(line); const o={}; headers.forEach((h,i)=>o[h]=v[i]||''); return o;
+  });
+
+  // Detectar si es formato BA Colaborativa (tiene columna 'Número' y 'Prestación')
+  if (headers.includes('Número') && headers.includes('Prestación')) {
+    return rawRows.map(r => {
+      const prest = r['Prestación'] || '';
+      // Extraer nivel desde Prestación
+      let nivel = 'secundaria';
+      if (/Nivel Primario/i.test(prest))  nivel = 'primaria';
+      if (/Nivel Inicial/i.test(prest))   nivel = 'inicial';
+      if (/Nivel Secundario/i.test(prest) || /Secundaria/i.test(prest)) nivel = 'secundaria';
+      // Extraer módulo: último segmento de Prestación
+      const partes = prest.split(' - ');
+      let modulo = partes[partes.length - 1] || 'General';
+      // Si el último segmento es el nivel, tomar el anterior
+      if (/Nivel (Primario|Secundario|Inicial)/i.test(modulo)) modulo = partes[partes.length - 2] || 'General';
+      if (modulo === 'AprendeBA') modulo = 'General';
+      // Fecha: quitar hora
+      const fecha = (r['Fecha de inicio'] || '').split(' ')[0] || '';
+      return {
+        num:             r['Número'] || '',
+        nivel,
+        modulo,
+        cue:             r['Educación - Cue'] || '',
+        establecimiento: r['Educación - Establecimiento'] || r['Ubicación'] || '',
+        ciudadano:       r['Ciudadano'] || '',
+        dni:             r['Número documento'] || '',
+        email:           r['Email de contacto'] || r['Educación - Email'] || '',
+        cargo:           r['Educación - Cargo'] || '',
+        adjunto:         r['Contiene archivos adjuntos'] || 'No',
+        fecha,
+        descripcion:     r['Observación'] || r['Motivo'] || '',
+      };
+    }).filter(t => t.num);
+  }
+
+  // Formato genérico
+  return rawRows;
 }
 
 function bacExportar() {
