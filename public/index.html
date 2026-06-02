@@ -2510,28 +2510,87 @@ nav.nav-principal button[data-tab="mantis"].activo { color: #b91c1c; border-bott
 
 <!-- ════ BA COLABORATIVA ════ -->
 <div class="tab-content" id="tab-bacolaborativa">
-  <div style="display:flex;flex-direction:column;height:80vh;gap:12px;">
-    <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff;border:1px solid var(--line);border-radius:10px;flex-wrap:wrap;">
-      <span style="font-size:20px;">🤝</span>
-      <div style="flex:1;">
-        <div style="font-weight:700;color:var(--navy);font-size:15px;">BA Colaborativa · Bandeja AprendeBA</div>
-        <div style="font-size:12px;color:var(--text-soft);">Tickets abiertos, cerrados y % de resolución — sincronizado con el equipo</div>
-      </div>
-      <a href="./tickets-dashboard.html" target="_blank"
-         style="display:inline-flex;align-items:center;gap:6px;background:var(--teal);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
-        📊 Abrir Dashboard
-      </a>
-      <a href="https://bacolaborativa-backoffice.buenosaires.gob.ar/" target="_blank"
-         style="display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--teal);border:1.5px solid var(--teal);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
-        ↗ BA Colaborativa
-      </a>
-    </div>
-    <iframe
-      src="./tickets-dashboard.html"
-      style="flex:1;border:1px solid var(--line);border-radius:10px;background:#fff;"
-      title="Dashboard Tickets AprendeBA">
-    </iframe>
+
+<!-- ── TOP BAR ── -->
+<div style="display:flex;align-items:center;gap:12px;padding:14px 0 10px;flex-wrap:wrap;">
+  <div style="flex:1;">
+    <div style="font-weight:800;color:var(--navy);font-size:16px;">🎫 BA Colaborativa — Bandeja AprendeBA</div>
+    <div id="bac-sub" style="font-size:12px;color:var(--text-soft);margin-top:2px;">Importá un archivo para comenzar</div>
   </div>
+  <button onclick="document.getElementById('bac-file').click()" style="background:var(--teal);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;">📥 Importar tickets</button>
+  <button onclick="bacExportar()" style="background:#fff;color:var(--teal);border:1.5px solid var(--teal);padding:8px 16px;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;">📤 Exportar</button>
+  <a href="https://bacolaborativa-backoffice.buenosaires.gob.ar/" target="_blank" style="display:inline-flex;align-items:center;background:#f8fafc;color:var(--navy);border:1.5px solid var(--line);padding:8px 14px;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;">↗ Abrir BA Colaborativa</a>
+  <input type="file" id="bac-file" accept=".json,.csv" style="display:none" onchange="bacImportar(this)">
+  <span id="bac-sync" style="font-size:12px;font-weight:600;color:var(--teal)"></span>
+</div>
+
+<!-- ── MÉTRICAS ── -->
+<div id="bac-metrics" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px;">
+  <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
+    <div id="bac-m-total" style="font-size:30px;font-weight:900;color:var(--navy);">0</div>
+    <div style="font-size:11px;color:#888;margin-top:2px;">Total tickets</div>
+  </div>
+  <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
+    <div id="bac-m-open" style="font-size:30px;font-weight:900;color:#e07b00;">0</div>
+    <div style="font-size:11px;color:#888;margin-top:2px;">⏳ Pendientes</div>
+  </div>
+  <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
+    <div id="bac-m-res" style="font-size:30px;font-weight:900;color:#2e7d32;">0</div>
+    <div style="font-size:11px;color:#888;margin-top:2px;">✓ Respondidos</div>
+  </div>
+  <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
+    <div id="bac-m-pct" style="font-size:30px;font-weight:900;color:var(--teal);">0%</div>
+    <div style="font-size:11px;color:#888;margin-top:2px;">% Resolución</div>
+    <div style="background:#e8ecf0;border-radius:6px;height:6px;margin-top:6px;overflow:hidden;">
+      <div id="bac-m-bar" style="width:0%;height:6px;background:linear-gradient(90deg,var(--teal),#2e7d32);border-radius:6px;transition:width .8s;"></div>
+    </div>
+  </div>
+  <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);">
+    <div style="font-size:10px;font-weight:700;color:#888;text-transform:uppercase;margin-bottom:8px;">Por módulo</div>
+    <div id="bac-mod-bars" style="display:flex;flex-direction:column;gap:5px;"></div>
+  </div>
+</div>
+
+<!-- ── FILTROS ── -->
+<div style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+  <input id="bac-fq" type="text" placeholder="Buscar ticket, escuela, descripción..." oninput="bacFiltrar()"
+    style="padding:6px 11px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;width:220px;outline:none;">
+  <select id="bac-fn" onchange="bacFiltrar()" style="padding:6px 10px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;">
+    <option value="">Todos los niveles</option>
+    <option value="inicial">🟣 Inicial</option>
+    <option value="primaria">🔵 Primaria</option>
+    <option value="secundaria">🟢 Secundaria</option>
+  </select>
+  <select id="bac-fm" onchange="bacFiltrar()" style="padding:6px 10px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;"><option value="">Todos los módulos</option></select>
+  <select id="bac-fr" onchange="bacFiltrar()" style="padding:6px 10px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;">
+    <option value="">Todos</option>
+    <option value="0">⏳ Pendientes</option>
+    <option value="1">✓ Respondidos</option>
+  </select>
+  <span id="bac-count" style="margin-left:auto;background:var(--teal-bg);color:var(--teal);padding:3px 12px;border-radius:14px;font-size:12px;font-weight:700;">0 tickets</span>
+</div>
+
+<!-- ── TABLA ── -->
+<div id="bac-empty" style="text-align:center;padding:48px 24px;color:#aaa;">
+  <div style="font-size:40px;margin-bottom:12px;">📂</div>
+  <div style="font-size:14px;font-weight:600;">Aún no hay tickets cargados</div>
+  <div style="font-size:12px;margin-top:6px;">Importá un archivo JSON o CSV para comenzar</div>
+</div>
+<div id="bac-tabla-wrap" style="display:none;overflow-x:auto;border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,.08);">
+<table style="width:100%;border-collapse:collapse;background:#fff;min-width:900px;">
+  <thead><tr style="background:var(--navy);color:#fff;font-size:11.5px;">
+    <th style="padding:9px 10px;width:36px;">✓</th>
+    <th style="padding:9px 10px;width:110px;">Ticket</th>
+    <th style="padding:9px 10px;width:180px;">Establecimiento</th>
+    <th style="padding:9px 10px;width:130px;">Módulo</th>
+    <th style="padding:9px 10px;">Descripción</th>
+    <th style="padding:9px 10px;width:120px;">Contacto</th>
+    <th style="padding:9px 10px;width:240px;">Respuesta</th>
+  </tr></thead>
+  <tbody id="bac-tbody"></tbody>
+</table>
+</div>
+
 </div><!-- /tab-bacolaborativa -->
 
 <!-- ════ MANTIS ════ -->
@@ -3023,9 +3082,24 @@ function esCerrado(estado) {
   return e.includes('cerr') || e.includes('clos') || e.includes('resuel') || e.includes('resolv') || e === '80' || e === '50';
 }
 
+const PRI_ES = {
+  'immediate':'Inmediata','urgent':'Urgente','high':'Alta',
+  'normal':'Normal','low':'Baja','none':'Ninguna',
+  'inmediata':'Inmediata','urgente':'Urgente','alta':'Alta',
+  'baja':'Baja','ninguna':'Ninguna'
+};
+const EST_ES = {
+  'new':'Nuevo','acknowledged':'Reconocido','confirmed':'Confirmado',
+  'assigned':'Asignado','resolved':'Resuelto','closed':'Cerrado',
+  'feedback':'Retroalimentación','reopened':'Reabierto',
+  'nuevo':'Nuevo','reconocido':'Reconocido','confirmado':'Confirmado',
+  'asignado':'Asignado','resuelto':'Resuelto','cerrado':'Cerrado'
+};
+function tradPri(p){ return PRI_ES[(p||'').toLowerCase()] || p || '—'; }
+function tradEst(e){ return EST_ES[(e||'').toLowerCase()] || e || '—'; }
 function priColor(p) {
   const s = (p || '').toLowerCase();
-  if (s.includes('urgent') || s.includes('inmedia')) return '#dc2626';
+  if (s.includes('urgent') || s.includes('inmedia') || s.includes('immediate')) return '#dc2626';
   if (s.includes('alta') || s.includes('high'))     return '#ea580c';
   if (s.includes('normal'))                          return '#ca8a04';
   return '#6b7280';
@@ -3151,6 +3225,306 @@ async function cargarMantisProxy() {
     });
     if (statusTxt) statusTxt.textContent = 'No se pudo conectar con Mantis';
   }
+}
+
+// ══════════════════════════════════════════════════════════════
+// BA COLABORATIVA — bandeja integrada
+// ══════════════════════════════════════════════════════════════
+const CLOUD = 'https://aprendebaas.netlify.app/.netlify/functions';
+let BAC_T = [];       // array de tickets
+let BAC_STATE = {};   // { num: {r:bool, resp:str} }
+let bacSaveTimer = null;
+
+// ── TEMPLATES (respuestas automáticas) ──────────────────────
+const BAC_TMPL = {
+  'Boletines': 'Buenos días/tardes, [NOMBRE].\n\nPara la generación de boletines:\n1. Verificá que todas las calificaciones estén cargadas.\n2. Verificá que el presentismo del período esté completo.\n3. Usá el botón «Generar boletines» para la generación masiva.\n\nSi el inconveniente persiste, indicanos CUE, sección y captura del error.\n\nSaludos,\nEquipo AprendeBA',
+  'Calificaciones': 'Buenos días/tardes, [NOMBRE].\n\nPara cargar calificaciones:\n1. Ingresá al módulo Calificaciones.\n2. Seleccioná bimestre, grado/año y sección.\n3. Completá el campo PPI y la calificación para cada alumno.\n\nSi los campos aparecen bloqueados, el Directivo puede reabrirlos desde «Abrir Calificaciones».\n\nSaludos,\nEquipo AprendeBA',
+  'Presentismo': 'Buenos días/tardes, [NOMBRE].\n\nPara el módulo de Presentismo:\n• Para reabrir una semana: el Directivo usa «Abrir semana».\n• Estados: P=Presente · A=Ausente · IT=Ingreso tardío · RA=Retiro anticipado.\n\nSi el alumno figura en otra sección, verificá el cambio de sección en el módulo correspondiente.\n\nSaludos,\nEquipo AprendeBA',
+  'Legajos': 'Buenos días/tardes, [NOMBRE].\n\nPara resolver la consulta sobre Legajos, indicanos:\n1. DNI del/los alumno/s afectado/s.\n2. El dato incorrecto o faltante.\n3. Captura de pantalla del inconveniente.\n\nSaludos,\nEquipo AprendeBA',
+  'Matriculados': 'Buenos días/tardes, [NOMBRE].\n\nEl proceso de matriculación requiere:\n1. Secciones creadas.\n2. Efectivización completa.\n3. Luego matriculación del alumno.\n\n⚠ No se puede matricular antes de efectivizar.\n\nSaludos,\nEquipo AprendeBA',
+  'default': 'Buenos días/tardes, [NOMBRE].\n\nRecibimos tu consulta. Para asistirte mejor indicanos:\n1. Descripción detallada del inconveniente.\n2. Capturas del error.\n3. DNI del alumno afectado (si aplica).\n\nSaludos,\nEquipo AprendeBA'
+};
+
+function bacGetTmpl(t) {
+  const mod = (t.modulo || '').toLowerCase();
+  for (const [key, val] of Object.entries(BAC_TMPL)) {
+    if (key === 'default') continue;
+    if (mod.includes(key.toLowerCase())) return val.replace('[NOMBRE]', t.ciudadano || '[nombre]');
+  }
+  return BAC_TMPL.default.replace('[NOMBRE]', t.ciudadano || '[nombre]');
+}
+
+// ── CLOUD SYNC ───────────────────────────────────────────────
+async function bacLoadCloud() {
+  document.getElementById('bac-sync').textContent = '↻ Sincronizando...';
+  let local = {};
+  try { local = JSON.parse(localStorage.getItem('bac_v4') || '{}'); } catch(_) {}
+  try {
+    const res  = await fetch(CLOUD + '/get-state', { cache: 'no-store' });
+    const data = await res.json();
+    BAC_STATE = Object.assign({}, local, data || {});
+    localStorage.setItem('bac_v4', JSON.stringify(BAC_STATE));
+    document.getElementById('bac-sync').textContent = '✓ Sincronizado';
+  } catch(_) {
+    BAC_STATE = local;
+    document.getElementById('bac-sync').textContent = '⚠ Sin conexión — local';
+  }
+  bacRender(BAC_T);
+}
+
+function bacScheduleSave() {
+  if (bacSaveTimer) clearTimeout(bacSaveTimer);
+  bacSaveTimer = setTimeout(async () => {
+    localStorage.setItem('bac_v4', JSON.stringify(BAC_STATE));
+    try {
+      await fetch(CLOUD + '/save-state', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(BAC_STATE) });
+      document.getElementById('bac-sync').textContent = '✓ Guardado en equipo';
+    } catch(_) {
+      document.getElementById('bac-sync').textContent = '⚠ Solo guardado local';
+    }
+  }, 800);
+}
+
+// ── STATS ────────────────────────────────────────────────────
+function bacStats() {
+  const total = BAC_T.length;
+  const res   = BAC_T.filter(t => BAC_STATE[t.num]?.r).length;
+  const pct   = total ? Math.round(res / total * 100) : 0;
+
+  const s = id => document.getElementById(id);
+  if (s('bac-m-total')) s('bac-m-total').textContent = total;
+  if (s('bac-m-open'))  s('bac-m-open').textContent  = total - res;
+  if (s('bac-m-res'))   s('bac-m-res').textContent   = res;
+  if (s('bac-m-pct'))   s('bac-m-pct').textContent   = pct + '%';
+  if (s('bac-m-bar'))   s('bac-m-bar').style.width   = pct + '%';
+
+  // Module bars
+  const mods = {};
+  BAC_T.forEach(t => {
+    if (!mods[t.modulo]) mods[t.modulo] = { total: 0, res: 0 };
+    mods[t.modulo].total++;
+    if (BAC_STATE[t.num]?.r) mods[t.modulo].res++;
+  });
+  const mb = s('bac-mod-bars');
+  if (mb) {
+    const entries = Object.entries(mods).sort((a,b) => b[1].total - a[1].total).slice(0, 6);
+    mb.innerHTML = entries.map(([mod, {total: mt, res: mr}]) => {
+      const p = mt ? Math.round(mr / mt * 100) : 0;
+      return `<div style="display:flex;align-items:center;gap:6px;">
+        <div style="width:90px;font-size:10px;color:#444;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${mod}">${mod}</div>
+        <div style="flex:1;background:#e8ecf0;border-radius:4px;height:7px;overflow:hidden;">
+          <div style="width:${p}%;height:7px;background:var(--teal);border-radius:4px;"></div>
+        </div>
+        <div style="font-size:10px;color:#666;width:30px;text-align:right;">${mr}/${mt}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Header subtitle
+  const sub = document.getElementById('bac-sub');
+  if (sub && total) {
+    const today = new Date().toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit',year:'numeric'});
+    sub.textContent = `${total} tickets · ${today} · Resolución: ${res}/${total} (${pct}%)`;
+  }
+}
+
+// ── NIVEL COLOR ───────────────────────────────────────────────
+function bacNivColor(n) {
+  if (n === 'inicial')    return { bg: '#fdf4ff', border: '#e879f9', text: '#c026d3' };
+  if (n === 'primaria')   return { bg: '#eff6ff', border: '#93c5fd', text: '#2563eb' };
+  if (n === 'secundaria') return { bg: '#ecfdf5', border: '#6ee7b7', text: '#059669' };
+  return { bg: '#f8fafc', border: '#cbd5e1', text: '#64748b' };
+}
+
+// ── RENDER ───────────────────────────────────────────────────
+function bacRender(data) {
+  const tbody = document.getElementById('bac-tbody');
+  const empty = document.getElementById('bac-empty');
+  const wrap  = document.getElementById('bac-tabla-wrap');
+  if (!tbody) return;
+
+  if (!data.length) {
+    if (empty) empty.style.display = BAC_T.length ? 'none' : 'block';
+    if (wrap)  wrap.style.display  = 'none';
+    document.getElementById('bac-count').textContent = '0 tickets';
+    return;
+  }
+
+  if (empty) empty.style.display = 'none';
+  if (wrap)  wrap.style.display  = 'block';
+  document.getElementById('bac-count').textContent = data.length + ' ticket' + (data.length !== 1 ? 's' : '');
+
+  tbody.innerHTML = '';
+  data.forEach((t, i) => {
+    const gi   = BAC_T.indexOf(t);
+    const st   = BAC_STATE[t.num] || { r: false, resp: '' };
+    const col  = bacNivColor(t.nivel);
+    const resp = (st.resp || '').replace(/</g, '&lt;');
+    const desc = (t.descripcion || '—').replace(/</g, '&lt;');
+    const long = desc.length > 120;
+
+    const tr = document.createElement('tr');
+    tr.style.cssText = `border-bottom:1px solid #edf1f7;${st.r ? 'opacity:.65;' : ''}`;
+    tr.dataset.num = t.num;
+    tr.innerHTML = `
+      <td style="padding:8px 10px;text-align:center;">
+        <input type="checkbox" ${st.r ? 'checked' : ''} style="width:16px;height:16px;accent-color:#2e7d32;cursor:pointer;"
+          onchange="bacToggle('${t.num}',this)">
+      </td>
+      <td style="padding:8px 10px;">
+        <div style="font-weight:700;color:var(--navy);font-family:monospace;font-size:11.5px;">${t.num}</div>
+        <div style="font-size:10.5px;color:#999;margin-top:2px;">${t.fecha || ''}</div>
+      </td>
+      <td style="padding:8px 10px;border-left:3px solid ${col.border};background:${col.bg};">
+        <div style="font-weight:700;font-size:12px;">${t.establecimiento || '—'}</div>
+        ${t.cue ? `<span style="font-size:10.5px;background:rgba(0,0,0,.06);padding:1px 6px;border-radius:4px;font-weight:700;">${t.cue}</span>` : ''}
+      </td>
+      <td style="padding:8px 10px;">
+        <span style="background:${col.bg};color:${col.text};border:1px solid ${col.border};padding:3px 8px;border-radius:7px;font-size:11px;font-weight:700;">${t.modulo || '—'}</span>
+      </td>
+      <td style="padding:8px 10px;font-size:12.5px;">
+        <div id="bac-d${gi}" style="line-height:1.5;${long ? 'display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;' : ''}">${desc}</div>
+        ${long ? `<button onclick="bacExp(${gi},this)" style="font-size:11px;color:var(--teal);font-weight:600;border:none;background:none;cursor:pointer;padding:0;margin-top:2px;">▼ ver más</button>` : ''}
+      </td>
+      <td style="padding:8px 10px;">
+        <div style="font-weight:600;font-size:12px;cursor:pointer;" onclick="this.nextSibling.style.display=this.nextSibling.style.display==='none'?'block':'none'">${t.ciudadano || '—'} <span style="font-size:9px;color:#bbb;">▼</span></div>
+        <div style="display:none;margin-top:3px;font-size:11px;color:#666;">${t.email || ''}<br>${t.cargo || ''}</div>
+      </td>
+      <td style="padding:8px 10px;">
+        <textarea id="bac-r${gi}" placeholder="Redactá la respuesta o usá Auto..." rows="2"
+          style="width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:11.5px;resize:vertical;background:${st.resp ? '#f0faf4' : '#fff'};font-family:inherit;line-height:1.5;"
+          oninput="bacSaveResp('${t.num}',${gi},this)">${resp}</textarea>
+        <div style="display:flex;gap:5px;margin-top:4px;">
+          <button onclick="bacAuto('${t.num}',${gi})" style="font-size:11px;background:var(--teal);color:#fff;border:none;padding:3px 9px;border-radius:5px;cursor:pointer;font-weight:600;">🤖 Auto</button>
+          <button onclick="bacCopy(${gi})" style="font-size:11px;background:#2e7d32;color:#fff;border:none;padding:3px 9px;border-radius:5px;cursor:pointer;font-weight:600;">📋 Copiar</button>
+          <span id="bac-ok${gi}" style="font-size:10px;color:#2e7d32;display:none;align-self:center;">✓</span>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+  bacStats();
+}
+
+// ── ACCIONES ─────────────────────────────────────────────────
+function bacToggle(num, cb) {
+  if (!BAC_STATE[num]) BAC_STATE[num] = { r: false, resp: '' };
+  BAC_STATE[num].r = cb.checked;
+  const tr = cb.closest('tr');
+  if (tr) tr.style.opacity = cb.checked ? '.65' : '1';
+  bacStats();
+  bacScheduleSave();
+}
+
+function bacSaveResp(num, i, ta) {
+  if (!BAC_STATE[num]) BAC_STATE[num] = { r: false, resp: '' };
+  BAC_STATE[num].resp = ta.value;
+  ta.style.background = ta.value ? '#f0faf4' : '#fff';
+  bacScheduleSave();
+}
+
+function bacAuto(num, i) {
+  const t = BAC_T.find(x => x.num === num); if (!t) return;
+  const ta = document.getElementById('bac-r' + i); if (!ta) return;
+  const txt = bacGetTmpl(t);
+  ta.value = txt;
+  ta.style.background = '#f0faf4';
+  bacSaveResp(num, i, ta);
+}
+
+function bacCopy(i) {
+  const ta = document.getElementById('bac-r' + i); if (!ta) return;
+  navigator.clipboard.writeText(ta.value).then(() => {
+    const ok = document.getElementById('bac-ok' + i);
+    if (ok) { ok.style.display = 'inline'; setTimeout(() => ok.style.display = 'none', 2000); }
+  });
+}
+
+function bacExp(i, btn) {
+  const d = document.getElementById('bac-d' + i); if (!d) return;
+  const open = d.style.webkitLineClamp !== 'unset' && d.style.overflow !== 'visible';
+  if (open) { d.style.cssText = 'line-height:1.5;'; btn.textContent = '▲ ver menos'; }
+  else { d.style.cssText = 'line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;'; btn.textContent = '▼ ver más'; }
+}
+
+// ── FILTROS ──────────────────────────────────────────────────
+function bacFiltrar() {
+  const q  = (document.getElementById('bac-fq')?.value || '').toLowerCase();
+  const nv = document.getElementById('bac-fn')?.value || '';
+  const mo = document.getElementById('bac-fm')?.value || '';
+  const re = document.getElementById('bac-fr')?.value || '';
+  const data = BAC_T.filter(t => {
+    const mq = !q  || [t.num, t.establecimiento, t.cue, t.ciudadano, t.modulo, t.descripcion].join(' ').toLowerCase().includes(q);
+    const mn = !nv || t.nivel === nv;
+    const mm = !mo || t.modulo === mo;
+    const isR = !!BAC_STATE[t.num]?.r;
+    const mr = !re || (re === '1' && isR) || (re === '0' && !isR);
+    return mq && mn && mm && mr;
+  });
+  bacRender(data);
+}
+
+// ── IMPORT / EXPORT ──────────────────────────────────────────
+function bacImportar(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => bacProcesar(e.target.result, file.name);
+  reader.readAsText(file, 'UTF-8');
+  input.value = '';
+}
+
+function bacProcesar(text, filename) {
+  try {
+    let tickets = [];
+    if (filename.endsWith('.json')) {
+      const p = JSON.parse(text);
+      tickets = Array.isArray(p) ? p : (p.tickets || p.data || []);
+    } else {
+      tickets = bacParseCSV(text);
+    }
+    if (!tickets.length) { alert('El archivo no tiene tickets válidos'); return; }
+
+    const norm = n => { const s = (n||'').toLowerCase(); return s.includes('inic')?'inicial':s.includes('prim')?'primaria':s.includes('sec')||s.includes('adult')?'secundaria':n; };
+    BAC_T = tickets.map(t => ({
+      num:             t.num || t.numero || t.id || t.ticket || '',
+      nivel:           norm(t.nivel || t.level || ''),
+      modulo:          t.modulo || t.module || t.categoria || '',
+      cue:             t.cue || '',
+      establecimiento: t.establecimiento || t.escuela || t.school || '',
+      ciudadano:       t.ciudadano || t.nombre || t.reporter || '',
+      dni:             t.dni || '',
+      email:           t.email || '',
+      cargo:           t.cargo || '',
+      adjunto:         t.adjunto || 'No',
+      fecha:           t.fecha || t.date || t['Date Submitted'] || '',
+      descripcion:     t.descripcion || t.description || t.Summary || '',
+    })).filter(t => t.num);
+
+    // Poblar filtro módulos
+    const sel = document.getElementById('bac-fm');
+    if (sel) {
+      sel.innerHTML = '<option value="">Todos los módulos</option>';
+      [...new Set(BAC_T.map(t => t.modulo).filter(Boolean))].sort().forEach(m => {
+        const o = document.createElement('option'); o.value = m; o.textContent = m; sel.append(o);
+      });
+    }
+    bacLoadCloud();
+    document.getElementById('bac-sync').textContent = `✓ ${BAC_T.length} tickets importados`;
+  } catch(e) { alert('Error al parsear: ' + e.message); }
+}
+
+function bacParseCSV(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  if (lines.length < 2) return [];
+  const splitL = line => { const f=[]; let c='',q=false; for(const ch of line){if(ch==='"'){q=!q}else if(ch===','&&!q){f.push(c);c=''}else c+=ch}; f.push(c); return f.map(x=>x.trim()); };
+  const headers = splitL(lines[0]);
+  return lines.slice(1).map(line => { const v=splitL(line); const o={}; headers.forEach((h,i)=>o[h]=v[i]||''); return o; });
+}
+
+function bacExportar() {
+  const blob = new Blob([JSON.stringify(BAC_T, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'tickets-ba-colaborativa.json'; a.click();
 }
 
 // ── INIT ─────────────────────────────────────────────────────
