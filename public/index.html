@@ -475,34 +475,13 @@ nav.nav-principal::-webkit-scrollbar { height: 3px; }
 nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
 
 
-/* Center all tab content areas */
-.tab-content.activo > *:not(.subnav-wrap):not([class*="subnav"]) {
-  /* handled per section */
-}
-.tab-section-centered {
-  max-width: 960px;
-  margin: 0 auto;
-}
-/* Tabs that need full centering */
-#tab-inicio .hero,
-#tab-inicio .panel-grid,
-#tab-procesos .panel-grid,
-#tab-testing .panel-grid,
-#tab-drive .panel-grid {
-  max-width: 960px;
-  margin-left: auto;
-  margin-right: auto;
-}
 
 
-/* ── Centering por tab ── */
-#tab-procesos .panel, #tab-procesos .panel-grid,
-#tab-testing  .panel, #tab-testing  .panel-grid,
-#tab-drive    .panel, #tab-drive    .panel-grid {
-  max-width: 900px; margin-left: auto; margin-right: auto;
-}
-#tab-inicio > div { max-width: 960px; margin-left: auto; margin-right: auto; }
-#tab-instructivos .sub-content > div { max-width: 960px; margin-left: auto; margin-right: auto; }
+/* ── Centrado selectivo para tabs de contenido simple ── */
+#tab-procesos .sub-content { max-width: 960px; margin: 0 auto; }
+#tab-testing  .sub-content { max-width: 960px; margin: 0 auto; }
+#tab-drive    .sub-content { max-width: 960px; margin: 0 auto; }
+#tab-mantis   > div        { max-width: 1200px; margin: 0 auto; }
 
 </style>
 </head>
