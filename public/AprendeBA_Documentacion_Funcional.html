@@ -4018,6 +4018,19 @@ function bacProcesar(text, filename) {
       });
     }
     bacLoadCloud();
+    // Si es CSV de BA Colaborativa (solo abiertos) → marcar el resto como resueltos
+    if (!filename.endsWith('.json')) {
+      const numsEnCSV = new Set(newTickets.map(t => t.num));
+      BAC_T.forEach(t => {
+        if (!numsEnCSV.has(t.num)) {
+          if (!BAC_STATE[t.num]) BAC_STATE[t.num] = { r: false, resp: '' };
+          if (!BAC_STATE[t.num].r) {
+            BAC_STATE[t.num].r = true; // auto-resolver
+          }
+        }
+      });
+      try { localStorage.setItem('bac_v4', JSON.stringify(BAC_STATE)); } catch(_) {}
+    }
     notifCheckBAC(BAC_T);
     document.getElementById('bac-sync').textContent = `✓ ${BAC_T.length} tickets importados`;
   } catch(e) { alert('Error al parsear: ' + e.message); }
