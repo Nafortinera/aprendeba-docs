@@ -3623,7 +3623,11 @@ function bacProcesar(text, filename) {
     if (!tickets.length) { alert('El archivo no tiene tickets válidos'); return; }
 
     const norm = n => { const s = (n||'').toLowerCase(); return s.includes('inic')?'inicial':s.includes('prim')?'primaria':s.includes('sec')||s.includes('adult')?'secundaria':n; };
-    BAC_T = tickets.map(t => ({
+    // Crear mapa de tickets existentes para preservar descripciones
+    const existingMap = {};
+    BAC_T.forEach(t => { existingMap[t.num] = t; });
+
+    const newTickets = tickets.map(t => ({
       num:             t.num || t.numero || t.id || t.ticket || '',
       nivel:           norm(t.nivel || t.level || ''),
       modulo:          t.modulo || t.module || t.categoria || '',
@@ -3637,6 +3641,25 @@ function bacProcesar(text, filename) {
       fecha:           t.fecha || t.date || t['Date Submitted'] || '',
       descripcion:     t.descripcion || t.description || t.Summary || '',
     })).filter(t => t.num);
+
+    // Fusionar: preservar descripciones existentes, agregar tickets nuevos
+    const merged = {};
+    BAC_T.forEach(t => { merged[t.num] = t; });
+    newTickets.forEach(t => {
+      if (merged[t.num]) {
+        // Ticket existente: preservar descripción si la nueva viene vacía
+        merged[t.num] = { ...merged[t.num], ...t,
+          descripcion: t.descripcion || merged[t.num].descripcion || '' };
+      } else {
+        merged[t.num] = t;
+      }
+    });
+    BAC_T = Object.values(merged).sort((a,b) => {
+      // Sort por fecha desc
+      const fa = (a.fecha||'').split('/').reverse().join('');
+      const fb = (b.fecha||'').split('/').reverse().join('');
+      return fb.localeCompare(fa);
+    });
 
     // Persistir en localStorage
     try { localStorage.setItem('bac_tickets', JSON.stringify(BAC_T)); } catch(_) {}
