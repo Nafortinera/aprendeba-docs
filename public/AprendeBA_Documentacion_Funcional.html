@@ -2788,45 +2788,48 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
     <span style="font-size:18px;">🐛</span>
     <div style="flex:1;">
       <div style="font-weight:700;color:var(--navy);font-size:14px;">Mantis · AprendeBA</div>
-      <div id="mantis-status-txt" style="font-size:12px;color:var(--text-soft);">Verificando proxy local...</div>
+      <div id="mantis-status-txt" style="font-size:12px;color:var(--text-soft);">Conectando con Mantis...</div>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <button onclick="toggleMantisdashboard()" id="btn-mantis-dash"
+        style="background:#f1f5f9;color:var(--navy);border:1.5px solid var(--line);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;">
+        📊 Ver dashboard
+      </button>
       <button onclick="cargarMantisProxy()" style="background:var(--teal);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;">↺ Actualizar</button>
       <a href="https://mantis.bue.edu.ar" target="_blank" style="display:inline-flex;align-items:center;background:#fff;color:var(--teal);border:1.5px solid var(--teal);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;">↗ Abrir Mantis</a>
     </div>
   </div>
 
-  <!-- PROXY OFF: instrucciones -->
-  <div id="mantis-proxy-off" style="display:none;background:#fef9ec;border:1.5px solid #f59e0b;border-radius:10px;padding:20px 24px;margin-bottom:12px;">
-    <div style="font-weight:700;color:#92400e;font-size:14px;margin-bottom:8px;">⚙️ Para ver los datos en vivo de Mantis</div>
-    <div style="font-size:13px;color:#78350f;line-height:1.7;">
-      1. Abrí una terminal (cmd o PowerShell)<br>
-      2. Editá <code style="background:#fff3cd;padding:1px 6px;border-radius:4px;">mantis-proxy.py</code> con tu usuario y contraseña<br>
-      3. Ejecutá: <code style="background:#fff3cd;padding:1px 6px;border-radius:4px;">python mantis-proxy.py</code><br>
-      4. Dejalo corriendo y hacé clic en <strong>↺ Actualizar</strong>
+  <!-- DASHBOARD (oculto por defecto) -->
+  <div id="mantis-dashboard-wrap" style="display:none;">
+    <div id="mantis-metrics" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px;">
+      <div style="background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
+        <div id="m-total" style="font-size:32px;font-weight:900;color:var(--navy);">—</div>
+        <div style="font-size:11px;color:#888;margin-top:2px;">Total bugs</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
+        <div id="m-open" style="font-size:32px;font-weight:900;color:#e07b00;">—</div>
+        <div style="font-size:11px;color:#888;margin-top:2px;">⏳ Abiertos</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
+        <div id="m-closed" style="font-size:32px;font-weight:900;color:#2e7d32;">—</div>
+        <div style="font-size:11px;color:#888;margin-top:2px;">✓ Resueltos</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
+        <div id="m-pct" style="font-size:32px;font-weight:900;color:var(--teal);">—</div>
+        <div style="font-size:11px;color:#888;margin-top:2px;">% Resolución</div>
+        <div style="background:#e8ecf0;border-radius:6px;height:6px;margin-top:6px;overflow:hidden;">
+          <div id="m-bar" style="width:0%;height:6px;background:linear-gradient(90deg,var(--teal),#2e7d32);border-radius:6px;transition:width .8s;"></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- MÉTRICAS -->
-  <div id="mantis-metrics" style="display:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px;">
-    <div style="background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
-      <div id="m-total" style="font-size:32px;font-weight:900;color:var(--navy);">—</div>
-      <div style="font-size:11px;color:#888;margin-top:2px;">Total bugs</div>
-    </div>
-    <div style="background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
-      <div id="m-open" style="font-size:32px;font-weight:900;color:#e07b00;">—</div>
-      <div style="font-size:11px;color:#888;margin-top:2px;">⏳ Abiertos</div>
-    </div>
-    <div style="background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
-      <div id="m-closed" style="font-size:32px;font-weight:900;color:#2e7d32;">—</div>
-      <div style="font-size:11px;color:#888;margin-top:2px;">✓ Resueltos</div>
-    </div>
-    <div style="background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
-      <div id="m-pct" style="font-size:32px;font-weight:900;color:var(--teal);">—</div>
-      <div style="font-size:11px;color:#888;margin-top:2px;">% Resolución</div>
-      <div style="background:#e8ecf0;border-radius:6px;height:6px;margin-top:6px;overflow:hidden;">
-        <div id="m-bar" style="width:0%;height:6px;background:linear-gradient(90deg,var(--teal),#2e7d32);border-radius:6px;transition:width .8s;"></div>
-      </div>
+  <!-- PROXY OFF: instrucciones -->
+  <div id="mantis-proxy-off" style="display:none;background:#fef9ec;border:1.5px solid #f59e0b;border-radius:10px;padding:20px 24px;margin-bottom:12px;">
+    <div style="font-weight:700;color:#92400e;font-size:14px;margin-bottom:8px;">⚙️ Configuración de Mantis</div>
+    <div style="font-size:13px;color:#78350f;line-height:1.7;">
+      No se pudo conectar con el servidor de Mantis. Intentá de nuevo en unos segundos.
     </div>
   </div>
 
@@ -2834,6 +2837,14 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <div id="mantis-filtros" style="display:none;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
     <input id="mf-q" type="text" placeholder="Buscar en bugs..." oninput="filtrarMantisProxy()"
       style="padding:6px 11px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;width:200px;outline:none;">
+    <select id="mf-proyecto" onchange="filtrarMantisProxy()"
+      style="padding:6px 10px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;">
+      <option value="">Todos los proyectos</option>
+      <option value="adultos">🏫 Adultos</option>
+      <option value="especial">♿ Especial</option>
+      <option value="libromatriz">📒 Libro Matriz</option>
+      <option value="aprendeba">🎓 AprendeBA</option>
+    </select>
     <select id="mf-estado" onchange="filtrarMantisProxy()"
       style="padding:6px 10px;border:1px solid var(--line);border-radius:7px;font-size:12.5px;">
       <option value="">Todos los estados</option>
@@ -2852,48 +2863,10 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
     <span id="mf-count" style="margin-left:auto;background:var(--teal-bg);color:var(--teal);padding:3px 11px;border-radius:14px;font-size:12px;font-weight:700;">—</span>
   </div>
 
-  <!-- TABLA ABIERTOS -->
-  <div id="mantis-open-wrap" style="display:none;">
-    <div style="font-size:12px;font-weight:700;color:var(--navy);padding:0 2px 6px;">⏳ Bugs abiertos</div>
-    <div style="overflow-x:auto;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);">
-      <table style="width:100%;border-collapse:collapse;background:#fff;min-width:700px;">
-        <thead><tr style="background:var(--navy);color:#fff;font-size:11.5px;">
-          <th style="padding:9px 10px;text-align:left;width:70px;">#</th>
-          <th style="padding:9px 10px;text-align:left;">Resumen</th>
-          <th style="padding:9px 10px;text-align:left;width:100px;">Categoría</th>
-          <th style="padding:9px 10px;text-align:left;width:90px;">Prioridad</th>
-          <th style="padding:9px 10px;text-align:left;width:100px;">Estado</th>
-          <th style="padding:9px 10px;text-align:left;width:100px;">Asignado</th>
-          <th style="padding:9px 10px;text-align:left;width:90px;">Fecha</th>
-        </tr></thead>
-        <tbody id="mantis-tbody-open"></tbody>
-      </table>
-    </div>
-  </div>
+  <!-- GRUPOS POR PROYECTO -->
+  <div id="mantis-grupos" style="display:none;"></div>
 
-  <!-- TABLA CERRADOS (colapsable) -->
-  <div id="mantis-closed-wrap" style="display:none;margin-top:14px;">
-    <div style="display:flex;align-items:center;gap:8px;padding:0 2px 6px;">
-      <span style="font-size:12px;font-weight:700;color:var(--navy);">✓ Bugs resueltos / cerrados</span>
-      <span id="mantis-closed-badge" style="background:#d1fae5;color:#065f46;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;"></span>
-      <button onclick="toggleMantisClosedTable()" style="margin-left:auto;font-size:11px;color:var(--teal);cursor:pointer;font-weight:600;border:none;background:none;" id="mantis-closed-toggle">▼ Mostrar</button>
-    </div>
-    <div id="mantis-closed-table" style="display:none;overflow-x:auto;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);">
-      <table style="width:100%;border-collapse:collapse;background:#fff;min-width:700px;">
-        <thead><tr style="background:#4b5563;color:#fff;font-size:11.5px;">
-          <th style="padding:9px 10px;text-align:left;width:70px;">#</th>
-          <th style="padding:9px 10px;text-align:left;">Resumen</th>
-          <th style="padding:9px 10px;text-align:left;width:100px;">Categoría</th>
-          <th style="padding:9px 10px;text-align:left;width:100px;">Estado</th>
-          <th style="padding:9px 10px;text-align:left;width:100px;">Resolución</th>
-          <th style="padding:9px 10px;text-align:left;width:90px;">Cerrado</th>
-        </tr></thead>
-        <tbody id="mantis-tbody-closed"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- IFRAME fallback (cuando proxy está off) -->
+  <!-- IFRAME fallback -->
   <div id="mantis-iframe-wrap" style="margin-top:14px;">
     <div style="font-size:11px;color:var(--text-soft);margin-bottom:6px;">Vista directa de Mantis (requiere login)</div>
     <iframe src="https://mantis.bue.edu.ar" style="width:100%;height:55vh;border:1px solid var(--line);border-radius:10px;background:#fff;" title="Mantis"></iframe>
@@ -3461,30 +3434,122 @@ function renderMantisRow(issue, closed) {
   </tr>`;
 }
 
+function getProyecto(issue) {
+  const txt = ((issue.resumen || '') + ' ' + (issue.categoria || '')).toLowerCase();
+  if (txt.includes('adultos') || txt.includes('cens') || txt.includes('adulto')) return 'adultos';
+  if (txt.includes('especial') || txt.includes('epa') || txt.includes('especial')) return 'especial';
+  if (txt.includes('libro matriz') || txt.includes('libro calificador') || txt.includes('libro_matriz') || (issue.categoria||'').toLowerCase().includes('libro')) return 'libromatriz';
+  return 'aprendeba';
+}
+
+const PROYECTOS = {
+  adultos:    { label: '🏫 Adultos',      color: '#7c3aed' },
+  especial:   { label: '♿ Especial',      color: '#0891b2' },
+  libromatriz:{ label: '📒 Libro Matriz',  color: '#b45309' },
+  aprendeba:  { label: '🎓 AprendeBA',     color: '#0e7490' },
+};
+
 function filtrarMantisProxy() {
-  const q  = (document.getElementById('mf-q')?.value || '').toLowerCase();
-  const es = (document.getElementById('mf-estado')?.value || '');
-  const pr = (document.getElementById('mf-prioridad')?.value || '').toLowerCase();
+  const q   = (document.getElementById('mf-q')?.value || '').toLowerCase();
+  const es  = (document.getElementById('mf-estado')?.value || '');
+  const pr  = (document.getElementById('mf-prioridad')?.value || '').toLowerCase();
+  const proy= (document.getElementById('mf-proyecto')?.value || '');
 
   let data = mantisAllIssues.filter(i => {
-    const mq = !q || [i.id, i.resumen, i.categoria, i.asignado_a, i.descripcion].join(' ').toLowerCase().includes(q);
+    const mq  = !q  || [i.id, i.resumen, i.categoria, i.asignado_a].join(' ').toLowerCase().includes(q);
     const mes = !es || (es === 'cerrado' ? esCerrado(i.estado) : !esCerrado(i.estado));
     const mpr = !pr || (i.prioridad || '').toLowerCase().includes(pr);
-    return mq && mes && mpr;
+    const mp  = !proy || getProyecto(i) === proy;
+    return mq && mes && mpr && mp;
   });
 
-  const open   = data.filter(i => !esCerrado(i.estado));
-  const closed = data.filter(i =>  esCerrado(i.estado));
+  const count = document.getElementById('mf-count');
+  if (count) count.textContent = data.length + ' bug' + (data.length !== 1 ? 's' : '');
 
-  const toOpen   = document.getElementById('mantis-tbody-open');
-  const toClosed = document.getElementById('mantis-tbody-closed');
-  const badge    = document.getElementById('mantis-closed-badge');
-  const count    = document.getElementById('mf-count');
+  renderMantisGrupos(data);
+}
 
-  if (toOpen)   toOpen.innerHTML   = open.map(i => renderMantisRow(i, false)).join('') || '<tr><td colspan="7" style="text-align:center;padding:20px;color:#999;font-size:13px;">Sin bugs abiertos</td></tr>';
-  if (toClosed) toClosed.innerHTML = closed.map(i => renderMantisRow(i, true)).join('')  || '<tr><td colspan="6" style="text-align:center;padding:20px;color:#999;font-size:13px;">Sin bugs cerrados</td></tr>';
-  if (badge)    badge.textContent  = closed.length + ' bug' + (closed.length !== 1 ? 's' : '');
-  if (count)    count.textContent  = data.length + ' bug' + (data.length !== 1 ? 's' : '');
+function renderMantisGrupos(data) {
+  const wrap = document.getElementById('mantis-grupos');
+  if (!wrap) return;
+
+  // Agrupar por proyecto
+  const grupos = {};
+  data.forEach(i => {
+    const p = getProyecto(i);
+    if (!grupos[p]) grupos[p] = [];
+    grupos[p].push(i);
+  });
+
+  const orden = ['adultos', 'especial', 'libromatriz', 'aprendeba'];
+  wrap.innerHTML = orden.filter(k => grupos[k]?.length).map(k => {
+    const issues = grupos[k];
+    const cfg    = PROYECTOS[k];
+    const abiertos = issues.filter(i => !esCerrado(i.estado)).length;
+    const pct = issues.length ? Math.round((issues.length - abiertos) / issues.length * 100) : 0;
+    const id  = 'mg-' + k;
+
+    return `<div style="background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:12px;overflow:hidden;">
+      <!-- Header del grupo -->
+      <div onclick="toggleGrupo('${id}')" style="display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;border-left:4px solid ${cfg.color};">
+        <div style="font-size:16px;">${cfg.label.split(' ')[0]}</div>
+        <div style="flex:1;">
+          <span style="font-weight:800;color:var(--navy);font-size:14px;">${cfg.label.slice(cfg.label.indexOf(' ')+1)}</span>
+          <span style="margin-left:8px;font-size:12px;color:#888;">${issues.length} bug${issues.length!==1?'s':''} · ${abiertos} abierto${abiertos!==1?'s':''}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="background:#e8ecf0;border-radius:20px;height:8px;width:100px;overflow:hidden;">
+            <div style="width:${pct}%;height:8px;background:${cfg.color};border-radius:20px;transition:width .8s;"></div>
+          </div>
+          <span style="font-size:11.5px;font-weight:700;color:${cfg.color};">${pct}%</span>
+        </div>
+        <span id="${id}-toggle" style="color:#aaa;font-size:13px;transition:transform .2s;">▼</span>
+      </div>
+      <!-- Tabla del grupo -->
+      <div id="${id}" style="display:none;overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;min-width:700px;">
+          <thead><tr style="background:#f8fafc;font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.3px;">
+            <th style="padding:8px 12px;text-align:left;width:75px;">ID</th>
+            <th style="padding:8px 12px;text-align:left;">Resumen</th>
+            <th style="padding:8px 12px;text-align:left;width:110px;">Categoría</th>
+            <th style="padding:8px 12px;text-align:left;width:90px;">Prioridad</th>
+            <th style="padding:8px 12px;text-align:left;width:100px;">Estado</th>
+            <th style="padding:8px 12px;text-align:left;width:100px;">Asignado</th>
+            <th style="padding:8px 12px;text-align:left;width:90px;">Fecha</th>
+          </tr></thead>
+          <tbody>
+            ${issues.map(i => `<tr style="border-top:1px solid #f1f5f9;${esCerrado(i.estado)?'opacity:.6;':''}transition:background .1s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+              <td style="padding:8px 12px;"><a href="${i.url}" target="_blank" style="font-weight:700;color:var(--navy);font-family:monospace;font-size:11.5px;">#${i.id}</a></td>
+              <td style="padding:8px 12px;font-size:12.5px;">${i.resumen||'—'}</td>
+              <td style="padding:8px 12px;font-size:11.5px;color:#555;">${i.categoria||'—'}</td>
+              <td style="padding:8px 12px;font-size:12px;font-weight:700;color:${priColor(i.prioridad)}">${tradPri(i.prioridad)}</td>
+              <td style="padding:8px 12px;">${estadoBadge(i.estado)}</td>
+              <td style="padding:8px 12px;font-size:11.5px;color:#555;">${i.asignado_a||'—'}</td>
+              <td style="padding:8px 12px;font-size:11px;color:#999;">${i.fecha||'—'}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+  }).join('') || '<div style="text-align:center;padding:32px;color:#999;font-size:13px;">Sin bugs con ese filtro</div>';
+}
+
+function toggleGrupo(id) {
+  const el  = document.getElementById(id);
+  const tog = document.getElementById(id + '-toggle');
+  if (!el) return;
+  const open = el.style.display === 'none';
+  el.style.display = open ? 'block' : 'none';
+  if (tog) tog.style.transform = open ? 'rotate(180deg)' : '';
+}
+
+function toggleMantisdashboard() {
+  const wrap = document.getElementById('mantis-dashboard-wrap');
+  const btn  = document.getElementById('btn-mantis-dash');
+  if (!wrap) return;
+  const open = wrap.style.display === 'none';
+  wrap.style.display = open ? 'block' : 'none';
+  if (btn) btn.textContent = open ? '📊 Ocultar dashboard' : '📊 Ver dashboard';
 }
 
 function toggleMantisClosedTable() {
@@ -3530,10 +3595,11 @@ async function cargarMantisProxy() {
     if (bar) bar.style.width = data.pct_resolucion + '%';
 
     // Mostrar secciones
-    ['mantis-filtros','mantis-open-wrap','mantis-closed-wrap'].forEach(id => {
+    ['mantis-filtros','mantis-grupos'].forEach(id => {
       const el = document.getElementById(id);
-      if (el) el.style.display = 'block';
+      if (el) el.style.display = id==='mantis-filtros' ? 'flex' : 'block';
     });
+    document.getElementById('mantis-iframe-wrap') && (document.getElementById('mantis-iframe-wrap').style.display = 'none');
 
     notifCheckMantis(mantisAllIssues);
     filtrarMantisProxy();
@@ -3547,7 +3613,7 @@ async function cargarMantisProxy() {
     if (proxyOff)   proxyOff.style.display   = 'block';
     if (iframeWrap) iframeWrap.style.display  = 'block';
     if (metrics)    metrics.style.display     = 'none';
-    ['mantis-filtros','mantis-open-wrap','mantis-closed-wrap'].forEach(id => {
+    ['mantis-filtros','mantis-grupos'].forEach(id => {
       const el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     if (statusTxt) statusTxt.textContent = 'No se pudo conectar con Mantis';
