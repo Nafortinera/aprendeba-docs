@@ -69,7 +69,7 @@
   .search-badge { background: rgba(255,255,255,0.18); padding: 3px 11px; border-radius: 10px; font-size: 12px; }
 
   /* NAV PRINCIPAL */
-  nav.nav-principal { background: white; border-bottom: 3px solid var(--gris-borde); display: flex; padding: 0 20px; overflow-x: auto; }
+  nav.nav-principal { background: white; border-bottom: 3px solid var(--gris-borde); display: flex; padding: 0 24px; overflow-x: auto; }
   nav.nav-principal button { flex-shrink: 0; background: none; border: none; padding: 14px 22px; cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--texto-suave); border-bottom: 3px solid transparent; margin-bottom: -3px; transition: all 0.15s; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
   nav.nav-principal button:hover { color: var(--apba-teal); background: var(--gris-bg); }
   nav.nav-principal button.activo { color: var(--apba-navy); border-bottom-color: var(--apba-teal); }
@@ -87,7 +87,7 @@
   #subnav-procesos button.activo { color: var(--teal); border-bottom-color: var(--teal); font-weight: 700; }
 
   /* MAIN */
-  main { max-width: 1100px; margin: 24px auto; padding: 0 18px 60px; }
+  main { max-width: 100%; margin: 0; padding: 16px 24px 60px; }
   .tab-content { display: none; }
   .tab-content.activo { display: block; }
   .sub-content { display: none; }
@@ -363,7 +363,7 @@ nav.nav-principal button[data-tab="mantis"].activo { color: #b91c1c; border-bott
 
 /* ── Notebook / Tablet landscape (< 1100px) ── */
 @media (max-width: 1100px) {
-  main { padding: 0 12px 48px; }
+  main { padding: 14px 16px 48px; }
   .combined-bar { margin: 0 0 14px; }
   .mantis-section { margin: 0 0 30px; }
 }
@@ -388,7 +388,7 @@ nav.nav-principal button[data-tab="mantis"].activo { color: #b91c1c; border-bott
   .subnav button { font-size: 11px !important; padding: 5px 10px !important; white-space: nowrap; }
 
   /* Main */
-  main { margin: 12px auto; padding: 0 10px 40px; }
+  main { padding: 10px 12px 40px; }
 
   /* Métricas en grilla 2 columnas */
   #bac-metrics,
@@ -445,7 +445,7 @@ nav.nav-principal button[data-tab="mantis"].activo { color: #b91c1c; border-bott
   }
 
   /* Main full width */
-  main { padding: 0 6px 32px; margin: 8px auto; }
+  main { padding: 8px 6px 32px; }
 
   /* Métricas: 2 cols compacto */
   #bac-metrics,
