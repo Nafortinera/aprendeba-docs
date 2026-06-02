@@ -484,6 +484,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 #tab-mantis   > div        { max-width: 1200px; margin: 0 auto; }
 
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -2651,31 +2652,61 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <span id="bac-sync" style="font-size:12px;font-weight:600;color:var(--teal)"></span>
 </div>
 
-<!-- ── MÉTRICAS ── -->
-<div id="bac-metrics" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px;">
-  <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
-    <div id="bac-m-total" style="font-size:30px;font-weight:900;color:var(--navy);">0</div>
-    <div style="font-size:11px;color:#888;margin-top:2px;">Total tickets</div>
-  </div>
-  <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
-    <div id="bac-m-open" style="font-size:30px;font-weight:900;color:#e07b00;">0</div>
-    <div style="font-size:11px;color:#888;margin-top:2px;">⏳ Pendientes</div>
-  </div>
-  <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
-    <div id="bac-m-res" style="font-size:30px;font-weight:900;color:#2e7d32;">0</div>
-    <div style="font-size:11px;color:#888;margin-top:2px;">✓ Respondidos</div>
-  </div>
-  <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);text-align:center;">
-    <div id="bac-m-pct" style="font-size:30px;font-weight:900;color:var(--teal);">0%</div>
-    <div style="font-size:11px;color:#888;margin-top:2px;">% Resolución</div>
-    <div style="background:#e8ecf0;border-radius:6px;height:6px;margin-top:6px;overflow:hidden;">
-      <div id="bac-m-bar" style="width:0%;height:6px;background:linear-gradient(90deg,var(--teal),#2e7d32);border-radius:6px;transition:width .8s;"></div>
+<!-- ── DASHBOARD ── -->
+<div id="bac-metrics" style="display:grid;grid-template-columns:1fr 1fr 1fr 1.4fr;gap:12px;margin-bottom:16px;">
+
+  <!-- Card 1: Números clave -->
+  <div style="background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:14px;">
+    <div style="font-size:10px;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:.5px;">Resumen</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+      <div>
+        <div id="bac-m-total" style="font-size:36px;font-weight:900;color:var(--navy);line-height:1;">0</div>
+        <div style="font-size:11px;color:#888;margin-top:2px;">Total tickets</div>
+      </div>
+      <div style="text-align:right;">
+        <div id="bac-m-pct" style="font-size:28px;font-weight:900;color:var(--teal);line-height:1;">0%</div>
+        <div style="font-size:11px;color:#888;margin-top:2px;">% Resueltos</div>
+      </div>
+    </div>
+    <div style="background:#e8ecf0;border-radius:8px;height:8px;overflow:hidden;">
+      <div id="bac-m-bar" style="width:0%;height:8px;background:linear-gradient(90deg,var(--teal),#2e7d32);border-radius:8px;transition:width 1s ease;"></div>
+    </div>
+    <div style="display:flex;gap:16px;">
+      <div>
+        <div id="bac-m-open" style="font-size:22px;font-weight:800;color:#e07b00;">0</div>
+        <div style="font-size:10.5px;color:#888;">⏳ Pendientes</div>
+      </div>
+      <div>
+        <div id="bac-m-res" style="font-size:22px;font-weight:800;color:#2e7d32;">0</div>
+        <div style="font-size:10.5px;color:#888;">✓ Respondidos</div>
+      </div>
     </div>
   </div>
-  <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);">
-    <div style="font-size:10px;font-weight:700;color:#888;text-transform:uppercase;margin-bottom:8px;">Por módulo</div>
-    <div id="bac-mod-bars" style="display:flex;flex-direction:column;gap:5px;"></div>
+
+  <!-- Card 2: Donut abiertos/cerrados -->
+  <div style="background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.08);">
+    <div style="font-size:10px;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Estado</div>
+    <div style="position:relative;height:130px;display:flex;align-items:center;justify-content:center;">
+      <canvas id="bac-chart-estado" style="max-height:130px;"></canvas>
+    </div>
   </div>
+
+  <!-- Card 3: Donut por nivel -->
+  <div style="background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.08);">
+    <div style="font-size:10px;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Por nivel</div>
+    <div style="position:relative;height:130px;display:flex;align-items:center;justify-content:center;">
+      <canvas id="bac-chart-nivel" style="max-height:130px;"></canvas>
+    </div>
+  </div>
+
+  <!-- Card 4: Barras por módulo -->
+  <div style="background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.08);">
+    <div style="font-size:10px;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Por módulo</div>
+    <div style="position:relative;height:130px;">
+      <canvas id="bac-chart-modulos" style="max-height:130px;"></canvas>
+    </div>
+  </div>
+
 </div>
 
 <!-- ── FILTROS ── -->
@@ -3464,6 +3495,92 @@ function bacStats() {
   if (sub && total) {
     const today = new Date().toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit',year:'numeric'});
     sub.textContent = `${total} tickets · ${today} · Resolución: ${res}/${total} (${pct}%)`;
+  }
+  // Update charts
+  bacUpdateCharts(total, res, total - res);
+}
+
+// ── CHARTS ────────────────────────────────────────────────────
+let bacChartEstado = null, bacChartNivel = null, bacChartModulos = null;
+
+function bacUpdateCharts(total, res, pending) {
+  if (typeof Chart === 'undefined') return;
+
+  // Chart 1: Estado (donut)
+  const ctxE = document.getElementById('bac-chart-estado');
+  if (ctxE) {
+    if (bacChartEstado) bacChartEstado.destroy();
+    bacChartEstado = new Chart(ctxE, {
+      type: 'doughnut',
+      data: {
+        labels: ['Pendientes', 'Respondidos'],
+        datasets: [{ data: [pending, res],
+          backgroundColor: ['#fb923c', '#22c55e'],
+          borderWidth: 0, hoverOffset: 4 }]
+      },
+      options: {
+        cutout: '68%', plugins: {
+          legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 10, boxWidth: 12 } },
+          tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw} (${total ? Math.round(ctx.raw/total*100) : 0}%)` } }
+        }, responsive: true, maintainAspectRatio: false
+      }
+    });
+  }
+
+  // Chart 2: Nivel (donut)
+  const ctxN = document.getElementById('bac-chart-nivel');
+  if (ctxN) {
+    const niveles = { 'Inicial': 0, 'Primaria': 0, 'Secundaria': 0, 'Otro': 0 };
+    BAC_T.forEach(t => {
+      const n = (t.nivel || '').toLowerCase();
+      if (n === 'inicial') niveles['Inicial']++;
+      else if (n === 'primaria') niveles['Primaria']++;
+      else if (n === 'secundaria') niveles['Secundaria']++;
+      else niveles['Otro']++;
+    });
+    const labels = Object.keys(niveles).filter(k => niveles[k] > 0);
+    const data   = labels.map(k => niveles[k]);
+    if (bacChartNivel) bacChartNivel.destroy();
+    bacChartNivel = new Chart(ctxN, {
+      type: 'doughnut',
+      data: {
+        labels,
+        datasets: [{ data,
+          backgroundColor: ['#c026d3','#2563eb','#059669','#94a3b8'],
+          borderWidth: 0, hoverOffset: 4 }]
+      },
+      options: {
+        cutout: '68%', plugins: {
+          legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8, boxWidth: 12 } }
+        }, responsive: true, maintainAspectRatio: false
+      }
+    });
+  }
+
+  // Chart 3: Módulos (bar horizontal)
+  const ctxM = document.getElementById('bac-chart-modulos');
+  if (ctxM) {
+    const mods = {};
+    BAC_T.forEach(t => { if (t.modulo) mods[t.modulo] = (mods[t.modulo] || 0) + 1; });
+    const sorted = Object.entries(mods).sort((a,b) => b[1]-a[1]).slice(0, 7);
+    if (bacChartModulos) bacChartModulos.destroy();
+    bacChartModulos = new Chart(ctxM, {
+      type: 'bar',
+      data: {
+        labels: sorted.map(([k]) => k.length > 18 ? k.slice(0,16)+'…' : k),
+        datasets: [{ data: sorted.map(([,v]) => v),
+          backgroundColor: '#2FA89C', borderRadius: 5, barThickness: 14 }]
+      },
+      options: {
+        indexAxis: 'y',
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+          y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+        },
+        responsive: true, maintainAspectRatio: false
+      }
+    });
   }
 }
 
