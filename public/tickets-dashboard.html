@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Tickets — AprendeBA</title>
+<style>
+  :root{
+    --navy:#1a3c5e;--teal:#0e7490;--green:#2e7d32;--orange:#e07b00;
+    --bg:#f0f4f8;--white:#fff;--border:#d1dce8;--shadow:0 2px 8px rgba(0,0,0,.10);
+    --c-ini:#d946ef;--c-pri:#2563eb;--c-sec:#059669;
+    --c-ini-bg:#fdf4ff;--c-pri-bg:#eff6ff;--c-sec-bg:#ecfdf5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:#1e2a3a;font-size:13.5px;}
+
+  header{background:linear-gradient(135deg,#1a3c5e 0%,#0e7490 100%);color:white;padding:16px 24px;}
+  header h1{font-size:18px;font-weight:700;}
+  header p{font-size:11.5px;opacity:.8;margin-top:3px;}
+  .leyenda-nivel{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;align-items:center;}
+  .ln{padding:3px 12px;border-radius:12px;font-size:11.5px;font-weight:700;}
+  .ln-ini{background:var(--c-ini-bg);color:var(--c-ini);border:1px solid #e879f9;}
+  .ln-pri{background:var(--c-pri-bg);color:var(--c-pri);border:1px solid #93c5fd;}
+  .ln-sec{background:var(--c-sec-bg);color:var(--c-sec);border:1px solid #6ee7b7;}
+
+  /* ── SYNC BADGE ── */
+  .sync-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 13px;border-radius:20px;font-size:11.5px;font-weight:700;transition:all .4s;cursor:default;}
+  .sync-badge.ok  {background:#d1fae5;color:#065f46;}
+  .sync-badge.warn{background:#fef3c7;color:#92400e;}
+  .sync-badge.load{background:#e0f4f8;color:#075985;}
+  .sync-badge.err {background:#fee2e2;color:#991b1b;}
+  .sync-dot{width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block;}
+  .sync-dot.anim{animation:pulse .9s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+  .stats{display:flex;gap:10px;flex-wrap:wrap;padding:14px 24px;}
+  .stat{background:var(--white);border-radius:9px;padding:10px 16px;box-shadow:var(--shadow);min-width:100px;text-align:center;}
+  .stat .n{font-size:24px;font-weight:800;color:var(--teal);}
+  .stat .l{font-size:10.5px;color:#666;margin-top:1px;}
+  .stat.ok .n{color:var(--green);} .stat.pen .n{color:var(--orange);}
+  .stat.ini .n{color:var(--c-ini);} .stat.pri .n{color:var(--c-pri);} .stat.sec .n{color:var(--c-sec);}
+
+  .filtros{background:var(--white);padding:12px 24px;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+  .filtros input,.filtros select{padding:6px 11px;border:1px solid var(--border);border-radius:6px;font-size:12.5px;background:#f8fafc;outline:none;}
+  .filtros input{width:230px;}
+  .filtros input:focus,.filtros select:focus{border-color:var(--teal);}
+  .btn{background:var(--teal);color:white;border:none;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;}
+  .btn:hover{background:var(--navy);}
+  .count-b{background:#e0f4f8;color:var(--teal);padding:3px 11px;border-radius:16px;font-size:12px;font-weight:700;margin-left:auto;}
+
+  .tabla-wrap{overflow-x:auto;padding:0 24px 40px;}
+  table{width:100%;border-collapse:collapse;background:var(--white);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-top:14px;min-width:1200px;}
+  thead th{background:var(--navy);color:white;padding:9px 10px;text-align:left;font-size:11.5px;font-weight:600;white-space:nowrap;cursor:pointer;user-select:none;}
+  thead th:hover{background:var(--teal);} thead th.ns{cursor:default;} thead th.ns:hover{background:var(--navy);}
+  thead th.sort-asc::after{content:" ▲";font-size:9px;} thead th.sort-desc::after{content:" ▼";font-size:9px;}
+  tbody tr{border-bottom:1px solid #edf1f7;transition:background .12s;}
+  tbody tr.lvl-ini td.te{border-left:4px solid var(--c-ini);background:var(--c-ini-bg);}
+  tbody tr.lvl-pri td.te{border-left:4px solid var(--c-pri);background:var(--c-pri-bg);}
+  tbody tr.lvl-sec td.te{border-left:4px solid var(--c-sec);background:var(--c-sec-bg);}
+  tbody tr.respondido td{opacity:.68;}
+  td{padding:9px 10px;font-size:12.5px;vertical-align:top;}
+
+  .chk{width:17px;height:17px;accent-color:var(--green);cursor:pointer;}
+  .cw{text-align:center;padding-top:4px;}
+  .tnum{font-weight:700;color:var(--navy);font-family:monospace;font-size:11.5px;white-space:nowrap;}
+  .tfecha{font-size:10.5px;color:#888;margin-top:2px;}
+  .est-name{font-weight:700;font-size:12.5px;line-height:1.3;}
+  .cue-tag{display:inline-block;margin-top:3px;font-size:10.5px;font-weight:700;color:#444;background:rgba(0,0,0,.07);padding:1px 7px;border-radius:4px;}
+  .cargo-txt{font-size:10.5px;color:#777;margin-top:3px;}
+  .mc{display:inline-block;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600;}
+  .mc-ini{background:var(--c-ini-bg);color:var(--c-ini);} .mc-pri{background:var(--c-pri-bg);color:var(--c-pri);}
+  .mc-sec{background:var(--c-sec-bg);color:var(--c-sec);} .mc-o{background:#f1f5f9;color:#64748b;}
+  .desc-txt{font-size:12.5px;line-height:1.55;color:#2a3a4a;}
+  .ds{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .ds.exp{-webkit-line-clamp:unset;overflow:visible;}
+  .eb{color:var(--teal);font-size:11px;cursor:pointer;font-weight:600;margin-top:3px;display:inline-block;background:none;border:none;padding:0;}
+  .cname{font-weight:600;font-size:12.5px;} .csub{font-size:11px;color:#777;margin-top:2px;line-height:1.4;}
+  .adj-si{display:inline-block;background:#fef3c7;color:#92400e;border:1px solid #fde68a;padding:2px 8px;border-radius:8px;font-size:11px;font-weight:700;}
+  .adj-no{display:inline-block;background:#f1f5f9;color:#94a3b8;padding:2px 8px;border-radius:8px;font-size:11px;}
+
+  .mantis-input{width:100%;min-width:80px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;font-size:12px;font-family:monospace;background:#fffef5;}
+  .mantis-input:focus{outline:none;border-color:#f59e0b;background:#fffde7;}
+  .mantis-input.hv{border-color:#f59e0b;background:#fffde7;font-weight:700;color:#92400e;}
+
+  .resp-wrap{position:relative;}
+  .resp-area{width:100%;min-width:190px;padding:6px 8px;border:1px solid var(--border);border-radius:5px;font-size:11.5px;min-height:62px;resize:vertical;background:#f8fff8;font-family:"Segoe UI",sans-serif;line-height:1.55;}
+  .resp-area:focus{outline:none;border-color:var(--green);background:#f0faf4;}
+  .resp-area.hv{border-color:#86efac;background:#f0faf4;}
+  .resp-btns{display:flex;gap:5px;margin-top:4px;align-items:center;}
+  .cbtn{font-size:10.5px;color:white;border:none;padding:3px 9px;border-radius:4px;cursor:pointer;font-weight:600;}
+  .cbtn-copy{background:var(--green);}  .cbtn-copy:hover{background:#1b5e20;}
+  .cbtn-tpl{background:var(--teal);}    .cbtn-tpl:hover{background:var(--navy);}
+  .cbtn-clear{background:#94a3b8;}      .cbtn-clear:hover{background:#64748b;}
+  .copy-ok{color:var(--green);font-size:10px;display:none;}
+
+  .leyenda{padding:6px 24px 2px;font-size:11px;color:#777;display:flex;gap:10px;flex-wrap:wrap;}
+  .pill{background:#e8ecf0;padding:2px 8px;border-radius:10px;}
+
+  /* ── RESOLUTION DASHBOARD ── */
+  .dash-top{padding:0 24px 0;display:flex;flex-wrap:wrap;gap:14px;align-items:stretch;}
+  .res-card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:16px 22px;min-width:180px;flex:1;}
+  .res-card h3{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+  .res-pct{font-size:42px;font-weight:900;color:var(--teal);line-height:1;}
+  .res-bar-wrap{background:#e8ecf0;border-radius:8px;height:10px;margin-top:10px;overflow:hidden;}
+  .res-bar{height:10px;border-radius:8px;background:linear-gradient(90deg,#0e7490,#2e7d32);transition:width .8s ease;}
+  .res-legend{font-size:11px;color:#666;margin-top:6px;}
+
+  /* ── VISTA TOGGLE ── */
+  .vista-btns{display:flex;gap:6px;padding:10px 24px 0;}
+  .vbtn{padding:6px 16px;border-radius:20px;border:2px solid var(--teal);background:transparent;color:var(--teal);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
+  .vbtn.act{background:var(--teal);color:#fff;}
+
+  /* ── SECTION HEADERS ── */
+  .sec-hdr{padding:10px 24px 4px;display:flex;align-items:center;gap:10px;}
+  .sec-hdr h2{font-size:13px;font-weight:800;color:var(--navy);}
+  .sec-badge{padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;}
+  .sec-badge.open{background:#fff3cd;color:#856404;}
+  .sec-badge.closed{background:#d1fae5;color:#065f46;}
+  .sec-toggle{margin-left:auto;font-size:11px;color:var(--teal);cursor:pointer;font-weight:600;border:none;background:none;}
+
+  /* ── MANTIS PANEL ── */
+  .mantis-panel-top{background:#fffef5;border:1px solid #fde68a;border-radius:10px;margin:0 24px 14px;padding:14px 18px;}
+  .mantis-panel-top h3{font-size:12px;font-weight:700;color:#92400e;margin-bottom:10px;}
+  .mantis-list{display:flex;flex-wrap:wrap;gap:8px;}
+  .mantis-pill{background:#fff;border:1.5px solid #f59e0b;border-radius:8px;padding:5px 12px;font-size:11.5px;font-weight:700;color:#92400e;cursor:pointer;transition:background .12s;}
+  .mantis-pill:hover{background:#fef3c7;}
+  .mantis-pill a{color:inherit;text-decoration:none;}
+  .mantis-empty{font-size:11.5px;color:#bbb;font-style:italic;}
+
+  /* Row closed style */
+  tbody tr.closed-row td{opacity:.55;background:#f8fafc !important;}
+  tbody tr.closed-row td.te{border-left-color:#aaa !important;}
+
+
+  /* ── COMBINED METRICS ── */
+  .combined-bar{background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:16px 22px;margin:0 24px 14px;}
+  .combined-bar h3{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;}
+  .combined-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .combined-label{width:130px;font-size:12px;font-weight:600;color:#444;white-space:nowrap;}
+  .combined-track{flex:1;background:#e8ecf0;border-radius:8px;height:12px;overflow:hidden;}
+  .combined-fill{height:12px;border-radius:8px;transition:width .8s ease;}
+  .combined-pct{width:50px;font-size:12px;font-weight:700;text-align:right;}
+  .combined-count{font-size:11px;color:#888;width:60px;text-align:right;}
+
+  /* ── MANTIS SECTION ── */
+  .mantis-section{margin:0 24px 30px;}
+  .mantis-sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .mantis-sec-hdr h2{font-size:13px;font-weight:800;color:var(--navy);}
+  .mantis-proxy-note{background:#fef9ec;border:1.5px solid #f59e0b;border-radius:10px;padding:14px 18px;font-size:12.5px;color:#78350f;line-height:1.7;}
+  .mantis-proxy-note code{background:#fff3cd;padding:1px 6px;border-radius:4px;}
+  .mantis-table-wrap{overflow-x:auto;border-radius:10px;box-shadow:var(--shadow);}
+  .mantis-table{width:100%;border-collapse:collapse;background:var(--white);min-width:600px;}
+  .mantis-table thead th{background:var(--navy);color:#fff;padding:9px 10px;text-align:left;font-size:11.5px;font-weight:600;}
+  .mantis-table tbody tr{border-bottom:1px solid #edf1f7;transition:background .12s;}
+  .mantis-table tbody tr:hover{background:#f8fafc;}
+  .mantis-table td{padding:8px 10px;font-size:12px;vertical-align:top;}
+  .mantis-table tbody tr.closed-m td{opacity:.6;background:#f9fafb;}
+
+
+  /* ── IMPORT / EXPORT ── */
+  .import-zone{border:2px dashed var(--teal);border-radius:12px;padding:20px 24px;text-align:center;cursor:pointer;transition:all .2s;background:#f0faf8;margin:0 24px 14px;}
+  .import-zone:hover,.import-zone.drag{background:#d0f0e8;border-color:var(--navy);}
+  .import-zone p{font-size:13px;color:var(--teal);font-weight:600;margin:0;}
+  .import-zone small{font-size:11.5px;color:#888;}
+  .import-bar{display:flex;gap:8px;padding:0 24px 10px;flex-wrap:wrap;align-items:center;}
+  .ibtn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;border:none;}
+  .ibtn-imp{background:var(--teal);color:#fff;}
+  .ibtn-exp{background:#fff;color:var(--teal);border:1.5px solid var(--teal);}
+  .ibtn-imp:hover{background:var(--navy);}
+  .import-msg{font-size:12px;margin-left:auto;font-weight:600;}
+  .import-msg.ok{color:#2e7d32;} .import-msg.err{color:#c62828;}
+
+</style>
+</head>
+<body>
+<header>
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;">
+    <div>
+      <h1>🎫 Dashboard Tickets AprendeBA</h1>
+      <p id="hdr-sub">Cargando tickets...</p>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+      <span class="sync-badge load" id="sync-badge">
+        <span class="sync-dot anim"></span>
+        <span id="sync-txt">Conectando...</span>
+      </span>
+      <span style="font-size:10px;opacity:.7;" id="sync-time"></span>
+    </div>
+  </div>
+  <div class="leyenda-nivel">
+    <span class="ln ln-ini">● Inicial</span>
+    <span class="ln ln-pri">● Primaria</span>
+    <span class="ln ln-sec">● Secundaria / Adultos</span>
+  </div>
+</header>
+
+<!-- ── RESOLUTION DASHBOARD ── -->
+<div class="dash-top">
+  <div class="res-card">
+    <h3>% Resolución</h3>
+    <div class="res-pct" id="res-pct">—</div>
+    <div class="res-bar-wrap"><div class="res-bar" id="res-bar" style="width:0%"></div></div>
+    <div class="res-legend"><span id="sr">0</span> resueltos de <span id="st">0</span> totales</div>
+  </div>
+  <div class="res-card" style="flex:2;min-width:340px;">
+    <h3>Estado por módulo</h3>
+    <div id="mod-bars" style="display:flex;flex-direction:column;gap:6px;margin-top:4px;"></div>
+  </div>
+  <div class="res-card" style="min-width:160px;">
+    <h3>Tickets abiertos</h3>
+    <div class="res-pct" style="color:#e07b00;" id="sp">—</div>
+    <div class="res-legend">⏳ Pendientes de respuesta</div>
+  </div>
+</div>
+
+<div class="stats" style="padding-top:8px;">
+  <div class="stat ini"><div class="n" id="si">—</div><div class="l">Inicial</div></div>
+  <div class="stat pri"><div class="n" id="spr">—</div><div class="l">Primaria</div></div>
+  <div class="stat sec"><div class="n" id="ss">—</div><div class="l">Secundaria</div></div>
+  <div class="stat">    <div class="n" id="sb">—</div><div class="l">🐛 Mantis</div></div>
+  <div class="stat">    <div class="n" id="sa">—</div><div class="l">📎 Adjuntos</div></div>
+</div>
+
+<!-- ── VISTA TOGGLE ── -->
+
+<!-- ── BARRA COMBINADA ── -->
+<div class="combined-bar" id="combined-section">
+  <h3>📊 Resolución combinada — BA Colaborativa + Mantis</h3>
+  <div class="combined-row">
+    <div class="combined-label">🎫 BA Colaborativa</div>
+    <div class="combined-track"><div class="combined-fill" id="cb-bac-bar" style="width:0%;background:linear-gradient(90deg,#0e7490,#2e7d32);"></div></div>
+    <div class="combined-pct" id="cb-bac-pct" style="color:#0e7490;">—</div>
+    <div class="combined-count" id="cb-bac-count">—</div>
+  </div>
+  <div class="combined-row">
+    <div class="combined-label">🐛 Mantis</div>
+    <div class="combined-track"><div class="combined-fill" id="cb-man-bar" style="width:0%;background:linear-gradient(90deg,#92400e,#b45309);"></div></div>
+    <div class="combined-pct" id="cb-man-pct" style="color:#92400e;">—</div>
+    <div class="combined-count" id="cb-man-count" style="font-size:11px;color:#aaa;">sin proxy</div>
+  </div>
+  <div style="border-top:1px solid #e8ecf0;margin:10px 0;"></div>
+  <div class="combined-row">
+    <div class="combined-label" style="font-weight:800;color:var(--navy);">Total general</div>
+    <div class="combined-track"><div class="combined-fill" id="cb-tot-bar" style="width:0%;background:linear-gradient(90deg,#1a3c5e,#0e7490);"></div></div>
+    <div class="combined-pct" id="cb-tot-pct" style="color:var(--navy);font-size:14px;">—</div>
+    <div class="combined-count" id="cb-tot-count">—</div>
+  </div>
+</div>
+
+<div class="vista-btns">
+  <button class="vbtn act" onclick="setVista('todos',this)">Todos</button>
+  <button class="vbtn" onclick="setVista('abiertos',this)">⏳ Abiertos</button>
+  <button class="vbtn" onclick="setVista('cerrados',this)">✓ Cerrados</button>
+</div>
+
+<!-- ── MANTIS LINKED ── -->
+<div class="mantis-panel-top" id="mantis-linked-panel">
+  <h3>🐛 Tickets con Mantis vinculado</h3>
+  <div class="mantis-list" id="mantis-linked-list"><span class="mantis-empty">Sin Mantis vinculado aún</span></div>
+</div>
+
+
+
+<!-- ── IMPORT / EXPORT BAR ── -->
+<div class="import-bar">
+  <button class="ibtn ibtn-imp" onclick="document.getElementById('file-input').click()">
+    📥 Importar tickets (JSON / CSV)
+  </button>
+  <button class="ibtn ibtn-exp" onclick="exportarTickets()">
+    📤 Exportar JSON
+  </button>
+  <input type="file" id="file-input" accept=".json,.csv" style="display:none" onchange="importarArchivo(this)">
+  <span class="import-msg" id="import-msg"></span>
+</div>
+<!-- ── DROP ZONE ── -->
+<div class="import-zone" id="drop-zone"
+  ondragover="event.preventDefault();this.classList.add('drag')"
+  ondragleave="this.classList.remove('drag')"
+  ondrop="handleDrop(event)"
+  onclick="document.getElementById('file-input').click()">
+  <p>📂 Arrastrá un archivo JSON o CSV de BA Colaborativa</p>
+  <small>O hacé clic para seleccionarlo · Los datos actuales se reemplazarán</small>
+</div>
+
+<div class="filtros">
+  <span style="font-size:12px;font-weight:600;color:#555;">🔍</span>
+  <input type="text" id="fq" placeholder="Ticket, CUE, escuela, nombre, descripción..." oninput="filtrar()">
+  <select id="fn" onchange="filtrar()">
+    <option value="">Todos los niveles</option>
+    <option value="inicial">🟣 Inicial</option>
+    <option value="primaria">🔵 Primaria</option>
+    <option value="secundaria">🟢 Secundaria</option>
+  </select>
+  <select id="fm" onchange="filtrar()"><option value="">Todos los módulos</option></select>
+  <select id="fr" onchange="filtrar()">
+    <option value="">Todos</option>
+    <option value="0">⏳ Pendientes</option>
+    <option value="1">✓ Respondidos</option>
+  </select>
+  <select id="fa" onchange="filtrar()">
+    <option value="">Con/sin adjunto</option>
+    <option value="Sí">📎 Con adjunto</option>
+    <option value="No">Sin adjunto</option>
+  </select>
+  <button class="btn" onclick="limpiar()">↺ Limpiar</button>
+  <span class="count-b" id="cb">—</span>
+</div>
+
+<div class="leyenda">
+  <span class="pill">✓ Tildá cuando respondas — se sincroniza con el equipo</span>
+  <span class="pill">🤖 «Auto» pre-arma el texto según el módulo</span>
+  <span class="pill">📋 Revisá, editá y copiá a BA Colaborativa</span>
+  <span class="pill">🔄 Se actualiza sola cada 60 segundos</span>
+</div>
+
+<div id="sec-abiertos" class="sec-hdr">
+  <h2>⏳ Tickets Abiertos</h2>
+  <span class="sec-badge open" id="badge-open">—</span>
+</div>
+<div class="tabla-wrap">
+<table id="tbl">
+  <thead><tr>
+    <th class="ns" style="width:36px;">✓</th>
+    <th onclick="srt(1)" style="width:108px;">Ticket</th>
+    <th onclick="srt(2)" style="width:170px;">Establecimiento / CUE</th>
+    <th onclick="srt(3)" style="width:140px;">Módulo</th>
+    <th onclick="srt(4)">Descripción del problema</th>
+    <th onclick="srt(5)" style="width:110px;">Contacto</th>
+    <th class="ns" style="width:58px;">📎</th>
+    <th class="ns" style="width:90px;">🐛 Mantis</th>
+    <th class="ns" style="width:230px;">📋 Respuesta</th>
+  </tr></thead>
+  <tbody id="tbody"></tbody>
+</table>
+</div>
+
+<!-- ── CERRADOS ── -->
+<div id="sec-cerrados" class="sec-hdr">
+  <h2>✓ Tickets Cerrados / Respondidos</h2>
+  <span class="sec-badge closed" id="badge-closed">—</span>
+  <button class="sec-toggle" onclick="toggleCerrados()">▼ Mostrar</button>
+</div>
+<div id="tabla-cerrados-wrap" class="tabla-wrap" style="display:none;">
+<table id="tbl-cerrados">
+  <thead><tr>
+    <th class="ns" style="width:36px;">✓</th>
+    <th style="width:108px;">Ticket</th>
+    <th style="width:170px;">Establecimiento / CUE</th>
+    <th style="width:140px;">Módulo</th>
+    <th>Descripción del problema</th>
+    <th style="width:110px;">Contacto</th>
+    <th class="ns" style="width:58px;">📎</th>
+    <th class="ns" style="width:90px;">🐛 Mantis</th>
+    <th class="ns" style="width:230px;">📋 Respuesta</th>
+  </tr></thead>
+  <tbody id="tbody-cerrados"></tbody>
+</table>
+</div>
+
+<script>
+// ── DATOS ──────────────────────────────────────────────────────────────
+const T=[{"num":"00881993/25","nivel":"secundaria","modulo":"Plan de Estudios","cue":"202435","establecimiento":"EEM 2 - D.E. 14 ARGENTINOS JUNIORS","ciudadano":"Mirta Analia Spinetti","dni":"25102151","email":"mirta.spinetti@bue.edu.ar","cargo":"PROSECRETARIO (NIVEL MEDIO)","adjunto":"No","fecha":"01/09/2025","descripcion":"En plataforma figura plan DAR (Deporte de Alto rendimiento): Bachillerato en Educación Física (Certificación DAR). En plan de estudio que envió el ministerio figura: TÍTULO: BACHILLER EN EDUCACIÓN FÍSICA. Resoluciones 321-MEGC/15 y sus modificatorias."},{"num":"00458063/26","nivel":"secundaria","modulo":"Espacio curriculares pendientes","cue":"200583","establecimiento":"ET 1 - OTTO KRAUSE","ciudadano":"Graciela Alicia Reboiras","dni":"20350166","email":"graciela.reboiras@bue.edu.ar","cargo":"PROFESOR DE EDUCACIÓN MEDIA, MAESTRO DE ENSEÑANZA PRÁCTICA","adjunto":"No","fecha":"10/04/2026","descripcion":"DNI 96139628 GAEL ENRIQUE GALICIA NATERA. Cargamos como ec.pendientes pero no figuran en ec pendientes: 1 año Ed.artística diseño, Tecnología de la Rep., 2 año: Física, Historia, Matemática, Tecnología de la rep. El mensaje muestra que se cargó correctamente pero no lo muestra en ec.pendientes."},{"num":"00504268/26","nivel":"primaria","modulo":"Matriculados","cue":"201237","establecimiento":"VALENTÍN GÓMEZ","ciudadano":"Mariel Alejandra Licantica","dni":"29544746","email":"mariel.licantica@bue.edu.ar","cargo":"VICEDIRECTOR DE EDUCACIÓN PRIMARIA","adjunto":"Sí","fecha":"20/04/2026","descripcion":"SOLICITUD DE MATRICULACIÓN. Alumno: Logan Nahitan ROJAS VARGAS, DNI 56648105."},{"num":"00562566/26","nivel":"primaria","modulo":"Matriculados","cue":"200421","establecimiento":"ESTEBAN ECHEVERRÍA","ciudadano":"Laura Viviana D'onofrio","dni":"24364563","email":"laura.donofrio@bue.edu.ar","cargo":"MAESTRO SECRETARIO DE PRIMARIA","adjunto":"Sí","fecha":"04/05/2026","descripcion":"No se puede matricular al alumno en 5° A. Alumno: Lucas Marcos Cortes, DNI 58207476. Cuando se realiza la acción no la realiza."},{"num":"00610847/26","nivel":"secundaria","modulo":"Boletines","cue":"201457","establecimiento":"EEM 6 D.E.1","ciudadano":"Eugenio Marcelo De Leon","dni":"18118341","email":"eugenio.deleon@bue.edu.ar","cargo":"TP4, PROFESOR DE EDUCACIÓN MEDIA, VICEDIRECTOR (NIVEL MEDIO)","adjunto":"No","fecha":"17/05/2026","descripcion":"Al intentar generar boletines del 1er bimestre de 1ro A Turno Mañana sale leyenda que no se pueden generar por falta de presentismo. Se verifica que el presentismo del 1er bimestre está cargado en forma completa e igual la plataforma no permite general boletines."},{"num":"00611907/26","nivel":"primaria","modulo":"Calificaciones","cue":"200524","establecimiento":"MARIANO MORENO","ciudadano":"Patricia Fernanda Shinzato","dni":"20988457","email":"patricia.shinzato@bue.edu.ar","cargo":"MAESTRO SECRETARIO DE PRIMARIA","adjunto":"No","fecha":"18/05/2026","descripcion":"LA DOCENTE CAROLINA MORAN DE 1°A J.COMPLETA NO PUEDE CARGAR LAS CALIFICACIONES DEL 1°BIMESTRE EN LENGUA, MATEMÁTICA Y C.DEL MUNDO. SE LE BORRAN LAS NOTAS QUE ESCRIBE."},{"num":"00614259/26","nivel":"secundaria","modulo":"Presentismo","cue":"200478","establecimiento":"ET 32 - GRAL. JOSÉ DE SAN MARTÍN","ciudadano":"Hernan Federico Marino","dni":"21109476","email":"marinohf@gmail.com","cargo":"MAESTRO DE ENSEÑANZA PRÁCTICA","adjunto":"No","fecha":"18/05/2026","descripcion":"El preceptor de 3º 5ª intenta modificar datos en la plataforma pero el sistema solo permite cargar a partir del lunes. Los de la semana pasada aparece una leyenda: 'el alumno estaba inscripto en otra sección'."},{"num":"00612281/26","nivel":"secundaria","modulo":"Boletines","cue":"200920","establecimiento":"COLEGIO 6 - MANUEL BELGRANO DE 2º","ciudadano":"Ignacio Martin Barreneche","dni":"32635520","email":"ignacio.barreneche@bue.edu.ar","cargo":"VICEDIRECTOR (NIVEL MEDIO)","adjunto":"No","fecha":"18/05/2026","descripcion":"NO PODEMOS GENERAR BOLETINES AUN TENIENDO ASISTENCIA Y CALIFICACIONES CARGADAS."},{"num":"00614324/26","nivel":"secundaria","modulo":"Presentismo","cue":"200478","establecimiento":"ET 32 - GRAL. JOSÉ DE SAN MARTÍN","ciudadano":"Hernan Federico Marino","dni":"21109476","email":"marinohf@gmail.com","cargo":"MAESTRO DE ENSEÑANZA PRÁCTICA","adjunto":"No","fecha":"18/05/2026","descripcion":"El preceptor de 2º 8ª: No le deja cargar las inasistencias del contraturno del 30 de Marzo y 6 de Abril."},{"num":"00617232/26","nivel":"primaria","modulo":"Calificaciones","cue":"201602","establecimiento":"JOSÉ FEDERICO MORENO (PLURILINGÜE)","ciudadano":"Florencia Abril Burgueño Mancebo","dni":"46026359","email":"florenciaburguenomancebo@gmail.com","cargo":"M.M.E. LENGUAS ADICIONALES - INGLÉS","adjunto":"No","fecha":"19/05/2026","descripcion":"No puedo cargar las notas de mis alumnos en la plataforma AprendeBA. Presenta errores y no me deja seleccionar mis grados ni secciones en el momento de calificar. Solicito asistencia técnica."},{"num":"00608631/26","nivel":"primaria","modulo":"Boletines","cue":"200363","establecimiento":"REP. DE NICARAGUA","ciudadano":"Cecilia Carolina Noia","dni":"30276661","email":"ceciliacarolina.noia@bue.edu.ar","cargo":"MAESTRO DE GRADO","adjunto":"No","fecha":"16/05/2026","descripcion":"Es la cuarta vez que inicio este reclamo. No puedo cargar las notas de los boletines en el área de matemática, tampoco puedo pedir el rol. Me llamaron 1 vez, no pude atender y cerraron el caso. Necesito que esto se solucione."},{"num":"00618525/26","nivel":"secundaria","modulo":"Presentismo","cue":"200583","establecimiento":"ET 1 - OTTO KRAUSE","ciudadano":"Graciela Alicia Reboiras","dni":"20350166","email":"graciela.reboiras@bue.edu.ar","cargo":"MAESTRO DE ENSEÑANZA PRÁCTICA, AYUDANTE TÉCNICO DE TRABAJOS PRÁCTICOS","adjunto":"No","fecha":"19/05/2026","descripcion":"DNI 52297690 Spitalnik Gabriela Jazmin. Se hizo el cambio de sección de 1°14 a 1°9. En el presentismo no se han copiado los estados de presentes/ausentes de los contraturnos, sí de TT."},{"num":"00599470/26","nivel":"secundaria","modulo":"Libro Matriz","cue":"201162","establecimiento":"COLEGIO 5 - B. MITRE DE 2º","ciudadano":"Daniel Alberto Gomez","dni":"26920459","email":"daniel.gomez@bue.edu.ar","cargo":"SECRETARIO (NIVEL MEDIO), PROSECRETARIO (NIVEL MEDIO)","adjunto":"No","fecha":"13/05/2026","descripcion":"A LA ALUMNA AGUILERA AGUSTINA, DNI 48520628, NO SE PUEDE AGREGAR ESPACIO CURRICULAR FILOSOFIA DE 5TO AÑO. ADJUNTAMOS CAPTURA DE PANTALLA DEL PROBLEMA."},{"num":"00548195/26","nivel":"secundaria","modulo":"Legajos","cue":"201162","establecimiento":"COLEGIO 5 - B. MITRE DE 2º","ciudadano":"Daniel Alberto Gomez","dni":"26920459","email":"daniel.gomez@bue.edu.ar","cargo":"SECRETARIO (NIVEL MEDIO), PROSECRETARIO (NIVEL MEDIO)","adjunto":"Sí","fecha":"29/04/2026","descripcion":"AL ALUMNO VILLARROEL ANDIA ALAN, DNI 47389201, NO SE LE PUEDE GUARDAR LA MODIFICACION EN EL TIPO DE DOCUMENTO. ADJUNTAMOS CAPTURA DEL INCONVENIENTE."},{"num":"00606448/26","nivel":"primaria","modulo":"Legajos","cue":"200181","establecimiento":"ALTE. M. BLANCO ENCALADA","ciudadano":"Eliana Soledad Suraniti","dni":"29502223","email":"eliana.suraniti@bue.edu.ar","cargo":"MAESTRO SECRETARIO DE PRIMARIA","adjunto":"No","fecha":"15/05/2026","descripcion":"Una alumna de primer grado está matriculada pero no salen datos personales ni código único de vinculación. Jessed Evangeline Rengifo Chirinos, 1 grado, pasaporte 191811432."},{"num":"00622137/26","nivel":"primaria","modulo":"Boletines","cue":"200578","establecimiento":"CORNELIO SAAVEDRA","ciudadano":"Nora Patricia Kenny","dni":"21155772","email":"nora.kenny@bue.edu.ar","cargo":"DIRECTOR DE EDUCACIÓN PRIMARIA","adjunto":"No","fecha":"20/05/2026","descripcion":"NO DEJA GENERAR BOLETINES."},{"num":"00625181/26","nivel":"secundaria","modulo":"Boletines","cue":"200583","establecimiento":"ET 1 - OTTO KRAUSE","ciudadano":"Graciela Alicia Reboiras","dni":"20350166","email":"graciela.reboiras@bue.edu.ar","cargo":"MAESTRO DE ENSEÑANZA PRÁCTICA, AYUDANTE TÉCNICO DE TRABAJOS PRÁCTICOS","adjunto":"No","fecha":"21/05/2026","descripcion":"DNI 52585217 ORE ISAAC ANDY. El estudiante tiene condición REGULAR. Se emitieron todos los boletines del curso 1°14 pero no se generó el de este estudiante."},{"num":"00612880/26","nivel":"secundaria","modulo":"Boletines","cue":"200583","establecimiento":"ET 1 - OTTO KRAUSE","ciudadano":"Graciela Alicia Reboiras","dni":"20350166","email":"graciela.reboiras@bue.edu.ar","cargo":"MAESTRO DE ENSEÑANZA PRÁCTICA, AYUDANTE TÉCNICO DE TRABAJOS PRÁCTICOS","adjunto":"No","fecha":"18/05/2026","descripcion":"No permite generar boletines para los 3 años de COM 1, COM 7, MEC 10, MEC 2. Estos cursos corresponden a la nueva currícula."},{"num":"00616708/26","nivel":"inicial","modulo":"Legajos","cue":"201193","establecimiento":"ESCUELA INFANTIL 4 HTAL. PIÑEYRO","ciudadano":"Patricia Sonia Gutierrez","dni":"22594477","email":"gutierrezpato_sonia@hotmail.com","cargo":"VICEDIRECTOR DE NIVEL INICIAL","adjunto":"No","fecha":"19/05/2026","descripcion":"La alumna Balbachan Davagnino Martina, DNI 71102404, de sala de lactario figura como no nacida en la plataforma BAaprende. Al querer completar la solapa Legajos no se guardan los datos ingresados."},{"num":"00625345/26","nivel":"secundaria","modulo":"Boletines","cue":"200583","establecimiento":"ET 1 - OTTO KRAUSE","ciudadano":"Graciela Alicia Reboiras","dni":"20350166","email":"graciela.reboiras@bue.edu.ar","cargo":"MAESTRO DE ENSEÑANZA PRÁCTICA, AYUDANTE TÉCNICO DE TRABAJOS PRÁCTICOS","adjunto":"No","fecha":"21/05/2026","descripcion":"DNI 52004405 VEGA TOLEDO EILEN. El estudiante de 2° año 4 div. tiene condición REGULAR pero no se generó el boletín. Al resto del curso sí."},{"num":"00626534/26","nivel":"primaria","modulo":"Legajos","cue":"200799","establecimiento":"GRAN MCAL. DEL PERU R. CASTILLA","ciudadano":"Laura Andrea Frascarelli","dni":"22862174","email":"laura.frascarelli@bue.edu.ar","cargo":"VICEDIRECTOR DE EDUCACIÓN PRIMARIA, MAESTRO SECRETARIO DE PRIMARIA","adjunto":"No","fecha":"21/05/2026","descripcion":"SOLICITO CAMBIAR EL PASAPORTE POR DNI ARGENTINO N° 96508142 AL ALUMNO PABLO ANDRES PEREZ RODRIGUEZ DE NACIONALIDAD VENEZOLANA."},{"num":"00609501/26","nivel":"primaria","modulo":"Boletines","cue":"201683","establecimiento":"DR. PEDRO AVELINO TORRES","ciudadano":"Alejandra Graciela Soria","dni":"25439305","email":"alejandra.soria@bue.edu.ar","cargo":"MAESTRO DE GRADO","adjunto":"No","fecha":"16/05/2026","descripcion":"No puedo calificar la rubrica de matemática. Si logré ingresar a Lengua y Conocer del mundo. Esas rubricas están grises y la de matemática celeste."},{"num":"00615362/26","nivel":"primaria","modulo":"Boletines","cue":"200215","establecimiento":"COMISARIO GENERAL ALFREDO DANIEL ZUNDA — ED. FÍSICA","ciudadano":"Gabriela Andrea Prozzillo","dni":"23670952","email":"gabriela.prozzillo@bue.edu.ar","cargo":"VICEDIRECTOR DE EDUCACIÓN PRIMARIA, DIRECTOR DE EDUCACIÓN PRIMARIA","adjunto":"No","fecha":"18/05/2026","descripcion":"Escuela intensificada en Ed. Física. Los docentes cargan notas en 'Ed. física intensificada' y queda sin completar 'Educación física'. Al quedar vacante esa área, no podemos generar los boletines pese a tener todo lo demás completo."}];
+
+// ── TEMPLATES ──────────────────────────────────────────────────────────
+const TMPL={
+  "Calificaciones":{"Nivel Primario":"Buenos días/tardes, [NOMBRE].\n\nLe informamos que el módulo de Calificaciones Primaria 2026 se encuentra disponible.\n\nPara cargar calificaciones del bimestre:\n1. Ingresá a AprendeBA con tu cuenta @bue.edu.ar.\n2. Seleccioná el módulo «Calificaciones».\n3. Elegí el período, grado y sección.\n4. Completá el campo PPI (obligatorio para todos los alumnos).\n5. Usá la pestaña «Calificaciones Generales» para ver el resumen por materia.\n\nSi las calificaciones aparecen cerradas, el Directivo o Equipo de Conducción pueden reabrirlas desde el botón «Abrir Calificaciones».\n\nPor dudas adicionales: https://buenosaires.gob.ar/gcaba_historico/supervisores-directivos-y-equipos-de-conduccion/instructivos-0\n\nSaludos,\nEquipo AprendeBA","Nivel Secundario":"Buenos días/tardes, [NOMBRE].\n\nLe informamos que el módulo de Calificaciones Secundaria 2026 está activo.\n\nPara cargar calificaciones:\n1. Ingresá al módulo Calificaciones.\n2. Seleccioná bimestre, año, sección y espacio curricular.\n3. Completá el campo PPI y la calificación (1-10) para cada alumno.\n4. Ambos campos son obligatorios para guardar.\n\nSi necesitás cargar ECP, accedé al módulo ECP y marcá «No corresponde» si el espacio no aplica al plan.\n\nSaludos,\nEquipo AprendeBA","Nivel Inicial":"Buenos días/tardes, [NOMBRE].\n\nPara el módulo de Calificaciones del Nivel Inicial (informe cuatrimestral):\n1. Ingresá al módulo Calificaciones.\n2. Completá el informe cuatrimestral por sala.\n3. Podés usar la carga masiva para agilizar la carga de criterios.\n\nConsultá el instructivo oficial en: https://buenosaires.gob.ar/gcaba_historico/supervisores-directivos-y-equipos-de-conduccion/instructivos-0\n\nSaludos,\nEquipo AprendeBA"},
+  "Plan de Estudios":"Buenos días/tardes, [NOMBRE].\n\nPara consultas sobre Plan de Estudios en AprendeBA, necesitamos que nos indiquen:\n1. CUE del establecimiento.\n2. N° de resolución del plan de estudios correcto.\n3. Captura de pantalla del error o inconsistencia que visualizan.\n\nLos planes de estudio se configuran desde el Backoffice por el equipo habilitado. Lo derivaremos al equipo técnico para su revisión.\n\nSaludos,\nEquipo AprendeBA",
+  "Legajos":"Buenos días/tardes, [NOMBRE].\n\nPara resolver la consulta sobre el módulo Legajos, por favor indicanos:\n1. N° de documento (DNI) del/los alumno/s afectado/s.\n2. El dato incorrecto o faltante que observan.\n3. Captura de pantalla del legajo con el inconveniente.\n\nEl legajo contiene información de matrícula, datos personales, PPI, PPS y movimientos. Una vez que recibamos el detalle, lo derivaremos al área técnica para su corrección.\n\nSaludos,\nEquipo AprendeBA",
+  "Presentismo":"Buenos días/tardes, [NOMBRE].\n\nPara resolver la consulta sobre Presentismo en AprendeBA:\n\n• La toma de asistencia puede realizarla: Docente, Preceptor, Directivo o Equipo de Conducción.\n• Para reabrir una semana cerrada: debe hacerlo el Directivo o el Equipo de Conducción desde el botón «Abrir semana».\n• Para justificar una inasistencia: usar el ícono ✏ (lápiz) en la columna «Justificar» y completar todos los campos requeridos.\n• Estados disponibles: P=Presente · A=Ausente · APC=Ausente con presencia en clases · IT=Ingreso tardío · RA=Retiro anticipado.\n\nConsultá el instructivo completo en: https://buenosaires.gob.ar/gcaba_historico/supervisores-directivos-y-equipos-de-conduccion/instructivos-0\n\nSaludos,\nEquipo AprendeBA",
+  "Espacio curriculares pendientes":"Buenos días/tardes, [NOMBRE].\n\nPara la gestión de ECP (Espacios Curriculares Pendientes):\n1. Accedé al módulo ECP en AprendeBA.\n2. Seleccioná el alumno y la materia pendiente.\n3. Cargá la calificación una vez que fue rendida.\n4. Si el ECP no aplica al plan, marcá «No corresponde».\n\n⚠ Si el sistema muestra alertas aunque todas las calificaciones estén cargadas, verificá que todos los ECP tengan el campo «No corresponde» marcado correctamente.\n\nSi el inconveniente persiste, indicanos DNI del alumno, espacio curricular y captura del error.\n\nSaludos,\nEquipo AprendeBA",
+  "Matriculados":"Buenos días/tardes, [NOMBRE].\n\nPara la gestión de matriculación, el orden obligatorio es:\n1. Crear secciones.\n2. Proceso de promoción de estudiantes.\n3. Envío de vacantes desde IEL.\n4. Efectivización del establecimiento.\n5. Matriculación de alumnos.\n\n⚠ No se puede matricular antes de efectivizar.\n\nSi el alumno figura en Inscriptos pero no permite asignarlo a un curso, verificá que la efectivización esté completa. Si el inconveniente persiste, indicanos el DNI del alumno y el curso al que querés asignarlo.\n\nSaludos,\nEquipo AprendeBA",
+  "Boletines":"Buenos días/tardes, [NOMBRE].\n\nPara la generación de boletines en AprendeBA:\n1. Accedé al módulo Boletines.\n2. Seleccioná el período y la sección.\n3. Verificá que TODAS las calificaciones estén cargadas y el presentismo completo.\n4. Usá el botón «Generar boletines» para la generación masiva.\n\nSi el módulo aparece deshabilitado:\n• Verificar que no falten calificaciones en ninguna materia (incluyendo ECP).\n• Verificar que el presentismo de todo el período esté cargado.\n• El Directivo o Equipo de Conducción pueden reabrir el período si está cerrado.\n\nSi el problema persiste, indicanos CUE, sección y captura de pantalla del error.\n\nSaludos,\nEquipo AprendeBA",
+  "Libro Matriz":"Buenos días/tardes, [NOMBRE].\n\nPara consultas sobre el Libro Matriz en AprendeBA, necesitamos que nos indiquen:\n1. DNI del alumno afectado.\n2. Descripción detallada del inconveniente.\n3. Captura de pantalla del error.\n\nLo derivaremos al equipo técnico para su revisión y resolución.\n\nSaludos,\nEquipo AprendeBA",
+  "default":"Buenos días/tardes, [NOMBRE].\n\nRecibimos tu consulta y la estamos analizando. Para poder asistirte mejor, necesitamos que nos indiques:\n1. Descripción detallada del inconveniente.\n2. Capturas de pantalla del error.\n3. DNI del alumno afectado (si aplica).\n4. CUE y nombre del establecimiento.\n\nUna vez que recibamos esta información, lo derivaremos al equipo correspondiente.\n\nSaludos,\nEquipo AprendeBA"
+};
+
+// ── SYNC (Netlify Blobs) ───────────────────────────────────────────────
+const CLOUD = 'https://aprendebaas.netlify.app/.netlify/functions';
+let STATE = {};          // { "00123/26": {r:bool, m:str, resp:str}, ... }
+let saveTimer = null;
+let autoRefresh = null;
+
+function showSync(txt, mode){
+  const b = document.getElementById('sync-badge');
+  const t = document.getElementById('sync-txt');
+  const d = b.querySelector('.sync-dot');
+  b.className = 'sync-badge ' + mode;
+  t.textContent = txt;
+  d.className = 'sync-dot' + (mode==='load'?' anim':'');
+  if(mode==='ok'||mode==='warn'){
+    const now = new Date();
+    document.getElementById('sync-time').textContent =
+      'Última sync: ' + now.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+  }
+}
+
+async function loadFromCloud(){
+  showSync('Sincronizando...','load');
+  // Siempre rescatar localStorage primero como base segura
+  let local = {};
+  try { local = JSON.parse(localStorage.getItem('bac_v4')||'{}'); } catch{}
+
+  try {
+    const res = await fetch(CLOUD+'/get-state', {cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    const cloudKeys = Object.keys(data || {});
+    const localKeys = Object.keys(local);
+
+    if(cloudKeys.length > 0) {
+      // Cloud tiene datos: merge inteligente (cloud + local, sin perder nada)
+      const merged = Object.assign({}, local, data);
+      STATE = merged;
+      // Actualizar localStorage con el merge
+      localStorage.setItem('bac_v4', JSON.stringify(STATE));
+      showSync('✓ Equipo sincronizado','ok');
+    } else if(localKeys.length > 0) {
+      // Cloud vacío pero tenemos datos locales: preservar local y subir al cloud
+      STATE = local;
+      showSync('✓ Datos locales (subiendo al equipo...)','warn');
+      saveToCloud(); // sincronizar local → cloud sin esperar
+      return;
+    } else {
+      // Ambos vacíos: primer uso
+      STATE = {};
+      showSync('✓ Conectado','ok');
+    }
+    applyStateToDOM();
+  } catch(e) {
+    // Error de red: preservar siempre el estado actual o localStorage
+    if(Object.keys(STATE).length === 0) STATE = local;
+    showSync('⚠ Sin conexión — datos preservados localmente','warn');
+  }
+  updStats();
+}
+
+async function saveToCloud(){
+  // Always persist locally
+  localStorage.setItem('bac_v4', JSON.stringify(STATE));
+  try {
+    const res = await fetch(CLOUD+'/save-state', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(STATE)
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    showSync('✓ Guardado en equipo','ok');
+  } catch(e) {
+    showSync('⚠ Solo guardado local','warn');
+  }
+}
+
+function scheduleSave(){
+  if(saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(()=>saveToCloud(), 800);
+}
+
+function applyStateToDOM(){
+  T.forEach((t,i)=>{
+    const s = STATE[t.num] || {r:false,m:'',resp:''};
+    const tr = document.querySelector(`tr[data-num="${CSS.escape(t.num)}"]`);
+    if(!tr) return;
+    const cb = tr.querySelector('.chk');
+    if(cb){ cb.checked=!!s.r; s.r?tr.classList.add('respondido'):tr.classList.remove('respondido'); }
+    const mi = tr.querySelector('.mantis-input');
+    if(mi){ mi.value=s.m||''; mi.classList.toggle('hv',!!(s.m)); }
+    const ra = document.getElementById('ra'+i);
+    if(ra){ ra.value=s.resp||''; ra.classList.toggle('hv',!!(s.resp)); }
+  });
+  updStats();
+}
+
+// ── GETTERS/SETTERS ────────────────────────────────────────────────────
+function gD(n){ return STATE[n]||{r:false,m:'',resp:''}; }
+function sD(n,k,v){
+  if(!STATE[n]) STATE[n]={r:false,m:'',resp:''};
+  STATE[n][k]=v;
+  scheduleSave();
+}
+
+// ── TEMPLATES ──────────────────────────────────────────────────────────
+function getTmpl(t){
+  const mod=t.modulo||'';
+  const niv=t.nivel||'';
+  for(const [key,val] of Object.entries(TMPL)){
+    if(key==='default') continue;
+    if(mod.toLowerCase().includes(key.toLowerCase())){
+      if(typeof val==='object'){
+        for(const [nk,nv] of Object.entries(val)){
+          if(niv==='inicial'&&nk.includes('Inicial')) return nv.replace('[NOMBRE]',t.ciudadano||'[nombre]');
+          if(niv==='primaria'&&nk.includes('Primario')) return nv.replace('[NOMBRE]',t.ciudadano||'[nombre]');
+          if(niv==='secundaria'&&nk.includes('Secundario')) return nv.replace('[NOMBRE]',t.ciudadano||'[nombre]');
+        }
+        return Object.values(val)[0].replace('[NOMBRE]',t.ciudadano||'[nombre]');
+      }
+      return val.replace('[NOMBRE]',t.ciudadano||'[nombre]');
+    }
+  }
+  return TMPL.default.replace('[NOMBRE]',t.ciudadano||'[nombre]');
+}
+
+function mcCls(n){ return n==='inicial'?'mc-ini':n==='primaria'?'mc-pri':n==='secundaria'?'mc-sec':'mc-o'; }
+
+// ── RENDER ─────────────────────────────────────────────────────────────
+function renderTabla(data){
+  const tbody=document.getElementById('tbody');
+  tbody.innerHTML='';
+  data.forEach((t,i)=>{
+    const globalIdx = T.indexOf(t);
+    const dd=gD(t.num);
+    const tr=document.createElement('tr');
+    tr.className='lvl-'+t.nivel+(dd.r?' respondido':'');
+    tr.dataset.num=t.num;
+    tr.innerHTML=`
+      <td class="cw"><input type="checkbox" class="chk" ${dd.r?'checked':''} onchange="togR('${t.num}',this)"></td>
+      <td><div class="tnum">${t.num}</div><div class="tfecha">${t.fecha}</div></td>
+      <td class="te">
+        <div class="est-name">${t.establecimiento}</div>
+        ${t.cue?`<span class="cue-tag">CUE ${t.cue}</span>`:''}
+        ${t.cargo?`<div class="cargo-txt">${t.cargo}</div>`:''}
+      </td>
+      <td><span class="mc ${mcCls(t.nivel)}">${t.modulo||'—'}</span></td>
+      <td>
+        <div class="desc-txt ds" id="d${globalIdx}">${(t.descripcion||'—').replace(/</g,'&lt;')}</div>
+        ${(t.descripcion||'').length>150?`<button class="eb" onclick="xp(${globalIdx},this)">▼ ver más</button>`:''}
+      </td>
+      <td>
+        <div class="cname" onclick="togCiu(this)" title="Ver datos de contacto" style="cursor:pointer;">
+          ${t.ciudadano} <span style="font-size:9px;color:#bbb;vertical-align:middle;">▼</span>
+        </div>
+        <div class="ciu-det" style="display:none;margin-top:4px;">
+          <div class="csub">DNI ${t.dni}</div>
+          ${t.email?`<div class="csub" style="word-break:break-all;">${t.email}</div>`:''}
+        </div>
+      </td>
+      <td style="text-align:center;">${t.adjunto==='Sí'?'<span class="adj-si">📎 Sí</span>':'<span class="adj-no">No</span>'}</td>
+      <td><input type="text" class="mantis-input ${dd.m?'hv':''}" placeholder="N°..." value="${dd.m||''}" oninput="savM('${t.num}',this)"></td>
+      <td>
+        <div class="resp-wrap">
+          <textarea class="resp-area ${dd.resp?'hv':''}" id="ra${globalIdx}"
+            placeholder="Redactá la respuesta o usá «🤖 Auto»..."
+            oninput="savR('${t.num}',this)">${(dd.resp||'').replace(/</g,'&lt;')}</textarea>
+          <div class="resp-btns">
+            <button class="cbtn cbtn-tpl" onclick="autoResp('${t.num}',${globalIdx})">🤖 Auto</button>
+            <button class="cbtn cbtn-copy" onclick="cp(${globalIdx})">📋 Copiar</button>
+            <button class="cbtn cbtn-clear" onclick="clearResp('${t.num}',${globalIdx})">✕</button>
+            <span class="copy-ok" id="ok${globalIdx}">✓ Copiado</span>
+          </div>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('cb').textContent=data.length+' ticket'+(data.length!==1?'s':'');
+}
+
+// ── ACCIONES ───────────────────────────────────────────────────────────
+function autoResp(num,i){
+  const t=T.find(x=>x.num===num); if(!t) return;
+  const tmpl=getTmpl(t);
+  const ta=document.getElementById('ra'+i);
+  ta.value=tmpl; ta.classList.add('hv');
+  sD(num,'resp',tmpl);
+}
+function clearResp(num,i){
+  const ta=document.getElementById('ra'+i);
+  ta.value=''; ta.classList.remove('hv');
+  sD(num,'resp','');
+}
+function togR(n,cb){
+  sD(n,'r',cb.checked);
+  const tr=cb.closest('tr');
+  cb.checked?tr.classList.add('respondido'):tr.classList.remove('respondido');
+  updStats();
+}
+function savM(n,inp){ const v=inp.value.trim(); sD(n,'m',v); inp.classList.toggle('hv',!!v); updStats(); }
+function savR(n,ta){ sD(n,'resp',ta.value); ta.classList.toggle('hv',!!ta.value); }
+function togCiu(el){ const d=el.nextElementSibling; d.style.display=d.style.display==='none'?'block':'none'; }
+function cp(i){
+  const ta=document.getElementById('ra'+i),ok=document.getElementById('ok'+i);
+  navigator.clipboard.writeText(ta.value).then(()=>{ ok.style.display='inline'; setTimeout(()=>ok.style.display='none',2200); });
+}
+function xp(i,btn){
+  const d=document.getElementById('d'+i),open=d.classList.toggle('exp');
+  btn.textContent=open?'▲ ver menos':'▼ ver más';
+}
+
+// ── STATS ──────────────────────────────────────────────────────────────
+function updStats(){
+  let r=0,b=0,ini=0,pri=0,sec=0,adj=0;
+  T.forEach(t=>{
+    if(STATE[t.num]?.r) r++;
+    if(STATE[t.num]?.m) b++;
+    if(t.nivel==='inicial') ini++;
+    if(t.nivel==='primaria') pri++;
+    if(t.nivel==='secundaria') sec++;
+    if(t.adjunto==='Sí') adj++;
+  });
+  const total=T.length;
+  const pct=total?Math.round(r/total*100):0;
+  document.getElementById('sp').textContent=total-r;
+  document.getElementById('sr').textContent=r;
+  document.getElementById('st').textContent=total;
+  document.getElementById('si').textContent=ini;
+  document.getElementById('spr').textContent=pri;
+  document.getElementById('ss').textContent=sec;
+  document.getElementById('sb').textContent=b;
+  document.getElementById('sa').textContent=adj;
+  // Combined bar
+  updCombinedBar();
+  // Resolution bar
+  const pctEl=document.getElementById('res-pct');
+  const barEl=document.getElementById('res-bar');
+  if(pctEl) pctEl.textContent=pct+'%';
+  if(barEl) barEl.style.width=pct+'%';
+  // Badge open
+  const bo=document.getElementById('badge-open');
+  if(bo) bo.textContent=(total-r)+' ticket'+((total-r)!==1?'s':'');
+  // Module bars + mantis + header
+  updModBars();
+  updMantisLinked();
+  updHeaderSub();
+}
+
+// ── FILTROS ────────────────────────────────────────────────────────────
+function filtrar(){
+  const q=document.getElementById('fq').value.toLowerCase();
+  const nv=document.getElementById('fn').value;
+  const mod=document.getElementById('fm').value;
+  const rsp=document.getElementById('fr').value;
+  const adj=document.getElementById('fa').value;
+  let data=T.filter(t=>{
+    const mq=!q||[t.num,t.establecimiento,t.cue,t.ciudadano,t.dni,t.modulo,t.descripcion,t.email].join(' ').toLowerCase().includes(q);
+    const mn=!nv||t.nivel===nv;
+    const mm=!mod||t.modulo===mod;
+    const isR=!!(STATE[t.num]?.r);
+    const mr=!rsp||(rsp==='1'&&isR)||(rsp==='0'&&!isR);
+    const ma=!adj||t.adjunto===adj;
+    return mq&&mn&&mm&&mr&&ma;
+  });
+  // Vista filter
+  let abiertos=data, cerrados=[];
+  if(vistaActual==='abiertos'){
+    abiertos=data.filter(t=>!STATE[t.num]?.r);
+    cerrados=[];
+  } else if(vistaActual==='cerrados'){
+    abiertos=[];
+    cerrados=data.filter(t=>STATE[t.num]?.r);
+  } else {
+    abiertos=data.filter(t=>!STATE[t.num]?.r);
+    cerrados=data.filter(t=>STATE[t.num]?.r);
+  }
+  renderTabla(abiertos);
+  renderCerrados(cerrados.length>0?cerrados:data);
+  // Show/hide sections
+  const sa=document.getElementById('sec-abiertos');
+  const sc2=document.getElementById('sec-cerrados');
+  const scw=document.getElementById('tabla-cerrados-wrap');
+  if(vistaActual==='cerrados'){
+    if(sa) sa.style.display='none';
+    if(sc2) sc2.style.display='flex';
+    if(scw) scw.style.display='block';
+  } else if(vistaActual==='abiertos'){
+    if(sa) sa.style.display='flex';
+    if(sc2) sc2.style.display='none';
+  } else {
+    if(sa) sa.style.display='flex';
+    if(sc2) sc2.style.display='flex';
+  }
+  updStats();
+}
+function limpiar(){
+  document.getElementById('fq').value='';
+  ['fn','fm','fr','fa'].forEach(id=>document.getElementById(id).selectedIndex=0);
+  filtrar();
+}
+
+// ── SORT ───────────────────────────────────────────────────────────────
+let sc=-1,sd=1;
+function srt(col){
+  document.querySelectorAll('thead th').forEach(t=>t.classList.remove('sort-asc','sort-desc'));
+  sc===col?sd*=-1:(sc=col,sd=1);
+  document.querySelectorAll('thead th')[col].classList.add(sd===1?'sort-asc':'sort-desc');
+  const tb=document.getElementById('tbody');
+  [...tb.querySelectorAll('tr')].sort((a,b)=>
+    (a.cells[col]?.textContent.trim()||'').localeCompare(b.cells[col]?.textContent.trim()||'','es')*sd
+  ).forEach(r=>tb.append(r));
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────
+(()=>{
+  // Poblar selector módulos
+  const s=document.getElementById('fm');
+  [...new Set(T.map(t=>t.modulo).filter(Boolean))].sort().forEach(m=>{
+    const o=document.createElement('option'); o.value=m; o.textContent=m; s.append(o);
+  });
+})();
+
+// Carga inicial desde cloud (o localStorage como fallback)
+loadFromCloud().then(()=>{ renderTabla(T); updStats(); cargarMantisDash(); });
+
+// Auto-refresh cada 60 segundos — solo si no está editando activamente
+autoRefresh = setInterval(()=>{
+  const active = document.activeElement;
+  const editando = active && (active.tagName === 'TEXTAREA' || active.tagName === 'INPUT');
+  if(!editando){
+    loadFromCloud().then(()=>{ filtrar(); });
+  }
+}, 60000);
+
+// ── VISTA ─────────────────────────────────────────────────────────────
+let vistaActual = 'todos';
+function setVista(v, btn) {
+  vistaActual = v;
+  document.querySelectorAll('.vbtn').forEach(b => b.classList.remove('act'));
+  btn.classList.add('act');
+  filtrar();
+}
+
+function toggleCerrados() {
+  const wrap = document.getElementById('tabla-cerrados-wrap');
+  const btn = document.querySelector('.sec-toggle');
+  const open = wrap.style.display === 'none';
+  wrap.style.display = open ? 'block' : 'none';
+  btn.textContent = open ? '▲ Ocultar' : '▼ Mostrar';
+}
+
+// ── MODULE BARS ────────────────────────────────────────────────────────
+function updModBars() {
+  const mods = {};
+  T.forEach(t => {
+    if (!mods[t.modulo]) mods[t.modulo] = { total: 0, res: 0 };
+    mods[t.modulo].total++;
+    if (STATE[t.num]?.r) mods[t.modulo].res++;
+  });
+  const container = document.getElementById('mod-bars');
+  if (!container) return;
+  const entries = Object.entries(mods).sort((a,b) => b[1].total - a[1].total);
+  container.innerHTML = entries.map(([mod, {total, res}]) => {
+    const pct = total ? Math.round(res/total*100) : 0;
+    return `<div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:120px;font-size:10.5px;color:#444;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${mod}">${mod}</div>
+      <div style="flex:1;background:#e8ecf0;border-radius:6px;height:8px;overflow:hidden;">
+        <div style="width:${pct}%;height:8px;background:linear-gradient(90deg,#0e7490,#2e7d32);border-radius:6px;transition:width .6s;"></div>
+      </div>
+      <div style="font-size:10.5px;font-weight:700;color:#555;width:42px;text-align:right;">${res}/${total}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── MANTIS LINKED ─────────────────────────────────────────────────────
+function updMantisLinked() {
+  const list = document.getElementById('mantis-linked-list');
+  if (!list) return;
+  const linked = T.filter(t => STATE[t.num]?.m).map(t => ({
+    ticket: t.num, mantis: STATE[t.num].m, mod: t.modulo, res: STATE[t.num]?.r
+  }));
+  if (!linked.length) {
+    list.innerHTML = '<span class="mantis-empty">Sin Mantis vinculado aún — completá el campo 🐛 en cada ticket</span>';
+    return;
+  }
+  list.innerHTML = linked.map(l =>
+    `<div class="mantis-pill ${l.res ? 'resolved' : ''}" title="Ticket ${l.ticket} · ${l.mod}${l.res ? ' · ✓ Respondido' : ''}">
+      <a href="https://mantis.bue.edu.ar/view.php?id=${l.mantis}" target="_blank">#${l.mantis}</a>
+      ${l.res ? ' ✓' : ''}
+    </div>`
+  ).join('');
+}
+
+// ── CERRADOS TABLE ─────────────────────────────────────────────────────
+function renderCerrados(data) {
+  const tbody = document.getElementById('tbody-cerrados');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  const closed = data.filter(t => STATE[t.num]?.r);
+  document.getElementById('badge-closed').textContent = closed.length + ' ticket' + (closed.length !== 1 ? 's' : '');
+  closed.forEach((t, i) => {
+    const globalIdx = T.indexOf(t);
+    const dd = gD(t.num);
+    const tr = document.createElement('tr');
+    tr.className = 'lvl-' + t.nivel + ' closed-row respondido';
+    tr.dataset.num = t.num;
+    tr.innerHTML = `
+      <td class="cw"><input type="checkbox" class="chk" checked onchange="togR('${t.num}',this)"></td>
+      <td><div class="tnum">${t.num}</div><div class="tfecha">${t.fecha}</div></td>
+      <td class="te"><div class="est-name">${t.establecimiento}</div>${t.cue ? `<span class="cue-tag">CUE ${t.cue}</span>` : ''}</td>
+      <td><span class="mc ${mcCls(t.nivel)}">${t.modulo || '—'}</span></td>
+      <td><div class="desc-txt">${(t.descripcion || '—').replace(/</g, '&lt;').substring(0, 120)}${(t.descripcion || '').length > 120 ? '…' : ''}</div></td>
+      <td><div class="cname">${t.ciudadano}</div></td>
+      <td style="text-align:center;">${t.adjunto === 'Sí' ? '<span class="adj-si">📎 Sí</span>' : '<span class="adj-no">No</span>'}</td>
+      <td>${dd.m ? `<a href="https://mantis.bue.edu.ar/view.php?id=${dd.m}" target="_blank" style="font-weight:700;color:#92400e;">#${dd.m}</a>` : '—'}</td>
+      <td style="font-size:11px;color:#2e7d32;font-weight:600;">✓ Respondido</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ── HEADER SUBTITLE ────────────────────────────────────────────────────
+function updHeaderSub() {
+  const total = T.length;
+  const res = T.filter(t => STATE[t.num]?.r).length;
+  const today = new Date().toLocaleDateString('es-AR', {day:'2-digit', month:'2-digit', year:'numeric'});
+  document.getElementById('hdr-sub').textContent =
+    `${total} tickets · ${today} · Resolución: ${res}/${total} (${total ? Math.round(res/total*100) : 0}%)`;
+}
+
+
+// ── MANTIS DASHBOARD ─────────────────────────────────────────
+const PROXY_URL = 'https://aprendebaas.netlify.app/.netlify/functions'; // Netlify
+let mantisData = null;
+
+function isClosed(estado) {
+  const e = (estado || '').toLowerCase();
+  return e.includes('cerr') || e.includes('clos') || e.includes('resuel') || e.includes('resolv');
+}
+
+function priColor2(p) {
+  const s = (p || '').toLowerCase();
+  if (s.includes('urgent') || s.includes('inmedia')) return '#dc2626';
+  if (s.includes('alta') || s.includes('high'))      return '#ea580c';
+  if (s.includes('normal'))                           return '#ca8a04';
+  return '#6b7280';
+}
+
+function estBadge(e) {
+  const closed = isClosed(e);
+  return `<span style="background:${closed?'#d1fae5':'#fff3cd'};color:${closed?'#065f46':'#92400e'};padding:2px 7px;border-radius:7px;font-size:11px;font-weight:600;">${e}</span>`;
+}
+
+function updCombinedBar() {
+  // BAC metrics
+  const bacTotal = T.length;
+  const bacRes   = T.filter(t => STATE[t.num]?.r).length;
+  const bacPct   = bacTotal ? Math.round(bacRes / bacTotal * 100) : 0;
+
+  // Mantis metrics
+  const manTotal  = mantisData ? mantisData.total    : null;
+  const manClosed = mantisData ? mantisData.cerrados  : null;
+  const manPct    = mantisData ? mantisData.pct_resolucion : null;
+
+  // Combined
+  const combTotal  = bacTotal + (manTotal  || 0);
+  const combClosed = bacRes   + (manClosed || 0);
+  const combPct    = combTotal ? Math.round(combClosed / combTotal * 100) : 0;
+
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const setW = (id, w)  => { const el = document.getElementById(id); if (el) el.style.width = w + '%'; };
+
+  set('cb-bac-pct',   bacPct + '%');
+  set('cb-bac-count', bacRes + '/' + bacTotal);
+  setW('cb-bac-bar',  bacPct);
+
+  if (mantisData) {
+    set('cb-man-pct',   manPct + '%');
+    set('cb-man-count', manClosed + '/' + manTotal);
+    setW('cb-man-bar',  manPct);
+  }
+
+  set('cb-tot-pct',   combPct + '%');
+  set('cb-tot-count', combClosed + '/' + combTotal);
+  setW('cb-tot-bar',  combPct);
+}
+
+function toggleMantisClosedDash() {
+  const t = document.getElementById('mantis-dash-closed-table');
+  const b = document.getElementById('mantis-closed-dash-btn');
+  if (!t || !b) return;
+  const open = t.style.display === 'none';
+  t.style.display = open ? 'block' : 'none';
+  b.textContent   = open ? '▲ Ocultar' : '▼ Mostrar';
+}
+
+async function cargarMantisDash() {
+  const note = document.getElementById('mantis-dash-proxy-note');
+  try {
+    await fetch('https://aprende-ba.vercel.app/api/mantis-issues?ping=1', { signal: AbortSignal.timeout(3000) });
+
+    const res  = await fetch('https://aprende-ba.vercel.app/api/mantis-issues');
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    mantisData = data;
+    const issues   = data.issues || [];
+    const openList = issues.filter(i => !isClosed(i.estado));
+    const closedL  = issues.filter(i =>  isClosed(i.estado));
+
+    // Badge
+    const badge = document.getElementById('mantis-dash-badge');
+    if (badge) badge.textContent = data.abiertos + ' abiertos · ' + data.cerrados + ' cerrados';
+
+    // Hide proxy note
+    if (note) note.style.display = 'none';
+
+    // Render open
+    const openWrap = document.getElementById('mantis-dash-open');
+    const openBody = document.getElementById('mantis-dash-open-body');
+    const openCnt  = document.getElementById('mantis-open-cnt');
+    if (openWrap) openWrap.style.display = 'block';
+    if (openCnt)  openCnt.textContent = openList.length;
+    if (openBody) openBody.innerHTML = openList.map(i =>
+      `<tr>
+        <td><a href="${i.url}" target="_blank" style="font-weight:700;color:var(--navy);font-family:monospace;">#${i.id}</a></td>
+        <td style="font-size:12px;">${i.resumen||'—'}</td>
+        <td style="font-size:11.5px;color:#555;">${i.categoria||'—'}</td>
+        <td style="font-weight:700;color:${priColor2(i.prioridad)};font-size:12px;">${i.prioridad||'—'}</td>
+        <td>${estBadge(i.estado)}</td>
+        <td style="font-size:11.5px;color:#555;">${i.asignado_a||'—'}</td>
+      </tr>`
+    ).join('') || '<tr><td colspan="6" style="text-align:center;padding:16px;color:#999;">Sin bugs abiertos 🎉</td></tr>';
+
+    // Render closed
+    const closedWrap = document.getElementById('mantis-dash-closed-wrap');
+    const closedBody = document.getElementById('mantis-dash-closed-body');
+    const closedBadge = document.getElementById('mantis-closed-cnt-badge');
+    if (closedWrap)  closedWrap.style.display  = 'block';
+    if (closedBadge) closedBadge.textContent   = closedL.length + ' bug' + (closedL.length !== 1 ? 's' : '');
+    if (closedBody) closedBody.innerHTML = closedL.map(i =>
+      `<tr class="closed-m">
+        <td><a href="${i.url}" target="_blank" style="font-weight:700;color:#555;font-family:monospace;">#${i.id}</a></td>
+        <td style="font-size:12px;">${i.resumen||'—'}</td>
+        <td style="font-size:11.5px;color:#666;">${i.categoria||'—'}</td>
+        <td>${estBadge(i.estado)}</td>
+        <td style="font-size:11.5px;color:#666;">${i.resolucion||'—'}</td>
+      </tr>`
+    ).join('') || '<tr><td colspan="5" style="text-align:center;padding:16px;color:#999;">—</td></tr>';
+
+    updCombinedBar();
+
+  } catch(e) {
+    if (note) note.style.display = 'block';
+    mantisData = null;
+    updCombinedBar();
+  }
+}
+
+// updCombinedBar se llama desde updStats directamente (ver función updStats)
+
+
+// ── IMPORT / EXPORT ──────────────────────────────────────────
+function showImportMsg(txt, ok) {
+  const el = document.getElementById('import-msg');
+  if (!el) return;
+  el.textContent = txt;
+  el.className = 'import-msg ' + (ok ? 'ok' : 'err');
+  setTimeout(() => { el.textContent = ''; }, 5000);
+}
+
+function exportarTickets() {
+  const data = JSON.stringify(T, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'tickets-ba-colaborativa.json';
+  a.click();
+}
+
+function importarArchivo(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => procesarImport(e.target.result, file.name);
+  reader.readAsText(file, 'UTF-8');
+  input.value = '';
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+  document.getElementById('drop-zone').classList.remove('drag');
+  const file = event.dataTransfer.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => procesarImport(e.target.result, file.name);
+  reader.readAsText(file, 'UTF-8');
+}
+
+function procesarImport(text, filename) {
+  try {
+    let tickets = [];
+    if (filename.endsWith('.json')) {
+      const parsed = JSON.parse(text);
+      tickets = Array.isArray(parsed) ? parsed : (parsed.tickets || parsed.data || []);
+    } else if (filename.endsWith('.csv')) {
+      tickets = parsearCSV(text);
+    } else {
+      showImportMsg('Formato no reconocido. Usá .json o .csv', false);
+      return;
+    }
+
+    if (!tickets.length) {
+      showImportMsg('El archivo no tiene tickets válidos', false);
+      return;
+    }
+
+    // Normalizar campos
+    tickets = tickets.map(t => ({
+      num:           t.num || t.numero || t.id || t.ticket || '',
+      nivel:         normalizarNivel(t.nivel || t.level || ''),
+      modulo:        t.modulo || t.module || t.categoria || t.category || '',
+      cue:           t.cue || '',
+      establecimiento: t.establecimiento || t.escuela || t.school || '',
+      ciudadano:     t.ciudadano || t.nombre || t.name || t.reporter || '',
+      dni:           t.dni || t.documento || '',
+      email:         t.email || t.mail || '',
+      cargo:         t.cargo || t.rol || '',
+      adjunto:       t.adjunto || 'No',
+      fecha:         t.fecha || t.date || t['Date Submitted'] || '',
+      descripcion:   t.descripcion || t.description || t.Summary || t.resumen || '',
+    })).filter(t => t.num);
+
+    // Reemplazar T globalmente
+    T.length = 0;
+    tickets.forEach(t => T.push(t));
+
+    // Actualizar selector de módulos
+    const s = document.getElementById('fm');
+    if (s) {
+      s.innerHTML = '<option value="">Todos los módulos</option>';
+      [...new Set(T.map(t => t.modulo).filter(Boolean))].sort().forEach(m => {
+        const o = document.createElement('option');
+        o.value = m; o.textContent = m; s.append(o);
+      });
+    }
+
+    // Actualizar header
+    document.getElementById('st').textContent = T.length;
+
+    filtrar();
+    updStats();
+    showImportMsg(`✓ ${T.length} tickets importados desde ${filename}`, true);
+
+    // Ocultar drop zone
+    const dz = document.getElementById('drop-zone');
+    if (dz) dz.style.display = 'none';
+
+  } catch(e) {
+    showImportMsg('Error al parsear el archivo: ' + e.message, false);
+  }
+}
+
+function normalizarNivel(n) {
+  const s = n.toLowerCase();
+  if (s.includes('inic') || s.includes('jardin') || s.includes('initial')) return 'inicial';
+  if (s.includes('prim') || s.includes('primary')) return 'primaria';
+  if (s.includes('sec') || s.includes('media') || s.includes('adult') || s.includes('secondary')) return 'secundaria';
+  return n;
+}
+
+function parsearCSV(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g,'').trim());
+  return lines.slice(1).map(line => {
+    // Handle quoted fields with commas
+    const fields = [];
+    let cur = '', inQ = false;
+    for (const ch of line) {
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { fields.push(cur); cur = ''; }
+      else { cur += ch; }
+    }
+    fields.push(cur);
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = (fields[i] || '').trim());
+    return obj;
+  }).filter(r => Object.values(r).some(v => v));
+}
+
+</script>
+
+<!-- ══ MANTIS SECTION ══ -->
+<div class="mantis-section" id="mantis-dash-wrap">
+  <div class="mantis-sec-hdr">
+    <h2>🐛 Bugs Mantis</h2>
+    <span id="mantis-dash-badge" style="background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;">—</span>
+    <button onclick="cargarMantisDash()" style="margin-left:auto;background:var(--teal);color:#fff;border:none;padding:5px 12px;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;">↺ Actualizar</button>
+    <a href="https://mantis.bue.edu.ar" target="_blank" style="display:inline-flex;align-items:center;background:#fff;color:var(--teal);border:1.5px solid var(--teal);padding:5px 12px;border-radius:7px;font-size:11.5px;font-weight:600;text-decoration:none;">↗ Mantis</a>
+  </div>
+  <div id="mantis-dash-proxy-note" class="mantis-proxy-note">
+    ⚙️ Para ver bugs en vivo: hacé clic en <strong>↺ Actualizar</strong>
+  </div>
+  <!-- Open bugs -->
+  <div id="mantis-dash-open" style="display:none;margin-top:10px;">
+    <div style="font-size:11.5px;font-weight:700;color:var(--navy);margin-bottom:6px;">⏳ Abiertos (<span id="mantis-open-cnt">0</span>)</div>
+    <div class="mantis-table-wrap">
+      <table class="mantis-table">
+        <thead><tr>
+          <th style="width:65px;">#</th>
+          <th>Resumen</th>
+          <th style="width:100px;">Categoría</th>
+          <th style="width:80px;">Prioridad</th>
+          <th style="width:90px;">Estado</th>
+          <th style="width:95px;">Asignado</th>
+        </tr></thead>
+        <tbody id="mantis-dash-open-body"></tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Closed bugs -->
+  <div id="mantis-dash-closed-wrap" style="display:none;margin-top:12px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <span style="font-size:11.5px;font-weight:700;color:var(--navy);">✓ Resueltos/Cerrados</span>
+      <span id="mantis-closed-cnt-badge" style="background:#d1fae5;color:#065f46;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;"></span>
+      <button onclick="toggleMantisClosedDash()" id="mantis-closed-dash-btn" style="margin-left:auto;font-size:11px;color:var(--teal);font-weight:600;border:none;background:none;cursor:pointer;">▼ Mostrar</button>
+    </div>
+    <div id="mantis-dash-closed-table" style="display:none;" class="mantis-table-wrap">
+      <table class="mantis-table">
+        <thead><tr>
+          <th style="width:65px;">#</th>
+          <th>Resumen</th>
+          <th style="width:100px;">Categoría</th>
+          <th style="width:100px;">Estado</th>
+          <th style="width:100px;">Resolución</th>
+        </tr></thead>
+        <tbody id="mantis-dash-closed-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
