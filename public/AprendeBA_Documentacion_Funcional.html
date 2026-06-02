@@ -356,6 +356,124 @@ nav.nav-principal button[data-tab="mantis"].activo { color: #b91c1c; border-bott
 .mantis-config label { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; display: block; margin-bottom: 4px; }
 .ba-iframe-wrap { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(26,77,143,0.10); }
 .ba-access-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #1d4ed8, #3b82f6); color: white; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px; }
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE — Netbook / Notebook / Tablet / Mobile
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Notebook / Tablet landscape (< 1100px) ── */
+@media (max-width: 1100px) {
+  main { padding: 0 12px 48px; }
+  .combined-bar { margin: 0 0 14px; }
+  .mantis-section { margin: 0 0 30px; }
+}
+
+/* ── Netbook / Tablet portrait (< 900px) ── */
+@media (max-width: 900px) {
+  /* Header más compacto */
+  header { padding: 10px 14px; }
+  header h1 { font-size: 16px !important; }
+  .equipo-tag { display: none; }
+
+  /* Nav tabs: scroll horizontal con tabs más chicos */
+  nav.nav-principal { padding: 0 8px; gap: 0; }
+  nav.nav-principal button {
+    padding: 10px 10px !important;
+    font-size: 12px !important;
+    white-space: nowrap;
+  }
+
+  /* Subnav */
+  .subnav { gap: 4px; flex-wrap: nowrap; overflow-x: auto; padding: 8px 10px; }
+  .subnav button { font-size: 11px !important; padding: 5px 10px !important; white-space: nowrap; }
+
+  /* Main */
+  main { margin: 12px auto; padding: 0 10px 40px; }
+
+  /* Métricas en grilla 2 columnas */
+  #bac-metrics,
+  #mantis-metrics,
+  .dash-top { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Tablas con scroll horizontal */
+  .tabla-wrap, .mantis-table-wrap, #bac-tabla-wrap { overflow-x: auto !important; }
+
+  /* Reducir columnas menos importantes en tabla */
+  .import-bar { padding: 0 0 10px; }
+}
+
+/* ── Netbook chico / Tablet portrait angosto (< 768px) ── */
+@media (max-width: 768px) {
+  /* Ocultar texto de tabs, dejar solo emoji */
+  nav.nav-principal button { font-size: 11px !important; padding: 10px 8px !important; }
+
+  /* Stack métricas en 2 cols */
+  #bac-metrics { grid-template-columns: repeat(2, 1fr) !important; }
+  .dash-top { flex-direction: column !important; }
+  .res-card { min-width: unset !important; }
+
+  /* Filtros apilados */
+  div[style*="filtros"],
+  .filtros { flex-direction: column; align-items: stretch !important; }
+  .filtros input, .filtros select,
+  #bac-fq, #bac-fn, #bac-fm, #bac-fr { width: 100% !important; }
+
+  /* Panel equipo en header: una línea */
+  .equipo-header { flex-direction: column; gap: 4px; }
+  .equipo-nombres { font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* Tablas Mantis: ocultar columna Descripción en listas */
+  .mantis-table td:nth-child(5),
+  .mantis-table th:nth-child(5) { display: none; }
+
+  /* BA Colaborativa tabla: ocultar contacto */
+  #bac-tbody td:nth-child(6),
+  #bac-tabla-wrap thead th:nth-child(6) { display: none; }
+}
+
+/* ── Mobile / pantalla muy chica (< 600px) ── */
+@media (max-width: 600px) {
+  header { padding: 8px 10px; }
+  header h1 { font-size: 14px !important; }
+
+  /* Tabs: solo íconos */
+  nav.nav-principal { padding: 0 4px; }
+  nav.nav-principal button {
+    font-size: 13px !important;
+    padding: 8px 6px !important;
+    min-width: 36px;
+  }
+
+  /* Main full width */
+  main { padding: 0 6px 32px; margin: 8px auto; }
+
+  /* Métricas: 2 cols compacto */
+  #bac-metrics,
+  #mantis-metrics { grid-template-columns: repeat(2, 1fr) !important; gap: 6px !important; }
+  #bac-m-total, #bac-m-open, #bac-m-res, #bac-m-pct,
+  #m-total, #m-open, #m-closed, #m-pct { font-size: 24px !important; }
+
+  /* Ocultar más columnas en tablas */
+  .mantis-table td:nth-child(3),
+  .mantis-table th:nth-child(3),
+  .mantis-table td:nth-child(6),
+  .mantis-table th:nth-child(6) { display: none; }
+
+  #bac-tabla-wrap td:nth-child(7),
+  #bac-tabla-wrap th:nth-child(7) { display: none; }
+
+  /* Botones más grandes para touch */
+  button { min-height: 36px; }
+
+  /* Ocultar barras de módulo */
+  #bac-mod-bars, #mod-bars { display: none; }
+}
+
+/* Scroll suave en navegación */
+nav.nav-principal { scroll-behavior: smooth; }
+nav.nav-principal::-webkit-scrollbar { height: 3px; }
+nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+
 </style>
 </head>
 <body>
