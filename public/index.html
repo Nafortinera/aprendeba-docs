@@ -483,6 +483,19 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 #tab-drive    .sub-content { max-width: 960px; margin: 0 auto; }
 #tab-mantis   > div        { max-width: 1200px; margin: 0 auto; }
 
+
+/* ── NOTIFICATIONS ── */
+.notif-item { display:flex;gap:10px;padding:10px 18px;cursor:pointer;transition:background .1s;border-bottom:1px solid #f8f8f8; }
+.notif-item:hover { background:#f8fafc; }
+.notif-item.unread { background:#f0f9ff;border-left:3px solid #0e7490; }
+.notif-item.unread:hover { background:#e0f2fe; }
+.notif-icon { font-size:20px;flex-shrink:0;margin-top:2px; }
+.notif-body { flex:1;min-width:0; }
+.notif-title { font-size:12.5px;font-weight:700;color:#1e293b;line-height:1.3; }
+.notif-desc  { font-size:11.5px;color:#64748b;margin-top:2px;line-height:1.4; }
+.notif-time  { font-size:10.5px;color:#aaa;margin-top:3px; }
+.notif-empty { text-align:center;padding:32px 20px;color:#aaa;font-size:13px; }
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
@@ -509,6 +522,24 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
     <span class="eq-chip">Maximiliano Ramírez</span>
     <span class="eq-chip">Rodrigo Pedro</span>
     <span class="eq-chip">Cristian Santillán</span>
+  </div>
+  <!-- ── BELL ── -->
+  <div id="notif-bell-wrap" style="position:fixed;top:12px;right:18px;z-index:9999;">
+    <button onclick="toggleNotifPanel()" style="background:rgba(255,255,255,.18);border:none;border-radius:50%;width:42px;height:42px;font-size:20px;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);" title="Notificaciones">
+      🔔
+      <span id="notif-badge" style="display:none;position:absolute;top:2px;right:2px;background:#ef4444;color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:700;line-height:18px;text-align:center;"></span>
+    </button>
+  </div>
+
+  <!-- ── PANEL ── -->
+  <div id="notif-panel" style="display:none;position:fixed;top:62px;right:18px;width:340px;max-height:480px;background:#fff;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.18);z-index:9998;overflow:hidden;flex-direction:column;">
+    <div style="padding:14px 18px 10px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;gap:8px;">
+      <span style="font-size:16px;">🔔</span>
+      <span style="font-weight:800;color:#1e293b;font-size:14px;flex:1;">Notificaciones</span>
+      <button onclick="marcarTodasLeidas()" style="font-size:11px;color:#0e7490;font-weight:600;border:none;background:none;cursor:pointer;">✓ Marcar todo leído</button>
+      <button onclick="toggleNotifPanel()" style="font-size:18px;border:none;background:none;cursor:pointer;color:#aaa;line-height:1;">×</button>
+    </div>
+    <div id="notif-list" style="overflow-y:auto;max-height:400px;padding:8px 0;"></div>
   </div>
 </header>
 
@@ -3243,6 +3274,134 @@ function renderMantis() {
   if (lista) lista.innerHTML = html || '<div style="text-align:center;padding:32px;color:#6b7280;">No hay issues con ese filtro.</div>';
 }
 
+// ══════════════════════════════════════════════════════════════
+// SISTEMA DE NOTIFICACIONES
+// ══════════════════════════════════════════════════════════════
+const NOTIF_KEY = 'aprendeba_notifs';
+const NOTIF_SEEN_KEY = 'aprendeba_notifs_seen';
+
+function notifLoad() {
+  try { return JSON.parse(localStorage.getItem(NOTIF_KEY) || '[]'); } catch(_) { return []; }
+}
+function notifSave(list) {
+  try { localStorage.setItem(NOTIF_KEY, JSON.stringify(list.slice(0, 50))); } catch(_) {}
+}
+function notifSeenIds() {
+  try { return JSON.parse(localStorage.getItem(NOTIF_SEEN_KEY) || '[]'); } catch(_) { return []; }
+}
+
+function agregarNotif(tipo, titulo, desc) {
+  const list = notifLoad();
+  const id = tipo + '_' + Date.now();
+  list.unshift({ id, tipo, titulo, desc, ts: new Date().toISOString(), leida: false });
+  notifSave(list);
+  actualizarBadge();
+  return id;
+}
+
+function actualizarBadge() {
+  const list  = notifLoad();
+  const unread = list.filter(n => !n.leida).length;
+  const badge = document.getElementById('notif-badge');
+  if (!badge) return;
+  badge.textContent = unread > 9 ? '9+' : unread;
+  badge.style.display = unread > 0 ? 'block' : 'none';
+  // Animate bell
+  const bell = badge.parentElement;
+  if (unread > 0 && bell) { bell.style.animation = 'bellRing .4s ease'; setTimeout(() => bell.style.animation='', 500); }
+}
+
+function renderNotifPanel() {
+  const list   = notifLoad();
+  const el     = document.getElementById('notif-list');
+  if (!el) return;
+  if (!list.length) { el.innerHTML = '<div class="notif-empty">🔕 Sin notificaciones</div>'; return; }
+  const icons = { bac:'🎫', mantis:'🐛', doc:'📄', default:'📢' };
+  el.innerHTML = list.map(n => `
+    <div class="notif-item ${n.leida?'':'unread'}" onclick="marcarLeida('${n.id}')">
+      <div class="notif-icon">${icons[n.tipo]||icons.default}</div>
+      <div class="notif-body">
+        <div class="notif-title">${n.titulo}</div>
+        <div class="notif-desc">${n.desc}</div>
+        <div class="notif-time">${new Date(n.ts).toLocaleString('es-AR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleNotifPanel() {
+  const panel = document.getElementById('notif-panel');
+  if (!panel) return;
+  const open = panel.style.display === 'flex';
+  panel.style.display = open ? 'none' : 'flex';
+  if (!open) renderNotifPanel();
+}
+
+function marcarLeida(id) {
+  const list = notifLoad();
+  const n = list.find(x => x.id === id);
+  if (n) n.leida = true;
+  notifSave(list);
+  renderNotifPanel();
+  actualizarBadge();
+}
+
+function marcarTodasLeidas() {
+  const list = notifLoad().map(n => ({ ...n, leida: true }));
+  notifSave(list);
+  renderNotifPanel();
+  actualizarBadge();
+}
+
+// ── Detectar cambios Mantis ────────────────────────────────────
+function notifCheckMantis(newIssues) {
+  const KEY = 'mantis_last_ids';
+  try {
+    const lastRaw = localStorage.getItem(KEY);
+    if (!lastRaw) {
+      // Primera vez — guardar estado sin notificar
+      localStorage.setItem(KEY, JSON.stringify(newIssues.map(i => ({ id: i.id, estado: i.estado }))));
+      return;
+    }
+    const lastMap = {};
+    JSON.parse(lastRaw).forEach(i => lastMap[i.id] = i.estado);
+    const nuevos    = newIssues.filter(i => !lastMap[i.id]);
+    const resueltos = newIssues.filter(i => lastMap[i.id] && lastMap[i.id] !== i.estado && esCerrado(i.estado) && !esCerrado(lastMap[i.id]));
+
+    if (nuevos.length) agregarNotif('mantis', `🐛 ${nuevos.length} bug${nuevos.length>1?'s':''} nuevo${nuevos.length>1?'s':''}`,
+      nuevos.slice(0,2).map(i => `#${i.id} ${i.resumen||''}`).join(' · ') + (nuevos.length>2?` +${nuevos.length-2} más`:''));
+    resueltos.forEach(i => agregarNotif('mantis', `✅ Bug resuelto: #${i.id}`, (i.resumen||'').slice(0,80)));
+
+    localStorage.setItem(KEY, JSON.stringify(newIssues.map(i => ({ id: i.id, estado: i.estado }))));
+  } catch(_) {}
+}
+
+// ── Detectar tickets nuevos BAC ────────────────────────────────
+function notifCheckBAC(newTickets) {
+  const KEY = 'bac_last_nums';
+  try {
+    const lastRaw = localStorage.getItem(KEY);
+    if (!lastRaw) { localStorage.setItem(KEY, JSON.stringify(newTickets.map(t => t.num))); return; }
+    const lastSet = new Set(JSON.parse(lastRaw));
+    const nuevos  = newTickets.filter(t => !lastSet.has(t.num));
+    if (nuevos.length) agregarNotif('bac', `🎫 ${nuevos.length} ticket${nuevos.length>1?'s':''} nuevo${nuevos.length>1?'s':''}`,
+      nuevos.slice(0,2).map(t => `${t.num} — ${t.modulo||t.establecimiento||''}`).join(' · ') + (nuevos.length>2?` +${nuevos.length-2} más`:''));
+    localStorage.setItem(KEY, JSON.stringify(newTickets.map(t => t.num)));
+  } catch(_) {}
+}
+
+// Bell ring animation
+const _bellStyle = document.createElement('style');
+_bellStyle.textContent = '@keyframes bellRing{0%,100%{transform:rotate(0)}25%{transform:rotate(-15deg)}75%{transform:rotate(15deg)}}';
+document.head.appendChild(_bellStyle);
+
+// Close panel on click outside
+document.addEventListener('click', e => {
+  const panel = document.getElementById('notif-panel');
+  const wrap  = document.getElementById('notif-bell-wrap');
+  if (panel && panel.style.display==='flex' && !panel.contains(e.target) && !wrap.contains(e.target))
+    panel.style.display = 'none';
+});
+
 // ── MANTIS PROXY ─────────────────────────────────────────────
 const PROXY = 'https://aprendebaas.netlify.app/.netlify/functions'; // Netlify
 let mantisAllIssues = [];
@@ -3378,6 +3537,7 @@ async function cargarMantisProxy() {
       if (el) el.style.display = 'block';
     });
 
+    notifCheckMantis(mantisAllIssues);
     filtrarMantisProxy();
     if (statusTxt) statusTxt.textContent = `✓ ${data.total} bugs cargados · Proxy activo en aprendebaas.netlify.app`;
 
@@ -3790,6 +3950,7 @@ function bacProcesar(text, filename) {
       });
     }
     bacLoadCloud();
+    notifCheckBAC(BAC_T);
     document.getElementById('bac-sync').textContent = `✓ ${BAC_T.length} tickets importados`;
   } catch(e) { alert('Error al parsear: ' + e.message); }
 }
@@ -3854,6 +4015,7 @@ function bacExportar() {
 // ── INIT ─────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   cargarMantisProxy();
+  actualizarBadge();
   // Restaurar tickets BA Colaborativa desde localStorage (o usar datos por defecto)
   try {
     const saved = localStorage.getItem('bac_tickets');
