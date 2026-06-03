@@ -4184,6 +4184,25 @@ function bacExportar() {
 document.addEventListener('DOMContentLoaded', function() {
   cargarMantisProxy();
   actualizarBadge();
+  // Ordenar inv-body por año descendente al cargar
+  (function() {
+    const tbody = document.getElementById('inv-body');
+    if (!tbody) return;
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    rows.sort((a, b) => {
+      const getYear = r => {
+        const cells = r.querySelectorAll('td');
+        return parseInt(cells[3]?.textContent?.trim() || '0', 10);
+      };
+      return getYear(b) - getYear(a);
+    });
+    rows.forEach(r => tbody.appendChild(r));
+    // Renumber
+    rows.forEach((r, i) => {
+      const num = r.querySelector('td:first-child');
+      if (num) num.textContent = i + 1;
+    });
+  })();
   // Restaurar tickets BA Colaborativa desde localStorage (o usar datos por defecto)
   try {
     const saved = localStorage.getItem('bac_tickets');
