@@ -824,7 +824,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
           <span style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:11px;color:#15803d;font-weight:600;">Filtrar →</span>
         </div>
       </div>
-      <div id="fuente-activa" style="display:none;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:8px 14px;margin-bottom:12px;display:flex;align-items:center;gap:8px;font-size:12.5px;">
+      <div id="fuente-activa" style="display:none;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:8px 14px;margin-bottom:12px;align-items:center;gap:8px;font-size:12.5px;">
         <span id="fuente-label" style="font-weight:600;color:#0369a1;flex:1;"></span>
         <button onclick="limpiarFuente()" style="font-size:11px;color:#0369a1;border:none;background:none;cursor:pointer;font-weight:600;">✕ Mostrar todos</button>
       </div>
@@ -3098,6 +3098,19 @@ function cambiarTab(tab) {
   document.querySelectorAll('.nav-sub').forEach(n => n.style.display = 'none');
   const sub = document.getElementById('subnav-' + tab);
   if (sub) sub.style.display = 'flex';
+  // Si ningún sub-content está activo en el tab, activar el primero válido
+  if (content) {
+    const activeSub = content.querySelector('.sub-content.activo');
+    if (!activeSub) {
+      const defaults = {
+        documentacion: 'doc-tabla', procesos: 'proc-estado',
+        instructivos: 'inst-oficial', testing: 'test-todos', drive: 'drive-main'
+      };
+      const defaultSub = document.getElementById(defaults[tab]);
+      if (defaultSub) defaultSub.classList.add('activo');
+      else { const first = content.querySelector('.sub-content'); if (first) first.classList.add('activo'); }
+    }
+  }
   // Trigger drive load
   if (tab === 'drive') cargarDriveData();
   // Restore mantis config
