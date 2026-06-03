@@ -3069,6 +3069,9 @@ function cambiarTab(tab) {
 }
 
 function cambiarSub(tab, sub) {
+  if (sub === 'proc-diagramas') {
+    setTimeout(function() { if (!_diagRendered['d1']) mostrarDiagrama('d1'); }, 100);
+  }
   const parentTab = document.getElementById('tab-' + tab);
   if (!parentTab) return;
   parentTab.querySelectorAll('.sub-content').forEach(s => s.classList.remove('activo'));
@@ -3409,17 +3412,33 @@ function limpiarFuente() {
 
 // ── MERMAID ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
-  if (typeof mermaid !== 'undefined') {
-    mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
-  }
+  // mermaid initialized separately
 });
+const _diagRendered = {};
 function mostrarDiagrama(id) {
   document.querySelectorAll('.diag-wrap').forEach(d => d.style.display = 'none');
   document.querySelectorAll('.diag-btn').forEach(b => b.classList.remove('activo-diag'));
   const el = document.getElementById(id);
-  if (el) { el.style.display = 'block'; if (typeof mermaid !== 'undefined') mermaid.run({ nodes: el.querySelectorAll('.mermaid') }); }
+  if (el) {
+    el.style.display = 'block';
+    if (typeof mermaid !== 'undefined' && !_diagRendered[id]) {
+      _diagRendered[id] = true;
+      // Convert pre.mermaid to div.mermaid for proper rendering
+      el.querySelectorAll('pre.mermaid').forEach(function(pre) {
+        const div = document.createElement('div');
+        div.className = 'mermaid';
+        div.textContent = pre.textContent;
+        pre.parentNode.replaceChild(div, pre);
+      });
+      mermaid.run({ nodes: el.querySelectorAll('.mermaid') });
+    }
+  }
   const btn = document.getElementById('btn-' + id);
   if (btn) btn.classList.add('activo-diag');
+}
+// Init mermaid config
+if (typeof mermaid !== 'undefined') {
+  mermaid.initialize({ startOnLoad: false, theme: 'default', securityLevel: 'loose' });
 }
 
 // ── MANTIS PROXY ─────────────────────────────────────────────
