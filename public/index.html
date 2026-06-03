@@ -2688,15 +2688,16 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <div style="background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:12px;">
     <div style="font-size:10px;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:.5px;">Resumen</div>
     <div style="display:flex;align-items:center;gap:12px;">
-      <!-- Izquierda: total y % -->
+      <!-- Izquierda: % arriba, total abajo -->
       <div style="flex:1;">
-        <div id="bac-m-total" style="font-size:40px;font-weight:900;color:var(--navy);line-height:1;">0</div>
-        <div style="font-size:11px;color:#888;margin-top:2px;">Total tickets</div>
+        <div id="bac-m-pct" style="font-size:42px;font-weight:900;color:var(--teal);line-height:1;">0%</div>
+        <div style="font-size:11px;font-weight:600;color:var(--teal);margin-top:2px;">% Resueltos</div>
         <div style="background:#e8ecf0;border-radius:8px;height:8px;overflow:hidden;margin-top:10px;">
           <div id="bac-m-bar" style="width:0%;height:8px;background:linear-gradient(90deg,var(--teal),#2e7d32);border-radius:8px;transition:width 1s ease;"></div>
         </div>
-        <div style="margin-top:4px;font-size:11px;font-weight:700;color:var(--teal);">
-          <span id="bac-m-pct">0%</span> resueltos
+        <div style="margin-top:6px;display:flex;align-items:baseline;gap:5px;">
+          <span id="bac-m-total" style="font-size:22px;font-weight:900;color:var(--navy);">0</span>
+          <span style="font-size:11px;color:#888;">tickets totales</span>
         </div>
       </div>
       <!-- Derecha: contadores grandes -->
