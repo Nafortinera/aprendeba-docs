@@ -601,7 +601,26 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
     </div>
   </div>
 
-  <h3 style="font-size:13px;color:var(--texto-suave);margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">Instructivos</h3>
+  <h3 style="font-size:13px;color:var(--texto-suave);margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">Documentación</h3>
+  <div class="cards-grid">
+    <div class="card cd" onclick="ir('documentacion','doc-tabla')">
+      <span style="font-size:26px">📊</span>
+      <h3>Tabla de documentos</h3>
+      <p>Inventario completo de documentos funcionales del equipo con links a Drive.</p>
+      <span class="card-tag">8 documentos</span>
+    </div>
+    <div class="card cd" onclick="ir('documentacion','doc-matriculacion')">
+      <span style="font-size:26px">🎓</span><h3>Matriculación</h3><p>IEL, secciones, alumnos ingresantes.</p><span class="card-tag">Todos los niveles</span>
+    </div>
+    <div class="card cd" onclick="ir('documentacion','doc-efectivizacion')">
+      <span style="font-size:26px">✅</span><h3>Efectivización</h3><p>Flujo común y alternativo 2026.</p><span class="card-tag">Secundaria</span>
+    </div>
+    <div class="card cd" onclick="ir('documentacion','doc-ecp')">
+      <span style="font-size:26px">📚</span><h3>ECP</h3><p>Espacios Curriculares Pendientes.</p><span class="card-tag">Secundaria</span>
+    </div>
+  </div>
+
+  <h3 style="font-size:13px;color:var(--texto-suave);margin:20px 0 12px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">Instructivos</h3>
   <div class="cards-grid">
     <div class="card ci" onclick="ir('instructivos','inst-oficial')">
       <span style="font-size:26px">🌐</span>
@@ -629,22 +648,43 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
     </div>
   </div>
 
-  <h3 style="font-size:13px;color:var(--texto-suave);margin:20px 0 12px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">Documentación Funcional</h3>
+  <h3 style="font-size:13px;color:var(--texto-suave);margin:20px 0 12px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">Inventario Funcional</h3>
   <div class="cards-grid">
-    <div class="card cd" onclick="ir('documentacion','doc-tabla')">
-      <span style="font-size:26px">📊</span>
-      <h3>Tabla de documentos</h3>
-      <p>Inventario completo de documentos funcionales del equipo con links a Drive.</p>
-      <span class="card-tag">8 documentos</span>
+    <div class="card ci" onclick="ir('documentacion','inv-todos')">
+      <span style="font-size:26px">📄</span>
+      <h3>Inventario completo</h3>
+      <p>Listado general de todos los módulos y funcionalidades relevadas.</p>
+      <span class="card-tag">Todos</span>
     </div>
-    <div class="card cd" onclick="ir('documentacion','doc-matriculacion')">
-      <span style="font-size:26px">🎓</span><h3>Matriculación</h3><p>IEL, secciones, alumnos ingresantes.</p><span class="card-tag">Todos los niveles</span>
+    <div class="card ci" onclick="ir('documentacion','inv-calificaciones')">
+      <span style="font-size:26px">📝</span>
+      <h3>Calificaciones</h3>
+      <p>Inventario de funcionalidades del módulo de calificaciones.</p>
+      <span class="card-tag">Inventario</span>
     </div>
-    <div class="card cd" onclick="ir('documentacion','doc-efectivizacion')">
-      <span style="font-size:26px">✅</span><h3>Efectivización</h3><p>Flujo común y alternativo 2026.</p><span class="card-tag">Secundaria</span>
+    <div class="card ci" onclick="ir('documentacion','inv-boletines')">
+      <span style="font-size:26px">📄</span>
+      <h3>Boletines</h3>
+      <p>Inventario de generación y emisión de boletines.</p>
+      <span class="card-tag">Inventario</span>
     </div>
-    <div class="card cd" onclick="ir('documentacion','doc-ecp')">
-      <span style="font-size:26px">📚</span><h3>ECP</h3><p>Espacios Curriculares Pendientes.</p><span class="card-tag">Secundaria</span>
+    <div class="card ci" onclick="ir('documentacion','inv-presentismo')">
+      <span style="font-size:26px">📋</span>
+      <h3>Presentismo</h3>
+      <p>Inventario de toma de asistencia y gestión de inasistencias.</p>
+      <span class="card-tag">Inventario</span>
+    </div>
+    <div class="card ci" onclick="ir('documentacion','inv-legajo')">
+      <span style="font-size:26px">🗂</span>
+      <h3>Legajo</h3>
+      <p>Inventario de datos del alumno y documentación de legajo.</p>
+      <span class="card-tag">Inventario</span>
+    </div>
+    <div class="card ci" onclick="ir('documentacion','inv-pases')">
+      <span style="font-size:26px">🔀</span>
+      <h3>Pases</h3>
+      <p>Inventario del módulo de pases entre establecimientos.</p>
+      <span class="card-tag">Inventario</span>
     </div>
   </div>
 
