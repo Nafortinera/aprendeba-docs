@@ -588,93 +588,53 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <div class="hero">
     <h2>AprendeBA — Documentación Funcional</h2>
     <p>Portal centralizado del equipo. Instructivos oficiales, documentación funcional, comunicaciones con Phinxlab y estado de deploys del ciclo 2026.</p>
-
   </div>
 
-  <h3 style="font-size:13px;color:var(--texto-suave);margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">Documentación</h3>
-  <div class="cards-grid">
-    <div class="card cd" onclick="ir('documentacion','doc-tabla')">
-      <span style="font-size:26px">📊</span>
-      <h3>Tabla de documentos</h3>
-      <p>Inventario completo de documentos funcionales del equipo con links a Drive.</p>
-      <span class="card-tag">8 documentos</span>
-    </div>
-    <div class="card cd" onclick="ir('documentacion','doc-matriculacion')">
-      <span style="font-size:26px">🎓</span><h3>Matriculación</h3><p>IEL, secciones, alumnos ingresantes.</p><span class="card-tag">Todos los niveles</span>
-    </div>
-    <div class="card cd" onclick="ir('documentacion','doc-efectivizacion')">
-      <span style="font-size:26px">✅</span><h3>Efectivización</h3><p>Flujo común y alternativo 2026.</p><span class="card-tag">Secundaria</span>
-    </div>
-    <div class="card cd" onclick="ir('documentacion','doc-ecp')">
-      <span style="font-size:26px">📚</span><h3>ECP</h3><p>Espacios Curriculares Pendientes.</p><span class="card-tag">Secundaria</span>
-    </div>
-  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:8px;">
 
-  <h3 style="font-size:13px;color:var(--texto-suave);margin:20px 0 12px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">Inventario Funcional</h3>
-  <div class="cards-grid">
-    <div class="card ci" onclick="ir('documentacion','doc-tabla')">
-      <span style="font-size:26px">📁</span>
-      <h3>Drive Funcional</h3>
-      <p>Documentos funcionales del equipo en Drive, ordenados por fecha.</p>
-      <span class="card-tag">Drive</span>
+    <div class="card ci" onclick="cambiarTab('instructivos')" style="cursor:pointer;">
+      <span style="font-size:30px">📋</span>
+      <h3>Instructivos</h3>
+      <p>Instructivos oficiales GCBA por módulo.</p>
     </div>
-    <div class="card ci" onclick="ir('documentacion','doc-tabla')">
-      <span style="font-size:26px">📁</span>
-      <h3>Drive Funcional</h3>
-      <p>Documentos funcionales del equipo en Drive, ordenados por fecha.</p>
-      <span class="card-tag">Drive</span>
-    </div>
-    <div class="card ci" onclick="ir('documentacion','doc-tabla')">
-      <span style="font-size:26px">📄</span>
-      <h3>Inventario completo</h3>
-      <p>Listado general de todos los módulos y funcionalidades relevadas.</p>
-      <span class="card-tag">Todos</span>
-    </div>
-    <div class="card ci" onclick="ir('documentacion','doc-tabla')">
-      <span style="font-size:26px">📝</span>
-      <h3>Calificaciones</h3>
-      <p>Inventario de funcionalidades del módulo de calificaciones.</p>
-      <span class="card-tag">Inventario</span>
-    </div>
-    <div class="card ci" onclick="ir('documentacion','doc-tabla')">
-      <span style="font-size:26px">📄</span>
-      <h3>Boletines</h3>
-      <p>Inventario de generación y emisión de boletines.</p>
-      <span class="card-tag">Inventario</span>
-    </div>
-    <div class="card ci" onclick="ir('documentacion','doc-tabla')">
-      <span style="font-size:26px">📋</span>
-      <h3>Presentismo</h3>
-      <p>Inventario de toma de asistencia y gestión de inasistencias.</p>
-      <span class="card-tag">Inventario</span>
-    </div>
-    <div class="card ci" onclick="ir('documentacion','doc-tabla')">
-      <span style="font-size:26px">🗂</span>
-      <h3>Legajo</h3>
-      <p>Inventario de datos del alumno y documentación de legajo.</p>
-      <span class="card-tag">Inventario</span>
-    </div>
-    <div class="card ci" onclick="ir('documentacion','doc-pases')">
-      <span style="font-size:26px">🔀</span>
-      <h3>Pases</h3>
-      <p>Inventario del módulo de pases entre establecimientos.</p>
-      <span class="card-tag">Inventario</span>
-    </div>
-  </div>
 
-  <h3 style="font-size:13px;color:var(--texto-suave);margin:20px 0 12px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">Procesos & Estado</h3>
-  <div class="cards-grid">
-    <div class="card cp" onclick="ir('procesos','proc-estado')">
-      <span style="font-size:26px">🟢</span><h3>Estado módulos</h3><p>Habilitación actual de cada módulo en producción.</p><span class="card-tag">Actualizado</span>
+    <div class="card cd" onclick="cambiarTab('documentacion')" style="cursor:pointer;">
+      <span style="font-size:30px">📂</span>
+      <h3>Doc & Inventario</h3>
+      <p>Documentación funcional e inventario del proyecto.</p>
     </div>
-<div class="card cp" onclick="ir('procesos','proc-deploys')">
-      <span style="font-size:26px">📦</span><h3>Historial deploys</h3><p>Timeline de pasajes a producción 2026.</p><span class="card-tag">PRD · STG</span>
+
+    <div class="card cp" onclick="cambiarTab('procesos')" style="cursor:pointer;">
+      <span style="font-size:30px">🚀</span>
+      <h3>Procesos & Estado</h3>
+      <p>Estado de módulos e historial de deploys.</p>
     </div>
-    <div class="card cp" onclick="ir('procesos','proc-estado')">
-      <span style="font-size:26px">🗓️</span><h3>Roadmap</h3><p>Desarrollos pendientes y próximas entregas.</p><span class="card-tag">En curso</span>
+
+    <div class="card" onclick="cambiarTab('testing')" style="cursor:pointer;border-top:4px solid #f59e0b;">
+      <span style="font-size:30px">🧪</span>
+      <h3>Testing</h3>
+      <p>Casos de prueba y seguimiento de QA.</p>
     </div>
+
+    <div class="card" onclick="cambiarTab('drive')" style="cursor:pointer;border-top:4px solid #2FA89C;">
+      <span style="font-size:30px">☁️</span>
+      <h3>Drive & Novedades</h3>
+      <p>Documentos del equipo y novedades recientes.</p>
+    </div>
+
+    <div class="card" onclick="cambiarTab('bacolaborativa')" style="cursor:pointer;border-top:4px solid #3b82f6;">
+      <span style="font-size:30px">🤝</span>
+      <h3>BA Colaborativa</h3>
+      <p>Tickets de escuelas y dashboard de resolución.</p>
+    </div>
+
+    <div class="card" onclick="cambiarTab('mantis')" style="cursor:pointer;border-top:4px solid #ef4444;">
+      <span style="font-size:30px">🐛</span>
+      <h3>Mantis</h3>
+      <p>Bugs y mejoras registradas al proveedor.</p>
+    </div>
+
   </div>
-</div>
 
 <!-- ==================== INSTRUCTIVOS ==================== -->
 <div class="tab-content" id="tab-instructivos">
