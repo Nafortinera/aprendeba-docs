@@ -913,22 +913,22 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 
       <!-- ── CARDS POR FUENTE ── -->
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
-        <div onclick="filtrarPorFuente('Drive / AprendeBA')" style="background:linear-gradient(135deg,#e8f4fd,#f0f8ff);border:1.5px solid #93c5fd;border-radius:12px;padding:16px;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#3b82f6';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#93c5fd';this.style.transform=''">
+        <div onclick="filtrarPorFuente('Drive / AprendeBA 2026')" style="background:linear-gradient(135deg,#e8f4fd,#f0f8ff);border:1.5px solid #93c5fd;border-radius:12px;padding:16px;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#3b82f6';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#93c5fd';this.style.transform=''">
           <div style="font-size:22px;margin-bottom:6px;">📁</div>
-          <div style="font-weight:800;color:#1d4ed8;font-size:14px;">Drive del equipo</div>
-          <div style="font-size:11.5px;color:#3b82f6;margin-top:3px;">Documentos funcionales AprendeBA</div>
+          <div style="font-weight:800;color:#1d4ed8;font-size:14px;">Documentos Funcionales</div>
+          <div style="font-size:11.5px;color:#3b82f6;margin-top:3px;">Drive AprendeBA 2026 · 7 docs</div>
           <a href="https://drive.google.com/drive/folders/14YDYjI60SJpKMfJ87QbOtobj0Uy9K6UL?usp=drive_link" target="_blank" onclick="event.stopPropagation()" style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:11px;color:#1d4ed8;font-weight:600;text-decoration:none;">↗ Abrir Drive</a>
         </div>
-        <div onclick="filtrarPorFuente('Casos de uso')" style="background:linear-gradient(135deg,#fdf4ff,#faf0ff);border:1.5px solid #d8b4fe;border-radius:12px;padding:16px;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#9333ea';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#d8b4fe';this.style.transform=''">
-          <div style="font-size:22px;margin-bottom:6px;">🔍</div>
-          <div style="font-weight:800;color:#7e22ce;font-size:14px;">Casos de uso Phinx</div>
-          <div style="font-size:11.5px;color:#9333ea;margin-top:3px;">Análisis y casos de uso del proveedor</div>
+        <div onclick="filtrarPorFuente('Drive / Miescuela 2025')" style="background:linear-gradient(135deg,#fdf4ff,#faf0ff);border:1.5px solid #d8b4fe;border-radius:12px;padding:16px;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#9333ea';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#d8b4fe';this.style.transform=''">
+          <div style="font-size:22px;margin-bottom:6px;">🗂</div>
+          <div style="font-weight:800;color:#7e22ce;font-size:14px;">Drive del equipo</div>
+          <div style="font-size:11.5px;color:#9333ea;margin-top:3px;">Drive MiEscuela 2025 · 39 docs</div>
           <span style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:11px;color:#7e22ce;font-weight:600;">Filtrar →</span>
         </div>
-        <div onclick="filtrarPorFuente('Drive personal')" style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1.5px solid #86efac;border-radius:12px;padding:16px;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#16a34a';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#86efac';this.style.transform=''">
-          <div style="font-size:22px;margin-bottom:6px;">🗂</div>
-          <div style="font-weight:800;color:#15803d;font-size:14px;">Drive personal</div>
-          <div style="font-size:11.5px;color:#16a34a;margin-top:3px;">Documentos propios del equipo</div>
+        <div onclick="filtrarPorFuente('Mail')" style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1.5px solid #86efac;border-radius:12px;padding:16px;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#16a34a';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#86efac';this.style.transform=''">
+          <div style="font-size:22px;margin-bottom:6px;">📧</div>
+          <div style="font-weight:800;color:#15803d;font-size:14px;">Correos / Comunicaciones</div>
+          <div style="font-size:11.5px;color:#16a34a;margin-top:3px;">Emails del equipo · 14 docs</div>
           <span style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:11px;color:#15803d;font-weight:600;">Filtrar →</span>
         </div>
       </div>
@@ -3481,8 +3481,10 @@ function filtrarPorFuente(fuente) {
   const rows = document.querySelectorAll('#tabla-docs tbody tr, #inv-body tr');
   let vis = 0;
   rows.forEach(r => {
-    const txt = r.textContent;
-    const match = txt.toLowerCase().includes(fuente.toLowerCase());
+    // Search in fuente-tag span specifically
+    const fuenteEl = r.querySelector('.fuente-tag');
+    const fuenteTxt = fuenteEl ? fuenteEl.textContent : r.textContent;
+    const match = fuenteTxt.toLowerCase().includes(fuente.toLowerCase());
     r.style.display = match ? '' : 'none';
     if (match) vis++;
   });
