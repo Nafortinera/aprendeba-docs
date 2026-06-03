@@ -560,8 +560,6 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <nav class="nav-sub" id="subnav-instructivos">
   <button class="activo" data-sub="inst-oficial" onclick="cambiarSub('instructivos','inst-oficial')">🌐 Instructivos GCBA</button>
   <button data-sub="inst-drive"                  onclick="cambiarSub('instructivos','inst-drive')">📁 Drive del equipo</button>
-  <button data-sub="inst-presentismo"            onclick="cambiarSub('instructivos','inst-presentismo')">📋 Presentismo (detalle)</button>
-  <button data-sub="inst-calificaciones"         onclick="cambiarSub('instructivos','inst-calificaciones')">📝 Calificaciones (detalle)</button>
 </nav>
 <nav class="nav-sub" id="subnav-documentacion">
   <button data-sub="drive-funcional" onclick="cambiarSub('documentacion','drive-funcional')">📁 Drive Funcional</button>
@@ -620,34 +618,6 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
     </div>
     <div class="card cd" onclick="ir('documentacion','doc-ecp')">
       <span style="font-size:26px">📚</span><h3>ECP</h3><p>Espacios Curriculares Pendientes.</p><span class="card-tag">Secundaria</span>
-    </div>
-  </div>
-
-  <h3 style="font-size:13px;color:var(--texto-suave);margin:20px 0 12px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">Instructivos</h3>
-  <div class="cards-grid">
-    <div class="card ci" onclick="ir('instructivos','inst-oficial')">
-      <span style="font-size:26px">🌐</span>
-      <h3>Instructivos GCBA</h3>
-      <p>PDFs oficiales del sitio buenosaires.gob.ar organizados por módulo.</p>
-      <span class="card-tag">30+ PDFs</span>
-    </div>
-    <div class="card ci" onclick="ir('instructivos','inst-drive')">
-      <span style="font-size:26px">📁</span>
-      <h3>Drive del equipo</h3>
-      <p>Carpetas compartidas del equipo con instructivos y templates.</p>
-      <span class="card-tag">Drive</span>
-    </div>
-    <div class="card ci" onclick="ir('instructivos','inst-presentismo')">
-      <span style="font-size:26px">📋</span>
-      <h3>Presentismo</h3>
-      <p>Paso a paso: asistencia, cierre, justificaciones.</p>
-      <span class="card-tag">Todos los niveles</span>
-    </div>
-    <div class="card ci" onclick="ir('instructivos','inst-calificaciones')">
-      <span style="font-size:26px">📝</span>
-      <h3>Calificaciones</h3>
-      <p>Carga bimestral y novedades PPI 2026.</p>
-      <span class="card-tag">Nivel Primario</span>
     </div>
   </div>
 
@@ -817,57 +787,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   </div>
 
   <!-- PRESENTISMO DETALLE -->
-  <div class="sub-content" id="inst-presentismo">
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-icon pi-verde">📋</div>
-        <div class="panel-title"><h2>Presentismo — Paso a paso</h2><p>Toma de asistencia, cierre, justificaciones · Todos los niveles</p><span class="nivel nv-todos">Todos los niveles</span></div>
-      </div>
-      <div class="ac"><div class="ac-h" onclick="tog(this)">1. Acceso y selección de sección <span class="fl">▼</span></div><div class="ac-b">
-        <ol class="pasos"><li>Ingresá a AprendeBA → <strong>«Iniciá sesión»</strong> con tu cuenta @bue personal.</li><li>Seleccioná la escuela y tu rol: Directivo, Docente o Equipo de Conducción.</li><li>En el menú lateral → <strong>«Presentismo»</strong> → seleccioná año y sección.</li></ol>
-      </div></div>
-      <div class="ac"><div class="ac-h" onclick="tog(this)">2. Toma de asistencia y estados <span class="fl">▼</span></div><div class="ac-b">
-        <ol class="pasos"><li><strong>Individual:</strong> clic en celda día/estudiante → menú → estado.</li><li><strong>Masiva:</strong> clic en flecha del turno → estado para toda la sección.</li><li>Guardá con el botón <strong>«Guardar»</strong>.</li></ol>
-        <table style="margin-top:10px;"><tr><th>Código</th><th>Estado</th></tr><tr><td>P</td><td>Presente</td></tr><tr><td>A</td><td>Ausente</td></tr><tr><td>APC</td><td>Ausente con presencia en clases</td></tr><tr><td>IT</td><td>Ingreso tardío</td></tr><tr><td>RA</td><td>Retiro anticipado</td></tr></table>
-      </div></div>
-      <div class="ac"><div class="ac-h" onclick="tog(this)">3. Cierre de día y semana <span class="fl">▼</span></div><div class="ac-b">
-        <ol class="pasos"><li>Clic en el <strong>candado 🔒</strong> sobre la fecha para cerrar el día.</li><li>Clic en <strong>«Cerrar semana»</strong> al finalizar.</li></ol>
-        <div class="nota nota-r"><strong>⚠️</strong> Una vez cerrado no se pueden modificar estados. Solo Directivo y Equipo de Conducción pueden reabrir. Las justificaciones sí pueden cargarse post-cierre.</div>
-      </div></div>
-      <div class="ac"><div class="ac-h" onclick="tog(this)">4. Justificación de inasistencias <span class="fl">▼</span></div><div class="ac-b">
-        <ol class="pasos"><li>Clic en el lápiz ✏ en el margen derecho de la grilla.</li><li>Completá: tipo, rango de fechas, turnos, motivo y detalle.</li><li>Para IT/RA: indicá la hora.</li><li>Adjuntá el certificado en <strong>«Archivos»</strong> → <strong>«Guardar»</strong>.</li></ol>
-      </div></div>
-    </div>
-  </div>
-
-  <!-- CALIFICACIONES DETALLE -->
-  <div class="sub-content" id="inst-calificaciones">
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-icon pi-verde">📝</div>
-        <div class="panel-title"><h2>Calificaciones — Paso a paso</h2><p>1er Bimestre · Novedades PPI 2026</p><span class="nivel nv-pri">Nivel Primario</span></div>
-      </div>
-      <div class="nota nota-v" style="margin-bottom:14px;"><strong>✨ 2026:</strong> Campo PPI obligatorio para todos los estudiantes + pestaña Calificaciones Generales con descarga.</div>
-      <div class="ac"><div class="ac-h" onclick="tog(this)">1. Acceso y filtros <span class="fl">▼</span></div><div class="ac-b">
-        <ol class="pasos"><li>Ingresá con tu cuenta @bue.edu.ar (autenticación Google).</li><li>Rol Docente → módulo <strong>Calificaciones</strong>.</li><li>Selector de período: <strong>Primer Bimestre</strong> → filtrá grado y sección.</li></ol>
-      </div></div>
-      <div class="ac"><div class="ac-h" onclick="tog(this)">2. Carga de calificaciones <span class="fl">▼</span></div><div class="ac-b">
-        <ol class="pasos"><li>Clic en ✏ del estudiante → completá campos → <strong>«Guardar»</strong>.</li></ol>
-      </div></div>
-      <div class="ac"><div class="ac-h" onclick="tog(this)">3. PPI — Proyecto Pedagógico Individual <span class="nuevo">NUEVO 2026</span> <span class="fl">▼</span></div><div class="ac-b">
-        <ol class="pasos"><li>Columna <strong>«¿Tiene PPI?»</strong>: seleccioná Sí o No para cada estudiante (obligatorio para todos).</li><li>Si Sí: clic en 📎 <strong>«Adjuntar PPI»</strong> → archivo → confirmar.</li><li>Clic en <strong>«Adjuntar Evaluación PPI»</strong> → cargar el archivo correspondiente.</li></ol>
-        <div class="nota"><strong>Formatos:</strong> PDF, PNG o JPG. Solo adjuntás cuando el campo está en Sí.</div>
-      </div></div>
-      <div class="ac"><div class="ac-h" onclick="tog(this)">4. Calificaciones Generales <span class="nuevo">NUEVO 2026</span> <span class="fl">▼</span></div><div class="ac-b">
-        <ol class="pasos"><li>Pestaña <strong>«Calificaciones Generales»</strong> → resumen de toda la sección.</li><li>Botón <strong>«Descargar»</strong> para exportar el listado.</li></ol>
-      </div></div>
-    </div>
-  </div>
-
-</div><!-- /tab-instructivos -->
-
-
-<!-- ==================== DOCUMENTACIÓN ==================== -->
+  <!-- ==================== DOCUMENTACIÓN ==================== -->
 <div class="tab-content" id="tab-documentacion">
 
   <!-- TABLA DOCUMENTOS - inventario completo -->
