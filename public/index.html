@@ -498,8 +498,17 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 
 
 /* Ocultar subnav Doc & Inventario */
+
+/* ── DIAGRAMS ── */
+.diag-btn { background:#f1f5f9; color:var(--navy); border:1.5px solid var(--line); padding:7px 14px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; transition:all .15s; }
+.diag-btn:hover { background:var(--teal-bg); border-color:var(--teal); color:var(--teal); }
+.activo-diag { background:var(--teal)!important; color:#fff!important; border-color:var(--teal)!important; }
+.diag-wrap { overflow-x:auto; }
+.diag-wrap .mermaid { min-width:600px; }
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
 </head>
 <body>
 
@@ -579,6 +588,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <nav class="nav-sub" id="subnav-procesos">
   <button class="activo" data-sub="proc-estado"  onclick="cambiarSub('procesos','proc-estado')">🟢 Estado módulos</button>
   <button data-sub="proc-deploys"                onclick="cambiarSub('procesos','proc-deploys')">📦 Historial deploys</button>
+  <button data-sub="proc-diagramas"              onclick="cambiarSub('procesos','proc-diagramas')">🔀 Diagramas de flujo</button>
 </nav>
 
 <main>
@@ -3395,6 +3405,21 @@ function limpiarFuente() {
   const act = document.getElementById('fuente-activa');
   if (act) act.style.display = 'none';
   filtrarInv && filtrarInv();
+}
+
+// ── MERMAID ─────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof mermaid !== 'undefined') {
+    mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+  }
+});
+function mostrarDiagrama(id) {
+  document.querySelectorAll('.diag-wrap').forEach(d => d.style.display = 'none');
+  document.querySelectorAll('.diag-btn').forEach(b => b.classList.remove('activo-diag'));
+  const el = document.getElementById(id);
+  if (el) { el.style.display = 'block'; if (typeof mermaid !== 'undefined') mermaid.run({ nodes: el.querySelectorAll('.mermaid') }); }
+  const btn = document.getElementById('btn-' + id);
+  if (btn) btn.classList.add('activo-diag');
 }
 
 // ── MANTIS PROXY ─────────────────────────────────────────────
