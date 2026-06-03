@@ -593,9 +593,9 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
     <p>Portal centralizado del equipo. Instructivos oficiales, documentación funcional, comunicaciones con Phinxlab y estado de deploys del ciclo 2026.</p>
     <div class="chips">
       <span class="chip" onclick="ir('instructivos','inst-oficial')">📋 Instructivos GCBA</span>
-      <span class="chip" onclick="ir('instructivos','inst-drive')">📁 Drive del equipo</span>
+      <span class="chip" onclick="ir('instructivos','inst-oficial')">📁 Drive del equipo</span>
       <span class="chip" onclick="ir('documentacion','doc-tabla')">📂 Documentación funcional</span>
-      <span class="chip" onclick="ir('procesos','proc-phinx')">📧 Comunicaciones Phinx</span>
+      <span class="chip" onclick="ir('procesos','proc-estado')">📧 Comunicaciones Phinx</span>
       <span class="chip" onclick="ir('procesos','proc-estado')">🟢 Estado módulos</span>
       <span class="chip" onclick="cambiarTab('drive')">☁️ Drive &amp; Novedades</span>
     </div>
@@ -680,7 +680,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <div class="card cp" onclick="ir('procesos','proc-deploys')">
       <span style="font-size:26px">📦</span><h3>Historial deploys</h3><p>Timeline de pasajes a producción 2026.</p><span class="card-tag">PRD · STG</span>
     </div>
-    <div class="card cp" onclick="ir('procesos','proc-roadmap')">
+    <div class="card cp" onclick="ir('procesos','proc-estado')">
       <span style="font-size:26px">🗓️</span><h3>Roadmap</h3><p>Desarrollos pendientes y próximas entregas.</p><span class="card-tag">En curso</span>
     </div>
   </div>
