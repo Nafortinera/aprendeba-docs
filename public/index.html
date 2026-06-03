@@ -564,12 +564,14 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <button data-sub="inst-calificaciones"         onclick="cambiarSub('instructivos','inst-calificaciones')">📝 Calificaciones (detalle)</button>
 </nav>
 <nav class="nav-sub" id="subnav-documentacion">
+  <button data-sub="drive-funcional" onclick="cambiarSub('documentacion','drive-funcional')">📁 Drive Funcional</button>
   <button class="activo" data-sub="doc-tabla"    onclick="cambiarSub('documentacion','doc-tabla')">📊 Tabla documentos</button>
   <button data-sub="doc-matriculacion"           onclick="cambiarSub('documentacion','doc-matriculacion')">🎓 Matriculación</button>
   <button data-sub="doc-pases"                   onclick="cambiarSub('documentacion','doc-pases')">🔀 Pases</button>
   <button data-sub="doc-efectivizacion"          onclick="cambiarSub('documentacion','doc-efectivizacion')">✅ Efectivización</button>
   <button data-sub="doc-ecp"                     onclick="cambiarSub('documentacion','doc-ecp')">📚 ECP</button>
   <button data-sub="doc-roles"                   onclick="cambiarSub('documentacion','doc-roles')">👤 Roles</button>
+  <button data-sub="drive-funcional" onclick="cambiarSub('documentacion','drive-funcional')">📁 Drive Funcional</button>
   <button data-sub="inv-todos" onclick="cambiarSub('documentacion','inv-todos')">📄 Inv. completo</button>
   <button data-sub="inv-calificaciones" onclick="cambiarSub('documentacion','inv-calificaciones')">📝 Calificaciones</button>
   <button data-sub="inv-boletines" onclick="cambiarSub('documentacion','inv-boletines')">📄 Boletines</button>
@@ -653,6 +655,18 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 
   <h3 style="font-size:13px;color:var(--texto-suave);margin:20px 0 12px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;">Inventario Funcional</h3>
   <div class="cards-grid">
+    <div class="card ci" onclick="ir('documentacion','drive-funcional')">
+      <span style="font-size:26px">📁</span>
+      <h3>Drive Funcional</h3>
+      <p>Documentos funcionales del equipo en Drive, ordenados por fecha.</p>
+      <span class="card-tag">Drive</span>
+    </div>
+    <div class="card ci" onclick="ir('documentacion','drive-funcional')">
+      <span style="font-size:26px">📁</span>
+      <h3>Drive Funcional</h3>
+      <p>Documentos funcionales del equipo en Drive, ordenados por fecha.</p>
+      <span class="card-tag">Drive</span>
+    </div>
     <div class="card ci" onclick="ir('documentacion','inv-todos')">
       <span style="font-size:26px">📄</span>
       <h3>Inventario completo</h3>
@@ -862,7 +876,25 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <div class="tab-content" id="tab-documentacion">
 
   <!-- TABLA DOCUMENTOS - inventario completo -->
-  <div class="sub-content activo" id="doc-tabla">
+  <div class="sub-content" id="sub-drive-funcional">
+  <div class="panel-header" style="margin-bottom:14px;">
+    <div class="panel-icon" style="background:#e8f4fd;font-size:20px;">📁</div>
+    <div class="panel-title">
+      <h2>Drive · Documentos Funcionales</h2>
+      <p>Carpeta compartida del equipo — más reciente primero</p>
+    </div>
+    <a href="https://drive.google.com/drive/folders/14YDYjI60SJpKMfJ87QbOtobj0Uy9K6UL?usp=drive_link" target="_blank"
+       style="display:inline-flex;align-items:center;gap:6px;background:var(--primary);color:white;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;margin-left:auto;">
+      ↗ Abrir en Drive
+    </a>
+  </div>
+  <iframe src="https://drive.google.com/embeddedfolderview?id=14YDYjI60SJpKMfJ87QbOtobj0Uy9K6UL#list"
+    style="width:100%;height:65vh;border:1px solid var(--gris-borde);border-radius:10px;background:#fff;"
+    title="Drive Documentos Funcionales">
+  </iframe>
+</div>
+
+<div class="sub-content activo" id="doc-tabla">
     <div class="panel">
       <div class="panel-header">
         <div class="panel-icon pi-violeta">📊</div>
