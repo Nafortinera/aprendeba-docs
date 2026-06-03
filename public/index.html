@@ -2733,8 +2733,8 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <!-- Card 4: Barras por módulo -->
   <div style="background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.08);">
     <div style="font-size:10px;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Por módulo</div>
-    <div style="position:relative;height:160px;">
-      <canvas id="bac-chart-modulos" style="max-height:160px;"></canvas>
+    <div style="position:relative;height:180px;">
+      <canvas id="bac-chart-modulos" style="max-height:180px;"></canvas>
     </div>
   </div>
 
@@ -3790,7 +3790,7 @@ function bacUpdateCharts(total, res, pending) {
   if (ctxM) {
     const mods = {};
     BAC_T.forEach(t => { if (t.modulo) mods[t.modulo] = (mods[t.modulo] || 0) + 1; });
-    const sorted = Object.entries(mods).sort((a,b) => b[1]-a[1]).slice(0, 7);
+    const sorted = Object.entries(mods).sort((a,b) => b[1]-a[1]).slice(0, 5);
     if (bacChartModulos) bacChartModulos.destroy();
     const totalTickets = BAC_T.length || 1;
     bacChartModulos = new Chart(ctxM, {
@@ -3799,7 +3799,7 @@ function bacUpdateCharts(total, res, pending) {
         labels: sorted.map(([k]) => k.length > 20 ? k.slice(0,18)+'…' : k),
         datasets: [{ data: sorted.map(([,v]) => v),
           backgroundColor: '#2FA89C', borderRadius: 6,
-          barThickness: 18, barPercentage: 0.6, categoryPercentage: 0.5 }]
+          barPercentage: 0.5, categoryPercentage: 0.4 }]
       },
       options: {
         indexAxis: 'y',
