@@ -2685,29 +2685,30 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <div id="bac-metrics" style="display:grid;grid-template-columns:1fr 1fr 1fr 1.4fr;gap:12px;margin-bottom:16px;">
 
   <!-- Card 1: Números clave -->
-  <div style="background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:14px;">
+  <div style="background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:12px;">
     <div style="font-size:10px;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:.5px;">Resumen</div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;">
-      <div>
-        <div id="bac-m-total" style="font-size:36px;font-weight:900;color:var(--navy);line-height:1;">0</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <!-- Izquierda: total y % -->
+      <div style="flex:1;">
+        <div id="bac-m-total" style="font-size:40px;font-weight:900;color:var(--navy);line-height:1;">0</div>
         <div style="font-size:11px;color:#888;margin-top:2px;">Total tickets</div>
+        <div style="background:#e8ecf0;border-radius:8px;height:8px;overflow:hidden;margin-top:10px;">
+          <div id="bac-m-bar" style="width:0%;height:8px;background:linear-gradient(90deg,var(--teal),#2e7d32);border-radius:8px;transition:width 1s ease;"></div>
+        </div>
+        <div style="margin-top:4px;font-size:11px;font-weight:700;color:var(--teal);">
+          <span id="bac-m-pct">0%</span> resueltos
+        </div>
       </div>
-      <div style="text-align:right;">
-        <div id="bac-m-pct" style="font-size:28px;font-weight:900;color:var(--teal);line-height:1;">0%</div>
-        <div style="font-size:11px;color:#888;margin-top:2px;">% Resueltos</div>
-      </div>
-    </div>
-    <div style="background:#e8ecf0;border-radius:8px;height:8px;overflow:hidden;">
-      <div id="bac-m-bar" style="width:0%;height:8px;background:linear-gradient(90deg,var(--teal),#2e7d32);border-radius:8px;transition:width 1s ease;"></div>
-    </div>
-    <div style="display:flex;gap:16px;">
-      <div>
-        <div id="bac-m-open" style="font-size:22px;font-weight:800;color:#e07b00;">0</div>
-        <div style="font-size:10.5px;color:#888;">⏳ Pendientes</div>
-      </div>
-      <div>
-        <div id="bac-m-res" style="font-size:22px;font-weight:800;color:#2e7d32;">0</div>
-        <div style="font-size:10.5px;color:#888;">✓ Respondidos</div>
+      <!-- Derecha: contadores grandes -->
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end;min-width:110px;">
+        <div style="text-align:right;background:#fff9f0;border-radius:10px;padding:10px 14px;border:1.5px solid #fed7aa;width:100%;">
+          <div id="bac-m-open" style="font-size:28px;font-weight:900;color:#e07b00;line-height:1;">0</div>
+          <div style="font-size:11px;color:#e07b00;font-weight:600;margin-top:2px;">⏳ Pendientes</div>
+        </div>
+        <div style="text-align:right;background:#f0faf4;border-radius:10px;padding:12px 14px;border:1.5px solid #86efac;width:100%;">
+          <div id="bac-m-res" style="font-size:32px;font-weight:900;color:#2e7d32;line-height:1;">0</div>
+          <div style="font-size:11px;color:#2e7d32;font-weight:600;margin-top:2px;">✓ Respondidos</div>
+        </div>
       </div>
     </div>
   </div>
