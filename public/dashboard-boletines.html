@@ -146,7 +146,7 @@ let DATA = DATA_MODULOS.boletines.slice();
 let sortCol = 'pct', sortDir = 1;
 
 // ── INIT ────────────────────────────────────────────────────
-(function init() {
+window.addEventListener('load', function init() {
   // Populate DE filter
   const des = [...new Set(DATA.map(d=>d.de))].sort((a,b)=>a-b);
   const sel = document.getElementById('fde');
