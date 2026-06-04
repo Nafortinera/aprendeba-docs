@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Boletines — AprendeBA</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {
   --navy:#1A3C5E; --teal:#0E7490; --teal2:#2FA89C;
@@ -90,11 +89,11 @@ td{padding:8px 12px;font-size:12.5px;}
   <div class="charts-row">
     <div class="chart-box">
       <h3>% por Nivel</h3>
-      <canvas id="chart-nivel" style="height:200px;max-height:200px;"></canvas>
+      <div id="chart-nivel" style="padding:8px 0;"></div>
     </div>
     <div class="chart-box">
       <h3>Distribución por Estado</h3>
-      <canvas id="chart-estado" style="height:200px;max-height:200px;"></canvas>
+      <div id="chart-estado" style="padding:8px 0;"></div>
     </div>
   </div>
 
@@ -271,9 +270,8 @@ function renderCards(rows) {
   `;
 }
 
-let chartNivel = null, chartEstado = null;
 function renderCharts(rows) {
-  // By nivel
+  // ── GRÁFICO 1: Barras por nivel (SVG) ──
   const niveles = {};
   rows.forEach(d => {
     if (!niveles[d.nivel]) niveles[d.nivel] = [];
@@ -281,51 +279,60 @@ function renderCharts(rows) {
   });
   const nLabels = Object.keys(niveles);
   const nAvgs   = nLabels.map(k => +(niveles[k].reduce((s,v)=>s+v,0)/niveles[k].length).toFixed(1));
+  const colors  = ['#0E7490','#059669','#d97706','#7c3aed'];
 
-  const ctx1 = document.getElementById('chart-nivel');
-  if (chartNivel) chartNivel.destroy();
-  chartNivel = new Chart(ctx1, {
-    type: 'bar',
-    data: {
-      labels: nLabels,
-      datasets: [{ data: nAvgs,
-        backgroundColor: ['#0E7490','#059669','#d97706'],
-        borderRadius: 8, barThickness: 40 }]
-    },
-    options: {
-      plugins: { legend: { display: false },
-        tooltip: { callbacks: { label: c => ` ${c.raw}% promedio` } } },
-      scales: {
-        y: { min:0, max:100, ticks: { callback: v => v+'%' }, grid: { color:'#f0f0f0' } },
-        x: { grid: { display: false } }
-      },
-      responsive: true, maintainAspectRatio: false
-    }
-  });
+  const barH = 36, gap = 12, padLeft = 120, padRight = 50, svgH = nLabels.length*(barH+gap)+gap;
+  const maxVal = 100;
+  const barsSVG = nLabels.map((lbl,i) => {
+    const w = Math.round((nAvgs[i]/maxVal)*300);
+    const y = gap + i*(barH+gap);
+    const col = colors[i % colors.length];
+    return `
+      <text x="${padLeft-8}" y="${y+barH/2+5}" text-anchor="end" font-size="12" fill="#555">${lbl}</text>
+      <rect x="${padLeft}" y="${y}" width="${w}" height="${barH}" rx="6" fill="${col}" opacity=".9"/>
+      <text x="${padLeft+w+6}" y="${y+barH/2+5}" font-size="12" font-weight="700" fill="${col}">${nAvgs[i]}%</text>`;
+  }).join('');
 
-  // Estado distribution
+  const el1 = document.getElementById('chart-nivel');
+  if (el1) el1.innerHTML = `<svg width="100%" viewBox="0 0 480 ${svgH}" xmlns="http://www.w3.org/2000/svg">${barsSVG}</svg>`;
+
+  // ── GRÁFICO 2: Donut con SVG ──
   const ok   = rows.filter(d=>d.pct>=100).length;
   const warn = rows.filter(d=>d.pct>=50&&d.pct<100).length;
   const err  = rows.filter(d=>d.pct<50).length;
-  const ctx2 = document.getElementById('chart-estado');
-  if (chartEstado) chartEstado.destroy();
-  chartEstado = new Chart(ctx2, {
-    type: 'doughnut',
-    data: {
-      labels: ['Completo (100%)', 'En progreso (50-99%)', 'Bajo (<50%)'],
-      datasets: [{ data: [ok, warn, err],
-        backgroundColor: ['#059669','#f59e0b','#dc2626'],
-        borderWidth: 0, hoverOffset: 6 }]
-    },
-    options: {
-      cutout: '65%',
-      plugins: {
-        legend: { position: 'bottom', labels: { font: { size:11 }, padding:10, boxWidth:12 } },
-        tooltip: { callbacks: { label: c => ` ${c.label}: ${c.raw} escuelas` } }
-      },
-      responsive: true, maintainAspectRatio: false
-    }
-  });
+  const total2 = ok + warn + err || 1;
+  const segs = [
+    {val:ok,   col:'#059669', lbl:`✅ Completo: ${ok}`},
+    {val:warn, col:'#f59e0b', lbl:`⚠️ Progreso: ${warn}`},
+    {val:err,  col:'#dc2626', lbl:`🔴 Bajo: ${err}`},
+  ];
+  const cx=100, cy=90, r=70, inner=42;
+  let startAngle = -Math.PI/2;
+  const paths = segs.map(s => {
+    if (!s.val) return '';
+    const angle = (s.val/total2)*2*Math.PI;
+    const x1=cx+r*Math.cos(startAngle), y1=cy+r*Math.sin(startAngle);
+    startAngle += angle;
+    const x2=cx+r*Math.cos(startAngle), y2=cy+r*Math.sin(startAngle);
+    const largeArc = angle > Math.PI ? 1 : 0;
+    const ix1=cx+inner*Math.cos(startAngle-angle), iy1=cy+inner*Math.sin(startAngle-angle);
+    const ix2=cx+inner*Math.cos(startAngle), iy2=cy+inner*Math.sin(startAngle);
+    return `<path d="M${x1},${y1} A${r},${r} 0 ${largeArc},1 ${x2},${y2} L${ix2},${iy2} A${inner},${inner} 0 ${largeArc},0 ${ix1},${iy1} Z" fill="${s.col}" opacity=".9"/>`;
+  }).join('');
+
+  const prom2 = rows.length ? (rows.reduce((s,d)=>s+d.pct,0)/rows.length).toFixed(1) : 0;
+  const legends = segs.filter(s=>s.val>0).map((s,i)=>
+    `<text x="185" y="${30+i*22}" font-size="11.5" fill="#333"><tspan font-size="13">${s.lbl.split(':')[0]}</tspan> ${s.lbl.split(':')[1]}</text>`
+  ).join('');
+
+  const el2 = document.getElementById('chart-estado');
+  if (el2) el2.innerHTML = `<svg width="100%" viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg">
+    ${paths}
+    <circle cx="${cx}" cy="${cy}" r="${inner}" fill="white"/>
+    <text x="${cx}" y="${cy-6}" text-anchor="middle" font-size="18" font-weight="800" fill="#1A3C5E">${prom2}%</text>
+    <text x="${cx}" y="${cy+14}" text-anchor="middle" font-size="10" fill="#888">promedio</text>
+    ${legends}
+  </svg>`;
 }
 
 // ── IMPORT ───────────────────────────────────────────────────
