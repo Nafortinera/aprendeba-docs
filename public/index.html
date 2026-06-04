@@ -3104,6 +3104,13 @@ function cambiarTab(tab) {
   document.querySelectorAll('.nav-sub').forEach(n => n.style.display = 'none');
   const sub = document.getElementById('subnav-' + tab);
   if (sub && tab !== 'documentacion') sub.style.display = 'flex';
+  // Auto-mostrar primer diagrama al entrar en proc-diagramas
+  if (tab === 'procesos') {
+    setTimeout(function() {
+      var ds = document.getElementById('proc-diagramas');
+      if (ds && ds.classList.contains('activo')) mostrarDiag('d1');
+    }, 200);
+  }
   // Siempre garantizar un sub-content activo
   if (content) {
     // Resetear todos los sub-contents de ESTE tab
@@ -3126,9 +3133,6 @@ function cambiarTab(tab) {
 }
 
 function cambiarSub(tab, sub) {
-  if (sub === 'proc-diagramas') {
-    setTimeout(function() { if (!_diagRendered['d1']) mostrarDiagrama('d1'); }, 100);
-  }
   const parentTab = document.getElementById('tab-' + tab);
   if (!parentTab) return;
   parentTab.querySelectorAll('.sub-content').forEach(s => s.classList.remove('activo'));
