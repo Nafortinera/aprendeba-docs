@@ -337,7 +337,8 @@
   .inv-search:focus { border-color:#1a6b8a; }
   .inv-filtros { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
 nav.nav-principal button[data-tab="bacolaborativa"].activo { color: #1d4ed8; border-bottom-color: #3b82f6; }
-nav.nav-principal button[data-tab="mantis"].activo { color: #b91c1c; border-bottom-color: #ef4444; }
+nav.nav-principal button[data-tab="powerbi"].activo { color: #f59e0b; border-bottom-color: #d97706; }
+  nav.nav-principal button[data-tab="mantis"].activo { color: #b91c1c; border-bottom-color: #ef4444; }
 .mantis-panel { background: white; border-radius: 12px; padding: 24px 28px; box-shadow: 0 2px 12px rgba(26,77,143,0.10); margin-bottom: 16px; }
 .mantis-issue { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 12px; }
 .mantis-issue:hover { background: #f9fafb; }
@@ -561,6 +562,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <button data-tab="drive"                        onclick="cambiarTab('drive')">☁️ Drive &amp; Novedades</button>
   <button data-tab="bacolaborativa" onclick="cambiarTab('bacolaborativa')">🤝 BA Colaborativa</button>
   <button data-tab="mantis" onclick="cambiarTab('mantis')">🐛 Mantis</button>
+  <button data-tab="powerbi"                      onclick="cambiarTab('powerbi')">📊 Power BI</button>
 </nav>
 
 <!-- SUB-NAV -->
@@ -3061,6 +3063,56 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 
 <!-- ════ TESTING ════ -->
 
+
+<!-- ==================== POWER BI ==================== -->
+<div class="tab-content" id="tab-powerbi">
+
+  <div class="panel" style="margin-bottom:12px;">
+    <div class="panel-header">
+      <div class="panel-icon" style="background:#FFF3CD;font-size:22px;">📊</div>
+      <div class="panel-title">
+        <h2>Power BI — AprendeBA</h2>
+        <p>Dashboard conectado al reporte de Power BI Service del equipo</p>
+      </div>
+      <a href="https://app.powerbi.com/groups/6ff3e570-898b-4a3b-9766-f824132cf090/reports/5150a917-1f20-4ad8-a5ca-7206d0fc847d" target="_blank"
+         style="display:inline-flex;align-items:center;gap:6px;background:#f59e0b;color:#fff;padding:8px 16px;border-radius:8px;font-size:12.5px;font-weight:700;text-decoration:none;margin-left:auto;">
+        ↗ Abrir en Power BI
+      </a>
+    </div>
+
+    <!-- Auth notice -->
+    <div id="pbi-auth-note" style="background:#fef9ec;border:1.5px solid #fcd34d;border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:#92400e;">
+      <strong>🔐 Acceso autenticado:</strong> Para ver el reporte embebido necesitás estar logueado en Power BI con tu cuenta <strong>@buenosaires.gob.ar</strong>.
+      Si el reporte no carga, hacé clic en <strong>"Abrir en Power BI"</strong>, iniciá sesión, y volvé acá.
+      <br><br>
+      <strong>💡 Tip para el equipo:</strong> Para que todos vean el reporte sin login individual, podés activar
+      <em>"Publicar en la web"</em> desde Power BI (Archivo → Insertar informe → Publicar en la web) y reemplazar el iframe con el link público.
+    </div>
+
+    <!-- Embed iframe -->
+    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;border:1px solid var(--gris-borde);background:#f8f9fa;">
+      <iframe
+        id="pbi-iframe"
+        src="https://app.powerbi.com/reportEmbed?reportId=5150a917-1f20-4ad8-a5ca-7206d0fc847d&groupId=6ff3e570-898b-4a3b-9766-f824132cf090&autoAuth=true&ctid=buenosaires.gob.ar"
+        style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:12px;"
+        allowfullscreen="true"
+        title="Power BI — AprendeBA">
+      </iframe>
+    </div>
+
+    <!-- Option: Paste public embed URL -->
+    <div style="margin-top:16px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:14px 18px;">
+      <div style="font-size:12.5px;font-weight:700;color:#15803d;margin-bottom:8px;">🔗 ¿Tenés un link de embed público? Pegalo acá:</div>
+      <div style="display:flex;gap:8px;">
+        <input id="pbi-url-input" type="text" placeholder="https://app.powerbi.com/view?r=..."
+          style="flex:1;padding:8px 12px;border:1px solid #86efac;border-radius:7px;font-size:12.5px;outline:none;">
+        <button onclick="actualizarPBI()" style="background:#15803d;color:#fff;border:none;padding:8px 16px;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer;">Cargar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </main>
 
 <script>
@@ -3455,6 +3507,23 @@ function mostrarDiag(id) {
   if (btn) btn.classList.add('activo-diag');
 }
 // Init mermaid config
+
+// ── POWER BI ─────────────────────────────────────────────────
+function actualizarPBI() {
+  const url = document.getElementById('pbi-url-input')?.value?.trim();
+  const iframe = document.getElementById('pbi-iframe');
+  if (url && iframe) {
+    iframe.src = url;
+    localStorage.setItem('pbi_embed_url', url);
+    document.getElementById('pbi-auth-note').style.display = 'none';
+  }
+}
+// Restore saved PBI URL on load
+document.addEventListener('DOMContentLoaded', function() {
+  const saved = localStorage.getItem('pbi_embed_url');
+  const iframe = document.getElementById('pbi-iframe');
+  if (saved && iframe) iframe.src = saved;
+});
 
 // ── MANTIS PROXY ─────────────────────────────────────────────
 const PROXY = 'https://aprendebaas.netlify.app/.netlify/functions'; // Netlify
