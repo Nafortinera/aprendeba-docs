@@ -69,7 +69,7 @@
   .search-badge { background: rgba(255,255,255,0.18); padding: 3px 11px; border-radius: 10px; font-size: 12px; }
 
   /* NAV PRINCIPAL */
-  nav.nav-principal { background: white; border-bottom: 3px solid var(--gris-borde); display: flex; padding: 0 24px; overflow-x: auto; position: sticky; top: 110px; z-index: 99; }
+  nav.nav-principal { background: white; border-bottom: 3px solid var(--gris-borde); display: flex; padding: 0 24px; overflow-x: auto; }
   nav.nav-principal button { flex-shrink: 0; background: none; border: none; padding: 14px 22px; cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--texto-suave); border-bottom: 3px solid transparent; margin-bottom: -3px; transition: all 0.15s; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
   nav.nav-principal button:hover { color: var(--apba-teal); background: var(--gris-bg); }
   nav.nav-principal button.activo { color: var(--apba-navy); border-bottom-color: var(--apba-teal); }
@@ -562,7 +562,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <button data-tab="drive"                        onclick="cambiarTab('drive')">☁️ Drive &amp; Novedades</button>
   <button data-tab="bacolaborativa" onclick="cambiarTab('bacolaborativa')">🤝 BA Colaborativa</button>
   <button data-tab="mantis" onclick="cambiarTab('mantis')">🐛 Mantis</button>
-  <button data-tab="powerbi"                      onclick="cambiarTab('powerbi')">📊 Power BI</button>
+  <button data-tab="powerbi"                      onclick="cambiarTab('powerbi')">📊 Carga escuelas</button>
 </nav>
 
 <!-- SUB-NAV -->
@@ -3064,52 +3064,23 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <!-- ════ TESTING ════ -->
 
 
-<!-- ==================== POWER BI ==================== -->
+<!-- ==================== CARGA ESCUELAS ==================== -->
 <div class="tab-content" id="tab-powerbi">
-
-  <div class="panel" style="margin-bottom:12px;">
-    <div class="panel-header">
-      <div class="panel-icon" style="background:#FFF3CD;font-size:22px;">📊</div>
-      <div class="panel-title">
-        <h2>Power BI — AprendeBA</h2>
-        <p>Dashboard conectado al reporte de Power BI Service del equipo</p>
-      </div>
-      <a href="https://app.powerbi.com/groups/6ff3e570-898b-4a3b-9766-f824132cf090/reports/5150a917-1f20-4ad8-a5ca-7206d0fc847d" target="_blank"
-         style="display:inline-flex;align-items:center;gap:6px;background:#f59e0b;color:#fff;padding:8px 16px;border-radius:8px;font-size:12.5px;font-weight:700;text-decoration:none;margin-left:auto;">
-        ↗ Abrir en Power BI
-      </a>
+  <div style="display:flex;align-items:center;gap:12px;padding:12px 0 10px;flex-wrap:wrap;">
+    <div style="flex:1;">
+      <div style="font-weight:800;color:var(--navy);font-size:16px;">📊 Carga Escuelas — Boletines · Presentismo · Calificaciones</div>
+      <div style="font-size:12px;color:var(--texto-suave);margin-top:2px;">Exportá desde el sistema e importá el CSV para actualizar los datos</div>
     </div>
-
-    <!-- Auth notice -->
-    <div id="pbi-auth-note" style="background:#fef9ec;border:1.5px solid #fcd34d;border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:#92400e;">
-      <strong>🔐 Acceso autenticado:</strong> Para ver el reporte embebido necesitás estar logueado en Power BI con tu cuenta <strong>@buenosaires.gob.ar</strong>.
-      Si el reporte no carga, hacé clic en <strong>"Abrir en Power BI"</strong>, iniciá sesión, y volvé acá.
-      <br><br>
-      <strong>💡 Tip para el equipo:</strong> Para que todos vean el reporte sin login individual, podés activar
-      <em>"Publicar en la web"</em> desde Power BI (Archivo → Insertar informe → Publicar en la web) y reemplazar el iframe con el link público.
-    </div>
-
-    <!-- Embed iframe -->
-    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;border:1px solid var(--gris-borde);background:#f8f9fa;">
-      <iframe
-        id="pbi-iframe"
-        src="https://app.powerbi.com/reportEmbed?reportId=5150a917-1f20-4ad8-a5ca-7206d0fc847d&groupId=6ff3e570-898b-4a3b-9766-f824132cf090&autoAuth=true&ctid=buenosaires.gob.ar"
-        style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:12px;"
-        allowfullscreen="true"
-        title="Power BI — AprendeBA">
-      </iframe>
-    </div>
-
-    <!-- Option: Paste public embed URL -->
-    <div style="margin-top:16px;background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:14px 18px;">
-      <div style="font-size:12.5px;font-weight:700;color:#15803d;margin-bottom:8px;">🔗 ¿Tenés un link de embed público? Pegalo acá:</div>
-      <div style="display:flex;gap:8px;">
-        <input id="pbi-url-input" type="text" placeholder="https://app.powerbi.com/view?r=..."
-          style="flex:1;padding:8px 12px;border:1px solid #86efac;border-radius:7px;font-size:12.5px;outline:none;">
-        <button onclick="actualizarPBI()" style="background:#15803d;color:#fff;border:none;padding:8px 16px;border-radius:7px;font-size:12.5px;font-weight:600;cursor:pointer;">Cargar</button>
-      </div>
-    </div>
-
+    <a href="https://aprendeba-docs.vercel.app/dashboard-boletines.html" target="_blank"
+       style="display:inline-flex;align-items:center;gap:6px;background:var(--teal);color:#fff;padding:8px 14px;border-radius:8px;font-size:12.5px;font-weight:600;text-decoration:none;">
+      ↗ Pantalla completa
+    </a>
+  </div>
+  <div style="border-radius:12px;overflow:hidden;border:1px solid var(--gris-borde);box-shadow:0 2px 8px rgba(0,0,0,.08);">
+    <iframe src="https://aprendeba-docs.vercel.app/dashboard-boletines.html"
+      style="width:100%;height:80vh;border:none;display:block;"
+      title="Dashboard Carga Escuelas">
+    </iframe>
   </div>
 </div>
 
@@ -3142,7 +3113,7 @@ function cambiarTab(tab) {
       content.querySelectorAll('.sub-content').forEach(s => s.classList.remove('activo'));
       const dt = document.getElementById('doc-tabla');
       if (dt) dt.classList.add('activo');
-    } else if (tab !== 'powerbi') {
+    } else {
       const activeSub = content.querySelector('.sub-content.activo');
       if (!activeSub) {
         const first = content.querySelector('.sub-content');
