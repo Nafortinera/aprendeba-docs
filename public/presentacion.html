@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AprendeBA Hub — Presentación</title>
+<style>
+/* ── BASE ── */
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Segoe UI",Arial,sans-serif;background:#000;color:#fff;overflow:hidden;height:100vh;}
+.deck{width:100vw;height:100vh;position:relative;}
+
+/* ── SLIDES ── */
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .5s ease;}
+.slide.active{opacity:1;pointer-events:all;}
+
+/* ── BACKGROUNDS ── */
+.bg-navy{background:linear-gradient(135deg,#0f2744 0%,#1a3c5e 60%,#0e7490 100%);}
+.bg-light{background:#f0f4f8;}
+.bg-dark{background:#0a1628;}
+.bg-teal{background:linear-gradient(135deg,#065a82 0%,#0e7490 100%);}
+
+/* ── HEADER BAR ── */
+.slide-header{background:rgba(0,0,0,.35);padding:14px 36px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(4px);}
+.slide-header.light{background:#1a3c5e;}
+.slide-header h2{font-size:20px;font-weight:800;color:#fff;flex:1;}
+.slide-num{font-size:11px;color:rgba(255,255,255,.5);font-weight:600;}
+
+/* ── CONTENT ── */
+.slide-body{flex:1;padding:28px 36px;display:flex;gap:24px;overflow:hidden;}
+.col{flex:1;display:flex;flex-direction:column;gap:14px;}
+
+/* ── CARDS ── */
+.card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:18px;backdrop-filter:blur(8px);}
+.card.light{background:#fff;border-color:#e2e8f0;color:#1e293b;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.card h3{font-size:14px;font-weight:700;margin-bottom:8px;}
+.card p{font-size:12px;opacity:.8;line-height:1.5;}
+
+/* ── STAT ── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;}
+.stat{background:rgba(255,255,255,.08);border-radius:12px;padding:14px;text-align:center;border:1px solid rgba(255,255,255,.1);}
+.stat.light{background:#fff;border-color:#e2e8f0;color:#1e293b;box-shadow:0 2px 6px rgba(0,0,0,.07);}
+.stat .n{font-size:32px;font-weight:900;line-height:1;}
+.stat .l{font-size:10px;opacity:.7;margin-top:4px;}
+
+/* ── DEMO FRAME ── */
+.demo-wrap{flex:1;border-radius:14px;overflow:hidden;border:2px solid rgba(46,250,220,.3);box-shadow:0 0 30px rgba(14,116,144,.4);position:relative;}
+.demo-wrap iframe{width:100%;height:100%;border:none;display:block;}
+.demo-label{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(14,116,144,.85);color:#fff;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;backdrop-filter:blur(4px);pointer-events:none;}
+
+/* ── TITLE SLIDE ── */
+.title-hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;}
+.title-hero .logo{font-size:52px;font-weight:900;margin-bottom:8px;}
+.title-hero .logo span{color:#2fa89c;}
+.title-hero .tagline{font-size:14px;color:#2fa89c;margin-bottom:24px;}
+.title-hero h1{font-size:38px;font-weight:800;line-height:1.2;margin-bottom:16px;max-width:700px;}
+.title-hero p{font-size:15px;opacity:.75;max-width:600px;line-height:1.6;}
+.url-pill{display:inline-block;background:rgba(255,255,255,.1);border:1.5px solid #2fa89c;border-radius:30px;padding:10px 28px;font-size:14px;font-weight:700;color:#2fa89c;margin-top:20px;font-family:Consolas,monospace;}
+
+/* ── BEFORE/AFTER ── */
+.ba-grid{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;align-items:start;}
+.ba-col{background:rgba(255,255,255,.06);border-radius:14px;padding:18px;}
+.ba-col.after{background:rgba(14,116,144,.15);border:1px solid rgba(14,116,144,.4);}
+.ba-col h4{font-size:13px;font-weight:800;margin-bottom:12px;padding:6px 10px;border-radius:8px;text-align:center;}
+.ba-col.before h4{background:rgba(220,38,38,.2);color:#fca5a5;}
+.ba-col.after h4{background:rgba(5,150,105,.2);color:#6ee7b7;}
+.ba-item{font-size:11px;opacity:.8;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:7px;}
+.arrow-mid{display:flex;align-items:center;justify-content:center;font-size:28px;color:#2fa89c;}
+
+/* ── ROADMAP ── */
+.roadmap-item{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);}
+.road-num{width:36px;height:36px;border-radius:50%;background:#0e7490;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0;}
+.road-badge{margin-left:auto;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;}
+
+/* ── TEAM CHIPS ── */
+.team-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px;}
+.team-chip{background:rgba(14,116,144,.2);border:1px solid rgba(46,250,220,.3);border-radius:20px;padding:6px 16px;font-size:11px;font-weight:600;}
+
+/* ── NAV ── */
+#nav{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);border-radius:40px;padding:10px 20px;z-index:999;}
+#nav button{background:rgba(255,255,255,.15);border:none;color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:16px;transition:all .2s;}
+#nav button:hover{background:#0e7490;}
+#nav button:disabled{opacity:.3;cursor:default;}
+#progress{display:flex;gap:6px;align-items:center;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:all .2s;}
+.dot.act{background:#2fa89c;width:20px;border-radius:4px;}
+#slide-counter{font-size:11px;color:rgba(255,255,255,.5);min-width:40px;text-align:center;}
+
+/* ── FULLSCREEN HINT ── */
+#fs-hint{position:fixed;top:14px;right:18px;background:rgba(0,0,0,.4);color:rgba(255,255,255,.5);font-size:10px;padding:5px 10px;border-radius:8px;cursor:pointer;z-index:999;}
+#fs-hint:hover{color:#fff;}
+
+/* Light slide text overrides */
+.slide.light-text .slide-body{color:#1e293b;}
+.slide.light-text .slide-header h2{color:#fff;}
+</style>
+</head>
+<body>
+
+<div id="fs-hint" onclick="toggleFS()">⛶ Pantalla completa</div>
+
+<div class="deck" id="deck">
+
+<!-- ══ SLIDE 1: TÍTULO ══ -->
+<div class="slide bg-navy active" id="s1">
+  <div class="title-hero">
+    <div class="logo">Aprende<span>BA</span></div>
+    <div class="tagline">Tu escuela a un clic</div>
+    <h1>Hub de Gestión del Equipo</h1>
+    <p>Una única plataforma para tickets de escuelas, bugs del proveedor, documentación funcional y métricas de carga — disponible para todo el equipo, en cualquier dispositivo.</p>
+    <div class="url-pill">🌐 aprendeba-docs.vercel.app</div>
+    <div style="margin-top:20px;font-size:11px;opacity:.5;">CÉLULA 5 · SSTEDU · Ministerio de Educación GCBA · 2026</div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 2: EL PROBLEMA ══ -->
+<div class="slide bg-dark" id="s2">
+  <div class="slide-header"><h2>⚡ El punto de partida</h2><span class="slide-num">02 / 09</span></div>
+  <div class="slide-body" style="align-items:stretch;">
+    <div class="ba-grid" style="flex:1;">
+      <div class="ba-col before">
+        <h4>❌ ANTES</h4>
+        <div class="ba-item">🔀 BA Colaborativa en pestaña separada</div>
+        <div class="ba-item">🐛 Mantis en otra pestaña del browser</div>
+        <div class="ba-item">📁 Documentación dispersa en Drive</div>
+        <div class="ba-item">📊 Power BI externo, requiere login</div>
+        <div class="ba-item">🎫 Tickets de escuelas en Excel manual</div>
+        <div class="ba-item">👥 Sin visibilidad cruzada del equipo</div>
+        <div class="ba-item">📋 Presentismo: exportación manual</div>
+      </div>
+      <div class="arrow-mid">▶</div>
+      <div class="ba-col after">
+        <h4>✅ AHORA</h4>
+        <div class="ba-item" style="color:#6ee7b7;">🎯 Una URL para todo el equipo</div>
+        <div class="ba-item" style="color:#6ee7b7;">🔄 Datos sincronizados en tiempo real</div>
+        <div class="ba-item" style="color:#6ee7b7;">📊 Dashboard de carga propio sin Power BI</div>
+        <div class="ba-item" style="color:#6ee7b7;">🐛 Mantis conectado con proxy local</div>
+        <div class="ba-item" style="color:#6ee7b7;">🤝 BA Colaborativa con respuestas automáticas</div>
+        <div class="ba-item" style="color:#6ee7b7;">🔔 Notificaciones de cambios integradas</div>
+        <div class="ba-item" style="color:#6ee7b7;">📱 PWA instalable en tablets</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 3: DEMO HUB ══ -->
+<div class="slide bg-dark" id="s3">
+  <div class="slide-header"><h2>🖥️ El Hub en vivo — exploramos juntos</h2><span class="slide-num">03 / 09</span></div>
+  <div class="slide-body">
+    <div class="demo-wrap">
+      <iframe src="https://aprendeba-docs.vercel.app/" title="AprendeBA Hub" loading="lazy"></iframe>
+      <div class="demo-label">aprendeba-docs.vercel.app</div>
+    </div>
+    <div class="col" style="max-width:240px;gap:10px;">
+      <div class="card" style="background:rgba(14,116,144,.2);border-color:rgba(46,250,220,.3);">
+        <h3 style="color:#2fa89c;">🧭 Navegación</h3>
+        <p>9 solapas integradas<br>Responsive en todos los dispositivos</p>
+      </div>
+      <div class="card">
+        <h3>🎫 BA Colaborativa</h3><p>Tickets de escuelas + dashboard</p>
+      </div>
+      <div class="card">
+        <h3>🐛 Mantis</h3><p>Bugs agrupados por proyecto</p>
+      </div>
+      <div class="card">
+        <h3>📊 Carga escuelas</h3><p>Boletines · Calificaciones</p>
+      </div>
+      <div class="card">
+        <h3>🔔 Notificaciones</h3><p>Campana con alertas del equipo</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 4: BA COLABORATIVA ══ -->
+<div class="slide bg-dark" id="s4">
+  <div class="slide-header"><h2>🤝 BA Colaborativa — Gestión de tickets de escuelas</h2><span class="slide-num">04 / 09</span></div>
+  <div class="slide-body">
+    <div class="demo-wrap">
+      <iframe src="https://aprendeba-docs.vercel.app/#tab-bacolaborativa" title="BA Colaborativa" loading="lazy"></iframe>
+      <div class="demo-label">Tab: BA Colaborativa</div>
+    </div>
+    <div class="col" style="max-width:240px;">
+      <div class="stat-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="stat"><div class="n" style="color:#3b82f6;">28</div><div class="l">Tickets</div></div>
+        <div class="stat"><div class="n" style="color:#059669;">79%</div><div class="l">Resolución</div></div>
+      </div>
+      <div class="card"><h3>📥 Importar CSV</h3><p>Exportar de BA Colaborativa y arrastrar</p></div>
+      <div class="card"><h3>🤖 Respuesta Auto</h3><p>Plantillas por módulo (Boletines, Presentismo…)</p></div>
+      <div class="card"><h3>🐛 Vinculo Mantis</h3><p>Campo de bug asociado por ticket</p></div>
+      <div class="card"><h3>🔄 Sync equipo</h3><p>Estado compartido via GitHub</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 5: MANTIS ══ -->
+<div class="slide bg-dark" id="s5">
+  <div class="slide-header"><h2>🐛 Mantis — Bugs y mejoras al proveedor Phinxlab</h2><span class="slide-num">05 / 09</span></div>
+  <div class="slide-body">
+    <div class="col" style="max-width:240px;">
+      <div class="stat-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="stat"><div class="n" style="color:#dc2626;">88</div><div class="l">Bugs totales</div></div>
+        <div class="stat"><div class="n" style="color:#d97706;">77</div><div class="l">Abiertos</div></div>
+        <div class="stat"><div class="n" style="color:#059669;">11</div><div class="l">Resueltos</div></div>
+        <div class="stat"><div class="n" style="color:#0e7490;">12.5%</div><div class="l">Resolución</div></div>
+      </div>
+      <div class="card"><h3>🏫 Adultos</h3><p>Bugs de modalidad CENS y adultos</p></div>
+      <div class="card"><h3>📋 Especial</h3><p>Establecimientos de Educación Especial</p></div>
+      <div class="card"><h3>📒 Libro Matriz</h3><p>Libro Matriz Digital</p></div>
+      <div class="card"><h3>⚡ Conexión directa</h3><p>Python proxy · sin CORS · datos en vivo</p></div>
+    </div>
+    <div class="demo-wrap">
+      <iframe src="https://aprendeba-docs.vercel.app/" title="Mantis" loading="lazy"></iframe>
+      <div class="demo-label">Tab: Mantis → Bugs agrupados por proyecto</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 6: DASHBOARD ══ -->
+<div class="slide bg-dark" id="s6">
+  <div class="slide-header"><h2>📊 Dashboard de Carga — Boletines · Calificaciones · Presentismo</h2><span class="slide-num">06 / 09</span></div>
+  <div class="slide-body">
+    <div class="demo-wrap">
+      <iframe src="https://aprendeba-docs.vercel.app/dashboard-boletines.html" title="Dashboard" loading="lazy"></iframe>
+      <div class="demo-label">Dashboard propio · Sin Power BI · 533 establecimientos</div>
+    </div>
+    <div class="col" style="max-width:220px;">
+      <div class="card" style="background:rgba(5,150,105,.15);border-color:rgba(110,231,183,.3);">
+        <h3 style="color:#6ee7b7;">📄 Boletines</h3>
+        <div style="font-size:28px;font-weight:900;color:#059669;margin:4px 0;">88.7%</div>
+        <p>533 establecimientos · Primario y Secundario</p>
+      </div>
+      <div class="card" style="background:rgba(217,119,6,.15);border-color:rgba(252,211,77,.3);">
+        <h3 style="color:#fcd34d;">📝 Calificaciones</h3>
+        <div style="font-size:28px;font-weight:900;color:#d97706;margin:4px 0;">46.4%</div>
+        <p>176 establecimientos · 1° Bimestre · Adultos</p>
+      </div>
+      <div class="card">
+        <h3>📋 Presentismo</h3>
+        <p>Conexión vía Google Apps Script en proceso · API bue.edu.ar</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 7: DOCS + TESTING ══ -->
+<div class="slide bg-dark" id="s7">
+  <div class="slide-header"><h2>📁 Documentación · Diagramas · Plan de Testing</h2><span class="slide-num">07 / 09</span></div>
+  <div class="slide-body">
+    <div class="col">
+      <div class="card">
+        <h3>📂 Doc & Inventario</h3>
+        <p>88 documentos funcionales · filtrable · ordenado por fecha<br>3 fuentes: Drive AprendeBA, MiEscuela 2025, Mail</p>
+      </div>
+      <div class="card">
+        <h3>🔀 Diagramas de Flujo</h3>
+        <p>5 diagramas desde la Matriz de Roles oficial (Inicial · Primaria · Secundaria)<br>Matriculación · Presentismo · Calificaciones · Ciclo del Alumno · Permisos por Rol</p>
+      </div>
+      <div class="card">
+        <h3>☁️ Drive & Novedades</h3>
+        <p>Carpeta compartida del equipo integrada · documentos más recientes primero</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="background:rgba(180,83,9,.15);border-color:rgba(251,191,36,.3);">
+        <h3 style="color:#fcd34d;">🧪 Plan de Testing — AprendeBA</h3>
+        <p style="margin-bottom:8px;">18 casos de prueba · 5 Test Sets · 8 bugs documentados</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:10px;">
+          <div style="background:rgba(255,255,255,.08);padding:6px 8px;border-radius:6px;">TS-001 Matriculación</div>
+          <div style="background:rgba(255,255,255,.08);padding:6px 8px;border-radius:6px;">TS-002 Presentismo</div>
+          <div style="background:rgba(255,255,255,.08);padding:6px 8px;border-radius:6px;">TS-003 Calificaciones</div>
+          <div style="background:rgba(255,255,255,.08);padding:6px 8px;border-radius:6px;">TS-004 Boletines</div>
+          <div style="background:rgba(255,255,255,.08);padding:6px 8px;border-radius:6px;">TS-005 Legajos</div>
+          <div style="background:rgba(255,255,255,.08);padding:6px 8px;border-radius:6px;">TS-006 Roles</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>📱 Acceso Presentismo (PWA)</h3>
+        <p>App instalable en tablets · activa cámara automáticamente · funciona offline · sincronizada con el hub</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 8: PRÓXIMOS PASOS ══ -->
+<div class="slide bg-teal" id="s8">
+  <div class="slide-header" style="background:rgba(0,0,0,.2);"><h2>🚀 Próximos pasos — Roadmap</h2><span class="slide-num">08 / 09</span></div>
+  <div class="slide-body" style="flex-direction:column;justify-content:center;">
+    <div style="max-width:800px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:12px;">
+      <div class="roadmap-item">
+        <div class="road-num">01</div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;">Presentismo en tiempo real</div>
+          <div style="font-size:11px;opacity:.75;margin-top:3px;">CORS habilitado en Apps Script de bue.edu.ar → datos automáticos sin exportar</div>
+        </div>
+        <div class="road-badge" style="background:rgba(254,243,199,.2);color:#fcd34d;">En proceso</div>
+      </div>
+      <div class="roadmap-item">
+        <div class="road-num">02</div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;">BA Colaborativa API directa</div>
+          <div style="font-size:11px;opacity:.75;margin-top:3px;">client_secret solicitado → tickets en vivo sin importar CSV manualmente</div>
+        </div>
+        <div class="road-badge" style="background:rgba(219,234,254,.2);color:#93c5fd;">Solicitado</div>
+      </div>
+      <div class="roadmap-item">
+        <div class="road-num">03</div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;">Historial de resolución</div>
+          <div style="font-size:11px;opacity:.75;margin-top:3px;">Gráficos de tendencia por bimestre · evolución de % de carga en el tiempo</div>
+        </div>
+        <div class="road-badge" style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.7);">Planificado</div>
+      </div>
+      <div class="roadmap-item" style="border:none;">
+        <div class="road-num" style="background:#059669;">✓</div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;">Sistema de notificaciones activo</div>
+          <div style="font-size:11px;opacity:.75;margin-top:3px;">Campana 🔔 con alertas de bugs nuevos en Mantis y tickets nuevos en BA Colaborativa</div>
+        </div>
+        <div class="road-badge" style="background:rgba(209,250,229,.2);color:#6ee7b7;">Listo ✓</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SLIDE 9: CIERRE ══ -->
+<div class="slide bg-navy" id="s9">
+  <div class="title-hero">
+    <div class="logo">Aprende<span>BA</span> Hub</div>
+    <h1 style="font-size:32px;">Una sola plataforma.<br>Todo el equipo. En tiempo real.</h1>
+    <div class="url-pill">🌐 aprendeba-docs.vercel.app</div>
+    <div style="margin-top:28px;font-size:12px;opacity:.6;text-transform:uppercase;letter-spacing:.5px;">Equipo Funcional — Célula 5</div>
+    <div class="team-grid">
+      <div class="team-chip">Cristina Castellar · PM</div>
+      <div class="team-chip">Nadia Delu · PM</div>
+      <div class="team-chip">Jesica Gómez</div>
+      <div class="team-chip">Maximiliano Ramírez</div>
+      <div class="team-chip">Rodrigo Pedro</div>
+      <div class="team-chip">Cristian Santillán</div>
+    </div>
+    <div style="margin-top:20px;font-size:10px;opacity:.4;">Subsecretaría de Tecnología Educativa · Ministerio de Educación GCBA · 2026</div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- ── NAV ── -->
+<div id="nav">
+  <button id="prev" onclick="go(-1)" disabled>◀</button>
+  <div id="progress"></div>
+  <span id="slide-counter">1 / 9</span>
+  <button id="next" onclick="go(1)">▶</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const N = slides.length;
+let cur = 0;
+
+function buildDots() {
+  const p = document.getElementById('progress');
+  for (let i = 0; i < N; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' act':'');
+    d.onclick = () => goTo(i);
+    p.append(d);
+  }
+}
+
+function goTo(n) {
+  slides[cur].classList.remove('active');
+  document.querySelectorAll('.dot')[cur].classList.remove('act');
+  cur = Math.max(0, Math.min(N-1, n));
+  slides[cur].classList.add('active');
+  document.querySelectorAll('.dot')[cur].classList.add('act');
+  document.getElementById('slide-counter').textContent = (cur+1) + ' / ' + N;
+  document.getElementById('prev').disabled = cur === 0;
+  document.getElementById('next').disabled = cur === N-1;
+}
+
+function go(dir) { goTo(cur + dir); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); go(-1); }
+  if (e.key === 'f' || e.key === 'F') toggleFS();
+});
+
+function toggleFS() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+  else document.exitFullscreen();
+}
+
+buildDots();
+</script>
+</body>
+</html>
