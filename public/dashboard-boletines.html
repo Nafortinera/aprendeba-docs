@@ -63,7 +63,8 @@ td{padding:7px 11px;font-size:12px;}
   <div class="modulo-btns">
     <button class="mbtn act" onclick="cambiarModulo('boletines',this)">📄 Boletines</button>
     <button class="mbtn" onclick="cambiarModulo('calificaciones',this)">📝 Calificaciones</button>
-    <button class="mbtn" onclick="cambiarModulo('presentismo',this)">📋 Presentismo</button>
+    <button class="mbtn" onclick="cambiarModulo('presentismo',this)" id="btn-pres">📋 Presentismo</button>
+    <button class="mbtn" onclick="conectarPresentismo()" style="background:#059669;color:#fff;border-color:#059669;font-size:11px;">🔗 Conectar</button>
   </div>
   <div class="periodo-btns" id="periodo-wrap">
     <button class="pbtn act" onclick="cambiarPeriodo('1° Bimestre',this)">1° Bim</button>
@@ -305,6 +306,96 @@ function importar(input) {
   };
   reader.readAsText(file,'UTF-8');
   input.value='';
+}
+
+// Conectar Presentismo via Apps Script
+async function conectarPresentismo() {
+  const msg = document.getElementById('import-msg');
+  msg.textContent = '🔄 Conectando con Apps Script...';
+  try {
+    const res = await fetch('https://script.google.com/a/bue.edu.ar/macros/s/AKfycbxeE12teu9TbT82DBsDofGlCn93UXsYwDErd1UqPd0AAAwV2j1wu9GXa4-M4I1sKsDHSg/exec?view=presentismo', {
+      credentials: 'include',
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    // Try to parse as JSON
+    let data;
+    try { data = JSON.parse(text); } catch(e) {
+      // Maybe it returned HTML (auth required)
+      if (text.includes('AccountChooser') || text.includes('signin')) {
+        msg.style.color = '#dc2626';
+        msg.textContent = '🔐 Necesitás estar logueado con @bue.edu.ar. Abrí el link, iniciá sesión, luego pegá el JSON abajo.';
+        window.open('https://script.google.com/a/bue.edu.ar/macros/s/AKfycbxeE12teu9TbT82DBsDofGlCn93UXsYwDErd1UqPd0AAAwV2j1wu9GXa4-M4I1sKsDHSg/exec?view=presentismo', '_blank');
+        mostrarPegarJSON();
+        return;
+      }
+      throw new Error('Respuesta no es JSON válido');
+    }
+    // Process the data
+    const rows = Array.isArray(data) ? data : (data.data || data.rows || []);
+    if (!rows.length) throw new Error('Sin datos en la respuesta');
+    DB['presentismo'] = procesarAppsScript(rows);
+    msg.style.color = '#059669';
+    msg.textContent = '✓ ' + DB['presentismo'].length + ' registros de Presentismo cargados';
+    // Switch to presentismo
+    document.querySelectorAll('.mbtn').forEach(b=>b.classList.remove('act'));
+    document.getElementById('btn-pres').classList.add('act');
+    MOD = 'presentismo'; init();
+    setTimeout(()=>{ msg.textContent=''; msg.style.color=''; }, 5000);
+  } catch(e) {
+    msg.style.color = '#dc2626';
+    msg.textContent = '⚠️ ' + e.message + ' — Usá "Importar datos" con el Excel exportado';
+    console.error(e);
+    setTimeout(()=>{ msg.textContent=''; msg.style.color=''; }, 8000);
+  }
+}
+
+function procesarAppsScript(rows) {
+  // Handle various JSON structures from Apps Script
+  if (typeof rows[0] === 'object') {
+    return rows.map(r => {
+      const nombre = r.establecimiento || r.escuela || r.nombre || r.Establecimiento || '';
+      const pct = parseFloat(r.pct || r.porcentaje || r.cargadas || r['% Cargadas'] || 0);
+      const periodo = r.periodo || r.bimestre || r.Periodo || '';
+      const de_m = nombre.match(/DE (\d+)/);
+      return {
+        de: de_m ? parseInt(de_m[1]) : 0,
+        nivel: r.nivel || r.Nivel || 'Presentismo',
+        escuela: nombre.slice(0, 65),
+        nombre_completo: nombre,
+        pct: pct > 1 ? Math.round(pct*10)/10 : Math.round(pct*1000)/10,
+        periodo
+      };
+    }).filter(d => d.escuela);
+  }
+  return [];
+}
+
+function mostrarPegarJSON() {
+  // Add a paste area if not exists
+  if (document.getElementById('paste-area')) return;
+  const div = document.createElement('div');
+  div.id = 'paste-area';
+  div.style.cssText = 'background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:12px;margin:10px 16px;';
+  div.innerHTML = `<div style="font-size:12px;font-weight:700;color:#15803d;margin-bottom:6px;">📋 Pegá el JSON del Apps Script acá:</div>
+    <textarea id="json-paste" rows="4" style="width:100%;font-size:11px;font-family:monospace;border:1px solid #86efac;border-radius:6px;padding:6px;" placeholder='[{"establecimiento":"...", "pct":0.85}]'></textarea>
+    <button onclick="cargarJSON()" style="margin-top:6px;background:#15803d;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">Cargar</button>`;
+  document.querySelector('.toolbar').after(div);
+}
+
+function cargarJSON() {
+  try {
+    const text = document.getElementById('json-paste').value.trim();
+    const data = JSON.parse(text);
+    const rows = Array.isArray(data) ? data : (data.data || []);
+    DB['presentismo'] = procesarAppsScript(rows);
+    document.getElementById('paste-area').remove();
+    document.getElementById('import-msg').textContent = '✓ ' + DB['presentismo'].length + ' registros cargados';
+    MOD = 'presentismo'; init();
+  } catch(e) {
+    alert('JSON inválido: ' + e.message);
+  }
 }
 
 // Init
