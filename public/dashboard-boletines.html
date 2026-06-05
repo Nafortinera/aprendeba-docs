@@ -309,46 +309,14 @@ function importar(input) {
 }
 
 // Conectar Presentismo via Apps Script
-async function conectarPresentismo() {
+function conectarPresentismo() {
+  // Open in new tab so user can authenticate and copy the data
+  window.open('https://script.google.com/a/bue.edu.ar/macros/s/AKfycbxeE12teu9TbT82DBsDofGlCn93UXsYwDErd1UqPd0AAAwV2j1wu9GXa4-M4I1sKsDHSg/exec?view=presentismo', '_blank');
+  // Show paste field immediately
+  mostrarPegarJSON();
   const msg = document.getElementById('import-msg');
-  msg.textContent = '🔄 Conectando con Apps Script...';
-  try {
-    const res = await fetch('https://script.google.com/a/bue.edu.ar/macros/s/AKfycbxeE12teu9TbT82DBsDofGlCn93UXsYwDErd1UqPd0AAAwV2j1wu9GXa4-M4I1sKsDHSg/exec?view=presentismo', {
-      credentials: 'include',
-      headers: { 'Accept': 'application/json' }
-    });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const text = await res.text();
-    // Try to parse as JSON
-    let data;
-    try { data = JSON.parse(text); } catch(e) {
-      // Maybe it returned HTML (auth required)
-      if (text.includes('AccountChooser') || text.includes('signin')) {
-        msg.style.color = '#dc2626';
-        msg.textContent = '🔐 Necesitás estar logueado con @bue.edu.ar. Abrí el link, iniciá sesión, luego pegá el JSON abajo.';
-        window.open('https://script.google.com/a/bue.edu.ar/macros/s/AKfycbxeE12teu9TbT82DBsDofGlCn93UXsYwDErd1UqPd0AAAwV2j1wu9GXa4-M4I1sKsDHSg/exec?view=presentismo', '_blank');
-        mostrarPegarJSON();
-        return;
-      }
-      throw new Error('Respuesta no es JSON válido');
-    }
-    // Process the data
-    const rows = Array.isArray(data) ? data : (data.data || data.rows || []);
-    if (!rows.length) throw new Error('Sin datos en la respuesta');
-    DB['presentismo'] = procesarAppsScript(rows);
-    msg.style.color = '#059669';
-    msg.textContent = '✓ ' + DB['presentismo'].length + ' registros de Presentismo cargados';
-    // Switch to presentismo
-    document.querySelectorAll('.mbtn').forEach(b=>b.classList.remove('act'));
-    document.getElementById('btn-pres').classList.add('act');
-    MOD = 'presentismo'; init();
-    setTimeout(()=>{ msg.textContent=''; msg.style.color=''; }, 5000);
-  } catch(e) {
-    msg.style.color = '#dc2626';
-    msg.textContent = '⚠️ ' + e.message + ' — Usá "Importar datos" con el Excel exportado';
-    console.error(e);
-    setTimeout(()=>{ msg.textContent=''; msg.style.color=''; }, 8000);
-  }
+  msg.style.color = '#0e7490';
+  msg.textContent = '👆 1. Iniciá sesión en la nueva pestaña  2. Copiá todo el contenido (Ctrl+A, Ctrl+C)  3. Pegá abajo';
 }
 
 function procesarAppsScript(rows) {
