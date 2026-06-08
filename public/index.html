@@ -2948,19 +2948,35 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <div style="font-size:12px;margin-top:6px;">Importá un archivo JSON o CSV para comenzar</div>
 </div>
 <div id="bac-tabla-wrap" style="display:none;overflow-x:auto;border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,.08);">
-<table style="width:100%;border-collapse:separate;border-spacing:0;background:#fff;min-width:1200px;">
+<!-- Header table (fixed) -->
+<table id="bac-thead-table" style="width:100%;border-collapse:collapse;table-layout:fixed;background:#fff;min-width:1200px;">
+  <colgroup>
+    <col style="width:36px;"><col style="width:115px;"><col style="width:200px;">
+    <col style="width:170px;"><col><col style="width:110px;">
+    <col style="width:85px;"><col style="width:220px;">
+  </colgroup>
   <thead><tr style="background:var(--navy);color:#fff;font-size:11.5px;">
-    <th style="padding:9px 10px;width:36px;position:sticky;top:0;background:var(--navy);z-index:2;box-shadow:0 1px 0 rgba(255,255,255,.1);">✓</th>
-    <th style="padding:9px 10px;width:115px;position:sticky;top:0;background:var(--navy);z-index:2;">Ticket</th>
-    <th style="padding:9px 10px;width:200px;position:sticky;top:0;background:var(--navy);z-index:2;">Establecimiento</th>
-    <th style="padding:9px 10px;width:170px;position:sticky;top:0;background:var(--navy);z-index:2;">Módulo</th>
-    <th style="padding:9px 10px;position:sticky;top:0;background:var(--navy);z-index:2;">Descripción</th>
-    <th style="padding:9px 10px;width:110px;position:sticky;top:0;background:var(--navy);z-index:2;">Contacto</th>
-    <th style="padding:9px 10px;width:85px;position:sticky;top:0;background:var(--navy);z-index:2;">🐛 Mantis</th>
-    <th style="padding:9px 10px;width:220px;position:sticky;top:0;background:var(--navy);z-index:2;">Respuesta</th>
+    <th style="padding:9px 10px;">✓</th>
+    <th style="padding:9px 10px;">Ticket</th>
+    <th style="padding:9px 10px;">Establecimiento</th>
+    <th style="padding:9px 10px;">Módulo</th>
+    <th style="padding:9px 10px;">Descripción</th>
+    <th style="padding:9px 10px;">Contacto</th>
+    <th style="padding:9px 10px;">🐛 Mantis</th>
+    <th style="padding:9px 10px;">Respuesta</th>
   </tr></thead>
+</table>
+<!-- Body table (scrollable) -->
+<div id="bac-body-scroll" style="overflow-y:auto;max-height:55vh;overflow-x:hidden;">
+<table style="width:100%;border-collapse:collapse;background:#fff;min-width:1200px;table-layout:fixed;">
+  <colgroup>
+    <col style="width:36px;"><col style="width:115px;"><col style="width:200px;">
+    <col style="width:170px;"><col><col style="width:110px;">
+    <col style="width:85px;"><col style="width:220px;">
+  </colgroup>
   <tbody id="bac-tbody"></tbody>
 </table>
+</div>
 </div>
 
 </div><!-- /tab-bacolaborativa -->
@@ -3494,6 +3510,21 @@ document.addEventListener('DOMContentLoaded', function() {
   const saved = localStorage.getItem('pbi_embed_url');
   const iframe = document.getElementById('pbi-iframe');
   if (saved && iframe) iframe.src = saved;
+});
+
+// Sync horizontal scroll between BAC header and body
+document.addEventListener('DOMContentLoaded', function() {
+  const wrap = document.getElementById('bac-tabla-wrap');
+  if (!wrap) return;
+  const obs = new MutationObserver(() => {
+    const scroll = document.getElementById('bac-body-scroll');
+    const hdr = document.getElementById('bac-thead-table');
+    if (scroll && hdr) {
+      wrap.addEventListener('scroll', () => { scroll.scrollLeft = wrap.scrollLeft; });
+      scroll.addEventListener('scroll', () => { wrap.scrollLeft = scroll.scrollLeft; });
+    }
+  });
+  obs.observe(wrap, { childList: true, subtree: true });
 });
 
 // ── MANTIS PROXY ─────────────────────────────────────────────
