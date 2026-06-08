@@ -4256,7 +4256,14 @@ function bacParseCSV(text) {
         cargo:           r['Educación - Cargo'] || '',
         adjunto:         r['Contiene archivos adjuntos'] || 'No',
         fecha,
-        descripcion:     r['Observación'] || r['Motivo'] || r['Prestación'] || '',
+        descripcion:     (() => {
+          const cuest = r['Cuestionario respondido'] || '';
+          // Extract "Describí la situación - ..." from questionnaire
+          const m = cuest.match(/Describ[ií] la situaci[oó]n[^-]*-\s*([^|]+)/i);
+          if (m) return m[1].trim();
+          // Fallback: Observación, Motivo, then Prestación
+          return r['Observación'] || r['Motivo'] || r['Prestación'] || '';
+        })(),
       };
     }).filter(t => t.num);
   }
