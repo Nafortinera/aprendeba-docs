@@ -3168,8 +3168,13 @@ function cambiarTab(tab) {
   }
   // Trigger drive load
   if (tab === 'drive') cargarDriveData();
-  // Restore mantis config
-  if (tab === 'mantis') restaurarMantisConfig();
+  // Mantis: reload and force show
+  if (tab === 'mantis') {
+    restaurarMantisConfig();
+    setTimeout(function() {
+      cargarMantisProxy();
+    }, 100);
+  }
 }
 
 function cambiarSub(tab, sub) {
