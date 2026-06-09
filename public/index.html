@@ -3834,7 +3834,7 @@ async function cargarMantisProxy() {
   if (statusTxt) statusTxt.textContent = 'Actualizando...';
 
   try {
-    const ping = await fetch('https://aprende-ba.vercel.app/api/mantis-issues?ping=1', { signal: AbortSignal.timeout(3000) });
+    const ping = await fetch('https://aprendeba-docs.vercel.app/api/mantis-issues?ping=1', { signal: AbortSignal.timeout(3000) });
     if (!ping.ok) throw new Error('proxy error');
 
     // Proxy activo
@@ -3843,7 +3843,7 @@ async function cargarMantisProxy() {
 
     if (statusTxt) statusTxt.textContent = 'Cargando bugs desde Mantis...';
 
-    const res = await fetch('https://aprende-ba.vercel.app/api/mantis-issues');
+    const res = await fetch('https://aprendeba-docs.vercel.app/api/mantis-issues');
     const data = await res.json();
 
     if (data.error) throw new Error(data.error);
