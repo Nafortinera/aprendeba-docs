@@ -2977,6 +2977,35 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <tbody id="bac-tbody"></tbody>
 </table>
 </div>
+
+<!-- ── HISTORIAL DE TICKETS RESUELTOS ── -->
+<div style="margin-top:18px;">
+  <div onclick="toggleHistorial()" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fff;border:1px solid var(--gris-borde);border-radius:10px;cursor:pointer;user-select:none;"
+       id="historial-header">
+    <span style="font-size:16px;">📚</span>
+    <div style="flex:1;">
+      <div style="font-weight:700;color:var(--navy);font-size:13px;">Historial — Tickets resueltos</div>
+      <div style="font-size:11px;color:var(--texto-suave);" id="historial-count">—</div>
+    </div>
+    <span id="historial-arrow" style="color:var(--texto-suave);font-size:13px;transition:transform .2s;">▼</span>
+  </div>
+  <div id="historial-wrap" style="display:none;margin-top:8px;overflow-x:auto;border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,.08);">
+    <div style="padding:8px 12px;background:#f0fdf4;border-bottom:1px solid #d1fae5;">
+      <input id="historial-fq" type="text" placeholder="Buscar en historial..." oninput="filtrarHistorial()"
+        style="padding:6px 11px;border:1px solid var(--gris-borde);border-radius:7px;font-size:12.5px;width:260px;outline:none;">
+    </div>
+    <table style="width:100%;border-collapse:collapse;background:#fff;min-width:900px;">
+      <thead><tr style="background:#374151;color:#fff;font-size:11px;">
+        <th style="padding:8px 10px;width:110px;">Ticket</th>
+        <th style="padding:8px 10px;width:180px;">Establecimiento</th>
+        <th style="padding:8px 10px;width:140px;">Módulo</th>
+        <th style="padding:8px 10px;">Descripción</th>
+        <th style="padding:8px 10px;width:110px;">Contacto</th>
+        <th style="padding:8px 10px;width:180px;">Respuesta</th>
+      </tr></thead>
+      <tbody id="historial-tbody"></tbody>
+    </table>
+  </div>
 </div>
 
 </div><!-- /tab-bacolaborativa -->
@@ -3526,6 +3555,62 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   obs.observe(wrap, { childList: true, subtree: true });
 });
+
+// ── HISTORIAL BA COLABORATIVA ─────────────────────────────────
+function toggleHistorial() {
+  const wrap  = document.getElementById('historial-wrap');
+  const arrow = document.getElementById('historial-arrow');
+  if (!wrap) return;
+  const open = wrap.style.display === 'none';
+  wrap.style.display = open ? 'block' : 'none';
+  if (arrow) arrow.style.transform = open ? 'rotate(180deg)' : '';
+  if (open) renderHistorial(BAC_T);
+}
+
+function renderHistorial(allTickets) {
+  const q = (document.getElementById('historial-fq')?.value || '').toLowerCase();
+  const resueltos = allTickets.filter(t => BAC_STATE[t.num]?.r);
+  const filtered  = q ? resueltos.filter(t =>
+    [t.num, t.escuela, t.modulo, t.descripcion, t.ciudadano].join(' ').toLowerCase().includes(q)
+  ) : resueltos;
+
+  const count = document.getElementById('historial-count');
+  if (count) count.textContent = `${filtered.length} de ${resueltos.length} ticket${resueltos.length !== 1 ? 's' : ''} resueltos`;
+
+  const tbody = document.getElementById('historial-tbody');
+  if (!tbody) return;
+
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:#aaa;font-size:13px;">Sin tickets resueltos</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(t => {
+    const st  = BAC_STATE[t.num] || {};
+    const resp = (st.resp || '').slice(0, 80) + ((st.resp||'').length > 80 ? '…' : '');
+    return `<tr style="border-bottom:1px solid #f1f5f9;opacity:.75;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.75'">
+      <td style="padding:7px 10px;font-size:11.5px;font-family:monospace;font-weight:700;color:#374151;">${t.num}<br><span style="font-weight:400;color:#94a3b8;font-family:inherit;">${t.fecha||''}</span></td>
+      <td style="padding:7px 10px;font-size:12px;">${t.establecimiento||'—'}<br><span style="font-size:10.5px;color:#94a3b8;">${t.cue||''}</span></td>
+      <td style="padding:7px 10px;font-size:11px;"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:6px;font-weight:700;">${t.modulo||'—'}</span></td>
+      <td style="padding:7px 10px;font-size:12px;color:#374151;">${(t.descripcion||'—').slice(0,100)}${(t.descripcion||'').length>100?'…':''}</td>
+      <td style="padding:7px 10px;font-size:11.5px;">${t.ciudadano||'—'}</td>
+      <td style="padding:7px 10px;font-size:11px;color:#64748b;font-style:italic;">${resp||'—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function filtrarHistorial() { renderHistorial(BAC_T); }
+
+// Update historial count when state changes
+const _origBacStats = bacStats;
+function bacStats() {
+  _origBacStats();
+  const count = document.getElementById('historial-count');
+  if (count) {
+    const resueltos = BAC_T.filter(t => BAC_STATE[t.num]?.r).length;
+    count.textContent = `${resueltos} ticket${resueltos !== 1 ? 's' : ''} resuelto${resueltos !== 1 ? 's' : ''}`;
+  }
+}
 
 // ── MANTIS PROXY ─────────────────────────────────────────────
 const PROXY = 'https://aprendebaas.netlify.app/.netlify/functions'; // Netlify
