@@ -3008,6 +3008,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   </div>
 </div>
 
+</div>
 </div><!-- /tab-bacolaborativa -->
 
 <!-- ════ MANTIS ════ -->
@@ -3737,7 +3738,6 @@ function filtrarMantisProxy() {
 
 function renderMantisGrupos(data) {
   const wrap = document.getElementById('mantis-grupos');
-  console.log('[M7] renderMantisGrupos data:', data?.length, 'wrap:', wrap, 'parent display:', wrap?.closest('.tab-content')?.style.display, wrap?.closest('.tab-content')?.className);
   if (!wrap) return;
 
   // Agrupar por proyecto
@@ -3833,12 +3833,8 @@ function toggleMantisClosedTable() {
 async function cargarMantisProxy() {
   const statusTxt = document.getElementById('mantis-status-txt');
   if (statusTxt) statusTxt.textContent = 'Actualizando...';
-
-  console.log('[M1] cargarMantisProxy iniciado');
   try {
-    console.log('[M2] fetch ping...');
     const ping = await fetch('https://aprendeba-docs.vercel.app/api/mantis-issues?ping=1');
-    console.log('[M3] ping status:', ping.status);
     if (!ping.ok) throw new Error('proxy error ' + ping.status);
 
     // Proxy activo
@@ -3853,7 +3849,6 @@ async function cargarMantisProxy() {
     if (data.error) throw new Error(data.error);
 
     mantisAllIssues = data.issues || [];
-    console.log('[M4] issues cargados:', mantisAllIssues.length);
 
     // Métricas
     const metrics = document.getElementById('mantis-metrics');
@@ -3875,9 +3870,7 @@ async function cargarMantisProxy() {
     document.getElementById('mantis-iframe-wrap') && (document.getElementById('mantis-iframe-wrap').style.display = 'none');
 
     notifCheckMantis(mantisAllIssues);
-    console.log('[M5] llamando filtrarMantisProxy...');
     filtrarMantisProxy();
-    console.log('[M6] grupos elem:', document.getElementById('mantis-grupos'), 'display:', document.getElementById('mantis-grupos')?.style.display);
     if (statusTxt) statusTxt.textContent = `✓ ${data.total} bugs cargados · Proxy activo en aprendebaas.netlify.app`;
 
   } catch (e) {
