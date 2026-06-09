@@ -3556,52 +3556,6 @@ document.addEventListener('DOMContentLoaded', function() {
   obs.observe(wrap, { childList: true, subtree: true });
 });
 
-// ── STICKY HEADER BAC (JS approach) ──────────────────────────
-function initBacStickyHeader() {
-  const wrap = document.getElementById('bac-tabla-wrap');
-  const table = wrap?.querySelector('table');
-  const thead = table?.querySelector('thead');
-  if (!wrap || !thead) return;
-
-  // Clone the header
-  const clone = thead.cloneNode(true);
-  clone.id = 'bac-sticky-clone';
-  clone.style.cssText = 'display:none;position:fixed;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.2);';
-  document.body.appendChild(clone);
-
-  function syncClone() {
-    const wrapRect = wrap.getBoundingClientRect();
-    const theadRect = thead.getBoundingClientRect();
-    const navH = 160; // header + nav height
-
-    if (theadRect.top < navH && wrapRect.bottom > navH + 30) {
-      // Show clone
-      clone.style.display = 'table-header-group';
-      clone.style.top = navH + 'px';
-      clone.style.left = wrapRect.left + 'px';
-      clone.style.width = wrapRect.width + 'px';
-      // Sync column widths
-      const origThs = thead.querySelectorAll('th');
-      const cloneThs = clone.querySelectorAll('th');
-      origThs.forEach((th, i) => {
-        if (cloneThs[i]) cloneThs[i].style.width = th.offsetWidth + 'px';
-      });
-    } else {
-      clone.style.display = 'none';
-    }
-  }
-
-  window.addEventListener('scroll', syncClone);
-  window.addEventListener('resize', () => { clone.style.display='none'; });
-}
-
-// Init after BAC renders
-const _origBacRender = bacRender;
-function bacRender(data) {
-  _origBacRender(data);
-  setTimeout(initBacStickyHeader, 300);
-}
-
 // ── HISTORIAL BA COLABORATIVA ─────────────────────────────────
 function toggleHistorial() {
   const wrap  = document.getElementById('historial-wrap');
