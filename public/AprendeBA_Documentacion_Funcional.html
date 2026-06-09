@@ -778,16 +778,16 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
       </div>
 
       <div style="margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-        <input type="text" id="filtro-docs" placeholder="🔍 Filtrar documentos..." 
+        <input type="text" id="filtro-docs" placeholder="🔍 Filtrar documentos..." oninput="filtrarTablaDoc()"
           style="padding:7px 14px;border:1px solid var(--gris-borde);border-radius:20px;font-size:13px;outline:none;width:260px;">
-        <select id="filtro-estado" style="padding:7px 10px;border:1px solid var(--gris-borde);border-radius:8px;font-size:13px;">
+        <select id="filtro-estado" onchange="filtrarTablaDoc()" style="padding:7px 10px;border:1px solid var(--gris-borde);border-radius:8px;font-size:13px;">
           <option value="">Todos los estados</option>
           <option value="Implementado">✅ Implementado</option>
           <option value="En desarrollo">🔧 En desarrollo</option>
           <option value="Pendiente">⏳ Pendiente</option>
           <option value="En seguimiento">👁 En seguimiento</option>
         </select>
-        <select id="filtro-modulo" style="padding:7px 10px;border:1px solid var(--gris-borde);border-radius:8px;font-size:13px;">
+        <select id="filtro-modulo" onchange="filtrarTablaDoc()" style="padding:7px 10px;border:1px solid var(--gris-borde);border-radius:8px;font-size:13px;">
           <option value="">Todos los módulos</option>
           <option value="Presentismo">📋 Presentismo</option>
           <option value="Calificaciones">📝 Calificaciones</option>
@@ -3615,6 +3615,28 @@ function bacStats() {
     const resueltos = BAC_T.filter(t => BAC_STATE[t.num]?.r).length;
     count.textContent = `${resueltos} ticket${resueltos !== 1 ? 's' : ''} resuelto${resueltos !== 1 ? 's' : ''}`;
   }
+}
+
+// ── FILTRAR TABLA DOCUMENTOS ──────────────────────────────────
+function filtrarTablaDoc() {
+  const q   = (document.getElementById('filtro-docs')?.value || '').toLowerCase();
+  const est = document.getElementById('filtro-estado')?.value || '';
+  const mod = document.getElementById('filtro-modulo')?.value || '';
+  const rows = document.querySelectorAll('#tabla-docs tbody tr');
+  let vis = 0;
+  rows.forEach(r => {
+    const txt   = r.textContent.toLowerCase();
+    const badge = r.querySelector('.badge, [class*="badge"]');
+    const bTxt  = badge ? badge.textContent : '';
+    const mq  = !q   || txt.includes(q);
+    const meq = !est || bTxt.includes(est);
+    const mmq = !mod || txt.includes(mod.toLowerCase());
+    const show = mq && meq && mmq;
+    r.style.display = show ? '' : 'none';
+    if (show) vis++;
+  });
+  const cnt = document.getElementById('filtro-count');
+  if (cnt) cnt.textContent = vis + ' documento' + (vis !== 1 ? 's' : '');
 }
 
 // ── MANTIS PROXY ─────────────────────────────────────────────
