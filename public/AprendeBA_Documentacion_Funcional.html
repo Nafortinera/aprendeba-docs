@@ -2528,7 +2528,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
     </div>
   </div>
 
-  <div class="sub-content" id="proc-diagramas" style="display:none;">
+  <div class="sub-content" id="proc-diagramas">
     <div class="panel">
       <div class="panel-header">
         <div class="panel-icon" style="background:#e0f4f8;font-size:20px;">🔀</div>
@@ -2551,7 +2551,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   </div>
 
   <!-- ── PROYECTOS & HORAS ── -->
-  <div class="sub-content" id="proc-horas" style="display:none;">
+  <div class="sub-content" id="proc-horas">
 
     <!-- HERO -->
     <div class="panel" style="background:linear-gradient(135deg,#0f4c75 0%,#1b6ca8 100%);color:#fff;padding:20px 24px;margin-bottom:16px;border-radius:12px;">
@@ -4219,4 +4219,5 @@ function bacUpdateCharts(total, res, pending) {
             callbacks: {
               label: ctx => {
                 const val = ctx.raw;
-                const p
+                const pct = Math.round(val / totalTickets * 100);
+ 
