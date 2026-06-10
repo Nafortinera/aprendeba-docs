@@ -590,6 +590,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <button class="activo" data-sub="proc-estado"  onclick="cambiarSub('procesos','proc-estado')">🟢 Estado módulos</button>
   <button data-sub="proc-deploys"                onclick="cambiarSub('procesos','proc-deploys')">📦 Historial deploys</button>
   <button data-sub="proc-diagramas"              onclick="cambiarSub('procesos','proc-diagramas')">🔀 Diagramas de flujo</button>
+  <button data-sub="proc-horas"                  onclick="cambiarSub('procesos','proc-horas')">📊 Proyectos & Horas</button>
 </nav>
 
 <main>
@@ -2527,127 +2528,87 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
     </div>
   </div>
 
-  <!-- ROADMAP -->
-  <div class="sub-content activo" id="test-todos">
+  <div class="sub-content" id="proc-diagramas">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-icon" style="background:#e0f4f8;font-size:20px;">🔀</div>
+        <div class="panel-title"><h2>Diagramas de Flujo — AprendeBA</h2>
+        <p>Flujos de proceso y permisos por rol · Matriz de Roles oficial</p></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+        <button onclick="mostrarDiag('d1')" id="btn-d1" class="diag-btn activo-diag">📚 Matriculación</button>
+        <button onclick="mostrarDiag('d2')" id="btn-d2" class="diag-btn">📋 Presentismo</button>
+        <button onclick="mostrarDiag('d3')" id="btn-d3" class="diag-btn">📝 Calificaciones</button>
+        <button onclick="mostrarDiag('d4')" id="btn-d4" class="diag-btn">👤 Ciclo del Alumno</button>
+        <button onclick="mostrarDiag('d5')" id="btn-d5" class="diag-btn">👥 Permisos por Rol</button>
+      </div>
+      <div id="d1" class="diag-wrap" style="display:block;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-matriculacion.svg" alt="📚 Matriculación" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+      <div id="d2" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-presentismo.svg" alt="📋 Presentismo" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+      <div id="d3" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-calificaciones.svg" alt="📝 Calificaciones" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+      <div id="d4" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-ciclo-alumno.svg" alt="👤 Ciclo del Alumno" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+      <div id="d5" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-permisos-rol.svg" alt="👥 Permisos por Rol" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+    </div>
+  </div>
+
+  <!-- ── PROYECTOS & HORAS ── -->
+  <div class="sub-content" id="proc-horas">
 
     <!-- HERO -->
-    <div class="hero" style="background:linear-gradient(135deg,#78350f 0%,#b45309 100%);margin-bottom:20px;">
-      <h2>🧪 Testing Automatizado — AprendeBA Staging</h2>
-      <p>Registro de corridas semanales automáticas sobre el entorno <strong>stg.miescuela2.phinxlab.com</strong>.<br>
-         Escuela de prueba: <strong>Esc. Primaria Nº 13 DE 21 Dr. Alfredo Lanari</strong> · CUE 20026800</p>
-      <div class="chips">
-        <span class="chip">Calificaciones</span>
-        <span class="chip">Presentismo</span>
-        <span class="chip">1° grado Mañana Simple A</span>
-        <span class="chip">Directivo</span>
+    <div class="panel" style="background:linear-gradient(135deg,#0f4c75 0%,#1b6ca8 100%);color:#fff;padding:20px 24px;margin-bottom:16px;border-radius:12px;">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between;">
+        <div>
+          <h2 style="margin:0;font-size:18px;color:#fff;">📊 Proyectos & Horas — Phinx</h2>
+          <p style="margin:4px 0 0;font-size:13px;opacity:.85;">Planificación de módulos y estimación de horas · Ciclo 2026</p>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button id="btn-sheet-vf"   onclick="mostrarSheet('vf')"   style="padding:6px 14px;border-radius:20px;border:2px solid #fff;background:#fff;color:#0f4c75;font-weight:700;font-size:12px;cursor:pointer;">📋 Versión completa</button>
+          <button id="btn-sheet-tope" onclick="mostrarSheet('tope')" style="padding:6px 14px;border-radius:20px;border:2px solid rgba(255,255,255,.5);background:transparent;color:#fff;font-weight:600;font-size:12px;cursor:pointer;">🎯 Tope 9.646 hs</button>
+        </div>
       </div>
     </div>
 
-    <!-- STATS -->
-    <div class="test-stats" id="test-stats">
-      <div class="ts-card ts-tot"><div class="ts-num" id="ts-total">2</div><div class="ts-lbl">Tests ejecutados</div></div>
-      <div class="ts-card ts-ok"> <div class="ts-num" id="ts-ok">1</div><div class="ts-lbl">✓ Exitosos</div></div>
-      <div class="ts-card ts-warn"><div class="ts-num" id="ts-warn">1</div><div class="ts-lbl">⚠ Parciales</div></div>
-      <div class="ts-card ts-err"><div class="ts-num" id="ts-err">0</div><div class="ts-lbl">✗ Con errores</div></div>
+    <!-- MÉTRICAS RESUMEN -->
+    <div id="horas-metricas" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px;"></div>
+
+    <!-- FILTRO ESTADO -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">
+      <span style="font-size:12.5px;color:var(--texto-suave);font-weight:600;">Filtrar:</span>
+      <select id="horas-filtro-estado" onchange="renderHorasTabla()" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;background:#fff;">
+        <option value="">Todos los estados</option>
+        <option value="En proceso">En proceso</option>
+        <option value="En analisis">En análisis</option>
+        <option value="Sin iniciar">Sin iniciar</option>
+        <option value="Propuesta Mejoras">Propuesta Mejoras</option>
+        <option value="Always on">Always on</option>
+        <option value="Equipo Cross">Equipo Cross</option>
+      </select>
+      <input id="horas-filtro-texto" oninput="renderHorasTabla()" placeholder="Buscar proyecto..." style="font-size:12px;padding:4px 10px;border:1px solid #ddd;border-radius:6px;flex:1;min-width:180px;max-width:300px;">
+      <span id="horas-count" style="font-size:12px;color:var(--texto-suave);margin-left:auto;"></span>
     </div>
 
-    <div class="nota nota-v" style="margin-bottom:16px;">
-      <strong>📅 Programación:</strong> Ambos tests corren automáticamente cada <strong>lunes a las 9:00 AM</strong>.
-      Hacé clic en <em>"Run now"</em> en el panel Scheduled para activarlos la primera vez.
-    </div>
-
-    <!-- LISTA DE REPORTES -->
-    <div id="test-lista">
-
-      <!-- ── REPORTE 2: Presentismo - 08/05/2026 ── -->
-      <div class="tr-entry">
-        <div class="tr-head">
-          <span class="tr-fecha">📅 08/05/2026 13:15 &nbsp;·&nbsp; <span class="test-modulo-tag tm-pre">Presentismo</span></span>
-          <span class="tr-badge tr-warn">⚠ PARCIAL</span>
-        </div>
-        <table class="tr-tabla">
-          <tr><th>Escuela (CUE)</th><td>Esc. Primaria Nº 13 DE 21 Dr. Alfredo Lanari — 20026800</td></tr>
-          <tr><th>Módulo</th><td>Presentismo · Toma de asistencia</td></tr>
-          <tr><th>Semana testeada</th><td>Lunes 11 al Viernes 15 de mayo 2026</td></tr>
-          <tr><th>Sección</th><td>1° grado Mañana Simple A</td></tr>
-          <tr><th>Alumno ausente</th><td>AVILES VELA, KATHERINE NAIRA — justificación realizada manualmente</td></tr>
-        </table>
-        <div class="tr-pasos">
-          <span class="paso-ok">✓ Login Google SSO</span>
-          <span class="paso-ok">✓ CUE 20026800 → Directivo</span>
-          <span class="paso-ok">✓ Módulo Presentismo cargado</span>
-          <span class="paso-ok">✓ Semana anterior navegada (Lunes 11-15)</span>
-          <span class="paso-ok">✓ Sección 1° grado Mañana A seleccionada</span>
-          <span class="paso-ok">✓ Asistencia cargada (Presente / Ausente)</span>
-          <span class="paso-ok">✓ Guardado exitoso</span>
-          <span class="paso-warn">⚠ Justificación: bug en staging (API devuelve HTML)</span>
-          <span class="paso-ok">✓ Justificación completada manualmente</span>
-        </div>
-        <div style="padding:0 16px 12px;">
-          <div class="nota nota-t" style="margin-top:0;">
-            <strong>Bug identificado:</strong> El formulario de Justificación en el entorno staging devuelve
-            <code>SyntaxError: Unexpected token '&lt;', "!doctype"... is not valid JSON</code>
-            cuando se intenta abrir desde el browser automatizado. La justificación se realiza manualmente hasta que Phinx corrija el endpoint.
-          </div>
-        </div>
-      </div>
-
-      <!-- ── REPORTE 1: Calificaciones - 08/05/2026 ── -->
-      <div class="tr-entry">
-        <div class="tr-head">
-          <span class="tr-fecha">📅 08/05/2026 12:47 &nbsp;·&nbsp; <span class="test-modulo-tag tm-cal">Calificaciones</span></span>
-          <span class="tr-badge tr-ok">✓ EXITOSO</span>
-        </div>
-        <table class="tr-tabla">
-          <tr><th>Escuela (CUE)</th><td>Esc. Primaria Nº 13 DE 21 Dr. Alfredo Lanari — 20026800</td></tr>
-          <tr><th>Módulo</th><td>Calificaciones · Primer Bimestre</td></tr>
-          <tr><th>Sección</th><td>1° grado Mañana Simple A</td></tr>
-          <tr><th>Alumno testeado</th><td>ALAMO, MATÍAS EZEQUIEL (DNI 58143527) — índ. rotativo #0</td></tr>
-          <tr><th>Valor cargado</th><td>Carga masiva "Alcanzado" · Observación de prueba</td></tr>
-          <tr><th>Runs totales</th><td>1 — próximo: ARICOMA SANCHEZ, THIAGO (índ. #1)</td></tr>
-        </table>
-        <div class="tr-pasos">
-          <span class="paso-ok">✓ Login Google SSO</span>
-          <span class="paso-ok">✓ Búsqueda CUE 20026800</span>
-          <span class="paso-ok">✓ Rol Directivo seleccionado</span>
-          <span class="paso-ok">✓ Módulo Calificaciones cargado</span>
-          <span class="paso-ok">✓ Filtros: Primer Bimestre / 1° grado / Sección A</span>
-          <span class="paso-ok">✓ Aspectos Generales → No / No → Guardado</span>
-          <span class="paso-ok">✓ Trabajo en el aula → Alcanzado (carga masiva) → Guardado</span>
-          <span class="paso-ok">✓ Convivencia → Alcanzado (carga masiva) → Guardado</span>
-          <span class="paso-ok">✓ Área de Conocimiento (Matemática) → Alcanzado → Guardado</span>
-          <span class="paso-ok">✓ Observaciones → Texto de prueba → Guardado</span>
-          <span class="paso-ok">✓ Estado alumno verificado: "En proceso"</span>
-        </div>
-      </div>
-
-    </div><!-- /test-lista -->
-
-    <!-- CONFIGURACIÓN -->
-    <div class="panel" style="margin-top:24px;">
-      <div class="panel-header">
-        <div class="panel-icon" style="background:#fff8e1;font-size:20px;">⚙️</div>
-        <div class="panel-title">
-          <h2>Configuración de los tests automáticos</h2>
-          <p>Archivo de estado y parámetros de cada test semanal</p>
-        </div>
-      </div>
-      <table>
-        <thead><tr><th>Parámetro</th><th>Calificaciones</th><th>Presentismo</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Frecuencia</strong></td><td>Lunes 9:00 AM</td><td>Lunes 9:00 AM</td></tr>
-          <tr><td><strong>CUE</strong></td><td>20026800</td><td>20026800</td></tr>
-          <tr><td><strong>Sección</strong></td><td>1° grado Mañana Simple A</td><td>1° grado Mañana Simple A</td></tr>
-          <tr><td><strong>Rotación</strong></td><td>1 alumno por semana (índ. en state file)</td><td>1 alumno ausente rotativo</td></tr>
-          <tr><td><strong>Valor prueba</strong></td><td>"Alcanzado" en todas las pestañas</td><td>Presente masivo + 1 Ausente</td></tr>
-          <tr><td><strong>Justificación</strong></td><td>N/A</td><td>Manual (bug en staging)</td></tr>
-          <tr><td><strong>Próximo alumno</strong></td><td>ARICOMA SANCHEZ, THIAGO</td><td>Índice #0 (ALAMO, MATÍAS)</td></tr>
-        </tbody>
+    <!-- TABLA -->
+    <div style="overflow-x:auto;">
+      <table id="tabla-horas" style="width:100%;border-collapse:collapse;font-size:12.5px;">
+        <thead>
+          <tr style="background:#f0f4f8;text-align:left;">
+            <th style="padding:8px 10px;font-size:11.5px;color:#5a6a7a;font-weight:700;border-bottom:2px solid #e2e8f0;">Proyecto</th>
+            <th style="padding:8px 10px;font-size:11.5px;color:#5a6a7a;font-weight:700;border-bottom:2px solid #e2e8f0;white-space:nowrap;">Estado</th>
+            <th style="padding:8px 10px;font-size:11.5px;color:#5a6a7a;font-weight:700;border-bottom:2px solid #e2e8f0;text-align:center;">Avance</th>
+            <th style="padding:8px 10px;font-size:11.5px;color:#5a6a7a;font-weight:700;border-bottom:2px solid #e2e8f0;text-align:right;white-space:nowrap;">Hs única vez</th>
+            <th style="padding:8px 10px;font-size:11.5px;color:#5a6a7a;font-weight:700;border-bottom:2px solid #e2e8f0;text-align:right;white-space:nowrap;">Hs recurrentes</th>
+            <th style="padding:8px 10px;font-size:11.5px;color:#5a6a7a;font-weight:700;border-bottom:2px solid #e2e8f0;">Observaciones</th>
+          </tr>
+        </thead>
+        <tbody id="horas-tbody"></tbody>
       </table>
     </div>
 
-  </div><!-- /sub-content -->
-</div><!-- /tab-testing -->
+    <!-- TOTALES -->
+    <div id="horas-totales" style="margin-top:16px;padding:14px 18px;background:#f0f4f8;border-radius:10px;font-size:13px;display:flex;gap:24px;flex-wrap:wrap;"></div>
+
+  </div><!-- /proc-horas -->
+
+</div><!-- /tab-procesos -->
 
 
 
@@ -2657,27 +2618,6 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 
 
 
-<div class="sub-content" id="proc-diagramas" style="display:none;">
-  <div class="panel">
-    <div class="panel-header">
-      <div class="panel-icon" style="background:#e0f4f8;font-size:20px;">🔀</div>
-      <div class="panel-title"><h2>Diagramas de Flujo — AprendeBA</h2>
-      <p>Flujos de proceso y permisos por rol · Matriz de Roles oficial</p></div>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
-      <button onclick="mostrarDiag('d1')" id="btn-d1" class="diag-btn activo-diag">📚 Matriculación</button>
-      <button onclick="mostrarDiag('d2')" id="btn-d2" class="diag-btn">📋 Presentismo</button>
-      <button onclick="mostrarDiag('d3')" id="btn-d3" class="diag-btn">📝 Calificaciones</button>
-      <button onclick="mostrarDiag('d4')" id="btn-d4" class="diag-btn">👤 Ciclo del Alumno</button>
-      <button onclick="mostrarDiag('d5')" id="btn-d5" class="diag-btn">👥 Permisos por Rol</button>
-    </div>
-    <div id="d1" class="diag-wrap" style="display:block;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-matriculacion.svg" alt="📚 Matriculación" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d2" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-presentismo.svg" alt="📋 Presentismo" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d3" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-calificaciones.svg" alt="📝 Calificaciones" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d4" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-ciclo-alumno.svg" alt="👤 Ciclo del Alumno" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d5" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-permisos-rol.svg" alt="👥 Permisos por Rol" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-  </div>
-</div>
 
 <!-- ==================== DRIVE & NOVEDADES ==================== -->
 <div class="tab-content" id="tab-drive">
@@ -3184,6 +3124,11 @@ function cambiarSub(tab, sub) {
   parentTab.querySelectorAll('.sub-content').forEach(s => s.classList.remove('activo'));
   const subEl = document.getElementById(sub);
   if (subEl) subEl.classList.add('activo');
+  // Inicializar Proyectos & Horas la primera vez
+  if (sub === 'proc-horas') {
+    var tbody = document.getElementById('horas-tbody');
+    if (tbody && !tbody.innerHTML.trim()) { renderHorasMetricas(); renderHorasTabla(); }
+  }
   const subnav = document.getElementById('subnav-' + tab);
   if (subnav) {
     subnav.querySelectorAll('button').forEach(b => {
@@ -3195,6 +3140,206 @@ function cambiarSub(tab, sub) {
 function ir(tab, sub) {
   cambiarTab(tab);
   if (sub) setTimeout(function(){ cambiarSub(tab, sub); }, 50);
+}
+
+// ── PROYECTOS & HORAS ─────────────────────────────────────────
+var HORAS_SHEET = 'vf'; // 'vf' | 'tope'
+
+var HORAS_DATA = {
+  vf: {
+    nombre: 'Versión completa',
+    totalUnica: 6505, totalRec: 2340, totalMes: 3966, totalAbs: 15864,
+    categorias: [
+      { nombre: 'APRENDE BA', proyectos: [
+        { p:'Módulo Notificaciones',       e:'En proceso',  av:90, u:50,   r:0,   obs:'Entregado, sin habilitar. Faltan definiciones del Ministerio', prioridad:'1', prd:'principios Mayo' },
+        { p:'Gestión de pases multiplataforma', e:'En analisis', av:0, u:250, r:0,  obs:'Faltan definiciones del Ministerio del alcance', prioridad:'3', prd:'fines Julio' },
+        { p:'BO - Agenda educativa',       e:'En proceso',  av:70, u:200,  r:0,   obs:'v1 entregado en STG. Faltan definiciones del cliente', prioridad:'2', prd:'principios Junio' },
+        { p:'Privadas - Primaria',         e:'En analisis', av:0,  u:1200, r:0,   obs:'Incluye mejoras de planes de estudio BO (400 hs)', prioridad:'2', prd:'principios Agosto' },
+        { p:'Privadas - Primaria Back Office', e:'En analisis', av:0, u:400, r:0, obs:'', prioridad:'2', prd:'principios Agosto' },
+        { p:'Cal. y Boletines - Regularidad Bim. II', e:'En analisis', av:0, u:300, r:0, obs:'', prioridad:'1', prd:'13 Mayo' },
+        { p:'Cal. y Boletines - Regularidad Bim. III', e:'En analisis', av:0, u:300, r:0, obs:'', prioridad:'1', prd:'principios Julio' },
+        { p:'Cal. y Boletines - Regularidad Bim. IV', e:'En analisis', av:0, u:500, r:0, obs:'', prioridad:'1', prd:'principios Agosto' },
+        { p:'API Legajo único - Etapa I',  e:'En analisis', av:0,  u:300,  r:0,   obs:'Se evaluará estimación a partir del trabajo inicial', prioridad:'2', prd:'principios Junio' },
+        { p:'Mejora config. períodos boletines', e:'En analisis', av:0, u:180, r:0, obs:'Horas aprobadas', prioridad:'1', prd:'13 Mayo' },
+        { p:'Informe funcional y UX (Nadia)', e:'Sin iniciar', av:0, u:250, r:0, obs:'', prioridad:'1', prd:'principios Junio' },
+        { p:'Integración Vacunas',         e:'Sin iniciar', av:0,  u:200,  r:0,   obs:'', prioridad:'3', prd:'principios Julio' },
+        { p:'Gestión de la Proyección - Inicial', e:'Sin iniciar', av:0, u:10, r:0, obs:'', prioridad:'1', prd:'principios Agosto' },
+        { p:'PIP PPS',                     e:'Sin iniciar', av:0,  u:100,  r:0,   obs:'', prioridad:'1', prd:'principios Agosto' },
+        { p:'Habilitación selectores períodos', e:'Always on', av:0, u:30, r:0,  obs:'x año', prioridad:'3', prd:'' },
+        { p:'Back Office 2.0',             e:'Propuesta Mejoras', av:0, u:0, r:2500, obs:'Flexibilidad académica, planes de estudio, autonomía, permisos', prioridad:'2', prd:'' },
+        { p:'Home y UX/UI 2.0',            e:'Propuesta Mejoras', av:0, u:0, r:1000, obs:'Rediseño home, gestión contraseña, UX', prioridad:'', prd:'' },
+        { p:'Matriculación 2.0',           e:'Propuesta Mejoras', av:0, u:0, r:2500, obs:'Búsqueda avanzada, desmatricular, copiado cal., pases', prioridad:'', prd:'' },
+        { p:'Presentismo y Calificaciones 2.0', e:'Propuesta Mejoras', av:0, u:0, r:2500, obs:'Implementar con Matriculación y BO', prioridad:'', prd:'' },
+        { p:'Legajo 2.0',                  e:'Propuesta Mejoras', av:0, u:0, r:1000, obs:'Adaptar a cambios de Matriculación y BO', prioridad:'', prd:'' },
+      ]},
+      { nombre: 'ADULTOS PRIMARIA y SECUNDARIA', proyectos: [
+        { p:'Promoción',                   e:'Sin iniciar', av:0,  u:675,  r:0,   obs:'', prioridad:'1', prd:'principios Agosto' },
+        { p:'Certificados finalización estudios - Primario', e:'En proceso', av:60, u:480, r:0, obs:'', prioridad:'1', prd:'Mayo' },
+        { p:'Libro Matriz a SITED - Secundario', e:'Sin iniciar', av:0, u:480, r:0, obs:'', prioridad:'3', prd:'fines Julio' },
+      ]},
+      { nombre: 'ESPECIALES', proyectos: [
+        { p:'Creación multigrupo',         e:'En analisis', av:0,  u:200,  r:0,   obs:'', prioridad:'1', prd:'22 Junio' },
+        { p:'Escuelas escalafón B con más niveles', e:'En analisis', av:0, u:400, r:0, obs:'', prioridad:'1', prd:'22 Junio' },
+      ]},
+      { nombre: 'GESTIONES RECURRENTES', proyectos: [
+        { p:'QA',    e:'Equipo Cross', av:0, u:0, r:640, obs:'', prioridad:'', prd:'' },
+        { p:'Devops',e:'Equipo Cross', av:0, u:0, r:240, obs:'', prioridad:'', prd:'' },
+        { p:'AF',    e:'Equipo Cross', av:0, u:0, r:320, obs:'', prioridad:'', prd:'' },
+        { p:'PMs',   e:'Equipo Cross', av:0, u:0, r:480, obs:'', prioridad:'', prd:'' },
+        { p:'Mantis',e:'Always on',    av:0, u:0, r:480, obs:'', prioridad:'', prd:'' },
+        { p:'IEL',   e:'Always on',    av:0, u:0, r:20,  obs:'', prioridad:'', prd:'' },
+        { p:'Soporte PPE Secundaria Aprende', e:'Always on', av:0, u:0, r:160, obs:'', prioridad:'', prd:'' },
+      ]},
+    ]
+  },
+  tope: {
+    nombre: 'Tope 9.646 hs',
+    totalUnica: 3900, totalRec: 1460, totalMes: 2435, totalAbs: 9740,
+    totalNuevos: 490,
+    categorias: [
+      { nombre: 'APRENDE BA', proyectos: [
+        { p:'Módulo Notificaciones',       e:'En proceso',  av:90, u:150,  r:0,   obs:'Entregado, sin habilitar', prd:'Junio' },
+        { p:'Gestión de pases multiplataforma', e:'En analisis', av:0, u:600, r:0, obs:'Faltan definiciones del Ministerio', prd:'Julio' },
+        { p:'BO - Agenda educativa',       e:'En proceso',  av:70, u:200,  r:0,   obs:'v1 en STG. Faltan definiciones del cliente', prd:'Junio' },
+        { p:'Privadas - Primaria',         e:'En analisis', av:0,  u:0,    r:0,   obs:'Resto info SINIGEP', prd:'Agosto' },
+        { p:'Privadas - Primaria Back Office', e:'En analisis', av:0, u:0, r:0, obs:'', prd:'Agosto' },
+        { p:'Cal. y Boletines - Regularidad Bim. II', e:'En analisis', av:0, u:300, r:0, obs:'', prd:'Mayo' },
+        { p:'Cal. y Boletines - Regularidad Bim. III', e:'En analisis', av:0, u:300, r:0, obs:'', prd:'Junio' },
+        { p:'Cal. y Boletines - Regularidad Bim. IV', e:'En analisis', av:0, u:500, r:0, obs:'', prd:'Junio' },
+        { p:'API Legajo único - Etapa I',  e:'En analisis', av:0,  u:0,    r:0,   obs:'Estimación a partir del trabajo inicial', prd:'Junio' },
+        { p:'Mejora config. períodos boletines', e:'En analisis', av:0, u:180, r:0, obs:'Horas aprobadas', prd:'Mayo' },
+        { p:'Informe funcional y UX (Nadia)', e:'En analisis', av:0, u:550, r:0, obs:'', prd:'Junio' },
+        { p:'Integración Vacunas',         e:'Sin iniciar', av:0,  u:0,    r:0,   obs:'', prd:'Julio' },
+        { p:'Gestión de la Proyección - Inicial', e:'Sin iniciar', av:0, u:10, r:0, obs:'', prd:'Agosto' },
+        { p:'PIP PPS',                     e:'Sin iniciar', av:0,  u:0,    r:0,   obs:'Implementar en Noviembre', prd:'Agosto' },
+        { p:'Habilitación selectores períodos', e:'Always on', av:0, u:30, r:0,   obs:'x año', prd:'' },
+      ]},
+      { nombre: 'ADULTOS PRIMARIA y SECUNDARIA', proyectos: [
+        { p:'Promoción',                   e:'Sin iniciar', av:0,  u:0,    r:0,   obs:'Debería estar en Noviembre', prd:'Agosto' },
+        { p:'Certificados finalización estudios - Primario', e:'En proceso', av:60, u:480, r:0, obs:'', prd:'Mayo' },
+        { p:'Libro Matriz a SITED - Secundario', e:'Sin iniciar', av:0, u:0, r:0, obs:'Debería estar en Noviembre', prd:'Julio' },
+      ]},
+      { nombre: 'ESPECIALES', proyectos: [
+        { p:'Creación multigrupo',         e:'En analisis', av:0,  u:200,  r:0,   obs:'', prd:'Julio' },
+        { p:'Escuelas escalafón B con más niveles', e:'En analisis', av:0, u:400, r:0, obs:'', prd:'Junio' },
+      ]},
+      { nombre: 'GESTIONES RECURRENTES', proyectos: [
+        { p:'QA',    e:'Equipo Cross', av:0, u:0, r:480, obs:'', prd:'' },
+        { p:'Devops',e:'Equipo Cross', av:0, u:0, r:80,  obs:'', prd:'' },
+        { p:'AF',    e:'Equipo Cross', av:0, u:0, r:160, obs:'', prd:'' },
+        { p:'PMs',   e:'Equipo Cross', av:0, u:0, r:480, obs:'', prd:'' },
+        { p:'Mantis',e:'Always on',    av:0, u:0, r:240, obs:'', prd:'' },
+        { p:'IEL',   e:'Always on',    av:0, u:0, r:20,  obs:'', prd:'' },
+      ]},
+      { nombre: 'NUEVOS PEDIDOS (18/05)', proyectos: [
+        { p:'Mejora situación suspensión y emergencia', e:'En analisis', av:0, u:50, r:0, obs:'', prd:'' },
+        { p:'Link SID en pantalla principal',           e:'En analisis', av:0, u:20, r:0, obs:'', prd:'' },
+        { p:'Evitar reinscripción alumnos Secu Aprende', e:'Sin iniciar', av:0, u:135, r:0, obs:'', prd:'' },
+        { p:'Gestión de Pases para Inscriptos - Secu Aprende', e:'Sin iniciar', av:0, u:140, r:0, obs:'', prd:'' },
+        { p:'SATAE',                        e:'Sin iniciar', av:0, u:105, r:0, obs:'', prd:'' },
+        { p:'Cambio cómputo asistencias N/C contraturno', e:'Sin iniciar', av:0, u:40, r:0, obs:'', prd:'' },
+      ]},
+    ]
+  }
+};
+
+var ESTADO_COLORES = {
+  'En proceso':       { bg:'#dcfce7', color:'#166534', label:'En proceso' },
+  'En analisis':      { bg:'#dbeafe', color:'#1e40af', label:'En análisis' },
+  'Sin iniciar':      { bg:'#f3f4f6', color:'#374151', label:'Sin iniciar' },
+  'Propuesta Mejoras':{ bg:'#fef9c3', color:'#854d0e', label:'Propuesta' },
+  'Always on':        { bg:'#e0f2fe', color:'#075985', label:'Always on' },
+  'Equipo Cross':     { bg:'#f3e8ff', color:'#6b21a8', label:'Equipo Cross' },
+};
+
+function estadoBadge(e) {
+  var c = ESTADO_COLORES[e] || { bg:'#f3f4f6', color:'#374151', label:e };
+  return '<span style="background:'+c.bg+';color:'+c.color+';padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;white-space:nowrap;">'+c.label+'</span>';
+}
+
+function mostrarSheet(sheet) {
+  HORAS_SHEET = sheet;
+  var btnVf   = document.getElementById('btn-sheet-vf');
+  var btnTope = document.getElementById('btn-sheet-tope');
+  if (sheet === 'vf') {
+    btnVf.style.background='#fff'; btnVf.style.color='#0f4c75'; btnVf.style.borderColor='#fff'; btnVf.style.fontWeight='700';
+    btnTope.style.background='transparent'; btnTope.style.color='#fff'; btnTope.style.borderColor='rgba(255,255,255,.5)'; btnTope.style.fontWeight='600';
+  } else {
+    btnTope.style.background='#fff'; btnTope.style.color='#0f4c75'; btnTope.style.borderColor='#fff'; btnTope.style.fontWeight='700';
+    btnVf.style.background='transparent'; btnVf.style.color='#fff'; btnVf.style.borderColor='rgba(255,255,255,.5)'; btnVf.style.fontWeight='600';
+  }
+  renderHorasMetricas();
+  renderHorasTabla();
+}
+
+function renderHorasMetricas() {
+  var d = HORAS_DATA[HORAS_SHEET];
+  var el = document.getElementById('horas-metricas');
+  if (!el) return;
+  var cards = [
+    { label:'Hs única vez', val: d.totalUnica.toLocaleString(), color:'#0f4c75', icon:'⚡' },
+    { label:'Hs recurrentes', val: d.totalRec.toLocaleString(), color:'#1b6ca8', icon:'🔄' },
+    { label:'Hs / mes', val: d.totalMes.toLocaleString(), color:'#2980b9', icon:'📅' },
+    { label:'Total estimado', val: d.totalAbs.toLocaleString(), color:'#e67e22', icon:'🎯' },
+  ];
+  if (d.totalNuevos) cards.push({ label:'Nuevos pedidos', val: d.totalNuevos.toLocaleString(), color:'#e74c3c', icon:'🆕' });
+  el.innerHTML = cards.map(function(c) {
+    return '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;border-left:4px solid '+c.color+';">' +
+      '<div style="font-size:22px;margin-bottom:2px;">'+c.icon+'</div>' +
+      '<div style="font-size:20px;font-weight:700;color:'+c.color+';">'+c.val+'</div>' +
+      '<div style="font-size:11.5px;color:var(--texto-suave);margin-top:2px;">'+c.label+'</div>' +
+    '</div>';
+  }).join('');
+}
+
+function renderHorasTabla() {
+  var d = HORAS_DATA[HORAS_SHEET];
+  var filtroEstado = (document.getElementById('horas-filtro-estado')||{value:''}).value;
+  var filtroTexto  = ((document.getElementById('horas-filtro-texto')||{value:''}).value||'').toLowerCase();
+  var tbody = document.getElementById('horas-tbody');
+  if (!tbody) return;
+  var rows = ''; var count = 0;
+  var totalU = 0; var totalR = 0;
+
+  d.categorias.forEach(function(cat) {
+    var proyFiltrados = cat.proyectos.filter(function(pr) {
+      var matchE = !filtroEstado || pr.e === filtroEstado;
+      var matchT = !filtroTexto || pr.p.toLowerCase().includes(filtroTexto) || (pr.obs||'').toLowerCase().includes(filtroTexto);
+      return matchE && matchT;
+    });
+    if (!proyFiltrados.length) return;
+
+    rows += '<tr><td colspan="6" style="background:#e8f0fe;padding:6px 10px;font-size:11.5px;font-weight:700;color:#1e40af;letter-spacing:.3px;">'+cat.nombre+'</td></tr>';
+
+    proyFiltrados.forEach(function(pr) {
+      count++;
+      totalU += pr.u || 0;
+      totalR += pr.r || 0;
+      var avBar = pr.av > 0
+        ? '<div style="background:#e5e7eb;border-radius:4px;height:6px;width:60px;display:inline-block;vertical-align:middle;"><div style="background:#10b981;height:6px;border-radius:4px;width:'+pr.av+'%;"></div></div> <span style="font-size:11px;color:#374151;">'+pr.av+'%</span>'
+        : '<span style="font-size:11px;color:#aaa;">—</span>';
+      var prdTag = (pr.prd) ? '<span style="font-size:10.5px;color:#6b7280;display:block;margin-top:2px;">PRD: '+pr.prd+'</span>' : '';
+      rows += '<tr style="border-bottom:1px solid #f1f5f9;">' +
+        '<td style="padding:7px 10px;">'+pr.p+prdTag+'</td>' +
+        '<td style="padding:7px 10px;">'+estadoBadge(pr.e)+'</td>' +
+        '<td style="padding:7px 10px;text-align:center;">'+avBar+'</td>' +
+        '<td style="padding:7px 10px;text-align:right;font-weight:600;color:#0f4c75;">'+(pr.u ? pr.u.toLocaleString()+' hs' : '—')+'</td>' +
+        '<td style="padding:7px 10px;text-align:right;font-weight:600;color:#6b21a8;">'+(pr.r ? pr.r.toLocaleString()+' hs' : '—')+'</td>' +
+        '<td style="padding:7px 10px;font-size:11.5px;color:var(--texto-suave);">'+(pr.obs||'')+'</td>' +
+      '</tr>';
+    });
+  });
+
+  tbody.innerHTML = rows || '<tr><td colspan="6" style="text-align:center;padding:20px;color:#aaa;">Sin resultados</td></tr>';
+
+  var cntEl = document.getElementById('horas-count');
+  if (cntEl) cntEl.textContent = count + ' proyecto' + (count !== 1 ? 's' : '');
+
+  var tot = document.getElementById('horas-totales');
+  if (tot) tot.innerHTML =
+    '<span><strong style="color:#0f4c75;">⚡ Hs única vez (filtro):</strong> '+totalU.toLocaleString()+' hs</span>' +
+    '<span><strong style="color:#6b21a8;">🔄 Hs recurrentes (filtro):</strong> '+totalR.toLocaleString()+' hs</span>' +
+    '<span><strong style="color:#374151;">📊 Total filtro:</strong> '+(totalU+totalR).toLocaleString()+' hs</span>';
 }
 
 // ── INVENTARIO ───────────────────────────────────────────────
@@ -4075,417 +4220,4 @@ function bacUpdateCharts(total, res, pending) {
               label: ctx => {
                 const val = ctx.raw;
                 const pct = Math.round(val / totalTickets * 100);
-                return ` ${val} ticket${val!==1?'s':''} (${pct}%)`;
-              }
-            }
-          }
-        },
-        scales: {
-          x: { grid: { display: false }, ticks: { font: { size: 10 } }, beginAtZero: true },
-          y: { grid: { display: false }, ticks: { font: { size: 10 } } }
-        },
-        responsive: true, maintainAspectRatio: false
-      }
-    });
-  }
-}
-
-// ── NIVEL COLOR ───────────────────────────────────────────────
-function bacNivColor(n) {
-  if (n === 'inicial')    return { bg: '#fdf4ff', border: '#e879f9', text: '#c026d3' };
-  if (n === 'primaria')   return { bg: '#eff6ff', border: '#93c5fd', text: '#2563eb' };
-  if (n === 'secundaria') return { bg: '#ecfdf5', border: '#6ee7b7', text: '#059669' };
-  return { bg: '#f8fafc', border: '#cbd5e1', text: '#64748b' };
-}
-
-// ── RENDER ───────────────────────────────────────────────────
-function bacRender(data) {
-  const tbody = document.getElementById('bac-tbody');
-  const empty = document.getElementById('bac-empty');
-  const wrap  = document.getElementById('bac-tabla-wrap');
-  if (!tbody) return;
-
-  if (!data.length) {
-    if (empty) empty.style.display = BAC_T.length ? 'none' : 'block';
-    if (wrap)  wrap.style.display  = 'none';
-    document.getElementById('bac-count').textContent = '0 tickets';
-    return;
-  }
-
-  if (empty) empty.style.display = 'none';
-  if (wrap)  wrap.style.display  = 'block';
-  document.getElementById('bac-count').textContent = data.length + ' ticket' + (data.length !== 1 ? 's' : '');
-
-  tbody.innerHTML = '';
-  data.forEach((t, i) => {
-    const gi   = BAC_T.indexOf(t);
-    const st   = BAC_STATE[t.num] || { r: false, resp: '' };
-    const col  = bacNivColor(t.nivel);
-    const resp = (st.resp || '').replace(/</g, '&lt;');
-    const desc = (t.descripcion || '—').replace(/</g, '&lt;');
-    const long = desc.length > 120;
-
-    const tr = document.createElement('tr');
-    tr.style.cssText = `border-bottom:1px solid #edf1f7;${st.r ? 'opacity:.65;' : ''}`;
-    tr.dataset.num = t.num;
-    tr.innerHTML = `
-      <td style="padding:8px 10px;text-align:center;">
-        <input type="checkbox" ${st.r ? 'checked' : ''} style="width:16px;height:16px;accent-color:#2e7d32;cursor:pointer;"
-          onchange="bacToggle('${t.num}',this)">
-      </td>
-      <td style="padding:8px 10px;">
-        <div style="font-weight:700;color:var(--navy);font-family:monospace;font-size:11.5px;">${t.num}</div>
-        <div style="font-size:10.5px;color:#999;margin-top:2px;">${t.fecha || ''}</div>
-      </td>
-      <td style="padding:8px 10px;border-left:3px solid ${col.border};background:${col.bg};">
-        <div style="font-weight:700;font-size:12px;">${t.establecimiento || '—'}</div>
-        ${t.cue ? `<span style="font-size:10.5px;background:rgba(0,0,0,.06);padding:1px 6px;border-radius:4px;font-weight:700;">${t.cue}</span>` : ''}
-      </td>
-      <td style="padding:8px 10px;">
-        <span style="background:${col.bg};color:${col.text};border:1px solid ${col.border};padding:3px 8px;border-radius:7px;font-size:11px;font-weight:700;display:inline-block;line-height:1.4;">${t.modulo || '—'}</span>
-      </td>
-      <td style="padding:8px 10px;font-size:12px;line-height:1.5;color:#374151;">
-        <div id="bac-d${gi}" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5;">${desc}</div>
-        ${desc.length > 100 ? `<button onclick="bacExp(${gi},this)" style="font-size:11px;color:var(--teal);font-weight:600;border:none;background:none;cursor:pointer;padding:2px 0 0;">▼ ver más</button>` : ''}
-      </td>
-      <td style="padding:8px 10px;">
-        <div style="font-weight:600;font-size:12px;cursor:pointer;" onclick="this.nextSibling.style.display=this.nextSibling.style.display==='none'?'block':'none'">${t.ciudadano || '—'} <span style="font-size:9px;color:#bbb;">▼</span></div>
-        <div style="display:none;margin-top:3px;font-size:11px;color:#666;">${t.email || ''}<br>${t.cargo || ''}</div>
-      </td>
-      <td style="padding:8px 10px;vertical-align:top;">
-        <input type="text" placeholder="N° Mantis..." value="${st.m||''}"
-          style="width:100%;padding:5px 7px;border:1px solid var(--line);border-radius:6px;font-size:11.5px;font-family:monospace;background:${st.m?'#fffde7':'#fff'};"
-          oninput="bacSavMantis('${t.num}',this)">
-        ${st.m ? `<a href="https://mantis.bue.edu.ar/view.php?id=${st.m}" target="_blank" style="display:block;margin-top:3px;font-size:10.5px;font-weight:700;color:#92400e;">#${st.m} ↗</a>` : ''}
-      </td>
-      <td style="padding:8px 10px;">
-        <textarea id="bac-r${gi}" placeholder="Redactá la respuesta o usá Auto..." rows="2"
-          style="width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:6px;font-size:11.5px;resize:vertical;background:${st.resp ? '#f0faf4' : '#fff'};font-family:inherit;line-height:1.5;"
-          oninput="bacSaveResp('${t.num}',${gi},this)">${resp}</textarea>
-        <div style="display:flex;gap:5px;margin-top:4px;">
-          <button onclick="bacAuto('${t.num}',${gi})" style="font-size:11px;background:var(--teal);color:#fff;border:none;padding:3px 9px;border-radius:5px;cursor:pointer;font-weight:600;">🤖 Auto</button>
-          <button onclick="bacCopy(${gi})" style="font-size:11px;background:#2e7d32;color:#fff;border:none;padding:3px 9px;border-radius:5px;cursor:pointer;font-weight:600;">📋 Copiar</button>
-          <span id="bac-ok${gi}" style="font-size:10px;color:#2e7d32;display:none;align-self:center;">✓</span>
-        </div>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-  bacStats();
-}
-
-// ── ACCIONES ─────────────────────────────────────────────────
-function bacToggle(num, cb) {
-  if (!BAC_STATE[num]) BAC_STATE[num] = { r: false, resp: '' };
-  BAC_STATE[num].r = cb.checked;
-  const tr = cb.closest('tr');
-  if (tr) tr.style.opacity = cb.checked ? '.65' : '1';
-  bacStats();
-  bacScheduleSave();
-}
-
-function bacSavMantis(num, inp) {
-  const v = inp.value.trim();
-  if (!BAC_STATE[num]) BAC_STATE[num] = { r: false, resp: '', m: '' };
-  BAC_STATE[num].m = v;
-  inp.style.background = v ? '#fffde7' : '#fff';
-  bacScheduleSave();
-}
-function bacSaveResp(num, i, ta) {
-  if (!BAC_STATE[num]) BAC_STATE[num] = { r: false, resp: '' };
-  BAC_STATE[num].resp = ta.value;
-  ta.style.background = ta.value ? '#f0faf4' : '#fff';
-  bacScheduleSave();
-}
-
-function bacAuto(num, i) {
-  const t = BAC_T.find(x => x.num === num); if (!t) return;
-  const ta = document.getElementById('bac-r' + i); if (!ta) return;
-  const txt = bacGetTmpl(t);
-  ta.value = txt;
-  ta.style.background = '#f0faf4';
-  bacSaveResp(num, i, ta);
-}
-
-function bacCopy(i) {
-  const ta = document.getElementById('bac-r' + i); if (!ta) return;
-  navigator.clipboard.writeText(ta.value).then(() => {
-    const ok = document.getElementById('bac-ok' + i);
-    if (ok) { ok.style.display = 'inline'; setTimeout(() => ok.style.display = 'none', 2000); }
-  });
-}
-
-function bacExp(i, btn) {
-  const d = document.getElementById('bac-d' + i); if (!d) return;
-  const open = d.style.webkitLineClamp !== 'unset' && d.style.overflow !== 'visible';
-  if (open) { d.style.cssText = 'line-height:1.5;'; btn.textContent = '▲ ver menos'; }
-  else { d.style.cssText = 'line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;'; btn.textContent = '▼ ver más'; }
-}
-
-// ── FILTROS ──────────────────────────────────────────────────
-function bacFiltrar() {
-  const q  = (document.getElementById('bac-fq')?.value || '').toLowerCase();
-  const nv = document.getElementById('bac-fn')?.value || '';
-  const mo = document.getElementById('bac-fm')?.value || '';
-  const re = document.getElementById('bac-fr')?.value || '';
-  const data = BAC_T.filter(t => {
-    const mq = !q  || [t.num, t.establecimiento, t.cue, t.ciudadano, t.modulo, t.descripcion].join(' ').toLowerCase().includes(q);
-    const mn = !nv || t.nivel === nv;
-    const mm = !mo || t.modulo === mo;
-    const isR = !!BAC_STATE[t.num]?.r;
-    const mr = !re || (re === '1' && isR) || (re === '0' && !isR);
-    return mq && mn && mm && mr;
-  });
-  bacRender(data);
-}
-
-// ── IMPORT / EXPORT ──────────────────────────────────────────
-function bacImportar(input) {
-  const file = input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => bacProcesar(e.target.result, file.name);
-  reader.readAsText(file, 'UTF-8');
-  input.value = '';
-}
-
-function bacProcesar(text, filename) {
-  try {
-    let tickets = [];
-    if (filename.endsWith('.json')) {
-      const p = JSON.parse(text);
-      tickets = Array.isArray(p) ? p : (p.tickets || p.data || []);
-    } else {
-      tickets = bacParseCSV(text);
-    }
-    if (!tickets.length) { alert('El archivo no tiene tickets válidos'); return; }
-
-    const norm = n => { const s = (n||'').toLowerCase(); return s.includes('inic')?'inicial':s.includes('prim')?'primaria':s.includes('sec')||s.includes('adult')?'secundaria':n; };
-    // Crear mapa de tickets existentes para preservar descripciones
-    const existingMap = {};
-    BAC_T.forEach(t => { existingMap[t.num] = t; });
-
-    const newTickets = tickets.map(t => ({
-      num:             t.num || t.numero || t.id || t.ticket || '',
-      nivel:           norm(t.nivel || t.level || ''),
-      modulo:          t.modulo || t.module || t.categoria || '',
-      cue:             t.cue || '',
-      establecimiento: t.establecimiento || t.escuela || t.school || '',
-      ciudadano:       t.ciudadano || t.nombre || t.reporter || '',
-      dni:             t.dni || '',
-      email:           t.email || '',
-      cargo:           t.cargo || '',
-      adjunto:         t.adjunto || 'No',
-      fecha:           t.fecha || t.date || t['Date Submitted'] || '',
-      descripcion:     t.descripcion || t.description || t.Summary || '',
-    })).filter(t => t.num);
-
-    // Fusionar: preservar descripciones existentes, agregar tickets nuevos
-    const merged = {};
-    BAC_T.forEach(t => { merged[t.num] = t; });
-    newTickets.forEach(t => {
-      if (merged[t.num]) {
-        // Ticket existente: preservar descripción si la nueva viene vacía
-        merged[t.num] = { ...merged[t.num], ...t,
-          descripcion: t.descripcion || merged[t.num].descripcion || '' };
-      } else {
-        merged[t.num] = t;
-      }
-    });
-    BAC_T = Object.values(merged).sort((a,b) => {
-      // Sort por fecha desc
-      const fa = (a.fecha||'').split('/').reverse().join('');
-      const fb = (b.fecha||'').split('/').reverse().join('');
-      return fb.localeCompare(fa);
-    });
-
-    // Persistir en localStorage
-    try { localStorage.setItem('bac_tickets', JSON.stringify(BAC_T)); } catch(_) {}
-    // Sync tickets to team via GitHub
-    try { fetch(CLOUD + '?type=tickets', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(BAC_T) }); } catch(_) {}
-    // Poblar filtro módulos
-    const sel = document.getElementById('bac-fm');
-    if (sel) {
-      sel.innerHTML = '<option value="">Todos los módulos</option>';
-      [...new Set(BAC_T.map(t => t.modulo).filter(Boolean))].sort().forEach(m => {
-        const o = document.createElement('option'); o.value = m; o.textContent = m; sel.append(o);
-      });
-    }
-    // Si es CSV de BA Colaborativa (solo abiertos) → marcar el resto como resueltos
-    if (!filename.endsWith('.json')) {
-      const numsEnCSV = new Set(newTickets.map(t => t.num));
-      let autoResolved = 0;
-      BAC_T.forEach(t => {
-        if (!numsEnCSV.has(t.num)) {
-          if (!BAC_STATE[t.num]) BAC_STATE[t.num] = {};
-          BAC_STATE[t.num].r = true;
-          if (!BAC_STATE[t.num].resp) BAC_STATE[t.num].resp = '';
-          autoResolved++;
-        }
-      });
-      try { localStorage.setItem('bac_v4', JSON.stringify(BAC_STATE)); } catch(_) {}
-      // Subir estado al equipo via GitHub sync
-      try {
-        fetch(CLOUD + '?type=state', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(BAC_STATE)
-        }).then(() => {
-          const syncEl = document.getElementById('bac-sync');
-          if (syncEl) syncEl.textContent = '✓ Sincronizado con el equipo';
-        }).catch(()=>{});
-      } catch(_) {}
-      // Subir tickets al equipo
-      try {
-        fetch(CLOUD + '?type=tickets', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(BAC_T)
-        }).catch(()=>{});
-      } catch(_) {}
-      bacRender(BAC_T);
-      bacStats();
-      const syncEl = document.getElementById('bac-sync');
-      if (syncEl) syncEl.textContent = `✓ ${BAC_T.length} tickets · ${autoResolved} resueltos · subiendo al equipo...`;
-    }
-    notifCheckBAC(BAC_T);
-    bacLoadCloud();
-  } catch(e) { alert('Error al parsear: ' + e.message); }
-}
-
-function bacParseCSV(text) {
-  const lines = text.split(/\r?\n/).filter(l => l.trim());
-  if (lines.length < 2) return [];
-  const splitL = line => {
-    const f=[]; let c='',q=false;
-    for(const ch of line){if(ch==='"'){q=!q}else if(ch===','&&!q){f.push(c);c=''}else c+=ch}
-    f.push(c); return f.map(x=>x.trim().replace(/^"|"$/g,''));
-  };
-  // Strip BOM from first line
-  const firstLine = lines[0].replace(/^\uFEFF/, '').replace(/^\xEF\xBB\xBF/, '');
-  const headers = splitL(firstLine).map(h => h.replace(/^\uFEFF/,'').trim());
-  const rawRows = lines.slice(1).map(line => {
-    const v=splitL(line); const o={};
-    headers.forEach((h,i)=>{ const key=h.replace(/\uFEFF/g,'').trim(); o[key]=v[i]||''; });
-    return o;
-  });
-
-  // Detectar si es formato BA Colaborativa (tiene columna 'Número' y 'Prestación')
-  // Detect BA Colaborativa format (with or without BOM on Número)
-  const hasNumero = headers.some(h => h.replace(/\uFEFF/,'') === 'Número');
-  if (hasNumero && headers.some(h => h.includes('Prestaci'))) {
-    return rawRows.map(r => {
-      const prest = r['Prestación'] || '';
-      // Extraer nivel desde Prestación
-      let nivel = 'secundaria';
-      if (/Nivel Primario/i.test(prest))  nivel = 'primaria';
-      if (/Nivel Inicial/i.test(prest))   nivel = 'inicial';
-      if (/Nivel Secundario/i.test(prest) || /Secundaria/i.test(prest)) nivel = 'secundaria';
-      // Extraer módulo: último segmento de Prestación
-      const partes = prest.split(' - ');
-      let modulo = partes[partes.length - 1] || 'General';
-      // Si el último segmento es el nivel, tomar el anterior
-      if (/Nivel (Primario|Secundario|Inicial)/i.test(modulo)) modulo = partes[partes.length - 2] || 'General';
-      if (modulo === 'AprendeBA') modulo = 'General';
-      // Fecha: quitar hora
-      const fecha = (r['Fecha de inicio'] || '').split(' ')[0] || '';
-      return {
-        num:             r['Número'] || '',
-        nivel,
-        modulo,
-        cue:             r['Educación - Cue'] || '',
-        establecimiento: r['Educación - Establecimiento'] || r['Ubicación'] || '',
-        ciudadano:       r['Ciudadano'] || '',
-        dni:             r['Número documento'] || '',
-        email:           r['Email de contacto'] || r['Educación - Email'] || '',
-        cargo:           r['Educación - Cargo'] || '',
-        adjunto:         r['Contiene archivos adjuntos'] || 'No',
-        fecha,
-        descripcion:     (() => {
-          const cuest = r['Cuestionario respondido'] || '';
-          // Extract "Describí la situación - ..." from questionnaire
-          const m = cuest.match(/Describ[ií] la situaci[oó]n[^-]*-\s*([^|]+)/i);
-          if (m) return m[1].trim();
-          // Fallback: Observación, Motivo, then Prestación
-          return r['Observación'] || r['Motivo'] || r['Prestación'] || '';
-        })(),
-      };
-    }).filter(t => t.num);
-  }
-
-  // Formato genérico
-  return rawRows;
-}
-
-function bacExportar() {
-  const blob = new Blob([JSON.stringify(BAC_T, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = 'tickets-ba-colaborativa.json'; a.click();
-}
-
-// ── INIT ─────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function() {
-  cargarMantisProxy();
-  actualizarBadge();
-  // Ordenar inv-body por año descendente al cargar
-  (function() {
-    const tbody = document.getElementById('inv-body');
-    if (!tbody) return;
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    rows.sort((a, b) => {
-      const getYear = r => {
-        const cells = r.querySelectorAll('td');
-        return parseInt(cells[3]?.textContent?.trim() || '0', 10);
-      };
-      return getYear(b) - getYear(a);
-    });
-    rows.forEach(r => tbody.appendChild(r));
-    // Renumber
-    rows.forEach((r, i) => {
-      const num = r.querySelector('td:first-child');
-      if (num) num.textContent = i + 1;
-    });
-  })();
-  // Restaurar tickets BA Colaborativa desde localStorage (o usar datos por defecto)
-  try {
-    const saved = localStorage.getItem('bac_tickets');
-    BAC_T = saved ? JSON.parse(saved) : BAC_T_DEFAULT.slice();
-    // Also fetch latest tickets from team sync (async, non-blocking)
-    if (!saved) {
-      fetch(CLOUD + '?type=tickets', { cache:'no-store' })
-        .then(r => r.json()).then(tickets => {
-          if (Array.isArray(tickets) && tickets.length > 0) {
-            BAC_T = tickets;
-            try { localStorage.setItem('bac_tickets', JSON.stringify(BAC_T)); } catch(_) {}
-            bacRender(BAC_T); bacStats();
-          }
-        }).catch(()=>{});
-    }
-    if (!saved) {
-      // Primera vez: guardar los tickets por defecto
-      localStorage.setItem('bac_tickets', JSON.stringify(BAC_T));
-    }
-    const sel = document.getElementById('bac-fm');
-    if (sel) {
-      sel.innerHTML = '<option value="">Todos los módulos</option>';
-      [...new Set(BAC_T.map(t => t.modulo).filter(Boolean))].sort().forEach(m => {
-        const o = document.createElement('option'); o.value = m; o.textContent = m; sel.append(o);
-      });
-    }
-    bacLoadCloud();
-  } catch(_) {}
-  filtrarInv();
-  var activeTab = document.querySelector('nav.nav-principal button.activo');
-  if (activeTab) {
-    var tabName = activeTab.dataset.tab;
-    var sub = document.getElementById('subnav-' + tabName);
-    if (sub) sub.style.display = 'flex';
-  }
-});
-</script>
-
-</body>
-</html>
-  
-</div>
-
->
+ 
