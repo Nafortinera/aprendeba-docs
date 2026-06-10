@@ -2537,6 +2537,71 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 
 
 
+<div class="sub-content" id="proc-diagramas">
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-icon" style="background:#e0f4f8;font-size:20px;">🔀</div>
+      <div class="panel-title"><h2>Diagramas de Flujo — AprendeBA</h2>
+      <p>Flujos de proceso y permisos por rol · Matriz de Roles oficial</p></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+      <button onclick="mostrarDiag('d1')" id="btn-d1" class="diag-btn activo-diag">📚 Matriculación</button>
+      <button onclick="mostrarDiag('d2')" id="btn-d2" class="diag-btn">📋 Presentismo</button>
+      <button onclick="mostrarDiag('d3')" id="btn-d3" class="diag-btn">📝 Calificaciones</button>
+      <button onclick="mostrarDiag('d4')" id="btn-d4" class="diag-btn">👤 Ciclo del Alumno</button>
+      <button onclick="mostrarDiag('d5')" id="btn-d5" class="diag-btn">👥 Permisos por Rol</button>
+    </div>
+    <div id="d1" class="diag-wrap" style="display:block;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-matriculacion.svg" alt="📚 Matriculación" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+    <div id="d2" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-presentismo.svg" alt="📋 Presentismo" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+    <div id="d3" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-calificaciones.svg" alt="📝 Calificaciones" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+    <div id="d4" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-ciclo-alumno.svg" alt="👤 Ciclo del Alumno" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+    <div id="d5" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-permisos-rol.svg" alt="👥 Permisos por Rol" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+  </div>
+  <!-- PROYECTOS & HORAS -->
+  <div class="sub-content" id="proc-horas">
+    <div class="panel" style="background:linear-gradient(135deg,#0f4c75 0%,#1b6ca8 100%);color:#fff;padding:20px 24px;margin-bottom:16px;border-radius:12px;">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between;">
+        <div>
+          <h2 style="margin:0;font-size:18px;color:#fff;">📊 Proyectos &amp; Horas — Phinx</h2>
+          <p style="margin:4px 0 0;font-size:13px;opacity:.85;">Planificación de módulos y estimación de horas · Ciclo 2026</p>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button id="btn-sheet-vf" onclick="mostrarSheet('vf')" style="padding:6px 14px;border-radius:20px;border:2px solid #fff;background:#fff;color:#0f4c75;font-weight:700;font-size:12px;cursor:pointer;">📋 Versión completa</button>
+          <button id="btn-sheet-tope" onclick="mostrarSheet('tope')" style="padding:6px 14px;border-radius:20px;border:2px solid rgba(255,255,255,.5);background:transparent;color:#fff;font-weight:600;font-size:12px;cursor:pointer;">🎯 Tope 9.646 hs</button>
+        </div>
+      </div>
+    </div>
+    <div id="horas-metricas" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px;"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">
+      <span style="font-size:12.5px;color:var(--texto-suave);font-weight:600;">Filtrar:</span>
+      <select id="horas-filtro-estado" onchange="renderHorasTabla()" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;background:#fff;">
+        <option value="">Todos los estados</option>
+        <option value="En proceso">En proceso</option>
+        <option value="En analisis">En análisis</option>
+        <option value="Sin iniciar">Sin iniciar</option>
+        <option value="Propuesta Mejoras">Propuesta Mejoras</option>
+        <option value="Always on">Always on</option>
+        <option value="Equipo Cross">Equipo Cross</option>
+      </select>
+      <input id="horas-filtro-texto" oninput="renderHorasTabla()" placeholder="Buscar proyecto..." style="font-size:12px;padding:4px 10px;border:1px solid #ddd;border-radius:6px;flex:1;min-width:180px;max-width:300px;">
+      <span id="horas-count" style="font-size:12px;color:var(--texto-suave);margin-left:auto;"></span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+        <thead><tr style="background:#f0f4f8;text-align:left;">
+          <th style="padding:8px 10px;font-size:11.5px;color:#5a6a7a;font-weight:700;border-bottom:2px solid #e2e8f0;">Proyecto</th>
+          <th style="padding:8px 10px;font-size:11.5px;color:#5a6a7a;font-weight:700;border-bottom:2px solid #e2e8f0;">Estado</th>
+          <th style="padding:8px 10px;font-size:11.5px;color:#5a6a7a;font-weight:700;border-bottom:2px solid #e2e8f0;text-align:center;">Avance</th>
+          <th style="padding:8px 10px;font-size:11.5px;color:#5a6a7a;font-weight:700;border-bottom:2px solid #e2e8f0;text-align:right;">Hs única vez</th>
+          <th style="padding:8px 10px;font-size:11.5px;color:#5a6a7a;font-weight:700;border-bottom:2px solid #e2e8f0;text-align:right;">Hs recurrentes</th>
+          <th style="padding:8px 10px;font-size:11.5px;color:#5a6a7a;font-weight:700;border-bottom:2px solid #e2e8f0;">Observaciones</th>
+        </tr></thead>
+        <tbody id="horas-tbody"></tbody>
+      </table>
+    </div>
+    <div id="horas-totales" style="margin-top:16px;padding:14px 18px;background:#f0f4f8;border-radius:10px;font-size:13px;display:flex;gap:24px;flex-wrap:wrap;"></div>
+  </div>
+</div>
 
 <!-- ==================== DRIVE & NOVEDADES ==================== -->
 <div class="tab-content" id="tab-drive">
@@ -3043,7 +3108,7 @@ function cambiarSub(tab, sub) {
   parentTab.querySelectorAll('.sub-content').forEach(s => s.classList.remove('activo'));
   const subEl = document.getElementById(sub);
   if (subEl) subEl.classList.add('activo');
-  if (sub === 'proc-horas') { var tb = document.getElementById('horas-tbody'); if (tb && !tb.innerHTML.trim()) { renderHorasMetricas(); renderHorasTabla(); } }
+  if (sub==='proc-horas'){var tb=document.getElementById('horas-tbody');if(tb&&!tb.innerHTML.trim()){renderHorasMetricas();renderHorasTabla();}}
   const subnav = document.getElementById('subnav-' + tab);
   if (subnav) {
     subnav.querySelectorAll('button').forEach(b => {
@@ -4343,116 +4408,104 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ── PROYECTOS & HORAS ─────────────────────────────────────────
-var HORAS_SHEET = 'vf';
-var HORAS_DATA = {
-  vf: {
-    totalUnica:6505,totalRec:2340,totalMes:3966,totalAbs:15864,
-    categorias:[
-      {nombre:'APRENDE BA',proyectos:[
-        {p:'Módulo Notificaciones',e:'En proceso',av:90,u:50,r:0,obs:'Entregado sin habilitar. Faltan definiciones Ministerio',prd:'principios Mayo'},
-        {p:'Gestión de pases multiplataforma',e:'En analisis',av:0,u:250,r:0,obs:'Faltan definiciones del Ministerio del alcance',prd:'fines Julio'},
-        {p:'BO - Agenda educativa',e:'En proceso',av:70,u:200,r:0,obs:'v1 en STG. Faltan definiciones del cliente',prd:'principios Junio'},
-        {p:'Privadas - Primaria',e:'En analisis',av:0,u:1200,r:0,obs:'Incluye mejoras planes de estudio BO (400 hs)',prd:'principios Agosto'},
-        {p:'Privadas - Primaria Back Office',e:'En analisis',av:0,u:400,r:0,obs:'',prd:'principios Agosto'},
-        {p:'Cal. Boletines - Regularidad Bim. II',e:'En analisis',av:0,u:300,r:0,obs:'',prd:'13 Mayo'},
-        {p:'Cal. Boletines - Regularidad Bim. III',e:'En analisis',av:0,u:300,r:0,obs:'',prd:'principios Julio'},
-        {p:'Cal. Boletines - Regularidad Bim. IV',e:'En analisis',av:0,u:500,r:0,obs:'',prd:'principios Agosto'},
-        {p:'API Legajo único - Etapa I',e:'En analisis',av:0,u:300,r:0,obs:'Estimación a partir del trabajo inicial',prd:'principios Junio'},
-        {p:'Mejora config. períodos boletines',e:'En analisis',av:0,u:180,r:0,obs:'Horas aprobadas',prd:'13 Mayo'},
-        {p:'Informe funcional y UX (Nadia)',e:'Sin iniciar',av:0,u:250,r:0,obs:'',prd:'principios Junio'},
-        {p:'Integración Vacunas',e:'Sin iniciar',av:0,u:200,r:0,obs:'',prd:'principios Julio'},
-        {p:'Gestión de la Proyección - Inicial',e:'Sin iniciar',av:0,u:10,r:0,obs:'',prd:'principios Agosto'},
-        {p:'PIP PPS',e:'Sin iniciar',av:0,u:100,r:0,obs:'',prd:'principios Agosto'},
-        {p:'Habilitación selectores períodos',e:'Always on',av:0,u:30,r:0,obs:'x año',prd:''},
-        {p:'Back Office 2.0',e:'Propuesta Mejoras',av:0,u:0,r:2500,obs:'Flexibilidad académica, planes de estudio, permisos',prd:''},
-        {p:'Home y UX/UI 2.0',e:'Propuesta Mejoras',av:0,u:0,r:1000,obs:'Rediseño home, gestión contraseña, UX',prd:''},
-        {p:'Matriculación 2.0',e:'Propuesta Mejoras',av:0,u:0,r:2500,obs:'Búsqueda avanzada, desmatricular, pases',prd:''},
-        {p:'Presentismo y Calificaciones 2.0',e:'Propuesta Mejoras',av:0,u:0,r:2500,obs:'Implementar con Matriculación y BO',prd:''},
-        {p:'Legajo 2.0',e:'Propuesta Mejoras',av:0,u:0,r:1000,obs:'Adaptar a cambios Matriculación y BO',prd:''},
-      ]},
-      {nombre:'ADULTOS PRIMARIA y SECUNDARIA',proyectos:[
-        {p:'Promoción',e:'Sin iniciar',av:0,u:675,r:0,obs:'',prd:'principios Agosto'},
-        {p:'Certificados finalización estudios - Primario',e:'En proceso',av:60,u:480,r:0,obs:'',prd:'Mayo'},
-        {p:'Libro Matriz a SITED - Secundario',e:'Sin iniciar',av:0,u:480,r:0,obs:'',prd:'fines Julio'},
-      ]},
-      {nombre:'ESPECIALES',proyectos:[
-        {p:'Creación multigrupo',e:'En analisis',av:0,u:200,r:0,obs:'',prd:'22 Junio'},
-        {p:'Escuelas escalafón B con más niveles',e:'En analisis',av:0,u:400,r:0,obs:'',prd:'22 Junio'},
-      ]},
-      {nombre:'GESTIONES RECURRENTES',proyectos:[
-        {p:'QA',e:'Equipo Cross',av:0,u:0,r:640,obs:'',prd:''},
-        {p:'Devops',e:'Equipo Cross',av:0,u:0,r:240,obs:'',prd:''},
-        {p:'AF',e:'Equipo Cross',av:0,u:0,r:320,obs:'',prd:''},
-        {p:'PMs',e:'Equipo Cross',av:0,u:0,r:480,obs:'',prd:''},
-        {p:'Mantis',e:'Always on',av:0,u:0,r:480,obs:'',prd:''},
-        {p:'IEL',e:'Always on',av:0,u:0,r:20,obs:'',prd:''},
-        {p:'Soporte PPE Secundaria Aprende',e:'Always on',av:0,u:0,r:160,obs:'',prd:''},
-      ]},
-    ]
-  },
-  tope: {
-    totalUnica:3900,totalRec:1460,totalMes:2435,totalAbs:9740,totalNuevos:490,
-    categorias:[
-      {nombre:'APRENDE BA',proyectos:[
-        {p:'Módulo Notificaciones',e:'En proceso',av:90,u:150,r:0,obs:'Entregado sin habilitar',prd:'Junio'},
-        {p:'Gestión de pases multiplataforma',e:'En analisis',av:0,u:600,r:0,obs:'Faltan definiciones del Ministerio',prd:'Julio'},
-        {p:'BO - Agenda educativa',e:'En proceso',av:70,u:200,r:0,obs:'v1 en STG',prd:'Junio'},
-        {p:'Privadas - Primaria',e:'En analisis',av:0,u:0,r:0,obs:'Resta info SINIGEP',prd:'Agosto'},
-        {p:'Privadas - Primaria Back Office',e:'En analisis',av:0,u:0,r:0,obs:'',prd:'Agosto'},
-        {p:'Cal. Boletines - Regularidad Bim. II',e:'En analisis',av:0,u:300,r:0,obs:'',prd:'Mayo'},
-        {p:'Cal. Boletines - Regularidad Bim. III',e:'En analisis',av:0,u:300,r:0,obs:'',prd:'Junio'},
-        {p:'Cal. Boletines - Regularidad Bim. IV',e:'En analisis',av:0,u:500,r:0,obs:'',prd:'Junio'},
-        {p:'API Legajo único - Etapa I',e:'En analisis',av:0,u:0,r:0,obs:'Estimación a partir del trabajo inicial',prd:'Junio'},
-        {p:'Mejora config. períodos boletines',e:'En analisis',av:0,u:180,r:0,obs:'Horas aprobadas',prd:'Mayo'},
-        {p:'Informe funcional y UX (Nadia)',e:'En analisis',av:0,u:550,r:0,obs:'',prd:'Junio'},
-        {p:'Integración Vacunas',e:'Sin iniciar',av:0,u:0,r:0,obs:'',prd:'Julio'},
-        {p:'Gestión de la Proyección - Inicial',e:'Sin iniciar',av:0,u:10,r:0,obs:'',prd:'Agosto'},
-        {p:'PIP PPS',e:'Sin iniciar',av:0,u:0,r:0,obs:'Implementar en Noviembre',prd:'Agosto'},
-        {p:'Habilitación selectores períodos',e:'Always on',av:0,u:30,r:0,obs:'x año',prd:''},
-      ]},
-      {nombre:'ADULTOS PRIMARIA y SECUNDARIA',proyectos:[
-        {p:'Promoción',e:'Sin iniciar',av:0,u:0,r:0,obs:'Debería estar en Noviembre',prd:'Agosto'},
-        {p:'Certificados finalización estudios - Primario',e:'En proceso',av:60,u:480,r:0,obs:'',prd:'Mayo'},
-        {p:'Libro Matriz a SITED - Secundario',e:'Sin iniciar',av:0,u:0,r:0,obs:'Debería estar en Noviembre',prd:'Julio'},
-      ]},
-      {nombre:'ESPECIALES',proyectos:[
-        {p:'Creación multigrupo',e:'En analisis',av:0,u:200,r:0,obs:'',prd:'Julio'},
-        {p:'Escuelas escalafón B con más niveles',e:'En analisis',av:0,u:400,r:0,obs:'',prd:'Junio'},
-      ]},
-      {nombre:'GESTIONES RECURRENTES',proyectos:[
-        {p:'QA',e:'Equipo Cross',av:0,u:0,r:480,obs:'',prd:''},
-        {p:'Devops',e:'Equipo Cross',av:0,u:0,r:80,obs:'',prd:''},
-        {p:'AF',e:'Equipo Cross',av:0,u:0,r:160,obs:'',prd:''},
-        {p:'PMs',e:'Equipo Cross',av:0,u:0,r:480,obs:'',prd:''},
-        {p:'Mantis',e:'Always on',av:0,u:0,r:240,obs:'',prd:''},
-        {p:'IEL',e:'Always on',av:0,u:0,r:20,obs:'',prd:''},
-      ]},
-      {nombre:'NUEVOS PEDIDOS (18/05)',proyectos:[
-        {p:'Mejora situación suspensión y emergencia',e:'En analisis',av:0,u:50,r:0,obs:'',prd:''},
-        {p:'Link SID en pantalla principal',e:'En analisis',av:0,u:20,r:0,obs:'',prd:''},
-        {p:'Evitar reinscripción alumnos Secu Aprende',e:'Sin iniciar',av:0,u:135,r:0,obs:'',prd:''},
-        {p:'Gestión de Pases Inscriptos - Secu Aprende',e:'Sin iniciar',av:0,u:140,r:0,obs:'',prd:''},
-        {p:'SATAE',e:'Sin iniciar',av:0,u:105,r:0,obs:'',prd:''},
-        {p:'Cambio cómputo asistencias N/C contraturno',e:'Sin iniciar',av:0,u:40,r:0,obs:'',prd:''},
-      ]},
-    ]
-  }
+var HORAS_SHEET='vf';
+var HORAS_DATA={
+  vf:{totalUnica:6505,totalRec:2340,totalMes:3966,totalAbs:15864,categorias:[
+    {nombre:'APRENDE BA',proyectos:[
+      {p:'Módulo Notificaciones',e:'En proceso',av:90,u:50,r:0,obs:'Entregado sin habilitar',prd:'principios Mayo'},
+      {p:'Gestión de pases multiplataforma',e:'En analisis',av:0,u:250,r:0,obs:'Faltan definiciones del Ministerio',prd:'fines Julio'},
+      {p:'BO - Agenda educativa',e:'En proceso',av:70,u:200,r:0,obs:'v1 en STG. Faltan definiciones',prd:'principios Junio'},
+      {p:'Privadas - Primaria',e:'En analisis',av:0,u:1200,r:0,obs:'Incluye mejoras BO (400 hs)',prd:'principios Agosto'},
+      {p:'Privadas - Primaria Back Office',e:'En analisis',av:0,u:400,r:0,obs:'',prd:'principios Agosto'},
+      {p:'Cal. Boletines - Regularidad Bim. II',e:'En analisis',av:0,u:300,r:0,obs:'',prd:'13 Mayo'},
+      {p:'Cal. Boletines - Regularidad Bim. III',e:'En analisis',av:0,u:300,r:0,obs:'',prd:'principios Julio'},
+      {p:'Cal. Boletines - Regularidad Bim. IV',e:'En analisis',av:0,u:500,r:0,obs:'',prd:'principios Agosto'},
+      {p:'API Legajo único - Etapa I',e:'En analisis',av:0,u:300,r:0,obs:'Estimación a partir del trabajo inicial',prd:'principios Junio'},
+      {p:'Mejora config. períodos boletines',e:'En analisis',av:0,u:180,r:0,obs:'Horas aprobadas',prd:'13 Mayo'},
+      {p:'Informe funcional y UX (Nadia)',e:'Sin iniciar',av:0,u:250,r:0,obs:'',prd:'principios Junio'},
+      {p:'Integración Vacunas',e:'Sin iniciar',av:0,u:200,r:0,obs:'',prd:'principios Julio'},
+      {p:'Gestión de la Proyección - Inicial',e:'Sin iniciar',av:0,u:10,r:0,obs:'',prd:'principios Agosto'},
+      {p:'PIP PPS',e:'Sin iniciar',av:0,u:100,r:0,obs:'',prd:'principios Agosto'},
+      {p:'Habilitación selectores períodos',e:'Always on',av:0,u:30,r:0,obs:'x año',prd:''},
+      {p:'Back Office 2.0',e:'Propuesta Mejoras',av:0,u:0,r:2500,obs:'Flexibilidad, planes de estudio, permisos',prd:''},
+      {p:'Home y UX/UI 2.0',e:'Propuesta Mejoras',av:0,u:0,r:1000,obs:'Rediseño home, gestión contraseña',prd:''},
+      {p:'Matriculación 2.0',e:'Propuesta Mejoras',av:0,u:0,r:2500,obs:'Búsqueda avanzada, desmatricular, pases',prd:''},
+      {p:'Presentismo y Calificaciones 2.0',e:'Propuesta Mejoras',av:0,u:0,r:2500,obs:'Con Matriculación y BO',prd:''},
+      {p:'Legajo 2.0',e:'Propuesta Mejoras',av:0,u:0,r:1000,obs:'Adaptar a cambios Matriculación y BO',prd:''},
+    ]},
+    {nombre:'ADULTOS PRIMARIA y SECUNDARIA',proyectos:[
+      {p:'Promoción',e:'Sin iniciar',av:0,u:675,r:0,obs:'',prd:'principios Agosto'},
+      {p:'Certificados finalización - Primario',e:'En proceso',av:60,u:480,r:0,obs:'',prd:'Mayo'},
+      {p:'Libro Matriz a SITED - Secundario',e:'Sin iniciar',av:0,u:480,r:0,obs:'',prd:'fines Julio'},
+    ]},
+    {nombre:'ESPECIALES',proyectos:[
+      {p:'Creación multigrupo',e:'En analisis',av:0,u:200,r:0,obs:'',prd:'22 Junio'},
+      {p:'Escuelas escalafón B con más niveles',e:'En analisis',av:0,u:400,r:0,obs:'',prd:'22 Junio'},
+    ]},
+    {nombre:'GESTIONES RECURRENTES',proyectos:[
+      {p:'QA',e:'Equipo Cross',av:0,u:0,r:640,obs:'',prd:''},{p:'Devops',e:'Equipo Cross',av:0,u:0,r:240,obs:'',prd:''},
+      {p:'AF',e:'Equipo Cross',av:0,u:0,r:320,obs:'',prd:''},{p:'PMs',e:'Equipo Cross',av:0,u:0,r:480,obs:'',prd:''},
+      {p:'Mantis',e:'Always on',av:0,u:0,r:480,obs:'',prd:''},{p:'IEL',e:'Always on',av:0,u:0,r:20,obs:'',prd:''},
+      {p:'Soporte PPE Secundaria Aprende',e:'Always on',av:0,u:0,r:160,obs:'',prd:''},
+    ]},
+  ]},
+  tope:{totalUnica:3900,totalRec:1460,totalMes:2435,totalAbs:9740,totalNuevos:490,categorias:[
+    {nombre:'APRENDE BA',proyectos:[
+      {p:'Módulo Notificaciones',e:'En proceso',av:90,u:150,r:0,obs:'Entregado sin habilitar',prd:'Junio'},
+      {p:'Gestión de pases multiplataforma',e:'En analisis',av:0,u:600,r:0,obs:'Faltan definiciones',prd:'Julio'},
+      {p:'BO - Agenda educativa',e:'En proceso',av:70,u:200,r:0,obs:'v1 en STG',prd:'Junio'},
+      {p:'Privadas - Primaria',e:'En analisis',av:0,u:0,r:0,obs:'Resta info SINIGEP',prd:'Agosto'},
+      {p:'Privadas - Primaria Back Office',e:'En analisis',av:0,u:0,r:0,obs:'',prd:'Agosto'},
+      {p:'Cal. Boletines - Regularidad Bim. II',e:'En analisis',av:0,u:300,r:0,obs:'',prd:'Mayo'},
+      {p:'Cal. Boletines - Regularidad Bim. III',e:'En analisis',av:0,u:300,r:0,obs:'',prd:'Junio'},
+      {p:'Cal. Boletines - Regularidad Bim. IV',e:'En analisis',av:0,u:500,r:0,obs:'',prd:'Junio'},
+      {p:'API Legajo único - Etapa I',e:'En analisis',av:0,u:0,r:0,obs:'Estimación a partir del trabajo inicial',prd:'Junio'},
+      {p:'Mejora config. períodos boletines',e:'En analisis',av:0,u:180,r:0,obs:'Horas aprobadas',prd:'Mayo'},
+      {p:'Informe funcional y UX (Nadia)',e:'En analisis',av:0,u:550,r:0,obs:'',prd:'Junio'},
+      {p:'Integración Vacunas',e:'Sin iniciar',av:0,u:0,r:0,obs:'',prd:'Julio'},
+      {p:'Gestión de la Proyección - Inicial',e:'Sin iniciar',av:0,u:10,r:0,obs:'',prd:'Agosto'},
+      {p:'PIP PPS',e:'Sin iniciar',av:0,u:0,r:0,obs:'Implementar en Noviembre',prd:'Agosto'},
+      {p:'Habilitación selectores períodos',e:'Always on',av:0,u:30,r:0,obs:'x año',prd:''},
+    ]},
+    {nombre:'ADULTOS PRIMARIA y SECUNDARIA',proyectos:[
+      {p:'Promoción',e:'Sin iniciar',av:0,u:0,r:0,obs:'Debería estar en Noviembre',prd:'Agosto'},
+      {p:'Certificados finalización - Primario',e:'En proceso',av:60,u:480,r:0,obs:'',prd:'Mayo'},
+      {p:'Libro Matriz a SITED - Secundario',e:'Sin iniciar',av:0,u:0,r:0,obs:'Debería estar en Noviembre',prd:'Julio'},
+    ]},
+    {nombre:'ESPECIALES',proyectos:[
+      {p:'Creación multigrupo',e:'En analisis',av:0,u:200,r:0,obs:'',prd:'Julio'},
+      {p:'Escuelas escalafón B con más niveles',e:'En analisis',av:0,u:400,r:0,obs:'',prd:'Junio'},
+    ]},
+    {nombre:'GESTIONES RECURRENTES',proyectos:[
+      {p:'QA',e:'Equipo Cross',av:0,u:0,r:480,obs:'',prd:''},{p:'Devops',e:'Equipo Cross',av:0,u:0,r:80,obs:'',prd:''},
+      {p:'AF',e:'Equipo Cross',av:0,u:0,r:160,obs:'',prd:''},{p:'PMs',e:'Equipo Cross',av:0,u:0,r:480,obs:'',prd:''},
+      {p:'Mantis',e:'Always on',av:0,u:0,r:240,obs:'',prd:''},{p:'IEL',e:'Always on',av:0,u:0,r:20,obs:'',prd:''},
+    ]},
+    {nombre:'NUEVOS PEDIDOS (18/05)',proyectos:[
+      {p:'Mejora suspensión y emergencia',e:'En analisis',av:0,u:50,r:0,obs:'',prd:''},
+      {p:'Link SID en pantalla principal',e:'En analisis',av:0,u:20,r:0,obs:'',prd:''},
+      {p:'Evitar reinscripción alumnos Secu Aprende',e:'Sin iniciar',av:0,u:135,r:0,obs:'',prd:''},
+      {p:'Gestión de Pases Inscriptos - Secu Aprende',e:'Sin iniciar',av:0,u:140,r:0,obs:'',prd:''},
+      {p:'SATAE',e:'Sin iniciar',av:0,u:105,r:0,obs:'',prd:''},
+      {p:'Cambio cómputo asistencias N/C contraturno',e:'Sin iniciar',av:0,u:40,r:0,obs:'',prd:''},
+    ]},
+  ]}
 };
-var ESTADO_COLORES={'En proceso':{bg:'#dcfce7',color:'#166534'},'En analisis':{bg:'#dbeafe',color:'#1e40af'},'Sin iniciar':{bg:'#f3f4f6',color:'#374151'},'Propuesta Mejoras':{bg:'#fef9c3',color:'#854d0e'},'Always on':{bg:'#e0f2fe',color:'#075985'},'Equipo Cross':{bg:'#f3e8ff',color:'#6b21a8'}};
-function estadoBadge(e){var c=ESTADO_COLORES[e]||{bg:'#f3f4f6',color:'#374151'};return '<span style="background:'+c.bg+';color:'+c.color+';padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;white-space:nowrap;">'+(e==='En analisis'?'En análisis':e)+'</span>';}
-function mostrarSheet(sheet){
-  HORAS_SHEET=sheet;
+var EC={'En proceso':{bg:'#dcfce7',c:'#166534'},'En analisis':{bg:'#dbeafe',c:'#1e40af'},'Sin iniciar':{bg:'#f3f4f6',c:'#374151'},'Propuesta Mejoras':{bg:'#fef9c3',c:'#854d0e'},'Always on':{bg:'#e0f2fe',c:'#075985'},'Equipo Cross':{bg:'#f3e8ff',c:'#6b21a8'}};
+function estadoBadge(e){var c=EC[e]||{bg:'#f3f4f6',c:'#374151'};return '<span style="background:'+c.bg+';color:'+c.c+';padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;white-space:nowrap;">'+(e==='En analisis'?'En análisis':e)+'</span>';}
+function mostrarSheet(s){
+  HORAS_SHEET=s;
   var bv=document.getElementById('btn-sheet-vf'),bt=document.getElementById('btn-sheet-tope');
-  if(sheet==='vf'){bv.style.cssText='padding:6px 14px;border-radius:20px;border:2px solid #fff;background:#fff;color:#0f4c75;font-weight:700;font-size:12px;cursor:pointer;';bt.style.cssText='padding:6px 14px;border-radius:20px;border:2px solid rgba(255,255,255,.5);background:transparent;color:#fff;font-weight:600;font-size:12px;cursor:pointer;';}
+  if(!bv||!bt)return;
+  if(s==='vf'){bv.style.cssText='padding:6px 14px;border-radius:20px;border:2px solid #fff;background:#fff;color:#0f4c75;font-weight:700;font-size:12px;cursor:pointer;';bt.style.cssText='padding:6px 14px;border-radius:20px;border:2px solid rgba(255,255,255,.5);background:transparent;color:#fff;font-weight:600;font-size:12px;cursor:pointer;';}
   else{bt.style.cssText='padding:6px 14px;border-radius:20px;border:2px solid #fff;background:#fff;color:#0f4c75;font-weight:700;font-size:12px;cursor:pointer;';bv.style.cssText='padding:6px 14px;border-radius:20px;border:2px solid rgba(255,255,255,.5);background:transparent;color:#fff;font-weight:600;font-size:12px;cursor:pointer;';}
   renderHorasMetricas();renderHorasTabla();
 }
 function renderHorasMetricas(){
-  var d=HORAS_DATA[HORAS_SHEET],el=document.getElementById('horas-metricas');
-  if(!el)return;
-  var cards=[{label:'Hs única vez',val:d.totalUnica.toLocaleString(),color:'#0f4c75',icon:'⚡'},{label:'Hs recurrentes',val:d.totalRec.toLocaleString(),color:'#6b21a8',icon:'🔄'},{label:'Hs / mes',val:d.totalMes.toLocaleString(),color:'#2980b9',icon:'📅'},{label:'Total estimado',val:d.totalAbs.toLocaleString(),color:'#e67e22',icon:'🎯'}];
-  if(d.totalNuevos)cards.push({label:'Nuevos pedidos',val:d.totalNuevos.toLocaleString(),color:'#e74c3c',icon:'🆕'});
-  el.innerHTML=cards.map(function(c){return '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;border-left:4px solid '+c.color+'"><div style="font-size:22px;margin-bottom:2px;">'+c.icon+'</div><div style="font-size:20px;font-weight:700;color:'+c.color+';">'+c.val+'</div><div style="font-size:11.5px;color:var(--texto-suave);margin-top:2px;">'+c.label+'</div></div>';}).join('');
+  var d=HORAS_DATA[HORAS_SHEET],el=document.getElementById('horas-metricas');if(!el)return;
+  var cards=[{l:'Hs única vez',v:d.totalUnica.toLocaleString(),c:'#0f4c75',i:'⚡'},{l:'Hs recurrentes',v:d.totalRec.toLocaleString(),c:'#6b21a8',i:'🔄'},{l:'Hs / mes',v:d.totalMes.toLocaleString(),c:'#2980b9',i:'📅'},{l:'Total estimado',v:d.totalAbs.toLocaleString(),c:'#e67e22',i:'🎯'}];
+  if(d.totalNuevos)cards.push({l:'Nuevos pedidos',v:d.totalNuevos.toLocaleString(),c:'#e74c3c',i:'🆕'});
+  el.innerHTML=cards.map(function(c){return '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;border-left:4px solid '+c.c+'"><div style="font-size:22px;">'+c.i+'</div><div style="font-size:20px;font-weight:700;color:'+c.c+';">'+c.v+'</div><div style="font-size:11.5px;color:var(--texto-suave);">'+c.l+'</div></div>';}).join('');
 }
 function renderHorasTabla(){
   var d=HORAS_DATA[HORAS_SHEET];
@@ -4463,18 +4516,18 @@ function renderHorasTabla(){
   d.categorias.forEach(function(cat){
     var pf=cat.proyectos.filter(function(pr){return(!fe||pr.e===fe)&&(!ft||pr.p.toLowerCase().includes(ft)||(pr.obs||'').toLowerCase().includes(ft));});
     if(!pf.length)return;
-    rows+='<tr><td colspan="6" style="background:#e8f0fe;padding:6px 10px;font-size:11.5px;font-weight:700;color:#1e40af;letter-spacing:.3px;">'+cat.nombre+'</td></tr>';
+    rows+='<tr><td colspan="6" style="background:#e8f0fe;padding:6px 10px;font-size:11.5px;font-weight:700;color:#1e40af;">'+cat.nombre+'</td></tr>';
     pf.forEach(function(pr){
       count++;totalU+=pr.u||0;totalR+=pr.r||0;
-      var av=pr.av>0?'<div style="background:#e5e7eb;border-radius:4px;height:6px;width:60px;display:inline-block;vertical-align:middle;"><div style="background:#10b981;height:6px;border-radius:4px;width:'+pr.av+'%;"></div></div> <span style="font-size:11px;">'+pr.av+'%</span>':'<span style="font-size:11px;color:#aaa;">—</span>';
-      var prdT=pr.prd?'<span style="font-size:10.5px;color:#6b7280;display:block;margin-top:2px;">PRD: '+pr.prd+'</span>':'';
-      rows+='<tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:7px 10px;">'+pr.p+prdT+'</td><td style="padding:7px 10px;">'+estadoBadge(pr.e)+'</td><td style="padding:7px 10px;text-align:center;">'+av+'</td><td style="padding:7px 10px;text-align:right;font-weight:600;color:#0f4c75;">'+(pr.u?pr.u.toLocaleString()+' hs':'—')+'</td><td style="padding:7px 10px;text-align:right;font-weight:600;color:#6b21a8;">'+(pr.r?pr.r.toLocaleString()+' hs':'—')+'</td><td style="padding:7px 10px;font-size:11.5px;color:var(--texto-suave);">'+(pr.obs||'')+'</td></tr>';
+      var av=pr.av>0?'<div style="background:#e5e7eb;border-radius:4px;height:6px;width:60px;display:inline-block;vertical-align:middle;"><div style="background:#10b981;height:6px;border-radius:4px;width:'+pr.av+'%;"></div></div> <span style="font-size:11px;">'+pr.av+'%</span>':'—';
+      var pt=pr.prd?'<span style="font-size:10.5px;color:#6b7280;display:block;">PRD: '+pr.prd+'</span>':'';
+      rows+='<tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:7px 10px;">'+pr.p+pt+'</td><td style="padding:7px 10px;">'+estadoBadge(pr.e)+'</td><td style="padding:7px 10px;text-align:center;font-size:12px;">'+av+'</td><td style="padding:7px 10px;text-align:right;font-weight:600;color:#0f4c75;">'+(pr.u?pr.u.toLocaleString()+' hs':'—')+'</td><td style="padding:7px 10px;text-align:right;font-weight:600;color:#6b21a8;">'+(pr.r?pr.r.toLocaleString()+' hs':'—')+'</td><td style="padding:7px 10px;font-size:11.5px;color:var(--texto-suave);">'+(pr.obs||'')+'</td></tr>';
     });
   });
   tbody.innerHTML=rows||'<tr><td colspan="6" style="text-align:center;padding:20px;color:#aaa;">Sin resultados</td></tr>';
   var cnt=document.getElementById('horas-count');if(cnt)cnt.textContent=count+' proyecto'+(count!==1?'s':'');
   var tot=document.getElementById('horas-totales');
-  if(tot)tot.innerHTML='<span><strong style="color:#0f4c75;">⚡ Hs única vez:</strong> '+totalU.toLocaleString()+' hs</span><span><strong style="color:#6b21a8;">🔄 Hs recurrentes:</strong> '+totalR.toLocaleString()+' hs</span><span><strong>📊 Total filtro:</strong> '+(totalU+totalR).toLocaleString()+' hs</span>';
+  if(tot)tot.innerHTML='<span><strong style="color:#0f4c75;">⚡ Hs única vez:</strong> '+totalU.toLocaleString()+' hs</span><span style="margin-left:16px;"><strong style="color:#6b21a8;">🔄 Hs recurrentes:</strong> '+totalR.toLocaleString()+' hs</span><span style="margin-left:16px;"><strong>📊 Total:</strong> '+(totalU+totalR).toLocaleString()+' hs</span>';
 }
 
 </script>
@@ -4482,29 +4535,6 @@ function renderHorasTabla(){
 </body>
 </html>
   
-</div>
-
-
-<div class="sub-content" id="proc-diagramas">
-  <div class="panel">
-    <div class="panel-header">
-      <div class="panel-icon" style="background:#e0f4f8;font-size:20px;">🔀</div>
-      <div class="panel-title"><h2>Diagramas de Flujo — AprendeBA</h2>
-      <p>Flujos de proceso y permisos por rol · Matriz de Roles oficial</p></div>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
-      <button onclick="mostrarDiag('d1')" id="btn-d1" class="diag-btn activo-diag">📚 Matriculación</button>
-      <button onclick="mostrarDiag('d2')" id="btn-d2" class="diag-btn">📋 Presentismo</button>
-      <button onclick="mostrarDiag('d3')" id="btn-d3" class="diag-btn">📝 Calificaciones</button>
-      <button onclick="mostrarDiag('d4')" id="btn-d4" class="diag-btn">👤 Ciclo del Alumno</button>
-      <button onclick="mostrarDiag('d5')" id="btn-d5" class="diag-btn">👥 Permisos por Rol</button>
-    </div>
-    <div id="d1" class="diag-wrap" style="display:block;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-matriculacion.svg" alt="📚 Matriculación" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d2" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-presentismo.svg" alt="📋 Presentismo" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d3" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-calificaciones.svg" alt="📝 Calificaciones" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d4" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-ciclo-alumno.svg" alt="👤 Ciclo del Alumno" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d5" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-permisos-rol.svg" alt="👥 Permisos por Rol" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-  </div>
 </div>
 
 >
