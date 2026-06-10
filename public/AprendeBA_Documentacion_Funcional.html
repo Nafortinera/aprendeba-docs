@@ -2527,157 +2527,38 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
     </div>
   </div>
 
-  <!-- ROADMAP -->
-  <div class="sub-content activo" id="test-todos">
-
-    <!-- HERO -->
-    <div class="hero" style="background:linear-gradient(135deg,#78350f 0%,#b45309 100%);margin-bottom:20px;">
-      <h2>🧪 Testing Automatizado — AprendeBA Staging</h2>
-      <p>Registro de corridas semanales automáticas sobre el entorno <strong>stg.miescuela2.phinxlab.com</strong>.<br>
-         Escuela de prueba: <strong>Esc. Primaria Nº 13 DE 21 Dr. Alfredo Lanari</strong> · CUE 20026800</p>
-      <div class="chips">
-        <span class="chip">Calificaciones</span>
-        <span class="chip">Presentismo</span>
-        <span class="chip">1° grado Mañana Simple A</span>
-        <span class="chip">Directivo</span>
-      </div>
-    </div>
-
-    <!-- STATS -->
-    <div class="test-stats" id="test-stats">
-      <div class="ts-card ts-tot"><div class="ts-num" id="ts-total">2</div><div class="ts-lbl">Tests ejecutados</div></div>
-      <div class="ts-card ts-ok"> <div class="ts-num" id="ts-ok">1</div><div class="ts-lbl">✓ Exitosos</div></div>
-      <div class="ts-card ts-warn"><div class="ts-num" id="ts-warn">1</div><div class="ts-lbl">⚠ Parciales</div></div>
-      <div class="ts-card ts-err"><div class="ts-num" id="ts-err">0</div><div class="ts-lbl">✗ Con errores</div></div>
-    </div>
-
-    <div class="nota nota-v" style="margin-bottom:16px;">
-      <strong>📅 Programación:</strong> Ambos tests corren automáticamente cada <strong>lunes a las 9:00 AM</strong>.
-      Hacé clic en <em>"Run now"</em> en el panel Scheduled para activarlos la primera vez.
-    </div>
-
-    <!-- LISTA DE REPORTES -->
-    <div id="test-lista">
-
-      <!-- ── REPORTE 2: Presentismo - 08/05/2026 ── -->
-      <div class="tr-entry">
-        <div class="tr-head">
-          <span class="tr-fecha">📅 08/05/2026 13:15 &nbsp;·&nbsp; <span class="test-modulo-tag tm-pre">Presentismo</span></span>
-          <span class="tr-badge tr-warn">⚠ PARCIAL</span>
-        </div>
-        <table class="tr-tabla">
-          <tr><th>Escuela (CUE)</th><td>Esc. Primaria Nº 13 DE 21 Dr. Alfredo Lanari — 20026800</td></tr>
-          <tr><th>Módulo</th><td>Presentismo · Toma de asistencia</td></tr>
-          <tr><th>Semana testeada</th><td>Lunes 11 al Viernes 15 de mayo 2026</td></tr>
-          <tr><th>Sección</th><td>1° grado Mañana Simple A</td></tr>
-          <tr><th>Alumno ausente</th><td>AVILES VELA, KATHERINE NAIRA — justificación realizada manualmente</td></tr>
-        </table>
-        <div class="tr-pasos">
-          <span class="paso-ok">✓ Login Google SSO</span>
-          <span class="paso-ok">✓ CUE 20026800 → Directivo</span>
-          <span class="paso-ok">✓ Módulo Presentismo cargado</span>
-          <span class="paso-ok">✓ Semana anterior navegada (Lunes 11-15)</span>
-          <span class="paso-ok">✓ Sección 1° grado Mañana A seleccionada</span>
-          <span class="paso-ok">✓ Asistencia cargada (Presente / Ausente)</span>
-          <span class="paso-ok">✓ Guardado exitoso</span>
-          <span class="paso-warn">⚠ Justificación: bug en staging (API devuelve HTML)</span>
-          <span class="paso-ok">✓ Justificación completada manualmente</span>
-        </div>
-        <div style="padding:0 16px 12px;">
-          <div class="nota nota-t" style="margin-top:0;">
-            <strong>Bug identificado:</strong> El formulario de Justificación en el entorno staging devuelve
-            <code>SyntaxError: Unexpected token '&lt;', "!doctype"... is not valid JSON</code>
-            cuando se intenta abrir desde el browser automatizado. La justificación se realiza manualmente hasta que Phinx corrija el endpoint.
-          </div>
-        </div>
-      </div>
-
-      <!-- ── REPORTE 1: Calificaciones - 08/05/2026 ── -->
-      <div class="tr-entry">
-        <div class="tr-head">
-          <span class="tr-fecha">📅 08/05/2026 12:47 &nbsp;·&nbsp; <span class="test-modulo-tag tm-cal">Calificaciones</span></span>
-          <span class="tr-badge tr-ok">✓ EXITOSO</span>
-        </div>
-        <table class="tr-tabla">
-          <tr><th>Escuela (CUE)</th><td>Esc. Primaria Nº 13 DE 21 Dr. Alfredo Lanari — 20026800</td></tr>
-          <tr><th>Módulo</th><td>Calificaciones · Primer Bimestre</td></tr>
-          <tr><th>Sección</th><td>1° grado Mañana Simple A</td></tr>
-          <tr><th>Alumno testeado</th><td>ALAMO, MATÍAS EZEQUIEL (DNI 58143527) — índ. rotativo #0</td></tr>
-          <tr><th>Valor cargado</th><td>Carga masiva "Alcanzado" · Observación de prueba</td></tr>
-          <tr><th>Runs totales</th><td>1 — próximo: ARICOMA SANCHEZ, THIAGO (índ. #1)</td></tr>
-        </table>
-        <div class="tr-pasos">
-          <span class="paso-ok">✓ Login Google SSO</span>
-          <span class="paso-ok">✓ Búsqueda CUE 20026800</span>
-          <span class="paso-ok">✓ Rol Directivo seleccionado</span>
-          <span class="paso-ok">✓ Módulo Calificaciones cargado</span>
-          <span class="paso-ok">✓ Filtros: Primer Bimestre / 1° grado / Sección A</span>
-          <span class="paso-ok">✓ Aspectos Generales → No / No → Guardado</span>
-          <span class="paso-ok">✓ Trabajo en el aula → Alcanzado (carga masiva) → Guardado</span>
-          <span class="paso-ok">✓ Convivencia → Alcanzado (carga masiva) → Guardado</span>
-          <span class="paso-ok">✓ Área de Conocimiento (Matemática) → Alcanzado → Guardado</span>
-          <span class="paso-ok">✓ Observaciones → Texto de prueba → Guardado</span>
-          <span class="paso-ok">✓ Estado alumno verificado: "En proceso"</span>
-        </div>
-      </div>
-
-    </div><!-- /test-lista -->
-
-    <!-- CONFIGURACIÓN -->
-    <div class="panel" style="margin-top:24px;">
+  <div class="sub-content" id="proc-diagramas" style="display:none;">
+    <div class="panel">
       <div class="panel-header">
-        <div class="panel-icon" style="background:#fff8e1;font-size:20px;">⚙️</div>
-        <div class="panel-title">
-          <h2>Configuración de los tests automáticos</h2>
-          <p>Archivo de estado y parámetros de cada test semanal</p>
-        </div>
+        <div class="panel-icon" style="background:#e0f4f8;font-size:20px;">🔀</div>
+        <div class="panel-title"><h2>Diagramas de Flujo — AprendeBA</h2>
+        <p>Flujos de proceso y permisos por rol · Matriz de Roles oficial</p></div>
       </div>
-      <table>
-        <thead><tr><th>Parámetro</th><th>Calificaciones</th><th>Presentismo</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Frecuencia</strong></td><td>Lunes 9:00 AM</td><td>Lunes 9:00 AM</td></tr>
-          <tr><td><strong>CUE</strong></td><td>20026800</td><td>20026800</td></tr>
-          <tr><td><strong>Sección</strong></td><td>1° grado Mañana Simple A</td><td>1° grado Mañana Simple A</td></tr>
-          <tr><td><strong>Rotación</strong></td><td>1 alumno por semana (índ. en state file)</td><td>1 alumno ausente rotativo</td></tr>
-          <tr><td><strong>Valor prueba</strong></td><td>"Alcanzado" en todas las pestañas</td><td>Presente masivo + 1 Ausente</td></tr>
-          <tr><td><strong>Justificación</strong></td><td>N/A</td><td>Manual (bug en staging)</td></tr>
-          <tr><td><strong>Próximo alumno</strong></td><td>ARICOMA SANCHEZ, THIAGO</td><td>Índice #0 (ALAMO, MATÍAS)</td></tr>
-        </tbody>
-      </table>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+        <button onclick="mostrarDiag('d1')" id="btn-d1" class="diag-btn activo-diag">📚 Matriculación</button>
+        <button onclick="mostrarDiag('d2')" id="btn-d2" class="diag-btn">📋 Presentismo</button>
+        <button onclick="mostrarDiag('d3')" id="btn-d3" class="diag-btn">📝 Calificaciones</button>
+        <button onclick="mostrarDiag('d4')" id="btn-d4" class="diag-btn">👤 Ciclo del Alumno</button>
+        <button onclick="mostrarDiag('d5')" id="btn-d5" class="diag-btn">👥 Permisos por Rol</button>
+      </div>
+      <div id="d1" class="diag-wrap" style="display:block;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-matriculacion.svg" alt="📚 Matriculación" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+      <div id="d2" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-presentismo.svg" alt="📋 Presentismo" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+      <div id="d3" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-calificaciones.svg" alt="📝 Calificaciones" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+      <div id="d4" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-ciclo-alumno.svg" alt="👤 Ciclo del Alumno" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
+      <div id="d5" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-permisos-rol.svg" alt="👥 Permisos por Rol" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
     </div>
-
-  </div><!-- /sub-content -->
-</div><!-- /tab-testing -->
-
-
-
-
-
-
-
-
-
-<div class="sub-content" id="proc-diagramas" style="display:none;">
-  <div class="panel">
-    <div class="panel-header">
-      <div class="panel-icon" style="background:#e0f4f8;font-size:20px;">🔀</div>
-      <div class="panel-title"><h2>Diagramas de Flujo — AprendeBA</h2>
-      <p>Flujos de proceso y permisos por rol · Matriz de Roles oficial</p></div>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
-      <button onclick="mostrarDiag('d1')" id="btn-d1" class="diag-btn activo-diag">📚 Matriculación</button>
-      <button onclick="mostrarDiag('d2')" id="btn-d2" class="diag-btn">📋 Presentismo</button>
-      <button onclick="mostrarDiag('d3')" id="btn-d3" class="diag-btn">📝 Calificaciones</button>
-      <button onclick="mostrarDiag('d4')" id="btn-d4" class="diag-btn">👤 Ciclo del Alumno</button>
-      <button onclick="mostrarDiag('d5')" id="btn-d5" class="diag-btn">👥 Permisos por Rol</button>
-    </div>
-    <div id="d1" class="diag-wrap" style="display:block;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-matriculacion.svg" alt="📚 Matriculación" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d2" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-presentismo.svg" alt="📋 Presentismo" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d3" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-calificaciones.svg" alt="📝 Calificaciones" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d4" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-ciclo-alumno.svg" alt="👤 Ciclo del Alumno" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d5" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-permisos-rol.svg" alt="👥 Permisos por Rol" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
   </div>
-</div>
+
+</div><!-- /tab-procesos -->
+
+
+
+
+
+
+
+
+
 
 <!-- ==================== DRIVE & NOVEDADES ==================== -->
 <div class="tab-content" id="tab-drive">
