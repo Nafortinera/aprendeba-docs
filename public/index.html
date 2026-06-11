@@ -633,7 +633,6 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <nav class="nav-sub" id="subnav-procesos">
   <button class="activo" data-sub="proc-estado"  onclick="cambiarSub('procesos','proc-estado')">🟢 Estado módulos</button>
   <button data-sub="proc-deploys"                onclick="cambiarSub('procesos','proc-deploys')">📦 Historial deploys</button>
-  <button data-sub="proc-diagramas"              onclick="cambiarSub('procesos','proc-diagramas')">🔀 Diagramas de flujo</button>
   <button data-sub="proc-horas"                  onclick="cambiarSub('procesos','proc-horas');renderHorasMetricas();renderHorasTabla();">📊 Proyectos &amp; Horas</button>
 </nav>
 
@@ -2583,29 +2582,6 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 
 
 
-<div class="sub-content" id="proc-diagramas">
-  <div class="panel">
-    <div class="panel-header">
-      <div class="panel-icon" style="background:#e0f4f8;font-size:20px;">🔀</div>
-      <div class="panel-title"><h2>Diagramas de Flujo — AprendeBA</h2>
-      <p>Flujos de proceso y permisos por rol · Matriz de Roles oficial</p></div>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
-      <button onclick="mostrarDiag('d1')" id="btn-d1" class="diag-btn activo-diag">📚 Matriculación</button>
-      <button onclick="mostrarDiag('d2')" id="btn-d2" class="diag-btn">📋 Presentismo</button>
-      <button onclick="mostrarDiag('d3')" id="btn-d3" class="diag-btn">📝 Calificaciones</button>
-      <button onclick="mostrarDiag('d4')" id="btn-d4" class="diag-btn">👤 Ciclo del Alumno</button>
-      <button onclick="mostrarDiag('d5')" id="btn-d5" class="diag-btn">👥 Permisos por Rol</button>
-    </div>
-    <div id="d1" class="diag-wrap" style="display:block;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-matriculacion.svg" alt="📚 Matriculación" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d2" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-presentismo.svg" alt="📋 Presentismo" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d3" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-calificaciones.svg" alt="📝 Calificaciones" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d4" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-ciclo-alumno.svg" alt="👤 Ciclo del Alumno" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-    <div id="d5" class="diag-wrap" style="display:none;text-align:center;"><img src="https://aprendeba-docs.vercel.app/diag-permisos-rol.svg" alt="👥 Permisos por Rol" style="max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:12px;" loading="lazy"></div>
-  </div>
-  <!-- PROYECTOS & HORAS -->
-  
-</div>
 <div class="sub-content" id="proc-horas">
     <div class="panel" style="background:linear-gradient(135deg,#0f4c75 0%,#1b6ca8 100%);color:#fff;padding:20px 24px;margin-bottom:16px;border-radius:12px;">
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between;">
@@ -4742,13 +4718,6 @@ function cambiarTab(tab) {
   document.querySelectorAll('.nav-sub').forEach(n => n.style.display = 'none');
   const sub = document.getElementById('subnav-' + tab);
   if (sub && tab !== 'documentacion') sub.style.display = 'flex';
-  // Auto-mostrar primer diagrama al entrar en proc-diagramas
-  if (tab === 'procesos') {
-    setTimeout(function() {
-      var ds = document.getElementById('proc-diagramas');
-      if (ds && ds.classList.contains('activo')) mostrarDiag('d1');
-    }, 200);
-  }
   // Siempre garantizar un sub-content activo
   if (content) {
     // Resetear todos los sub-contents de ESTE tab
@@ -6398,4 +6367,4 @@ function showDer(id, btn) {
 <!-- ===== /ASISTENTE FLOTANTE ===== -->
 
 </body>
-</html>                                                                                                                                                                         
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                              
