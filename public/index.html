@@ -3852,48 +3852,45 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 
     /* ── Header ── */
     #tab-flujos header.flujos-hdr {
-      background: linear-gradient(135deg, #1e40af 0%, #2563eb 60%, #3b82f6 100%);
+      background: linear-gradient(135deg, #155f7a 0%, #1a6b8a 50%, #1e7d96 100%);
       color: white;
-      padding: 28px 40px;
+      padding: 22px 32px;
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 14px;
     }
-    .#tab-flujos header.flujos-hdr-icon {
-      width: 48px; height: 48px;
-      background: rgba(255,255,255,.18);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 24px; flex-shrink: 0;
+    #tab-flujos .flujos-header-icon {
+      font-size: 28px; flex-shrink: 0;
     }
-    #tab-flujos header.flujos-hdr h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -.3px; }
-    #tab-flujos header.flujos-hdr p  { font-size: 0.83rem; opacity: .75; margin-top: 3px; }
+    #tab-flujos header.flujos-hdr h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: -.3px; }
+    #tab-flujos header.flujos-hdr p  { font-size: 0.82rem; opacity: .78; margin-top: 2px; }
 
     /* ── Nav ── */
     #tab-flujos nav.flujos-nav {
       background: white;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 2px solid #e2e8f0;
       display: flex;
-      padding: 0 32px;
-      gap: 4px;
+      padding: 0 24px;
+      gap: 2px;
       overflow-x: auto;
-      box-shadow: 0 1px 3px rgba(0,0,0,.05);
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
     }
-    #tab-flujos #tab-flujos nav.flujos-nav.flujos-#tab-flujos nav.flujos-nav button {
-      padding: 16px 20px;
+    #tab-flujos nav.flujos-nav button {
+      padding: 12px 18px;
       border: none;
+      border-bottom: 3px solid transparent;
       background: none;
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 500;
       color: #64748b;
       white-space: nowrap;
-      border-bottom: 3px solid transparent;
-      display: flex; align-items: center; gap: 7px;
+      display: flex; align-items: center; gap: 6px;
       transition: color .15s, border-color .15s;
+      margin-bottom: -2px;
     }
-    #tab-flujos #tab-flujos nav.flujos-nav.flujos-#tab-flujos nav.flujos-nav button:hover  { color: #2563eb; }
-    #tab-flujos #tab-flujos nav.flujos-nav.flujos-#tab-flujos nav.flujos-nav button.flujos-active { color: #2563eb; border-bottom-color: #2563eb; font-weight: 600; }
+    #tab-flujos nav.flujos-nav button:hover  { color: #1a6b8a; background: #f0f9ff; border-radius: 6px 6px 0 0; }
+    #tab-flujos nav.flujos-nav button.flujos-active { color: #1a6b8a; border-bottom-color: #1a6b8a; font-weight: 600; }
     .flujos-tab-icon { font-size: 1rem; }
 
     /* ── Layout ── */
@@ -6397,3 +6394,8 @@ function showDer(id, btn) {
 
 
 
+</script>
+<!-- ===== /ASISTENTE FLOTANTE ===== -->
+
+</body>
+</html>                                                                                                                                                                       
