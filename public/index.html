@@ -559,7 +559,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <button data-tab="documentacion"               onclick="cambiarTab('documentacion')">📂 Doc &amp; Inventario</button>
   <button data-tab="procesos"                    onclick="cambiarTab('procesos')">🚀 Procesos &amp; Estado</button>
   <button               data-tab="testing"         onclick="cambiarTab('testing')">🧪 Testing</button>
-  <button data-tab="drive"                        onclick="cambiarTab('drive')">☁️ Drive &amp; Novedades</button>
+  <button data-tab="der"                          onclick="cambiarTab('der')">🗂️ DER</button>
   <button data-tab="bacolaborativa" onclick="cambiarTab('bacolaborativa')">🤝 BA Colaborativa</button>
   <button data-tab="mantis" onclick="cambiarTab('mantis')">🐛 Mantis</button>
   <button data-tab="powerbi"                      onclick="cambiarTab('powerbi')">📊 Carga escuelas</button>
@@ -628,10 +628,10 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
       <p>Casos de prueba y seguimiento de QA.</p>
     </div>
 
-    <div class="card" onclick="cambiarTab('drive')" style="cursor:pointer;border-top:4px solid #2FA89C;">
-      <span style="font-size:30px">☁️</span>
-      <h3>Drive & Novedades</h3>
-      <p>Documentos del equipo y novedades recientes.</p>
+    <div class="card" onclick="cambiarTab('der')" style="cursor:pointer;border-color:#1a56db;">
+      <span style="font-size:30px">🗂️</span>
+      <h3>DER</h3>
+      <p>Diagramas Entidad-Relación por módulo.</p>
     </div>
 
     <div class="card" onclick="cambiarTab('bacolaborativa')" style="cursor:pointer;border-top:4px solid #3b82f6;">
@@ -2607,45 +2607,1187 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 
 
 <!-- ==================== DRIVE & NOVEDADES ==================== -->
-<div class="tab-content" id="tab-drive">
-  <div class="drive-portal-hero">
-    <h2>☁️ Drive &amp; Novedades del proyecto</h2>
-    <p>Documentos recientes de AprendeBA en Google Drive · Comunicaciones de Gmail · Actualización automática al abrir esta sección</p>
-  </div>
+<div class="tab-content" id="tab-der">
+<style>
 
-  <!-- NOTIFICACION BUTTON PANEL -->
-  <div class="panel" style="margin-bottom:18px;">
-    <div class="panel-header">
-      <div class="panel-icon pi-azul">📣</div>
-      <div class="panel-title">
-        <h2>Notificar actualización al equipo</h2>
-        <p>Prepara un borrador de Gmail para avisar que hay documentación nueva disponible en el portal</p>
+
+  header {
+    background: #1a56db;
+    color: white;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  }
+  header h1 { font-size: 22px; font-weight: 700; }
+  header p { font-size: 13px; opacity: .8; margin-top: 2px; }
+
+  #tab-der .der-layout {
+    display: flex;
+    min-height: calc(100vh - 74px);
+  }
+
+  /* Sidebar */
+  #tab-der .der-nav {
+    width: 220px;
+    background: #fff;
+    border-right: 1px solid #e5e7eb;
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 74px);
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+  #tab-der .der-nav h2 {
+    font-size: 11px;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: 0 16px 10px;
+  }
+  #tab-der .der-nav button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 13px;
+    color: #374151;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all .15s;
+  }
+  #tab-der .der-nav button:hover { background: #f0f4ff; color: #1a56db; }
+  #tab-der .der-nav button.active { background: #eff6ff; color: #1a56db; font-weight: 600; border-left-color: #1a56db; }
+  #tab-der .der-nav button .icon { font-size: 16px; }
+
+  /* Main */
+  #tab-der .der-main {
+    flex: 1;
+    padding: 28px 32px;
+    overflow: auto;
+  }
+
+  #tab-der .der-panel { display: none; }
+  #tab-der .der-panel.active { display: block; }
+
+  #tab-der .panel-header-der {
+    margin-bottom: 20px;
+  }
+  #tab-der .panel-header-der h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+  }
+  #tab-der .panel-header-der p {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+
+  #tab-der .der-container {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    overflow-x: auto;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+
+  #tab-der .legend-der {
+    display: flex;
+    gap: 20px;
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: #f9fafb;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    flex-wrap: wrap;
+  }
+  #tab-der .legend-der-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #4b5563;
+  }
+  #tab-der .legend-der-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  #tab-der .der-layout { display:flex; min-height:500px; }
+  #tab-der .der-main { flex:1; overflow:auto; }
+  #tab-der .der-nav { flex-shrink:0; }
+</style>
+<div class="der-layout">
+
+  <div class="der-nav">
+    <h2>Módulos</h2>
+    <button class="active" onclick="showDer('usuarios', this)"><span class="icon">👤</span> Usuarios y Roles</button>
+    <button onclick="showDer('establecimiento', this)"><span class="icon">🏫</span> Establecimiento</button>
+    <button onclick="showDer('matriculacion', this)"><span class="icon">📋</span> Matriculación</button>
+    <button onclick="showDer('presentismo', this)"><span class="icon">📅</span> Presentismo</button>
+    <button onclick="showDer('calificaciones', this)"><span class="icon">📊</span> Calificaciones</button>
+    <button onclick="showDer('boletines', this)"><span class="icon">📄</span> Boletines</button>
+    <button onclick="showDer('legajo', this)"><span class="icon">🗂️</span> Legajo</button>
+    <button onclick="showDer('planes', this)"><span class="icon">📚</span> Planes de Estudio</button>
+    <button onclick="showDer('ecp', this)"><span class="icon">⏳</span> ECP</button>
+    <button onclick="showDer('acap', this)"><span class="icon">🤝</span> ACAP</button>
+    <button onclick="showDer('promocion', this)"><span class="icon">🎓</span> Promoción</button>
+  </div><!-- /der-nav -->
+
+  <div class="der-main">
+
+    <!-- ===== USUARIOS Y ROLES ===== -->
+    <div id="panel-usuarios" class="der-panel active">
+      <div class="panel-header-der">
+        <h2>👤 Usuarios y Roles</h2>
+        <p>Gestión de acceso, identidad y permisos de todos los actores del sistema.</p>
+      </div>
+      <div class="der-container">
+        <svg viewBox="0 0 820 440" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- USUARIO -->
+          <g transform="translate(20,20)">
+            <rect width="190" height="215" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="190" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="190" height="6" fill="#3b5bdb"/>
+            <text x="95" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">USUARIO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_usuario (PK)</text>
+            <text x="8" y="63" fill="#374151" font-size="10">nombre</text>
+            <text x="8" y="78" fill="#374151" font-size="10">apellido</text>
+            <text x="8" y="93" fill="#374151" font-size="10">email</text>
+            <text x="8" y="108" fill="#374151" font-size="10">cuil</text>
+            <text x="8" y="123" fill="#374151" font-size="10">contraseña_hash</text>
+            <text x="8" y="138" fill="#374151" font-size="10">estado (activo / inactivo)</text>
+            <text x="8" y="153" fill="#374151" font-size="10">fecha_alta</text>
+            <text x="8" y="168" fill="#374151" font-size="10">tipo_documento</text>
+            <text x="8" y="183" fill="#374151" font-size="10">nro_documento</text>
+            <text x="8" y="198" fill="#374151" font-size="10">firma_digital (bool)</text>
+          </g>
+
+          <!-- ROL -->
+          <g transform="translate(270,20)">
+            <rect width="195" height="145" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="195" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="195" height="6" fill="#3b5bdb"/>
+            <text x="97" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">ROL</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_rol (PK)</text>
+            <text x="8" y="63" fill="#374151" font-size="10">nombre_rol</text>
+            <text x="8" y="78" fill="#374151" font-size="10">descripcion</text>
+            <text x="8" y="93" fill="#374151" font-size="10">nivel (inicial/primaria/secu)</text>
+            <text x="8" y="108" fill="#374151" font-size="10">estado</text>
+            <text x="8" y="123" fill="#374151" font-size="10">es_solo_visualizacion</text>
+          </g>
+
+          <!-- USUARIO_ROL -->
+          <g transform="translate(270,230)">
+            <rect width="195" height="145" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="195" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="195" height="6" fill="#d97706"/>
+            <text x="97" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">USUARIO_ROL</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_usuario_rol (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_usuario (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_rol (FK)</text>
+            <text x="8" y="93" fill="#1e6b4b" font-size="10">🔗 id_establecimiento (FK)</text>
+            <text x="8" y="108" fill="#374151" font-size="10">estado (pendiente / aprobado)</text>
+            <text x="8" y="123" fill="#374151" font-size="10">fecha_solicitud</text>
+            <text x="8" y="138" fill="#374151" font-size="10">aprobado_por (id_usuario)</text>
+          </g>
+
+          <!-- PERMISO -->
+          <g transform="translate(520,20)">
+            <rect width="190" height="125" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="190" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="190" height="6" fill="#3b5bdb"/>
+            <text x="95" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">PERMISO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_permiso (PK)</text>
+            <text x="8" y="63" fill="#374151" font-size="10">modulo</text>
+            <text x="8" y="78" fill="#374151" font-size="10">accion (leer/escribir/aprobar)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">descripcion</text>
+          </g>
+
+          <!-- ROL_PERMISO -->
+          <g transform="translate(520,210)">
+            <rect width="190" height="95" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="190" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="190" height="6" fill="#d97706"/>
+            <text x="95" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">ROL_PERMISO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_rol_permiso (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_rol (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_permiso (FK)</text>
+          </g>
+
+          <!-- Líneas -->
+          <line x1="210" y1="150" x2="270" y2="290" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="230" y="235" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="367" y1="165" x2="367" y2="230" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="372" y="202" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="465" y1="90" x2="520" y2="260" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="478" y="185" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="615" y1="145" x2="615" y2="210" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="620" y="183" fill="#6b7280" font-size="9">1 : N</text>
+        </svg>
+      </div>
+      <div class="legend-der">
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#3b5bdb"></div> Entidad principal</div>
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#d97706"></div> Tabla de relación (N:M)</div>
+        <div class="legend-der-item"><span style="color:#b45309;font-weight:700">🔑 PK</span> Clave primaria</div>
+        <div class="legend-der-item"><span style="color:#1e6b4b">🔗 FK</span> Clave foránea</div>
       </div>
     </div>
-    <p style="font-size:13px;color:var(--texto-suave);margin-bottom:4px;">Destinatarios del equipo: Cristina Castellar, Jesica Gómez, Maximiliano Ramírez, Rodrigo Pedro, Cristian Santillán</p>
-    <button class="btn-notificar" id="btn-notificar" onclick="notificarEquipo()">
-      📧 Preparar borrador en Gmail
-    </button>
-  </div>
 
-  <!-- LISTA DRIVE -->
-  <div class="panel">
-    <div class="panel-header">
-      <div class="panel-icon pi-azul">☁️</div>
-      <div class="panel-title">
-        <h2>Documentos recientes en Drive</h2>
-        <p>Archivos del proyecto AprendeBA · Actualizado automáticamente</p>
+    <!-- ===== ESTABLECIMIENTO ===== -->
+    <div id="panel-establecimiento" class="der-panel">
+      <div class="panel-header-der">
+        <h2>🏫 Establecimiento</h2>
+        <p>Escuelas, secciones, aulas, calendarios y estructura territorial.</p>
+      </div>
+      <div class="der-container">
+        <svg viewBox="0 0 820 440" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- ESTABLECIMIENTO -->
+          <g transform="translate(20,20)">
+            <rect width="210" height="245" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="210" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="210" height="6" fill="#3b5bdb"/>
+            <text x="105" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">ESTABLECIMIENTO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_establecimiento (PK)</text>
+            <text x="8" y="63" fill="#374151" font-size="10">cue (código único escuela)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">nombre</text>
+            <text x="8" y="93" fill="#374151" font-size="10">nivel (inicial/primaria/secu)</text>
+            <text x="8" y="108" fill="#374151" font-size="10">modalidad</text>
+            <text x="8" y="123" fill="#374151" font-size="10">gestion (publica / privada)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">direccion</text>
+            <text x="8" y="153" fill="#1e6b4b" font-size="10">🔗 id_distrito (FK)</text>
+            <text x="8" y="168" fill="#374151" font-size="10">estado (activo / inactivo)</text>
+            <text x="8" y="183" fill="#374151" font-size="10">fecha_alta</text>
+            <text x="8" y="198" fill="#1e6b4b" font-size="10">🔗 id_direccion_area (FK)</text>
+            <text x="8" y="213" fill="#374151" font-size="10">telefono</text>
+            <text x="8" y="228" fill="#374151" font-size="10">email_institucional</text>
+          </g>
+
+          <!-- SECCION -->
+          <g transform="translate(290,20)">
+            <rect width="200" height="195" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="200" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="200" height="6" fill="#3b5bdb"/>
+            <text x="100" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">SECCION</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_seccion (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_establecimiento (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">nombre (ej: 1°A)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">año / grado</text>
+            <text x="8" y="108" fill="#374151" font-size="10">turno (mañana/tarde/noche)</text>
+            <text x="8" y="123" fill="#374151" font-size="10">jornada (simple/extendida)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="153" fill="#374151" font-size="10">id_aula / codigo_aula</text>
+            <text x="8" y="168" fill="#1e6b4b" font-size="10">🔗 id_plan (FK)</text>
+            <text x="8" y="183" fill="#374151" font-size="10">estado</text>
+          </g>
+
+          <!-- DISTRITO -->
+          <g transform="translate(20,330)">
+            <rect width="210" height="95" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="210" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="210" height="6" fill="#3b5bdb"/>
+            <text x="105" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">DISTRITO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_distrito (PK)</text>
+            <text x="8" y="63" fill="#374151" font-size="10">nombre</text>
+            <text x="8" y="78" fill="#374151" font-size="10">region</text>
+          </g>
+
+          <!-- DIRECCION_AREA -->
+          <g transform="translate(555,20)">
+            <rect width="210" height="125" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="210" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="210" height="6" fill="#3b5bdb"/>
+            <text x="105" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">DIRECCION_AREA</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_direccion_area (PK)</text>
+            <text x="8" y="63" fill="#374151" font-size="10">nombre</text>
+            <text x="8" y="78" fill="#374151" font-size="10">tipo (DEA / DENS / etc)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">nivel</text>
+            <text x="8" y="108" fill="#374151" font-size="10">estado</text>
+          </g>
+
+          <!-- CALENDARIO_ACADEMICO -->
+          <g transform="translate(555,210)">
+            <rect width="210" height="145" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="210" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="210" height="6" fill="#3b5bdb"/>
+            <text x="105" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">CALENDARIO_ACADEMICO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_calendario (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_establecimiento (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="93" fill="#374151" font-size="10">nivel</text>
+            <text x="8" y="108" fill="#374151" font-size="10">fecha_inicio</text>
+            <text x="8" y="123" fill="#374151" font-size="10">fecha_fin</text>
+            <text x="8" y="138" fill="#374151" font-size="10">dias_habiles</text>
+          </g>
+
+          <!-- Líneas -->
+          <line x1="230" y1="140" x2="290" y2="100" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="245" y="116" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="125" y1="265" x2="125" y2="330" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="130" y="303" fill="#6b7280" font-size="9">N : 1</text>
+          <line x1="230" y1="198" x2="555" y2="270" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="375" y="248" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="490" y1="100" x2="555" y2="80" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="510" y="82" fill="#6b7280" font-size="9">N : 1</text>
+        </svg>
+      </div>
+      <div class="legend-der">
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#3b5bdb"></div> Entidad principal</div>
+        <div class="legend-der-item"><span style="color:#b45309;font-weight:700">🔑 PK</span> Clave primaria</div>
+        <div class="legend-der-item"><span style="color:#1e6b4b">🔗 FK</span> Clave foránea</div>
       </div>
     </div>
-    <div id="drive-lista" style="min-height:120px;">
-      <div style="text-align:center;padding:32px;color:var(--texto-suave);">
-        <div style="font-size:32px;margin-bottom:8px;">☁️</div>
-        <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Conectate con Google Drive</div>
-        <div style="font-size:13px;">Los documentos recientes del proyecto aparecerán aquí automáticamente.</div>
+
+    <!-- ===== MATRICULACION ===== -->
+    <div id="panel-matriculacion" class="der-panel">
+      <div class="panel-header-der">
+        <h2>📋 Matriculación</h2>
+        <p>Inscripción, efectivización, pases, desmatriculación e historial de movimientos del estudiante.</p>
+      </div>
+      <div class="der-container">
+        <svg viewBox="0 0 820 460" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- ESTUDIANTE -->
+          <g transform="translate(20,20)">
+            <rect width="205" height="215" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="205" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="205" height="6" fill="#3b5bdb"/>
+            <text x="102" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">ESTUDIANTE</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_estudiante (PK)</text>
+            <text x="8" y="63" fill="#374151" font-size="10">nombre</text>
+            <text x="8" y="78" fill="#374151" font-size="10">apellido</text>
+            <text x="8" y="93" fill="#374151" font-size="10">dni / cuil</text>
+            <text x="8" y="108" fill="#374151" font-size="10">nro_tramite_dni</text>
+            <text x="8" y="123" fill="#374151" font-size="10">fecha_nacimiento</text>
+            <text x="8" y="138" fill="#374151" font-size="10">genero</text>
+            <text x="8" y="153" fill="#374151" font-size="10">nacionalidad</text>
+            <text x="8" y="168" fill="#374151" font-size="10">direccion</text>
+            <text x="8" y="183" fill="#374151" font-size="10">cedula_identidad_extranjera</text>
+            <text x="8" y="198" fill="#374151" font-size="10">estado_global</text>
+          </g>
+
+          <!-- MATRICULA -->
+          <g transform="translate(285,20)">
+            <rect width="215" height="250" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="215" height="6" fill="#d97706"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">MATRICULA</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_matricula (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_estudiante (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_seccion (FK)</text>
+            <text x="8" y="93" fill="#1e6b4b" font-size="10">🔗 id_establecimiento (FK)</text>
+            <text x="8" y="108" fill="#1e6b4b" font-size="10">🔗 id_plan (FK)</text>
+            <text x="8" y="123" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="138" fill="#374151" font-size="10">fecha_efectiva (FEM)</text>
+            <text x="8" y="153" fill="#374151" font-size="10">condicion (regular / libre)</text>
+            <text x="8" y="168" fill="#374151" font-size="10">estado (efectivo / inscripto)</text>
+            <text x="8" y="183" fill="#374151" font-size="10">año_cursada</text>
+            <text x="8" y="198" fill="#374151" font-size="10">nivel</text>
+            <text x="8" y="213" fill="#374151" font-size="10">modalidad</text>
+            <text x="8" y="228" fill="#374151" font-size="10">es_promovido</text>
+          </g>
+
+          <!-- PASE -->
+          <g transform="translate(565,20)">
+            <rect width="210" height="195" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="210" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="210" height="6" fill="#d97706"/>
+            <text x="105" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">PASE</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_pase (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_estudiante (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_seccion_origen (FK)</text>
+            <text x="8" y="93" fill="#1e6b4b" font-size="10">🔗 id_seccion_destino (FK)</text>
+            <text x="8" y="108" fill="#1e6b4b" font-size="10">🔗 id_establecimiento_origen (FK)</text>
+            <text x="8" y="123" fill="#374151" font-size="10">fecha_efectiva_pase</text>
+            <text x="8" y="138" fill="#374151" font-size="10">tipo (interno / externo)</text>
+            <text x="8" y="153" fill="#374151" font-size="10">motivo</text>
+            <text x="8" y="168" fill="#374151" font-size="10">estado</text>
+            <text x="8" y="183" fill="#374151" font-size="10">ciclo_lectivo</text>
+          </g>
+
+          <!-- HISTORIAL_MATRICULA -->
+          <g transform="translate(285,335)">
+            <rect width="215" height="110" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="215" height="6" fill="#3b5bdb"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">HISTORIAL_MATRICULA</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_historial (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">evento (pase/cambio_secc/baja)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">fecha_evento</text>
+            <text x="8" y="108" fill="#374151" font-size="10">detalle</text>
+          </g>
+
+          <!-- Líneas -->
+          <line x1="225" y1="110" x2="285" y2="100" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="245" y="100" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="500" y1="100" x2="565" y2="100" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="522" y="94" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="392" y1="270" x2="392" y2="335" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="397" y="308" fill="#6b7280" font-size="9">1 : N</text>
+        </svg>
+      </div>
+      <div class="legend-der">
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#3b5bdb"></div> Entidad principal</div>
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#d97706"></div> Tabla de relación (N:M)</div>
+        <div class="legend-der-item"><span style="color:#b45309;font-weight:700">🔑 PK</span> Clave primaria</div>
+        <div class="legend-der-item"><span style="color:#1e6b4b">🔗 FK</span> Clave foránea</div>
       </div>
     </div>
-  </div>
 
+    <!-- ===== PRESENTISMO ===== -->
+    <div id="panel-presentismo" class="der-panel">
+      <div class="panel-header-der">
+        <h2>📅 Presentismo</h2>
+        <p>Registro de asistencia diaria, justificaciones, cómputo de regularidad y alertas.</p>
+      </div>
+      <div class="der-container">
+        <svg viewBox="0 0 820 480" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- REGISTRO_PRESENTISMO -->
+          <g transform="translate(20,20)">
+            <rect width="225" height="250" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="225" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="225" height="6" fill="#d97706"/>
+            <text x="112" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">REGISTRO_PRESENTISMO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_registro (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_seccion (FK)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">fecha</text>
+            <text x="8" y="108" fill="#374151" font-size="10">turno (JN / JE / Contraturno)</text>
+            <text x="8" y="123" fill="#374151" font-size="10">estado (P/A/RA/IT/NC/APC)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">puntaje calculado</text>
+            <text x="8" y="153" fill="#374151" font-size="10">justificado (bool)</text>
+            <text x="8" y="168" fill="#1e6b4b" font-size="10">🔗 id_justificacion (FK)</text>
+            <text x="8" y="183" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="198" fill="#374151" font-size="10">bimestre (1/2/3/4)</text>
+            <text x="8" y="213" fill="#374151" font-size="10">cargado_por (id_usuario)</text>
+            <text x="8" y="228" fill="#374151" font-size="10">fecha_carga</text>
+          </g>
+
+          <!-- JUSTIFICACION -->
+          <g transform="translate(305,20)">
+            <rect width="205" height="145" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="205" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="205" height="6" fill="#3b5bdb"/>
+            <text x="102" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">JUSTIFICACION</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_justificacion (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_registro (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">tipo_justificacion</text>
+            <text x="8" y="93" fill="#374151" font-size="10">descripcion</text>
+            <text x="8" y="108" fill="#374151" font-size="10">adjunto_url</text>
+            <text x="8" y="123" fill="#374151" font-size="10">fecha_carga</text>
+            <text x="8" y="138" fill="#374151" font-size="10">cargado_por (id_usuario)</text>
+          </g>
+
+          <!-- REGULARIDAD -->
+          <g transform="translate(305,235)">
+            <rect width="205" height="195" rx="6" fill="#f0f9f4" stroke="#15803d" stroke-width="1.5"/>
+            <rect width="205" height="28" rx="6" fill="#15803d"/>
+            <rect x="0" y="22" width="205" height="6" fill="#15803d"/>
+            <text x="102" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">REGULARIDAD</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_regularidad (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="93" fill="#374151" font-size="10">bimestre (1/2/3/4)</text>
+            <text x="8" y="108" fill="#374151" font-size="10">condicion (R / NR / DI)</text>
+            <text x="8" y="123" fill="#374151" font-size="10">modificada_manualmente (bool)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">modificado_por (id_usuario)</text>
+            <text x="8" y="153" fill="#374151" font-size="10">adjunto_respaldo (url)</text>
+            <text x="8" y="168" fill="#374151" font-size="10">fecha_calculo</text>
+            <text x="8" y="183" fill="#374151" font-size="10">faltas_anuales_injustificadas</text>
+          </g>
+
+          <!-- ALERTA_PRESENTISMO -->
+          <g transform="translate(570,20)">
+            <rect width="205" height="165" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="205" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="205" height="6" fill="#3b5bdb"/>
+            <text x="102" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">ALERTA_PRESENTISMO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_alerta (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_establecimiento (FK)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">tipo_alerta (1 / 2 / 3)</text>
+            <text x="8" y="108" fill="#374151" font-size="10">fecha_generacion</text>
+            <text x="8" y="123" fill="#374151" font-size="10">leida (bool)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">bimestre</text>
+            <text x="8" y="153" fill="#374151" font-size="10">ciclo_lectivo</text>
+          </g>
+
+          <!-- Líneas -->
+          <line x1="245" y1="115" x2="305" y2="80" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="265" y="91" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="132" y1="270" x2="305" y2="310" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="194" y="300" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="132" y1="140" x2="570" y2="80" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="340" y="95" fill="#6b7280" font-size="9">1 : N</text>
+        </svg>
+      </div>
+      <div class="legend-der">
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#3b5bdb"></div> Entidad principal</div>
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#15803d"></div> Entidad calculada</div>
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#d97706"></div> Registro transaccional</div>
+        <div class="legend-der-item"><span style="color:#b45309;font-weight:700">🔑 PK</span> Clave primaria</div>
+        <div class="legend-der-item"><span style="color:#1e6b4b">🔗 FK</span> Clave foránea</div>
+      </div>
+    </div>
+
+    <!-- ===== CALIFICACIONES ===== -->
+    <div id="panel-calificaciones" class="der-panel">
+      <div class="panel-header-der">
+        <h2>📊 Calificaciones</h2>
+        <p>Notas bimestrales, anuales, PPI, apertura/cierre de períodos (candado) y descarga.</p>
+      </div>
+      <div class="der-container">
+        <svg viewBox="0 0 820 460" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- CALIFICACION_BIMESTRAL -->
+          <g transform="translate(20,20)">
+            <rect width="225" height="240" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="225" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="225" height="6" fill="#d97706"/>
+            <text x="112" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">CALIFICACION_BIMESTRAL</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_calificacion (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_espacio_curricular (FK)</text>
+            <text x="8" y="93" fill="#1e6b4b" font-size="10">🔗 id_periodo_calificacion (FK)</text>
+            <text x="8" y="108" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="123" fill="#374151" font-size="10">bimestre (1/2/3/4)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">nota (numerica / conceptual)</text>
+            <text x="8" y="153" fill="#374151" font-size="10">tipo (bimestral / anual / final)</text>
+            <text x="8" y="168" fill="#374151" font-size="10">estado (abierto / cerrado)</text>
+            <text x="8" y="183" fill="#374151" font-size="10">cargado_por (id_usuario)</text>
+            <text x="8" y="198" fill="#374151" font-size="10">fecha_carga</text>
+            <text x="8" y="213" fill="#374151" font-size="10">nivel</text>
+            <text x="8" y="228" fill="#374151" font-size="10">visible (bool)</text>
+          </g>
+
+          <!-- CALIFICACION_ANUAL -->
+          <g transform="translate(305,20)">
+            <rect width="205" height="175" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="205" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="205" height="6" fill="#d97706"/>
+            <text x="102" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">CALIFICACION_ANUAL</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_cal_anual (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_espacio_curricular (FK)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="108" fill="#374151" font-size="10">nota_final (numerica)</text>
+            <text x="8" y="123" fill="#374151" font-size="10">condicion_final</text>
+            <text x="8" y="138" fill="#374151" font-size="10">estado (abierto / cerrado)</text>
+            <text x="8" y="153" fill="#374151" font-size="10">cargado_por (id_usuario)</text>
+            <text x="8" y="168" fill="#374151" font-size="10">automatizada (bool)</text>
+          </g>
+
+          <!-- PERIODO_CALIFICACION -->
+          <g transform="translate(305,265)">
+            <rect width="205" height="145" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="205" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="205" height="6" fill="#3b5bdb"/>
+            <text x="102" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">PERIODO_CALIFICACION</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_periodo (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_establecimiento (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="93" fill="#374151" font-size="10">bimestre</text>
+            <text x="8" y="108" fill="#374151" font-size="10">fecha_apertura</text>
+            <text x="8" y="123" fill="#374151" font-size="10">fecha_cierre (candado)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">nivel</text>
+          </g>
+
+          <!-- CALIFICACION_PPI -->
+          <g transform="translate(570,20)">
+            <rect width="215" height="180" rx="6" fill="#f0f9f4" stroke="#15803d" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#15803d"/>
+            <rect x="0" y="22" width="215" height="6" fill="#15803d"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">CALIFICACION_PPI</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_cal_ppi (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_espacio_curricular (FK)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="108" fill="#374151" font-size="10">tipo_indicador</text>
+            <text x="8" y="123" fill="#374151" font-size="10">valor</text>
+            <text x="8" y="138" fill="#374151" font-size="10">bimestre</text>
+            <text x="8" y="153" fill="#374151" font-size="10">cargado_por (id_usuario)</text>
+            <text x="8" y="168" fill="#374151" font-size="10">grado_nivelacion (bool)</text>
+          </g>
+
+          <!-- Líneas -->
+          <line x1="245" y1="110" x2="305" y2="100" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <line x1="245" y1="160" x2="305" y2="330" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <line x1="245" y1="110" x2="570" y2="90" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="130" y="100" fill="#6b7280" font-size="9">1 : N</text>
+        </svg>
+      </div>
+      <div class="legend-der">
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#d97706"></div> Calificaciones</div>
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#15803d"></div> PPI (Plan Pedagógico Individual)</div>
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#3b5bdb"></div> Configuración de períodos</div>
+      </div>
+    </div>
+
+    <!-- ===== BOLETINES ===== -->
+    <div id="panel-boletines" class="der-panel">
+      <div class="panel-header-der">
+        <h2>📄 Boletines</h2>
+        <p>Generación masiva, validación del preceptor, vista previa e integración al legajo.</p>
+      </div>
+      <div class="der-container">
+        <svg viewBox="0 0 820 420" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- BOLETIN -->
+          <g transform="translate(20,20)">
+            <rect width="215" height="235" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="215" height="6" fill="#d97706"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">BOLETIN</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_boletin (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_seccion (FK)</text>
+            <text x="8" y="93" fill="#1e6b4b" font-size="10">🔗 id_template (FK)</text>
+            <text x="8" y="108" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="123" fill="#374151" font-size="10">periodo (1B/1C/3B/2C)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">nivel</text>
+            <text x="8" y="153" fill="#374151" font-size="10">estado (generado/pendiente)</text>
+            <text x="8" y="168" fill="#374151" font-size="10">archivo_url</text>
+            <text x="8" y="183" fill="#374151" font-size="10">fecha_generacion</text>
+            <text x="8" y="198" fill="#374151" font-size="10">generado_por (id_usuario)</text>
+            <text x="8" y="213" fill="#374151" font-size="10">aprobado_preceptor (bool)</text>
+            <text x="8" y="228" fill="#374151" font-size="10">impactado_legajo (bool)</text>
+          </g>
+
+          <!-- ITEM_BOLETIN -->
+          <g transform="translate(295,20)">
+            <rect width="215" height="195" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="215" height="6" fill="#3b5bdb"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">ITEM_BOLETIN</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_item (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_boletin (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_espacio_curricular (FK)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">nota_bimestral</text>
+            <text x="8" y="108" fill="#374151" font-size="10">nota_conceptual</text>
+            <text x="8" y="123" fill="#374151" font-size="10">ausencias_totales</text>
+            <text x="8" y="138" fill="#374151" font-size="10">ausencias_justificadas</text>
+            <text x="8" y="153" fill="#374151" font-size="10">condicion_regularidad</text>
+            <text x="8" y="168" fill="#374151" font-size="10">indicador_valorativo</text>
+            <text x="8" y="183" fill="#374151" font-size="10">observaciones</text>
+          </g>
+
+          <!-- TEMPLATE_BOLETIN -->
+          <g transform="translate(570,20)">
+            <rect width="215" height="160" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="215" height="6" fill="#3b5bdb"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">TEMPLATE_BOLETIN</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_template (PK)</text>
+            <text x="8" y="63" fill="#374151" font-size="10">nivel</text>
+            <text x="8" y="78" fill="#374151" font-size="10">modalidad</text>
+            <text x="8" y="93" fill="#374151" font-size="10">tipo_jornada</text>
+            <text x="8" y="108" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="123" fill="#374151" font-size="10">archivo_template</text>
+            <text x="8" y="138" fill="#374151" font-size="10">version</text>
+            <text x="8" y="153" fill="#374151" font-size="10">activo (bool)</text>
+          </g>
+
+          <!-- Líneas -->
+          <line x1="235" y1="110" x2="295" y2="100" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="254" y="100" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="235" y1="93" x2="570" y2="80" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="385" y="80" fill="#6b7280" font-size="9">N : 1</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ===== LEGAJO ===== -->
+    <div id="panel-legajo" class="der-panel">
+      <div class="panel-header-der">
+        <h2>🗂️ Legajo</h2>
+        <p>Datos del estudiante, adjuntos, historial académico, certificados y unificación de legajos.</p>
+      </div>
+      <div class="der-container">
+        <svg viewBox="0 0 820 430" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- LEGAJO -->
+          <g transform="translate(20,20)">
+            <rect width="215" height="220" rx="6" fill="#f0f9f4" stroke="#15803d" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#15803d"/>
+            <rect x="0" y="22" width="215" height="6" fill="#15803d"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">LEGAJO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_legajo (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_estudiante (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">nro_legajo</text>
+            <text x="8" y="93" fill="#374151" font-size="10">nivel</text>
+            <text x="8" y="108" fill="#374151" font-size="10">estado</text>
+            <text x="8" y="123" fill="#374151" font-size="10">fecha_creacion</text>
+            <text x="8" y="138" fill="#374151" font-size="10">datos_filiatorios (json)</text>
+            <text x="8" y="153" fill="#374151" font-size="10">datos_contacto (json)</text>
+            <text x="8" y="168" fill="#374151" font-size="10">datos_salud (json)</text>
+            <text x="8" y="183" fill="#374151" font-size="10">firma_digital (bool)</text>
+            <text x="8" y="198" fill="#374151" font-size="10">legajo_unificado_con (FK)</text>
+          </g>
+
+          <!-- ADJUNTO_LEGAJO -->
+          <g transform="translate(295,20)">
+            <rect width="205" height="160" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="205" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="205" height="6" fill="#3b5bdb"/>
+            <text x="102" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">ADJUNTO_LEGAJO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_adjunto (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_legajo (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">tipo_documento</text>
+            <text x="8" y="93" fill="#374151" font-size="10">archivo_url</text>
+            <text x="8" y="108" fill="#374151" font-size="10">fecha_carga</text>
+            <text x="8" y="123" fill="#374151" font-size="10">cargado_por (id_usuario)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">estado (vigente/vencido)</text>
+            <text x="8" y="153" fill="#374151" font-size="10">nivel (PPI/inicial/primaria)</text>
+          </g>
+
+          <!-- HISTORIAL_ACADEMICO -->
+          <g transform="translate(295,245)">
+            <rect width="205" height="170" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="205" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="205" height="6" fill="#3b5bdb"/>
+            <text x="102" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">HISTORIAL_ACADEMICO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_historial (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_legajo (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="93" fill="#374151" font-size="10">nivel</text>
+            <text x="8" y="108" fill="#374151" font-size="10">establecimiento</text>
+            <text x="8" y="123" fill="#374151" font-size="10">seccion</text>
+            <text x="8" y="138" fill="#374151" font-size="10">condicion_final</text>
+            <text x="8" y="153" fill="#374151" font-size="10">boletines_url</text>
+          </g>
+
+          <!-- CERTIFICADO -->
+          <g transform="translate(560,20)">
+            <rect width="215" height="175" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="215" height="6" fill="#3b5bdb"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">CERTIFICADO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_certificado (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_legajo (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">tipo (7mo / analitico / etc)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">fecha_emision</text>
+            <text x="8" y="108" fill="#374151" font-size="10">archivo_url</text>
+            <text x="8" y="123" fill="#374151" font-size="10">generado_por (id_usuario)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">estado</text>
+            <text x="8" y="153" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="168" fill="#374151" font-size="10">firmas_responsables</text>
+          </g>
+
+          <!-- Líneas -->
+          <line x1="235" y1="100" x2="295" y2="90" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <line x1="140" y1="240" x2="295" y2="310" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <line x1="235" y1="140" x2="560" y2="100" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="130" y="95" fill="#6b7280" font-size="9">1 : N</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ===== PLANES DE ESTUDIO ===== -->
+    <div id="panel-planes" class="der-panel">
+      <div class="panel-header-der">
+        <h2>📚 Planes de Estudio</h2>
+        <p>Planes, espacios curriculares, áreas de conocimiento y asignación a secciones/docentes.</p>
+      </div>
+      <div class="der-container">
+        <svg viewBox="0 0 820 440" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- PLAN_ESTUDIO -->
+          <g transform="translate(20,20)">
+            <rect width="205" height="180" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="205" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="205" height="6" fill="#3b5bdb"/>
+            <text x="102" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">PLAN_ESTUDIO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_plan (PK)</text>
+            <text x="8" y="63" fill="#374151" font-size="10">nombre</text>
+            <text x="8" y="78" fill="#374151" font-size="10">nivel</text>
+            <text x="8" y="93" fill="#374151" font-size="10">modalidad</text>
+            <text x="8" y="108" fill="#374151" font-size="10">orientacion / especialidad</text>
+            <text x="8" y="123" fill="#374151" font-size="10">gestion (publica / privada)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">ciclo_lectivo_vigencia</text>
+            <text x="8" y="153" fill="#374151" font-size="10">intensificado (bool)</text>
+            <text x="8" y="168" fill="#374151" font-size="10">estado</text>
+          </g>
+
+          <!-- ESPACIO_CURRICULAR -->
+          <g transform="translate(285,20)">
+            <rect width="215" height="210" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="215" height="6" fill="#d97706"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">ESPACIO_CURRICULAR</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_espacio (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_plan (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">nombre</text>
+            <text x="8" y="93" fill="#374151" font-size="10">area_conocimiento</text>
+            <text x="8" y="108" fill="#374151" font-size="10">año / grado</text>
+            <text x="8" y="123" fill="#374151" font-size="10">tipo (obligatorio / optativo)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">horas_semanales</text>
+            <text x="8" y="153" fill="#374151" font-size="10">turno</text>
+            <text x="8" y="168" fill="#374151" font-size="10">modalidad_calificacion</text>
+            <text x="8" y="183" fill="#374151" font-size="10">es_tutoria (bool)</text>
+            <text x="8" y="198" fill="#374151" font-size="10">estado</text>
+          </g>
+
+          <!-- PLAN_ESTABLECIMIENTO -->
+          <g transform="translate(20,265)">
+            <rect width="205" height="115" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="205" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="205" height="6" fill="#d97706"/>
+            <text x="102" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">PLAN_ESTABLECIMIENTO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_plan_estab (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_plan (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_establecimiento (FK)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="108" fill="#374151" font-size="10">estado</text>
+          </g>
+
+          <!-- DOCENTE_EC -->
+          <g transform="translate(560,20)">
+            <rect width="215" height="160" rx="6" fill="#f0f9f4" stroke="#15803d" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#15803d"/>
+            <rect x="0" y="22" width="215" height="6" fill="#15803d"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">DOCENTE_EC</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_docente_ec (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_usuario (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_espacio_curricular (FK)</text>
+            <text x="8" y="93" fill="#1e6b4b" font-size="10">🔗 id_seccion (FK)</text>
+            <text x="8" y="108" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="123" fill="#374151" font-size="10">estado</text>
+            <text x="8" y="138" fill="#374151" font-size="10">tipo (titular / suplente)</text>
+          </g>
+
+          <!-- Líneas -->
+          <line x1="225" y1="100" x2="285" y2="100" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="242" y="94" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="112" y1="200" x2="112" y2="265" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="117" y="237" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="500" y1="100" x2="560" y2="80" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="518" y="83" fill="#6b7280" font-size="9">1 : N</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ===== ECP ===== -->
+    <div id="panel-ecp" class="der-panel">
+      <div class="panel-header-der">
+        <h2>⏳ ECP — Espacios Curriculares Pendientes</h2>
+        <p>Materias adeudadas, períodos de acreditación (diciembre / febrero), Libro Calificador y Libro Matriz Digital.</p>
+      </div>
+      <div class="der-container">
+        <svg viewBox="0 0 820 420" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- ECP -->
+          <g transform="translate(20,20)">
+            <rect width="225" height="250" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="225" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="225" height="6" fill="#d97706"/>
+            <text x="112" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">ESPACIO_CURR_PENDIENTE</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_ecp (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_espacio_curricular (FK)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">ciclo_lectivo_origen</text>
+            <text x="8" y="108" fill="#374151" font-size="10">tipo (automatica / manual)</text>
+            <text x="8" y="123" fill="#374151" font-size="10">estado (pendiente/aprobada)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">fecha_generacion</text>
+            <text x="8" y="153" fill="#374151" font-size="10">nota_obtenida_originalmente</text>
+            <text x="8" y="168" fill="#1e6b4b" font-size="10">🔗 id_periodo_acreditacion (FK)</text>
+            <text x="8" y="183" fill="#374151" font-size="10">fecha_acreditacion</text>
+            <text x="8" y="198" fill="#374151" font-size="10">nota_acreditacion</text>
+            <text x="8" y="213" fill="#374151" font-size="10">cargado_por (id_usuario)</text>
+            <text x="8" y="228" fill="#374151" font-size="10">aprobado_con_error (bool)</text>
+          </g>
+
+          <!-- PERIODO_ACREDITACION -->
+          <g transform="translate(305,20)">
+            <rect width="205" height="155" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="205" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="205" height="6" fill="#3b5bdb"/>
+            <text x="102" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">PERIODO_ACREDITACION</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_periodo (PK)</text>
+            <text x="8" y="63" fill="#374151" font-size="10">nombre (dic / feb / etc)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="93" fill="#374151" font-size="10">fecha_inicio</text>
+            <text x="8" y="108" fill="#374151" font-size="10">fecha_fin</text>
+            <text x="8" y="123" fill="#374151" font-size="10">nivel</text>
+            <text x="8" y="138" fill="#374151" font-size="10">estado (abierto / cerrado)</text>
+          </g>
+
+          <!-- LIBRO_CALIFICADOR -->
+          <g transform="translate(305,240)">
+            <rect width="205" height="155" rx="6" fill="#f0f9f4" stroke="#15803d" stroke-width="1.5"/>
+            <rect width="205" height="28" rx="6" fill="#15803d"/>
+            <rect x="0" y="22" width="205" height="6" fill="#15803d"/>
+            <text x="102" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">LIBRO_CALIFICADOR</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_libro (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_seccion (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_espacio_curricular (FK)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="108" fill="#374151" font-size="10">estado (abierto / cerrado)</text>
+            <text x="8" y="123" fill="#374151" font-size="10">archivo_digital_url</text>
+            <text x="8" y="138" fill="#374151" font-size="10">version</text>
+          </g>
+
+          <!-- LIBRO_MATRIZ -->
+          <g transform="translate(570,20)">
+            <rect width="210" height="155" rx="6" fill="#f0f9f4" stroke="#15803d" stroke-width="1.5"/>
+            <rect width="210" height="28" rx="6" fill="#15803d"/>
+            <rect x="0" y="22" width="210" height="6" fill="#15803d"/>
+            <text x="105" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">LIBRO_MATRIZ</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_libro_matriz (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_establecimiento (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="93" fill="#374151" font-size="10">nivel</text>
+            <text x="8" y="108" fill="#374151" font-size="10">estado</text>
+            <text x="8" y="123" fill="#374151" font-size="10">archivo_digital_url</text>
+            <text x="8" y="138" fill="#374151" font-size="10">version</text>
+          </g>
+
+          <!-- Líneas -->
+          <line x1="245" y1="120" x2="305" y2="90" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="263" y="99" fill="#6b7280" font-size="9">N : 1</text>
+          <line x1="132" y1="270" x2="305" y2="300" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="190" y="295" fill="#6b7280" font-size="9">N : 1</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ===== ACAP ===== -->
+    <div id="panel-acap" class="der-panel">
+      <div class="panel-header-der">
+        <h2>🤝 ACAP — Acciones Complementarias a la Actividad Pedagógica</h2>
+        <p>Acciones extracurriculares, organizaciones, participación estudiantil y devoluciones docentes.</p>
+      </div>
+      <div class="der-container">
+        <svg viewBox="0 0 820 440" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <!-- ACCION_ACAP -->
+          <g transform="translate(20,20)">
+            <rect width="215" height="230" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="215" height="6" fill="#d97706"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">ACCION_ACAP</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_accion (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_organizacion (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">nombre</text>
+            <text x="8" y="93" fill="#374151" font-size="10">descripcion</text>
+            <text x="8" y="108" fill="#374151" font-size="10">orientacion</text>
+            <text x="8" y="123" fill="#374151" font-size="10">fecha_inicio</text>
+            <text x="8" y="138" fill="#374151" font-size="10">fecha_fin</text>
+            <text x="8" y="153" fill="#374151" font-size="10">estado (activa / cerrada)</text>
+            <text x="8" y="168" fill="#374151" font-size="10">cupo</text>
+            <text x="8" y="183" fill="#374151" font-size="10">nivel</text>
+            <text x="8" y="198" fill="#374151" font-size="10">establecimientos_asociados</text>
+            <text x="8" y="213" fill="#374151" font-size="10">eje_tematico</text>
+          </g>
+
+          <!-- ORGANIZACION -->
+          <g transform="translate(20,320)">
+            <rect width="215" height="100" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="215" height="6" fill="#3b5bdb"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">ORGANIZACION</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_organizacion (PK)</text>
+            <text x="8" y="63" fill="#374151" font-size="10">nombre</text>
+            <text x="8" y="78" fill="#374151" font-size="10">tipo</text>
+            <text x="8" y="93" fill="#374151" font-size="10">estado</text>
+          </g>
+
+          <!-- PARTICIPACION_ACAP -->
+          <g transform="translate(295,20)">
+            <rect width="210" height="195" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="210" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="210" height="6" fill="#d97706"/>
+            <text x="105" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">PARTICIPACION_ACAP</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_participacion (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_accion (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">estado (inscripto/validado)</text>
+            <text x="8" y="108" fill="#374151" font-size="10">fecha_inscripcion</text>
+            <text x="8" y="123" fill="#374151" font-size="10">fecha_validacion</text>
+            <text x="8" y="138" fill="#374151" font-size="10">horas_completadas</text>
+            <text x="8" y="153" fill="#374151" font-size="10">certificado_url</text>
+            <text x="8" y="168" fill="#374151" font-size="10">referente (id_usuario)</text>
+          </g>
+
+          <!-- DEVOLUCION_ACAP -->
+          <g transform="translate(565,20)">
+            <rect width="215" height="195" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="215" height="6" fill="#3b5bdb"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">DEVOLUCION_ACAP</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_devolucion (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_participacion (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_usuario_docente (FK)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">eje</text>
+            <text x="8" y="108" fill="#374151" font-size="10">comentario</text>
+            <text x="8" y="123" fill="#374151" font-size="10">calificacion</text>
+            <text x="8" y="138" fill="#374151" font-size="10">fecha</text>
+            <text x="8" y="153" fill="#374151" font-size="10">contabilizada (bool)</text>
+            <text x="8" y="168" fill="#374151" font-size="10">visible_referente (bool)</text>
+          </g>
+
+          <!-- Líneas -->
+          <line x1="127" y1="250" x2="127" y2="320" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="132" y="290" fill="#6b7280" font-size="9">N : 1</text>
+          <line x1="235" y1="110" x2="295" y2="100" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="253" y="100" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="505" y1="100" x2="565" y2="100" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="523" y="94" fill="#6b7280" font-size="9">1 : N</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ===== PROMOCION ===== -->
+    <div id="panel-promocion" class="der-panel">
+      <div class="panel-header-der">
+        <h2>🎓 Promoción y Efectivización</h2>
+        <p>Condición de promoción, proyección DEI, efectivización masiva y parcial por alumno.</p>
+      </div>
+      <div class="der-container">
+        <svg viewBox="0 0 820 560" xmlns="http://www.w3.org/2000/svg" width="100%">
+
+          <!-- PROMOCION -->
+          <g transform="translate(20,20)">
+            <rect width="215" height="225" rx="6" fill="#f0f9f4" stroke="#15803d" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#15803d"/>
+            <rect x="0" y="22" width="215" height="6" fill="#15803d"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">PROMOCION</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_promocion (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="93" fill="#374151" font-size="10">condicion_final</text>
+            <text x="8" y="108" fill="#374151" font-size="10">  (promovido/repitente/en_proceso)</text>
+            <text x="8" y="123" fill="#374151" font-size="10">año_al_que_pasa</text>
+            <text x="8" y="138" fill="#374151" font-size="10">nivel_siguiente</text>
+            <text x="8" y="153" fill="#374151" font-size="10">fecha_calculo</text>
+            <text x="8" y="168" fill="#374151" font-size="10">bloqueante (bool)</text>
+            <text x="8" y="183" fill="#374151" font-size="10">motivo_bloqueo</text>
+            <text x="8" y="198" fill="#374151" font-size="10">efectivizado (bool)</text>
+          </g>
+
+          <!-- ALERTA_PROMOCION -->
+          <g transform="translate(295,20)">
+            <rect width="215" height="175" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="215" height="6" fill="#d97706"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">ALERTA_PROMOCION</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_alerta (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_establecimiento (FK)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">tipo_alerta</text>
+            <text x="8" y="108" fill="#374151" font-size="10">descripcion_alerta</text>
+            <text x="8" y="123" fill="#374151" font-size="10">fecha_generacion</text>
+            <text x="8" y="138" fill="#374151" font-size="10">resuelta (bool)</text>
+            <text x="8" y="153" fill="#374151" font-size="10">ciclo_lectivo</text>
+          </g>
+
+          <!-- PROYECCION_DEI -->
+          <g transform="translate(565,20)">
+            <rect width="215" height="190" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="215" height="6" fill="#3b5bdb"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">PROYECCION_DEI</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_proyeccion (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">ciclo_lectivo</text>
+            <text x="8" y="93" fill="#374151" font-size="10">año_proyectado</text>
+            <text x="8" y="108" fill="#374151" font-size="10">establecimiento_destino</text>
+            <text x="8" y="123" fill="#374151" font-size="10">estado</text>
+            <text x="8" y="138" fill="#374151" font-size="10">conflicto (bool)</text>
+            <text x="8" y="153" fill="#374151" font-size="10">fecha_proyeccion</text>
+            <text x="8" y="168" fill="#374151" font-size="10">reinscripto (bool)</text>
+          </g>
+
+          <!-- EFECTIVIZACION_MASIVA -->
+          <g transform="translate(20,310)">
+            <rect width="215" height="160" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="215" height="6" fill="#3b5bdb"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">EFECTIVIZACION_MASIVA</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_efect_masiva (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_establecimiento (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">ciclo_lectivo / nivel</text>
+            <text x="8" y="93" fill="#374151" font-size="10">ejecutado_por (id_usuario)</text>
+            <text x="8" y="108" fill="#374151" font-size="10">fecha_ejecucion</text>
+            <text x="8" y="123" fill="#374151" font-size="10">total_procesados</text>
+            <text x="8" y="138" fill="#374151" font-size="10">total_bloqueados</text>
+            <text x="8" y="153" fill="#374151" font-size="10">resultado (json)</text>
+          </g>
+
+          <!-- EFECTIVIZACION_PARCIAL -->
+          <g transform="translate(295,310)">
+            <rect width="215" height="200" rx="6" fill="#fef9f0" stroke="#d97706" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#d97706"/>
+            <rect x="0" y="22" width="215" height="6" fill="#d97706"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">EFECTIVIZACION_PARCIAL</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_efect_parcial (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_efect_masiva (FK)</text>
+            <text x="8" y="78" fill="#1e6b4b" font-size="10">🔗 id_matricula (FK)</text>
+            <text x="8" y="93" fill="#374151" font-size="10">estado (efectivizado/bloqueado)</text>
+            <text x="8" y="108" fill="#374151" font-size="10">motivo_bloqueo</text>
+            <text x="8" y="123" fill="#374151" font-size="10">dato_faltante (descripcion)</text>
+            <text x="8" y="138" fill="#374151" font-size="10">resuelto_manualmente (bool)</text>
+            <text x="8" y="153" fill="#374151" font-size="10">resuelto_por (id_usuario)</text>
+            <text x="8" y="168" fill="#374151" font-size="10">fecha_resolucion</text>
+            <text x="8" y="183" fill="#374151" font-size="10">ciclo_lectivo</text>
+          </g>
+
+          <!-- DETALLE_BLOQUEO -->
+          <g transform="translate(565,310)">
+            <rect width="215" height="175" rx="6" fill="#f0f4ff" stroke="#3b5bdb" stroke-width="1.5"/>
+            <rect width="215" height="28" rx="6" fill="#3b5bdb"/>
+            <rect x="0" y="22" width="215" height="6" fill="#3b5bdb"/>
+            <text x="107" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="700">DETALLE_BLOQUEO</text>
+            <text x="8" y="48" fill="#b45309" font-size="10" font-weight="700">🔑 id_bloqueo (PK)</text>
+            <text x="8" y="63" fill="#1e6b4b" font-size="10">🔗 id_efect_parcial (FK)</text>
+            <text x="8" y="78" fill="#374151" font-size="10">tipo_bloqueo</text>
+            <text x="8" y="93" fill="#374151" font-size="10">  (dato_faltante/conflicto_legajo)</text>
+            <text x="8" y="108" fill="#374151" font-size="10">campo_afectado</text>
+            <text x="8" y="123" fill="#374151" font-size="10">valor_actual</text>
+            <text x="8" y="138" fill="#374151" font-size="10">resuelto (bool)</text>
+            <text x="8" y="153" fill="#374151" font-size="10">fecha_resolucion</text>
+          </g>
+
+          <!-- Líneas fila superior -->
+          <line x1="235" y1="110" x2="295" y2="100" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="254" y="99" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="235" y1="140" x2="565" y2="100" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="385" y="110" fill="#6b7280" font-size="9">1 : N</text>
+
+          <!-- Líneas fila inferior -->
+          <line x1="127" y1="245" x2="127" y2="310" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="132" y="283" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="235" y1="390" x2="295" y2="390" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="252" y="384" fill="#6b7280" font-size="9">1 : N</text>
+          <line x1="510" y1="390" x2="565" y2="390" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="525" y="384" fill="#6b7280" font-size="9">1 : N</text>
+
+          <!-- Línea masiva → parcial via matricula -->
+          <line x1="402" y1="245" x2="402" y2="310" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <text x="407" y="283" fill="#6b7280" font-size="9">1 : N</text>
+        </svg>
+      </div>
+      <div class="legend-der">
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#15803d"></div> Estado calculado</div>
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#d97706"></div> Proceso por alumno</div>
+        <div class="legend-der-item"><div class="legend-der-dot" style="background:#3b5bdb"></div> Operación masiva / detalle</div>
+      </div>
+    </div>
+
+  </div><!-- /der-main -->
+</div>
+
+<script>
+  function show(id, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
 </div><!-- /tab-drive -->
 
 
@@ -3095,7 +4237,7 @@ function cambiarTab(tab) {
     }
   }
   // Trigger drive load
-  if (tab === 'drive') cargarDriveData();
+  // DER tab: no special init
   // Mantis: reload and force show
   if (tab === 'mantis') {
     restaurarMantisConfig();
@@ -4537,6 +5679,15 @@ document.addEventListener('DOMContentLoaded', function() {
   renderHorasMetricas();
   renderHorasTabla();
 });
+
+// ── DER ─────────────────────────────────────────────────────────
+function showDer(id, btn) {
+  document.querySelectorAll('#tab-der .der-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#tab-der .der-nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
 </script>
 
 </body>
