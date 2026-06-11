@@ -560,6 +560,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <button data-tab="procesos"                    onclick="cambiarTab('procesos')">🚀 Procesos &amp; Estado</button>
   <button               data-tab="testing"         onclick="cambiarTab('testing')">🧪 Testing</button>
   <button data-tab="der"                          onclick="cambiarTab('der')">🗂️ DER</button>
+  <button data-tab="flujos" onclick="cambiarTab(\'flujos\')">🔀 Flujos</button>
   <button data-tab="bacolaborativa" onclick="cambiarTab('bacolaborativa')">🤝 BA Colaborativa</button>
   <button data-tab="mantis" onclick="cambiarTab('mantis')">🐛 Mantis</button>
   <button data-tab="powerbi"                      onclick="cambiarTab('powerbi')">📊 Carga escuelas</button>
@@ -633,6 +634,11 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
       <h3>DER</h3>
       <p>Diagramas Entidad-Relación por módulo.</p>
     </div>
+        <div class="card" onclick="cambiarTab('flujos')" style="cursor:pointer;border-color:#2563eb;">
+          <span style="font-size:30px">🔀</span>
+          <h3>Flujos</h3>
+          <p>Diagramas de flujo por proceso y módulo.</p>
+        </div>
 
     <div class="card" onclick="cambiarTab('bacolaborativa')" style="cursor:pointer;border-top:4px solid #3b82f6;">
       <span style="font-size:30px">🤝</span>
@@ -3791,6 +3797,490 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 </div><!-- /tab-drive -->
 
 
+
+<div class="tab-content" id="tab-flujos">
+<style>
+
+    #tab-flujos * { box-sizing: border-box; }
+
+    #tab-flujos {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    #tab-flujos header.flujos-hdr {
+      background: linear-gradient(135deg, #1e40af 0%, #2563eb 60%, #3b82f6 100%);
+      color: white;
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .#tab-flujos header.flujos-hdr-icon {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,.18);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; flex-shrink: 0;
+    }
+    #tab-flujos header.flujos-hdr h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -.3px; }
+    #tab-flujos header.flujos-hdr p  { font-size: 0.83rem; opacity: .75; margin-top: 3px; }
+
+    /* ── Nav ── */
+    #tab-flujos nav.flujos-nav {
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      padding: 0 32px;
+      gap: 4px;
+      overflow-x: auto;
+      box-shadow: 0 1px 3px rgba(0,0,0,.05);
+    }
+    #tab-flujos #tab-flujos nav.flujos-nav.flujos-#tab-flujos nav.flujos-nav button {
+      padding: 16px 20px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #64748b;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      display: flex; align-items: center; gap: 7px;
+      transition: color .15s, border-color .15s;
+    }
+    #tab-flujos #tab-flujos nav.flujos-nav.flujos-#tab-flujos nav.flujos-nav button:hover  { color: #2563eb; }
+    #tab-flujos #tab-flujos nav.flujos-nav.flujos-#tab-flujos nav.flujos-nav button.flujos-active { color: #2563eb; border-bottom-color: #2563eb; font-weight: 600; }
+    .flujos-tab-icon { font-size: 1rem; }
+
+    /* ── Layout ── */
+    #tab-flujos main.flujos-main { padding: 36px 40px; max-width: 1400px; margin: 0 auto; }
+
+    .flujos-tab-panel {
+      position: absolute; visibility: hidden;
+      pointer-events: none; width: 1px; height: 1px; overflow: hidden;
+    }
+    .flujos-tab-panel.flujos-active {
+      position: static; visibility: visible;
+      pointer-events: auto; width: auto; height: auto; overflow: visible;
+    }
+
+    /* ── Panel #tab-flujos header.flujos-hdr ── */
+    .panel-#tab-flujos header.flujos-hdr {
+      display: flex; align-items: flex-start; gap: 16px;
+      margin-bottom: 28px;
+    }
+    .flujos-panel-color-bar {
+      width: 5px; border-radius: 4px; align-self: stretch; flex-shrink: 0;
+      min-height: 44px;
+    }
+    .panel-#tab-flujos header.flujos-hdr h2 { font-size: 1.25rem; font-weight: 700; color: #0f172a; }
+    .panel-#tab-flujos header.flujos-hdr p  { font-size: 0.84rem; color: #64748b; margin-top: 4px; line-height: 1.5; }
+    .flujos-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.72rem; font-weight: 600; padding: 3px 10px;
+      border-radius: 999px; margin-bottom: 6px;
+    }
+
+    /* ── Diagram card ── */
+    .flujos-diagram-card {
+      background: white;
+      border-radius: 16px;
+      padding: 40px 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04);
+      border: 1px solid #e8edf3;
+      overflow-x: auto;
+    }
+    .flujos-diagram-card .flujos-mermaid { display: flex; justify-content: center; }
+
+    /* ── Color themes per tab ── */
+    .theme-blue   .flujos-panel-color-bar { background: #3b82f6; }
+    .theme-blue   .flujos-badge { background: #eff6ff; color: #1d4ed8; }
+
+    .theme-violet .flujos-panel-color-bar { background: #8b5cf6; }
+    .theme-violet .flujos-badge { background: #f5f3ff; color: #6d28d9; }
+
+    .theme-teal   .flujos-panel-color-bar { background: #14b8a6; }
+    .theme-teal   .flujos-badge { background: #f0fdfa; color: #0f766e; }
+
+    .theme-amber  .flujos-panel-color-bar { background: #f59e0b; }
+    .theme-amber  .flujos-badge { background: #fffbeb; color: #b45309; }
+
+    /* ── Legend ── */
+    .flujos-legend {
+      display: flex; gap: 20px; flex-wrap: wrap;
+      margin-top: 24px; padding: 16px 20px;
+      background: #f8fafc; border-radius: 10px;
+      border: 1px solid #e2e8f0;
+    }
+    .flujos-legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: #475569; }
+    .flujos-legend-dot  { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
+  
+</style>
+<header class="flujos-hdr">
+  <div class="flujos-header-icon">🎓</div>
+  <div>
+    <h1>Flujos de Procesos · AprendeBA</h1>
+    <p>Documentacion funcional — Direccion General de Canales Digitales · GCBA</p>
+  </div>
+</header>
+
+<nav class="flujos-nav">
+  <button class="flujos-active" onclick="showFlujoTab('ciclo',this)">
+    <span class="flujos-tab-icon">📅</span> Ciclo Lectivo Anual
+  </button>
+  <button onclick="showFlujoTab('matriculacion',this)">
+    <span class="flujos-tab-icon">📋</span> Matriculacion y Pases
+  </button>
+  <button onclick="showFlujoTab('presentismo',this)">
+    <span class="flujos-tab-icon">✅</span> Presentismo y Regularidad
+  </button>
+  <button onclick="showFlujoTab('boletines',this)">
+    <span class="flujos-tab-icon">📄</span> Calificaciones y Boletines
+  </button>
+</nav>
+
+<main class="flujos-main">
+
+  <!-- ══════════ TAB 1: CICLO LECTIVO ══════════ -->
+  <div id="flujos-ciclo" class="flujos-tab-panel flujos-active theme-blue">
+    <div class="flujos-panel-header">
+      <div class="flujos-panel-color-bar"></div>
+      <div>
+        <span class="flujos-badge">Primaria · Inicial · Adultos</span>
+        <h2>Ciclo Lectivo Anual 2026</h2>
+        <p>Procesos principales desde la apertura del año escolar hasta la promoción de los estudiantes.</p>
+      </div>
+    </div>
+    <div class="flujos-diagram-card">
+      <div class="flujos-mermaid">
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','secondaryColor':'#f0fdf4','tertiaryColor':'#fefce8','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart TD
+    A(["🏫 Reincorporacion equipos de conduccion<br/>9 Feb"]) --> B
+
+    B["⚙️ Efectivizacion<br/>10 Feb · 6 Mar"] --> C
+    C["🔄 Migracion IEL<br/>Periodo ordinario"] --> D
+    D["📝 Matriculacion de ingresantes<br/>y actualizacion datos nominales<br/>25 Feb · 7 May"] --> E1
+
+    subgraph S1["📚 1er BIMESTRE · 25 Feb – 7 May"]
+      direction TB
+      E1["Carga Presentismo"] --> E2
+      E2["Revision condicion de regularidad<br/>30 Abr · 7 May"] --> E3
+      E3["Carga Calificaciones<br/>30 Abr · 21 May"] --> E4
+      E4["Generacion y Entrega de Informes<br/>14 May · 21 May"] --> E5
+      E5(["Visualizacion App Familias · 21 May"])
+    end
+
+    E5 --> F1
+
+    subgraph S2["📚 2do BIMESTRE · 8 May – 17 Jul"]
+      direction TB
+      F1["Carga Presentismo"] --> F2
+      F2["Revision condicion de regularidad"] --> F3
+      F3["Carga Calificaciones<br/>13 Jul · 14 Ago"] --> F4
+      F4["Generacion y Entrega de Informes<br/>3 Ago · 14 Ago"] --> F5
+      F5(["Visualizacion App Familias · 14 Ago"])
+    end
+
+    F5 --> REC
+
+    REC(["🏖️ RECESO INVERNAL<br/>20 Jul – 31 Jul"]) --> G1
+
+    subgraph S3["📚 3er BIMESTRE · 3 Ago – 2 Oct"]
+      direction TB
+      G1["Carga Presentismo"] --> G2
+      G2["Revision condicion de regularidad"] --> G3
+      G3["Carga Calificaciones<br/>25 Sep · 23 Oct"] --> G4
+      G4["Generacion y Entrega de Informes<br/>16 Oct · 23 Oct"] --> G5
+      G5(["Visualizacion App Familias · 23 Oct"])
+    end
+
+    G5 --> H1
+
+    subgraph S4["📚 4to BIMESTRE · 5 Oct – 4 Dic"]
+      direction TB
+      H1["Carga Presentismo"] --> H2
+      H2["Revision condicion de regularidad<br/>9 · 12 Dic"] --> H3
+      H3["Carga Calificaciones<br/>23 Nov · 18 Dic"] --> H4
+      H4["Generacion y Entrega de Informes<br/>7 · 18 Dic"] --> H5
+      H5(["Visualizacion App Familias · 18 Dic"])
+    end
+
+    H5 --> PROM(["🎓 PROMOCION<br/>Fin de ciclo lectivo"])
+
+    classDef inicio fill:#dbeafe,stroke:#3b82f6,color:#1e3a8a,font-weight:bold
+    classDef receso fill:#fef3c7,stroke:#f59e0b,color:#78350f,font-weight:bold
+    classDef fin    fill:#d1fae5,stroke:#059669,color:#064e3b,font-weight:bold
+    classDef proc   fill:#f8fafc,stroke:#94a3b8,color:#334155
+    classDef famapp fill:#ede9fe,stroke:#7c3aed,color:#3730a3
+
+    class A inicio
+    class REC receso
+    class PROM fin
+    class B,C,D proc
+    class E5,F5,G5,H5 famapp
+      </div>
+    </div>
+    <div class="flujos-legend">
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#dbeafe;border:1.5px solid #3b82f6"></div> Inicio de ciclo</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#fef3c7;border:1.5px solid #f59e0b"></div> Receso</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#d1fae5;border:1.5px solid #059669"></div> Fin / Promocion</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#ede9fe;border:1.5px solid #7c3aed"></div> Visible en App Familias</div>
+    </div>
+  </div>
+
+  <!-- ══════════ TAB 2: MATRICULACION ══════════ -->
+  <div id="flujos-matriculacion" class="flujos-tab-panel theme-violet">
+    <div class="flujos-panel-header">
+      <div class="flujos-panel-color-bar"></div>
+      <div>
+        <span class="flujos-badge">Modulo Matriculacion</span>
+        <h2>Matriculación y Gestión de Pases</h2>
+        <p>Flujo para incorporar alumnos a la plataforma e incorporar el proceso de pase entre escuelas.</p>
+      </div>
+    </div>
+    <div class="flujos-diagram-card">
+      <div class="flujos-mermaid">
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#f5f3ff','primaryTextColor':'#3b0764','primaryBorderColor':'#c4b5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart TD
+    START(["👤 Alumno no figura en la plataforma"]) --> Q1
+
+    Q1{"¿Donde estuvo<br/>el anio pasado?"}
+
+    Q1 -->|"Misma escuela"| MS["📞 Contactar referente<br/>para normalizar situacion"]
+    MS --> WARN(["⚠️ Resolucion pendiente<br/>por referente"])
+
+    Q1 -->|"Otra escuela publica CABA"| PA1{"¿Se gestiono el pase<br/>en la plataforma?"}
+    PA1 -->|"No"| PA2["📋 Gestionar pase<br/>desde la plataforma"]
+    PA2 --> PA3["📨 Escuela de origen<br/>recibe solicitud de pase"]
+    PA1 -->|"Si"| PA3
+    PA3 --> PA4{"¿Asistencia cargada<br/>hasta fecha FEM?"}
+    PA4 -->|"No"| PA5["⌨️ Cargar asistencia<br/>faltante"]
+    PA5 --> PA4
+    PA4 -->|"Si"| PA6["✔️ Escuela de origen<br/>aprueba el pase"]
+    PA6 --> OK1(["✅ Alumno disponible<br/>para matricular"])
+
+    Q1 -->|"Otra jurisdiccion<br/>o escuela privada"| IN1{"¿Tiene inscripcion?"}
+    IN1 -->|"No"| IN2["📢 Indicar que debe realizar<br/>inscripcion y solicitar vacante"]
+    IN2 --> WARN
+    IN1 -->|"Vacante asignada"| OK2(["✅ Figura como inscripto<br/>Proceder a matricular"])
+    IN1 -->|"Lista de espera"| IN5["📣 Avisar a supervision"]
+    IN5 --> WARN
+
+    classDef inicio  fill:#f5f3ff,stroke:#8b5cf6,color:#3b0764,font-weight:bold
+    classDef ok      fill:#d1fae5,stroke:#059669,color:#064e3b,font-weight:bold
+    classDef warn    fill:#fef3c7,stroke:#f59e0b,color:#78350f,font-weight:bold
+    classDef dec     fill:#faf5ff,stroke:#c4b5fd,color:#4c1d95
+    classDef proc    fill:#f8fafc,stroke:#94a3b8,color:#334155
+
+    class START inicio
+    class OK1,OK2 ok
+    class WARN warn
+    class Q1,PA1,PA4,IN1 dec
+    class MS,PA2,PA3,PA5,PA6,IN2,IN5 proc
+      </div>
+    </div>
+    <div class="flujos-legend">
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#f5f3ff;border:1.5px solid #8b5cf6"></div> Inicio</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#d1fae5;border:1.5px solid #059669"></div> Resolucion exitosa</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#fef3c7;border:1.5px solid #f59e0b"></div> Requiere gestion adicional</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#faf5ff;border:1.5px solid #c4b5fd"></div> Decision</div>
+    </div>
+  </div>
+
+  <!-- ══════════ TAB 3: PRESENTISMO ══════════ -->
+  <div id="flujos-presentismo" class="flujos-tab-panel theme-teal">
+    <div class="flujos-panel-header">
+      <div class="flujos-panel-color-bar"></div>
+      <div>
+        <span class="flujos-badge">Modulo Presentismo</span>
+        <h2>Presentismo y Cálculo de Regularidad</h2>
+        <p>Carga diaria de asistencia con puntaje variable según tipo de jornada, y lógica de regularidad bimestral.</p>
+      </div>
+    </div>
+    <div class="flujos-diagram-card">
+      <div class="flujos-mermaid">
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#f0fdfa','primaryTextColor':'#134e4a','primaryBorderColor':'#5eead4','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart TD
+    A(["📅 Dia escolar — registro JN"]) --> B
+
+    B{"¿Cuantos turnos<br/>tiene el alumno ese dia?"}
+
+    B -->|"1 turno<br/>Jornada simple"| T1["Puntaje base por registro:<br/>P / A / APC / NC = 1 pt<br/>RA / IT = 0.5 pt"]
+
+    B -->|"2 turnos<br/>Jornada doble o simple + contraturno"| T2["Puntaje = valor base / 2<br/>P / A / APC / NC = 0.5 pt<br/>RA / IT = 0.25 pt"]
+
+    B -->|"3 turnos<br/>Simple + 2 contraturnos"| T3["Puntaje = valor base / 3<br/>P / A / APC / NC = 0.33 pt<br/>RA / IT = 0.16 pt"]
+
+    T1 --> REG["👩‍🏫 Docente o Preceptor<br/>carga tipo de registro"]
+    T2 --> REG
+    T3 --> REG
+
+    REG --> C{"Tipo de registro"}
+    C -->|"Presente P"| PA["Suma al puntaje de Carga"]
+    C -->|"Aus. con presencia APC"| PA
+    C -->|"Retiro Anticipado RA"| PA
+    C -->|"Ingreso Tardio IT"| PA
+    C -->|"No Corresponde NC"| PA
+
+    C -->|"Ausente A"| AUS{"¿Tiene<br/>justificacion?"}
+    AUS -->|"No"| AUSN["Suma como falta<br/>NO justificada<br/>🔴 Afecta regularidad"]
+    AUS -->|"Si"| AUSJ["Ausente Justificado<br/>Suma a Justificaciones<br/>🟢 NO afecta regularidad"]
+    AUSN --> PA
+    AUSJ --> PA
+
+    PA --> J[("📊 Acumulacion bimestral<br/>Solo impactan registros JN")]
+
+    J --> FAB["Calculo de puntajes derivados"]
+
+    FAB --> F1["Justificaciones:<br/>suma de puntajes de ausentes justificados"]
+    FAB --> F2["Carga:<br/>suma de todos los puntajes<br/>IT y RA se multiplican x2<br/>sin contar justificaciones"]
+    FAB --> F3["Dias:<br/>dias del bimestre segun agenda<br/>menos dias sin matricula"]
+
+    F1 --> CALC
+    F2 --> CALC
+    F3 --> CALC
+
+    CALC["⚙️ Calculo de Regularidad<br/>1 semana despues del cierre del bimestre"] --> R1
+
+    R1{"¿Regularidad modificada<br/>manualmente por directivo?"}
+    R1 -->|"Si"| R1Y(["🔵 CAMBIO MANUAL<br/>Requiere documentacion respaldatoria"])
+    R1 -->|"No"| R2{"¿Faltas NO justificadas<br/>anuales mayor a 25?"}
+    R2 -->|"Si"| R2Y(["🔴 NO REGULAR anual"])
+    R2 -->|"No"| R3{"¿Faltas bimestre<br/>> 15% de dias del bimestre?"}
+    R3 -->|"Si"| R3Y(["🔴 NO REGULAR bimestral"])
+    R3 -->|"No"| R4{"¿Faltas + falta de carga<br/>> 15% de dias del bimestre?"}
+    R4 -->|"Si"| R4Y(["🟡 DATOS INSUFICIENTES"])
+    R4 -->|"No"| R5(["🟢 REGULAR"])
+
+    R3Y --> REC1["Se extiende al bimestre siguiente<br/>del mismo cuatrimestre"]
+    R2Y --> REC2["No puede recuperar<br/>regularidad anual"]
+    R5 --> REC3["Al inicio de cada cuatrimestre<br/>todos vuelven a ser Regulares<br/>excepto perdida de regularidad anual"]
+
+    classDef inicio  fill:#ccfbf1,stroke:#14b8a6,color:#134e4a,font-weight:bold
+    classDef jornada fill:#e0f2fe,stroke:#0ea5e9,color:#0c4a6e
+    classDef ok      fill:#d1fae5,stroke:#059669,color:#064e3b,font-weight:bold
+    classDef noReg   fill:#fee2e2,stroke:#ef4444,color:#7f1d1d,font-weight:bold
+    classDef insuf   fill:#fef3c7,stroke:#f59e0b,color:#78350f,font-weight:bold
+    classDef manual  fill:#dbeafe,stroke:#3b82f6,color:#1e3a8a,font-weight:bold
+    classDef dec     fill:#f0fdfa,stroke:#5eead4,color:#134e4a
+    classDef db      fill:#e0f2fe,stroke:#0ea5e9,color:#0c4a6e
+    classDef fab     fill:#f8fafc,stroke:#94a3b8,color:#334155
+
+    class A inicio
+    class T1,T2,T3 jornada
+    class R5 ok
+    class R2Y,R3Y noReg
+    class R4Y insuf
+    class R1Y manual
+    classDef faltaNo  fill:#fee2e2,stroke:#ef4444,color:#7f1d1d
+    classDef faltaJus fill:#d1fae5,stroke:#059669,color:#064e3b
+
+    class B,R1,R2,R3,R4,C,AUS dec
+    class J db
+    class FAB,F1,F2,F3,CALC fab
+    class AUSN faltaNo
+    class AUSJ faltaJus
+      </div>
+    </div>
+    <div class="flujos-legend">
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#e0f2fe;border:1.5px solid #0ea5e9"></div> Tipo de jornada / puntaje</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#d1fae5;border:1.5px solid #059669"></div> Regular</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#fee2e2;border:1.5px solid #ef4444"></div> No Regular</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#fef3c7;border:1.5px solid #f59e0b"></div> Datos Insuficientes</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#dbeafe;border:1.5px solid #3b82f6"></div> Cambio manual del directivo</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#f8fafc;border:1.5px solid #94a3b8"></div> Puntajes derivados (calculados)</div>
+    </div>
+  </div>
+
+  <!-- ══════════ TAB 4: BOLETINES ══════════ -->
+  <div id="flujos-boletines" class="flujos-tab-panel theme-amber">
+    <div class="flujos-panel-header">
+      <div class="flujos-panel-color-bar"></div>
+      <div>
+        <span class="flujos-badge">Modulos Calificaciones y Boletines</span>
+        <h2>Calificaciones y Generación de Boletines</h2>
+        <p>Carga de notas, generación del boletín y visibilidad de calificaciones según condición de regularidad.</p>
+      </div>
+    </div>
+    <div class="flujos-diagram-card">
+      <div class="flujos-mermaid">
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#fffbeb','primaryTextColor':'#451a03','primaryBorderColor':'#fcd34d','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart TD
+    A(["📝 Apertura del periodo de calificaciones"]) --> B
+    B["👩‍🏫 Docente carga calificaciones<br/>SIEMPRE sin importar la regularidad"] --> C
+
+    C{"¿Que periodo?"}
+    C -->|"1er y 3er Bimestre"| C1["Calificaciones CONCEPTUALES"]
+    C -->|"Cuatrimestral<br/>2do o 4to Bimestre"| C2["Calificaciones NUMERICAS"]
+
+    C1 --> D["📋 Directivo genera boletin por seccion"]
+    C2 --> D
+
+    D --> E["👁️ Preceptor valida<br/>vista previa del boletin"]
+    E --> F{"¿El alumno es REGULAR<br/>en el bimestre?"}
+
+    F -->|"✅ Regular"| G["Boletin muestra<br/>CALIFICACIONES del periodo"]
+    F -->|"❌ No regular"| H["Boletin muestra<br/>NO REGULAR en todos<br/>los espacios curriculares"]
+
+    G --> I["📁 Boletin impactado<br/>en el legajo del alumno"]
+    H --> I
+    I --> J(["📱 Familia visualiza<br/>en App Familias"])
+
+    J --> P1["📊 Revision condicion<br/>de regularidad anual"]
+    P1 --> P2{"¿Regular en el anio?"}
+    P2 -->|"Si"| P3(["🎓 PROMOVIDO<br/>al anio siguiente"])
+    P2 -->|"No"| P4["📖 Instancia de recuperacion<br/>de aprendizajes"]
+    P4 --> P5{"¿Aprueba<br/>recuperacion?"}
+    P5 -->|"Si"| P3
+    P5 -->|"No"| P6(["🔁 REPITE el anio"])
+
+    classDef inicio  fill:#fffbeb,stroke:#f59e0b,color:#451a03,font-weight:bold
+    classDef appfam  fill:#dbeafe,stroke:#3b82f6,color:#1e3a8a,font-weight:bold
+    classDef ok      fill:#d1fae5,stroke:#059669,color:#064e3b,font-weight:bold
+    classDef noReg   fill:#fee2e2,stroke:#ef4444,color:#7f1d1d,font-weight:bold
+    classDef promo   fill:#d1fae5,stroke:#059669,color:#064e3b,font-weight:bold
+    classDef repite  fill:#fee2e2,stroke:#ef4444,color:#7f1d1d,font-weight:bold
+    classDef dec     fill:#fef9c3,stroke:#fcd34d,color:#713f12
+    classDef proc    fill:#f8fafc,stroke:#94a3b8,color:#334155
+
+    class A inicio
+    class J appfam
+    class G,P3 promo
+    class H,P6 repite
+    class F,C,P2,P5 dec
+    class B,C1,C2,D,E,I,P1,P4 proc
+      </div>
+    </div>
+    <div class="flujos-legend">
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#d1fae5;border:1.5px solid #059669"></div> Regular / Promovido</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#fee2e2;border:1.5px solid #ef4444"></div> No regular / Repite</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#dbeafe;border:1.5px solid #3b82f6"></div> Visible en App Familias</div>
+      <div class="flujos-legend-item"><div class="flujos-legend-dot" style="background:#fef9c3;border:1.5px solid #fcd34d"></div> Decision</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    securityLevel: 'loose',
+    flowchart: { curve: 'basis', padding: 24, nodeSpacing: 40, rankSpacing: 50 }
+  });
+
+  function showFlujoTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</div><!-- /tab-flujos -->
+
 <div class="tab-content" id="tab-testing">
   <div class="sub-content activo" id="test-todos">
 
@@ -4238,6 +4728,7 @@ function cambiarTab(tab) {
   }
   // Trigger drive load
   // DER tab: no special init
+    if (tab === 'flujos') { if(window.mermaid) mermaid.run({querySelector:'#tab-flujos .flujos-mermaid'}); }
   // Mantis: reload and force show
   if (tab === 'mantis') {
     restaurarMantisConfig();
@@ -5855,6 +6346,15 @@ function showDer(id, btn) {
     document.getElementById('fab-modal-overlay').classList.remove('open');
     fabOpen = false;
   }
+
+
+function showFlujoTab(id, btn) {
+    document.querySelectorAll('#tab-flujos .flujos-tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('#tab-flujos nav.flujos-nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('flujos-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
 </script>
 <!-- ===== /ASISTENTE FLOTANTE ===== -->
 
