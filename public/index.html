@@ -6309,3 +6309,51 @@ function showDer(id, btn) {
   }
   @keyframes slideUpModal {
     to { transform: trans
+  }
+  #fab-modal-close {
+    position: absolute; top: 12px; right: 14px;
+    background: rgba(0,0,0,.08); border: none; border-radius: 50%;
+    width: 32px; height: 32px; font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+  }
+  #fab-modal-close:hover { background: rgba(0,0,0,.16); }
+  #fab-modal iframe { flex: 1; border: none; width: 100%; height: 100%; border-radius: 0 0 18px 18px; }
+</style>
+
+<!-- ===== ASISTENTE FLOTANTE ===== -->
+<button id="fab-asistente" onclick="fabToggle()" title="Abrir asistente">
+  🤖
+  <span class="fab-pulse"></span>
+</button>
+<div id="fab-tooltip">Asistente AprendeBA</div>
+
+<div id="fab-modal-overlay" onclick="fabClose(event)">
+  <div id="fab-modal" style="position:relative;">
+    <button id="fab-modal-close" onclick="fabClose()">✕</button>
+    <iframe id="fab-iframe" src="about:blank" allow="microphone"></iframe>
+  </div>
+</div>
+
+<script>
+  var fabOpen = false;
+  function fabToggle() {
+    if (fabOpen) { fabClose(); return; }
+    var overlay = document.getElementById('fab-modal-overlay');
+    var iframe  = document.getElementById('fab-iframe');
+    if (!iframe.src || iframe.src === 'about:blank') {
+      iframe.src = 'https://aprendeba-asistente.vercel.app/?embed=1';
+    }
+    overlay.classList.add('open');
+    fabOpen = true;
+  }
+  function fabClose(e) {
+    if (e && e.target !== document.getElementById('fab-modal-overlay')) return;
+    document.getElementById('fab-modal-overlay').classList.remove('open');
+    fabOpen = false;
+  }
+</script>
+<!-- ===== /ASISTENTE FLOTANTE ===== -->
+
+</body>
+</html>
