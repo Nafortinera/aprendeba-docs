@@ -2531,7 +2531,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   <!-- ESTADO -->
   <div class="sub-content activo" id="proc-estado">
     <div class="panel">
-      <div class="panel-header"><div class="panel-icon pi-teal">🟢</div><div class="panel-title"><h2>Estado de módulos — Ciclo 2026</h2><p>Actualizado al 13/05/2026</p></div></div>
+      <div class="panel-header"><div class="panel-icon pi-teal">🟢</div><div class="panel-title"><h2>Estado de módulos — Ciclo 2026</h2><p>Actualizado al 09/06/2026 · STG</p></div></div>
       <table>
         <tr><th>Módulo</th><th>Estado</th><th>Disponibilidad</th></tr>
         <tr><td>Calificaciones 4° bimestre 2025</td><td><span class="eb eb-ok">Activo</span></td><td>Habilitado para correcciones</td></tr>
@@ -2543,11 +2543,15 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
         <tr><td>Gestión de Pases — Sec. Aprende</td><td><span class="eb eb-ok">PRD</span></td><td>Desde 20/04/2026</td></tr>
         <tr><td>Gestión de Pases — Adultos EPA/CENS</td><td><span class="eb eb-ok">PRD</span></td><td>Desde 28/04/2026</td></tr>
         <tr><td>ID Aula</td><td><span class="eb eb-ok">PRD</span></td><td>Desde 10/03/2026</td></tr>
-        <tr><td>Autoregistración de Roles</td><td><span class="eb eb-warn">PRD c/bugs</span></td><td>Desde 10/02/2026 — validando errores</td></tr>
-        <tr><td>Hotfix Mantis 60726 — Error guardar PPI</td><td><span class="eb eb-warn">En proceso</span></td><td>Fix confirmado 13/05/2026 — pendiente impacto PRD</td></tr>
-        <tr><td>Mejora buscador de estudiantes</td><td><span class="eb eb-warn">En desarrollo</span></td><td>Pendiente</td></tr>
+        <tr><td>Mejoras UX/UI — Matriculación, Presentismo, Calificaciones, Pases</td><td><span class="eb eb-warn">STG</span></td><td>En STG desde 09/06 · PRD previsto 17/06/2026</td></tr>
+        <tr><td>Módulo Notificaciones — Domicilio Electrónico Escolar</td><td><span class="eb eb-warn">STG</span></td><td>En STG desde 09/06 · PRD previsto 17/06/2026</td></tr>
+        <tr><td>Back Office — Agenda Educativa (parametrización fechas)</td><td><span class="eb eb-warn">STG</span></td><td>En STG desde 09/06 · PRD previsto 17/06/2026</td></tr>
+        <tr><td>Cambio cálculo Regularidad (N/C contraturno = media asistencia)</td><td><span class="eb eb-warn">STG</span></td><td>En STG desde 09/06 · PRD previsto 17/06/2026</td></tr>
+        <tr><td>Gestión Suspensión y Emergencia</td><td><span class="eb eb-warn">STG</span></td><td>En STG desde 09/06 · PRD previsto 17/06/2026</td></tr>
+        <tr><td>Receso de invierno — Presentismo y Regularidad</td><td><span class="eb eb-warn">En desarrollo</span></td><td>Avance 90%</td></tr>
+        <tr><td>Informe funcional y UX Fase III</td><td><span class="eb eb-warn">En desarrollo</span></td><td>Avance 60%</td></tr>
+        <tr><td>Agregado en Otros accesos</td><td><span class="eb eb-warn">En desarrollo</span></td><td>Avance 20%</td></tr>
         <tr><td>LUE — Libreta Única del Estudiante</td><td><span class="eb eb-warn">En desarrollo</span></td><td>Inicio desarrollo 9/9/2025</td></tr>
-        <tr><td>App Presentismo con IA</td><td><span class="eb eb-info">Planificado</span></td><td>Primer punto de integración IA</td></tr>
       </table>
     </div>
   </div>
@@ -2562,6 +2566,17 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
         <span style="display:flex;align-items:center;gap:5px;"><span style="width:11px;height:11px;border-radius:50%;background:var(--rojo);display:inline-block;"></span> Incidente</span>
       </div>
       <div class="timeline">
+        <div class="tl stg"><div class="tl-f">09 Junio 2026</div><div class="tl-t">Deploy STG 09/06 → PRD previsto 17/06</div><span class="tl-e stg">STG</span><ul class="tl-l">
+          <li><strong>Mejoras UX/UI Fase I:</strong> Consulta estado matriculación jurisdiccional (solo lectura), validaciones FEM con alertas, autoguardado en Presentismo</li>
+          <li><strong>Mejoras UX/UI Fase II:</strong> Gestión de pases con mensajes contextuales, indicadores capacidad secciones, validación cambios pendientes en Calificaciones, desmatriculación con motivos tipificados</li>
+          <li><strong>Módulo Notificaciones:</strong> Nuevos estados de seguimiento, domicilio electrónico escolar, adhesión y consentimientos, auditoría de comunicaciones</li>
+          <li><strong>Back Office – Agenda Educativa:</strong> Parametrización de fechas operativas (Presentismo, Calificaciones, Boletines) sin intervención técnica</li>
+          <li><strong>Cálculo Regularidad:</strong> Contraturno N/C pasa a computar como media asistencia</li>
+          <li><strong>Suspensión y Emergencia:</strong> Diferenciación de eventos planificados vs. imprevistos, restricciones por rol y Jornada Extendida</li>
+          <li><strong>Tab Regularidad:</strong> Condición vigente por bimestre, historial de ciclo, trazabilidad de cambios manuales</li>
+          <li><strong>Cal. y Boletines Secundaria:</strong> Habilitación bimestres 2°, 3° y 4° ciclo 2026</li>
+          <li>28 tickets Mantis resueltos (Release: 60427, 60813, 60591, 60931, 60846, 60953, 7946, 60383, 60215, 59755, 59858, 60595, 61048, 60970, 61036, 60661, 60696, 59759, 61107, 60008, 60904, 60900, 61059 · Hotfix: 7749, 7713, 59923, 61139, 60847)</li>
+        </ul></div>
         <div class="tl prd"><div class="tl-f">28 Abril 2026</div><div class="tl-t">Deploy 28/04</div><span class="tl-e prd">PRD</span><ul class="tl-l"><li>Calificaciones y Boletines Secundaria (Regularidad) — uso desde 30/4</li><li>Gestión de «No Corresponde» en LMD</li><li>Calificaciones y Boletines Secundaria Adultos</li><li>Gestión de Pases Adultos EPA/CENS</li><li>11 tickets Mantis resueltos (59821, 59817, 59899, 59079, 60096–60097, 60178, 60200, 59810)</li></ul></div>
         <div class="tl prd"><div class="tl-f">20 Abril 2026</div><div class="tl-t">Deploy 20/04</div><span class="tl-e prd">PRD</span><ul class="tl-l"><li>Gestión de Pases Secundaria Aprende (completa)</li><li>Calificaciones y Boletines Secundaria Adultos</li><li>Mantis: 59995, MIES2-7152</li></ul></div>
         <div class="tl bug"><div class="tl-f">14 Abril 2026</div><div class="tl-t">Deploy 14/04 — Incidentes</div><span class="tl-e prd">PRD</span><ul class="tl-l"><li>Pases y matriculación (CCOO 13/04)</li><li>Post-deploy: 11 establecimientos con inconvenientes</li><li>Bugs: eliminación alumnos, alertas ECP plan 5810, errores efectivizar</li><li>Resolución: 15/4–16/4 mediante queries y atención directa</li></ul></div>
@@ -6293,78 +6308,4 @@ function showDer(id, btn) {
     animation: slideUpModal .25s ease forwards;
   }
   @keyframes slideUpModal {
-    to { transform: translateY(0); opacity: 1; }
-  }
-  #fab-modal-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    background: linear-gradient(135deg, #0d4f63 0%, #0e7490 100%);
-    color: #fff;
-    flex-shrink: 0;
-  }
-  #fab-modal-header span { font-size: 18px; font-weight: 700; flex: 1; font-family: inherit; }
-  #fab-modal-close {
-    background: rgba(255,255,255,.2);
-    border: none;
-    color: #fff;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background .15s;
-  }
-  #fab-modal-close:hover { background: rgba(255,255,255,.35); }
-  #fab-modal iframe {
-    flex: 1;
-    border: none;
-    width: 100%;
-  }
-</style>
-
-<button id="fab-asistente" onclick="fabToggle()" aria-label="Abrir Asistente AprendeBA">
-  <span class="fab-pulse"></span>
-  🤖
-</button>
-<div id="fab-tooltip">Asistente AprendeBA</div>
-
-<div id="fab-modal-overlay" onclick="fabClose(event)">
-  <div id="fab-modal">
-    <div id="fab-modal-header">
-      <span>🤖 Asistente AprendeBA</span>
-      <button id="fab-modal-close" onclick="fabClose()" aria-label="Cerrar">✕</button>
-    </div>
-    <iframe src="about:blank" id="fab-iframe" title="Asistente AprendeBA" loading="lazy"></iframe>
-  </div>
-</div>
-
-<script>
-  var fabOpen = false;
-  function fabToggle() {
-    if (fabOpen) { fabClose(); return; }
-    var overlay = document.getElementById('fab-modal-overlay');
-    var iframe  = document.getElementById('fab-iframe');
-    if (!iframe.src || iframe.src === 'about:blank') {
-      iframe.src = 'https://aprendeba-asistente.vercel.app/?embed=1';
-    }
-    overlay.classList.add('open');
-    fabOpen = true;
-  }
-  function fabClose(e) {
-    if (e && e.target !== document.getElementById('fab-modal-overlay')) return;
-    document.getElementById('fab-modal-overlay').classList.remove('open');
-    fabOpen = false;
-  }
-
-
-
-</script>
-<!-- ===== /ASISTENTE FLOTANTE ===== -->
-
-</body>
-</html>                                                                                                                                                                                                                                                                                                                                                                                                                                              
+    to { transform: t
