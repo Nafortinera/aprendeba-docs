@@ -537,6 +537,12 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   /* /HEADER */
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    mermaid.initialize({ startOnLoad: false, theme: 'base' });
+  });
+</script>
 </head>
 <body>
 
@@ -4763,7 +4769,14 @@ function cambiarTab(tab) {
   }
   // Trigger drive load
   // DER tab: no special init
-    if (tab === 'flujos') { if(window.mermaid) mermaid.run({querySelector:'#tab-flujos .flujos-mermaid'}); }
+    if (tab === 'flujos') {
+      setTimeout(function() {
+        if (window.mermaid) {
+          var nodes = document.querySelectorAll('#tab-flujos .flujos-mermaid:not([data-processed])');
+          if (nodes.length) mermaid.run({ nodes: Array.from(nodes) });
+        }
+      }, 50);
+    }
   // Mantis: reload and force show
   if (tab === 'mantis') {
     restaurarMantisConfig();
@@ -6384,8 +6397,3 @@ function showDer(id, btn) {
 
 
 
-</script>
-<!-- ===== /ASISTENTE FLOTANTE ===== -->
-
-</body>
-</html>                                                                                                                                                                                                                                                                                                                                                                     
