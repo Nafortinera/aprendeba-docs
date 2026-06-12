@@ -4229,18 +4229,49 @@ flowchart TD
 </main>
 
 <script>
-  mermaid.initialize({
-    startOnLoad: true,
-    securityLevel: 'loose',
-    flowchart: { curve: 'basis', padding: 24, nodeSpacing: 40, rankSpacing: 50 }
-  });
+  // NO llamar mermaid.initialize() — el hub ya lo hace
+  // Función para renderizar mermaid en los nodos aún no procesados
+  function flujos_renderMermaid(container) {
+    if (typeof mermaid === 'undefined') return;
+    var nodes = container ? container.querySelectorAll('.mermaid:not([data-processed])') 
+                           : document.querySelectorAll('#tab-flujos .mermaid:not([data-processed])');
+    if (nodes.length > 0) {
+      mermaid.run({ nodes: Array.from(nodes) }).then(function() {
+        setTimeout(function() { fixBimestresSvgSize(); alignConnector(0); }, 300);
+      }).catch(function(e){ console.warn('mermaid.run error', e); });
+    } else {
+      // Ya procesados, solo realinear
+      setTimeout(function() { fixBimestresSvgSize(); alignConnector(0); }, 100);
+    }
+  }
 
   function showTab(id, btn) {
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    btn.classList.add('active');
+    document.querySelectorAll('#tab-flujos .tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('#tab-flujos nav.flujos-nav button').forEach(b => b.classList.remove('active'));
+    var panel = document.getElementById(id);
+    if (panel) {
+      panel.classList.add('active');
+      // Renderizar mermaid en este panel
+      setTimeout(function() { flujos_renderMermaid(panel); }, 50);
+    }
+    if (btn) btn.classList.add('active');
   }
+
+  // Hookear cambiarTab del hub para renderizar cuando se activa el tab Flujos
+  document.addEventListener('DOMContentLoaded', function() {
+    var originalCambiarTab = window.cambiarTab;
+    if (originalCambiarTab) {
+      window.cambiarTab = function(tab) {
+        originalCambiarTab(tab);
+        if (tab === 'flujos') {
+          setTimeout(function() {
+            var activePanel = document.querySelector('#tab-flujos .tab-panel.active');
+            flujos_renderMermaid(activePanel || document.getElementById('tab-flujos'));
+          }, 100);
+        }
+      };
+    }
+  });
 
   function alignConnector(attempt) {
     attempt = attempt || 0;
@@ -4254,12 +4285,10 @@ flowchart TD
     const svg3 = block3Div.querySelector('svg');
     if (!svg2 || !svg3) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
 
-    // Buscar RECESO INVERNAL en bloque 2
     let recesoNode = null;
     svg2.querySelectorAll('.node').forEach(n => {
       if (n.textContent.includes('RECESO')) recesoNode = n;
     });
-    // Buscar rombo Aprobo en bloque 3
     let aprNode = null;
     svg3.querySelectorAll('.node').forEach(n => {
       if (n.textContent.includes('Aprobo')) aprNode = n;
@@ -4273,7 +4302,6 @@ flowchart TD
     const recesoCX = recesoRect.left + recesoRect.width / 2;
     const aprCX    = aprRect.left + aprRect.width / 2;
 
-    // Alinear flecha con RECESO
     const card = connector.closest('.diagram-card');
     const cardRect = card.getBoundingClientRect();
     const cardPadLeft = parseFloat(window.getComputedStyle(card).paddingLeft) || 0;
@@ -4281,7 +4309,6 @@ flowchart TD
     connector.style.textAlign = 'left';
     connector.style.paddingLeft = Math.max(0, targetLeft - 18) + 'px';
 
-    // Desplazar bloque 3 para alinear Aprobo con RECESO
     const shift = recesoCX - aprCX;
     block3Div.style.transform = `translateX(${shift}px)`;
     const card3Container = block3Div.closest('.diagram-card') || block3Div.parentElement;
@@ -4312,7 +4339,6 @@ flowchart TD
     });
     if (!clCluster) return;
 
-    // 1. Expandir cada bimestre hacia arriba
     bimClusters.forEach(cluster => {
       const rect = cluster.querySelector('rect');
       if (!rect) return;
@@ -4334,7 +4360,6 @@ flowchart TD
       }
     });
 
-    // 2. Expandir CL hacia arriba
     const clRect = clCluster.querySelector('rect');
     if (!clRect) return;
     const clOrigY = parseFloat(clRect.getAttribute('y') || 0);
@@ -4344,14 +4369,13 @@ flowchart TD
     clRect.setAttribute('y', newClTop);
     clRect.setAttribute('height', clOrigH + totalExp + CL_BOTTOM_PAD);
 
-    // Ajustar viewBox para que el rect CL quede siempre cerca del top del SVG
     const vb = svg.getAttribute('viewBox');
     if (vb) {
       const parts = vb.split(' ').map(parseFloat);
       if (parts.length === 4) {
         const origMinY = parts[1];
-        const newMinY  = newClTop - 5; // 5px de margen sobre el borde del CL
-        const shift    = origMinY - newMinY; // puede ser positivo o negativo
+        const newMinY  = newClTop - 5;
+        const shift    = origMinY - newMinY;
         parts[1]  = newMinY;
         parts[3] += shift + CL_BOTTOM_PAD;
         svg.setAttribute('viewBox', parts.join(' '));
@@ -4360,36 +4384,31 @@ flowchart TD
       }
     }
 
-    // 3. Label CL al top del rect extendido, negrita y más grande
-    // Color de fondo del recuadro CICLO LECTIVO
     clRect.style.fill   = '#a7f3d0';
     clRect.style.stroke = '#2d9a6b';
     clRect.style.strokeWidth = '2px';
 
-    // Ocultar el label original de Mermaid y reemplazarlo con un <text> SVG confiable
     const clFo = clCluster.querySelector('.cluster-label foreignObject');
     if (clFo) clFo.style.display = 'none';
 
     svg.dataset.fixed = '1';
 
-    // Eliminar el espacio vacío arriba del recuadro CL usando posiciones reales del DOM
     requestAnimationFrame(() => {
       const svgRect  = svg.getBoundingClientRect();
       const clBounds = clRect.getBoundingClientRect();
 
-      // Agregar título CICLO LECTIVO como <text> SVG centrado en el rect real
       const oldText = svg.querySelector('#cl-title-text');
       if (oldText) oldText.remove();
       const vb = svg.getAttribute('viewBox').split(' ').map(parseFloat);
       const scaleX = vb[2] / svgRect.width;
       const clCenterX = (clBounds.left - svgRect.left + clBounds.width / 2) * scaleX + vb[0];
-      const clTopY    = newClTop + 50;  // newClTop ya está en coordenadas SVG
+      const clTopY    = newClTop + 50;
       const titleEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       titleEl.setAttribute('id', 'cl-title-text');
       titleEl.setAttribute('x', clCenterX);
       titleEl.setAttribute('y', clTopY);
       titleEl.setAttribute('text-anchor', 'middle');
-      const targetScreenPx = 26; // tamaño deseado en píxeles de pantalla
+      const targetScreenPx = 26;
       const svgFontSize = Math.round(targetScreenPx * scaleX);
       titleEl.setAttribute('font-size', svgFontSize);
       titleEl.setAttribute('font-weight', 'bold');
@@ -4398,21 +4417,13 @@ flowchart TD
       titleEl.textContent = '🗓 CICLO LECTIVO';
       svg.appendChild(titleEl);
 
-      // Eliminar espacio vacío arriba
       const topGap = clBounds.top - svgRect.top;
       if (topGap > 10) svg.style.marginTop = -(topGap - 10) + 'px';
-      // Eliminar espacio vacío abajo
       const bottomGap = svgRect.bottom - clBounds.bottom;
       if (bottomGap > 20) svg.style.marginBottom = -(bottomGap - 20) + 'px';
-      // Alinear conector y bloque 3 después de aplicar los márgenes
       requestAnimationFrame(() => alignConnector(0));
     });
   }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => { fixBimestresSvgSize(); }, 500);
-    setTimeout(() => { fixBimestresSvgSize(); }, 1200);
-  });
 </script>
 </div><!-- /tab-flujos -->
 
