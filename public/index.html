@@ -4271,36 +4271,45 @@ flowchart TD
     }
   });
 
-  // alignConnector: solo posiciona la flecha, NO traslada el bloque 3
+  // alignConnector: alinea el rombo "Aprobó" justo debajo de la flecha ↓
   function alignConnector(attempt) {
     attempt = attempt || 0;
     const connector = document.getElementById('connector-bloque3');
-    if (!connector) return;
     const mermaidDivs = document.querySelectorAll('#ciclo .mermaid');
-    const block2Div = mermaidDivs[1];
-    if (!block2Div) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
-    const svg2 = block2Div.querySelector('svg');
-    if (!svg2) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
+    const block3Div = mermaidDivs[2];
+    if (!connector || !block3Div) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
+    const svg3 = block3Div.querySelector('svg');
+    if (!svg3) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
 
-    let recesoNode = null;
-    svg2.querySelectorAll('.node').forEach(n => {
-      if (n.textContent.includes('RECESO')) recesoNode = n;
+    // Buscar el nodo "Aprobó" (primer rombo del bloque 3)
+    let aprNode = null;
+    svg3.querySelectorAll('.node').forEach(n => {
+      if (n.textContent.includes('Aprobo') || n.textContent.includes('Aprobó')) aprNode = n;
     });
-    if (!recesoNode) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
+    if (!aprNode) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
 
-    const recesoRect = recesoNode.getBoundingClientRect();
-    if (recesoRect.width === 0) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
+    const aprRect = aprNode.getBoundingClientRect();
+    if (aprRect.width === 0) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
 
-    const recesoCX = recesoRect.left + recesoRect.width / 2;
-    const card = connector.closest('.diagram-card');
-    const cardRect = card.getBoundingClientRect();
-    const cardPadLeft = parseFloat(window.getComputedStyle(card).paddingLeft) || 0;
-    const targetLeft = recesoCX - cardRect.left - cardPadLeft;
-    connector.style.textAlign = 'left';
-    connector.style.paddingLeft = Math.max(0, targetLeft - 18) + 'px';
-    // NO se hace translateX en bloque 3 — se centra naturalmente
+    // Centro de la flecha ↓ (que es texto centrado en su contenedor)
+    const connectorRect = connector.getBoundingClientRect();
+    const connectorCX = connectorRect.left + connectorRect.width / 2;
+    const aprCX = aprRect.left + aprRect.width / 2;
+
+    // Resetear transform previo para medir posición real
+    block3Div.style.transform = '';
+    // Re-medir después del reset
+    requestAnimationFrame(function() {
+      const aprRect2 = aprNode.getBoundingClientRect();
+      const aprCX2 = aprRect2.left + aprRect2.width / 2;
+      const shift = connectorCX - aprCX2;
+      block3Div.style.transform = 'translateX(' + shift + 'px)';
+      const card3 = block3Div.closest('.diagram-card') || block3Div.parentElement;
+      if (card3) card3.style.overflowX = 'visible';
+    });
   }
 
+  
   function fixBimestresSvgSize() {
     const mermaidDivs = document.querySelectorAll('#ciclo .mermaid');
     const block2Div = mermaidDivs[1];
