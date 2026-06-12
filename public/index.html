@@ -3840,8 +3840,6 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   #ciclo .mermaid:nth-child(5) svg .nodeLabel,
   #ciclo .mermaid:nth-child(5) svg .edgeLabel { font-size: 14px !important; }
   
-/* Overrides para integración con el hub */
-#tab-flujos header { display: none !important; }
 </style>
 <header>
   <div class="header-icon">🎓</div>
@@ -3885,22 +3883,21 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
 flowchart TD
     A(["🏫 Reincorporacion equipos de conduccion"]) --> EF
-    ADMI(["📋 Direccion de Area<br/>Proceso de migracion IEL"]) --> IEL1
     EF["⚙️ Efectivizacion<br/>Alumnos del año anterior quedan<br/>matriculados automaticamente"] --> MATR
-    IEL1["🔄 Migracion IEL Ordinario → Inscriptos"] --> IEL2
-    IEL2["🔄 Migracion IEL Complementario → Inscriptos"] --> MAT
+    IEL1["🔄 Migracion IEL Ordinario → Inscriptos<br/>⚡ Automatica"] --> MAT
+    IEL2["🔄 Migracion IEL Complementario → Inscriptos<br/>⚡ Automatica"] --> MAT
     MAT["📝 Matriculacion de inscriptos"] --> MATR
     MATR[("👥 ALUMNOS MATRICULADOS")]
     classDef inicio fill:#dbeafe,stroke:#3b82f6,color:#1e3a8a,font-weight:bold
     classDef db     fill:#e0f2fe,stroke:#0ea5e9,color:#0c4a6e,font-weight:bold
     classDef proc   fill:#f8fafc,stroke:#94a3b8,color:#334155
-    class A,ADMI inicio
+    class A inicio
     class MATR db
     class EF,IEL1,IEL2,MAT proc
       </div>
 
       <!-- Conector visual -->
-      <div id="connector-bloque3" style="font-size:2rem;color:#64748b;line-height:1.2;margin:4px 0;text-align:center">↓</div>
+      <div style="text-align:center;font-size:2rem;color:#64748b;line-height:1.2;margin:4px 0">↓</div>
 
       <!-- BLOQUE 2: Bimestres (LR) -->
       <div class="mermaid">
@@ -3940,6 +3937,7 @@ flowchart LR
     class REC receso
       </div>
 
+      <!-- Conector visual alineado con el rombo de bloque 3 -->
       <div id="connector-bloque3" style="font-size:2rem;color:#64748b;line-height:1.2;margin:4px 0;text-align:center">↓</div>
 
       <!-- BLOQUE 3: Cierre, PPE y Efectivizacion -->
@@ -4226,9 +4224,8 @@ flowchart TD
   </div>
 
 </main>
-
 <script>
-  // No llamar mermaid.initialize() — el hub ya lo hace
+  // NO llamar mermaid.initialize() — el hub ya lo hace
 
   function flujos_renderMermaid(container) {
     if (typeof mermaid === 'undefined') return;
@@ -4240,7 +4237,6 @@ flowchart TD
         setTimeout(fixBimestresSvgSize, 1000);
       }).catch(function(e){ console.warn('mermaid.run error', e); });
     } else {
-      // Ya renderizados, solo aplicar fix visual
       setTimeout(fixBimestresSvgSize, 100);
     }
   }
@@ -4256,7 +4252,6 @@ flowchart TD
     if (btn) btn.classList.add('active');
   }
 
-  // Hookear cambiarTab del hub
   document.addEventListener('DOMContentLoaded', function() {
     var originalCambiarTab = window.cambiarTab;
     if (originalCambiarTab) {
@@ -4271,7 +4266,7 @@ flowchart TD
     }
   });
 
-  // alignConnector: alinea el rombo "Aprobó" justo debajo de la flecha ↓
+  // Alinea el rombo "Aprobó" justo bajo la flecha ↓
   function alignConnector(attempt) {
     attempt = attempt || 0;
     const connector = document.getElementById('connector-bloque3');
@@ -4281,7 +4276,6 @@ flowchart TD
     const svg3 = block3Div.querySelector('svg');
     if (!svg3) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
 
-    // Buscar el nodo "Aprobó" (primer rombo del bloque 3)
     let aprNode = null;
     svg3.querySelectorAll('.node').forEach(n => {
       if (n.textContent.includes('Aprobo') || n.textContent.includes('Aprobó')) aprNode = n;
@@ -4291,14 +4285,10 @@ flowchart TD
     const aprRect = aprNode.getBoundingClientRect();
     if (aprRect.width === 0) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
 
-    // Centro de la flecha ↓ (que es texto centrado en su contenedor)
     const connectorRect = connector.getBoundingClientRect();
     const connectorCX = connectorRect.left + connectorRect.width / 2;
-    const aprCX = aprRect.left + aprRect.width / 2;
 
-    // Resetear transform previo para medir posición real
     block3Div.style.transform = '';
-    // Re-medir después del reset
     requestAnimationFrame(function() {
       const aprRect2 = aprNode.getBoundingClientRect();
       const aprCX2 = aprRect2.left + aprRect2.width / 2;
@@ -4309,7 +4299,6 @@ flowchart TD
     });
   }
 
-  
   function fixBimestresSvgSize() {
     const mermaidDivs = document.querySelectorAll('#ciclo .mermaid');
     const block2Div = mermaidDivs[1];
@@ -4385,13 +4374,11 @@ flowchart TD
 
     const clFo = clCluster.querySelector('.cluster-label foreignObject');
     if (clFo) clFo.style.display = 'none';
-
     svg.dataset.fixed = '1';
 
     requestAnimationFrame(() => {
       const svgRect  = svg.getBoundingClientRect();
       const clBounds = clRect.getBoundingClientRect();
-
       const oldText = svg.querySelector('#cl-title-text');
       if (oldText) oldText.remove();
       const vbArr = svg.getAttribute('viewBox').split(' ').map(parseFloat);
@@ -4410,18 +4397,16 @@ flowchart TD
       titleEl.setAttribute('font-family', '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif');
       titleEl.textContent = '🗓 CICLO LECTIVO';
       svg.appendChild(titleEl);
-
       const topGap = clBounds.top - svgRect.top;
       if (topGap > 10) svg.style.marginTop = -(topGap - 10) + 'px';
       const bottomGap = svgRect.bottom - clBounds.bottom;
       if (bottomGap > 20) svg.style.marginBottom = -(bottomGap - 20) + 'px';
-
-      // Solo posicionar la flecha, sin mover bloque 3
       requestAnimationFrame(() => alignConnector(0));
     });
   }
 </script>
 </div><!-- /tab-flujos -->
+
 
 <div class="tab-content" id="tab-testing">
 <div class="sub-content activo" id="test-todos">
