@@ -3712,17 +3712,14 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 </div><!-- /tab-drive -->
 <div class="tab-content" id="tab-flujos">
 <style>
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
+#tab-flujos * { box-sizing: border-box; margin: 0; padding: 0; }
+#tab-flujos body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #f1f5f9;
       color: #1e293b;
       min-height: 100vh;
     }
-
-    /* ── Header ── */
+#tab-flujos /* ── Header ── */
     header {
       background: linear-gradient(135deg, #1e40af 0%, #2563eb 60%, #3b82f6 100%);
       color: white;
@@ -3731,17 +3728,16 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
       align-items: center;
       gap: 18px;
     }
-    .header-icon {
+#tab-flujos .header-icon {
       width: 48px; height: 48px;
       background: rgba(255,255,255,.18);
       border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
       font-size: 24px; flex-shrink: 0;
     }
-    header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -.3px; }
-    header p  { font-size: 0.83rem; opacity: .75; margin-top: 3px; }
-
-    /* ── Nav ── */
+#tab-flujos header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -.3px; }
+#tab-flujos header p { font-size: 0.83rem; opacity: .75; margin-top: 3px; }
+#tab-flujos /* ── Nav ── */
     nav {
       background: white;
       border-bottom: 1px solid #e2e8f0;
@@ -3751,7 +3747,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
       overflow-x: auto;
       box-shadow: 0 1px 3px rgba(0,0,0,.05);
     }
-    nav button {
+#tab-flujos nav button {
       padding: 16px 20px;
       border: none;
       background: none;
@@ -3764,40 +3760,36 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
       display: flex; align-items: center; gap: 7px;
       transition: color .15s, border-color .15s;
     }
-    nav button:hover  { color: #2563eb; }
-    nav button.active { color: #2563eb; border-bottom-color: #2563eb; font-weight: 600; }
-    .tab-icon { font-size: 1rem; }
-
-    /* ── Layout ── */
+#tab-flujos nav button:hover { color: #2563eb; }
+#tab-flujos nav button.active { color: #2563eb; border-bottom-color: #2563eb; font-weight: 600; }
+#tab-flujos .tab-icon { font-size: 1rem; }
+#tab-flujos /* ── Layout ── */
     main { padding: 36px 40px; max-width: 1400px; margin: 0 auto; }
-
-    .tab-panel {
+#tab-flujos .tab-panel {
       position: absolute; visibility: hidden;
       pointer-events: none; width: 1px; height: 1px; overflow: hidden;
     }
-    .tab-panel.active {
+#tab-flujos .tab-panel.active {
       position: static; visibility: visible;
       pointer-events: auto; width: auto; height: auto; overflow: visible;
     }
-
-    /* ── Panel header ── */
+#tab-flujos /* ── Panel header ── */
     .panel-header {
       display: flex; align-items: flex-start; gap: 16px;
       margin-bottom: 28px;
     }
-    .panel-color-bar {
+#tab-flujos .panel-color-bar {
       width: 5px; border-radius: 4px; align-self: stretch; flex-shrink: 0;
       min-height: 44px;
     }
-    .panel-header h2 { font-size: 1.25rem; font-weight: 700; color: #0f172a; }
-    .panel-header p  { font-size: 0.84rem; color: #64748b; margin-top: 4px; line-height: 1.5; }
-    .badge {
+#tab-flujos .panel-header h2 { font-size: 1.25rem; font-weight: 700; color: #0f172a; }
+#tab-flujos .panel-header p { font-size: 0.84rem; color: #64748b; margin-top: 4px; line-height: 1.5; }
+#tab-flujos .badge {
       display: inline-flex; align-items: center; gap: 5px;
       font-size: 0.72rem; font-weight: 600; padding: 3px 10px;
       border-radius: 999px; margin-bottom: 6px;
     }
-
-    /* ── Diagram card ── */
+#tab-flujos /* ── Diagram card ── */
     .diagram-card {
       background: white;
       border-radius: 16px;
@@ -3806,40 +3798,38 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
       border: 1px solid #e8edf3;
       overflow-x: auto;
     }
-    .diagram-card .mermaid { display: flex; justify-content: center; }
-
-    /* ── Color themes per tab ── */
+#tab-flujos .diagram-card .mermaid { display: flex; justify-content: center; }
+#tab-flujos /* ── Color themes per tab ── */
     .theme-blue   .panel-color-bar { background: #3b82f6; }
-    .theme-blue   .badge { background: #eff6ff; color: #1d4ed8; }
-
-    .theme-violet .panel-color-bar { background: #8b5cf6; }
-    .theme-violet .badge { background: #f5f3ff; color: #6d28d9; }
-
-    .theme-teal   .panel-color-bar { background: #14b8a6; }
-    .theme-teal   .badge { background: #f0fdfa; color: #0f766e; }
-
-    .theme-amber  .panel-color-bar { background: #f59e0b; }
-    .theme-amber  .badge { background: #fffbeb; color: #b45309; }
-
-    /* ── Legend ── */
+#tab-flujos .theme-blue   .badge { background: #eff6ff; color: #1d4ed8; }
+#tab-flujos .theme-violet .panel-color-bar { background: #8b5cf6; }
+#tab-flujos .theme-violet .badge { background: #f5f3ff; color: #6d28d9; }
+#tab-flujos .theme-teal   .panel-color-bar { background: #14b8a6; }
+#tab-flujos .theme-teal   .badge { background: #f0fdfa; color: #0f766e; }
+#tab-flujos .theme-amber  .panel-color-bar { background: #f59e0b; }
+#tab-flujos .theme-amber  .badge { background: #fffbeb; color: #b45309; }
+#tab-flujos /* ── Legend ── */
     .legend {
       display: flex; gap: 20px; flex-wrap: wrap;
       margin-top: 24px; padding: 16px 20px;
       background: #f8fafc; border-radius: 10px;
       border: 1px solid #e2e8f0;
     }
-    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: #475569; }
-    .legend-dot  { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
-  /* Forzar tipografía bloque 3 */
-  #ciclo .mermaid:nth-child(3) svg .label,
-  #ciclo .mermaid:nth-child(3) svg text,
-  #ciclo .mermaid:nth-child(3) svg .nodeLabel,
-  #ciclo .mermaid:nth-child(3) svg .edgeLabel { font-size: 37px !important; }
-  #ciclo .mermaid:nth-child(5) svg .label,
-  #ciclo .mermaid:nth-child(5) svg text,
-  #ciclo .mermaid:nth-child(5) svg .nodeLabel,
-  #ciclo .mermaid:nth-child(5) svg .edgeLabel { font-size: 14px !important; }
+#tab-flujos .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: #475569; }
+#tab-flujos .legend-dot { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
+#tab-flujos /* Forzar tipografía bloque 3 */
+  #ciclo .mermaid:nth-child(3) svg .label, #tab-flujos #ciclo .mermaid:nth-child(3) svg text, #tab-flujos #ciclo .mermaid:nth-child(3) svg .nodeLabel, #tab-flujos #ciclo .mermaid:nth-child(3) svg .edgeLabel { font-size: 37px !important; }
+#tab-flujos #ciclo .mermaid:nth-child(5) svg .label, #tab-flujos #ciclo .mermaid:nth-child(5) svg text, #tab-flujos #ciclo .mermaid:nth-child(5) svg .nodeLabel, #tab-flujos #ciclo .mermaid:nth-child(5) svg .edgeLabel { font-size: 14px !important; }
+
   
+
+/* Override: evitar que los elementos internos de flujos afecten el stacking del hub */
+#tab-flujos header { display: none !important; }
+#tab-flujos nav.flujos-nav, #tab-flujos nav {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
 </style>
 <header>
   <div class="header-icon">🎓</div>
