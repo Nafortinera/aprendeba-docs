@@ -5375,7 +5375,7 @@ function bacStats() {
       const res   = (h && h.resueltos_historico) ? h.resueltos_historico : resActivo;
       const pct   = total ? Math.round(res / total * 100) : 0;
       if (s('bac-m-total')) s('bac-m-total').textContent = total;
-      if (s('bac-m-open'))  s('bac-m-open').textContent  = totalActivo - resActivo;
+      if (s('bac-m-open'))  s('bac-m-open').textContent  = totalActivo;
       if (s('bac-m-res'))   s('bac-m-res').textContent   = res;
       if (s('bac-m-pct'))   s('bac-m-pct').textContent   = pct + '%';
       if (s('bac-m-bar'))   s('bac-m-bar').style.width   = pct + '%';
@@ -5890,7 +5890,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Restaurar tickets BA Colaborativa desde localStorage (o usar datos por defecto)
   try {
     // Control de versión: limpiar localStorage viejo cuando se actualiza el hub
-    const BAC_VERSION = '2026-06-12-r5';
+    const BAC_VERSION = '2026-06-12-r6';
     if (localStorage.getItem('bac_version') !== BAC_VERSION) {
       localStorage.removeItem('bac_tickets');
       localStorage.removeItem('bac_v4');
