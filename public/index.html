@@ -5362,16 +5362,34 @@ function bacScheduleSave() {
 
 // ── STATS ────────────────────────────────────────────────────
 function bacStats() {
-  const total = BAC_T.length;
-  const res   = BAC_T.filter(t => BAC_STATE[t.num]?.r).length;
-  const pct   = total ? Math.round(res / total * 100) : 0;
+  const totalActivo = BAC_T.length;
+  const resActivo   = BAC_T.filter(t => BAC_STATE[t.num]?.r).length;
 
   const s = id => document.getElementById(id);
-  if (s('bac-m-total')) s('bac-m-total').textContent = total;
-  if (s('bac-m-open'))  s('bac-m-open').textContent  = total - res;
-  if (s('bac-m-res'))   s('bac-m-res').textContent   = res;
-  if (s('bac-m-pct'))   s('bac-m-pct').textContent   = pct + '%';
-  if (s('bac-m-bar'))   s('bac-m-bar').style.width   = pct + '%';
+
+  // Usar totales históricos para las métricas principales del RESUMEN
+  fetch('/api/sync?type=history', { cache:'no-store' })
+    .then(r => r.json())
+    .then(h => {
+      const total = (h && h.total_historico)    ? h.total_historico    : totalActivo;
+      const res   = (h && h.resueltos_historico) ? h.resueltos_historico : resActivo;
+      const pct   = total ? Math.round(res / total * 100) : 0;
+      if (s('bac-m-total')) s('bac-m-total').textContent = total;
+      if (s('bac-m-open'))  s('bac-m-open').textContent  = totalActivo - resActivo;
+      if (s('bac-m-res'))   s('bac-m-res').textContent   = res;
+      if (s('bac-m-pct'))   s('bac-m-pct').textContent   = pct + '%';
+      if (s('bac-m-bar'))   s('bac-m-bar').style.width   = pct + '%';
+    })
+    .catch(() => {
+      const pct = totalActivo ? Math.round(resActivo / totalActivo * 100) : 0;
+      if (s('bac-m-total')) s('bac-m-total').textContent = totalActivo;
+      if (s('bac-m-open'))  s('bac-m-open').textContent  = totalActivo - resActivo;
+      if (s('bac-m-res'))   s('bac-m-res').textContent   = resActivo;
+      if (s('bac-m-pct'))   s('bac-m-pct').textContent   = pct + '%';
+      if (s('bac-m-bar'))   s('bac-m-bar').style.width   = pct + '%';
+    });
+
+  const total = totalActivo; const res = resActivo; const pct = totalActivo ? Math.round(resActivo/totalActivo*100) : 0;
 
   // Module bars
   const mods = {};
@@ -5872,7 +5890,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Restaurar tickets BA Colaborativa desde localStorage (o usar datos por defecto)
   try {
     // Control de versión: limpiar localStorage viejo cuando se actualiza el hub
-    const BAC_VERSION = '2026-06-12-r4';
+    const BAC_VERSION = '2026-06-12-r5';
     if (localStorage.getItem('bac_version') !== BAC_VERSION) {
       localStorage.removeItem('bac_tickets');
       localStorage.removeItem('bac_v4');
