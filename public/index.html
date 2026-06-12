@@ -5399,7 +5399,19 @@ function bacStats() {
   const sub = document.getElementById('bac-sub');
   if (sub && total) {
     const today = new Date().toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit',year:'numeric'});
-    sub.textContent = `${total} tickets · ${today} · Resolución: ${res}/${total} (${pct}%)`;
+    // Mostrar historial + activos
+    fetch('/api/sync?type=history', { cache:'no-store' })
+      .then(r => r.json())
+      .then(h => {
+        if (h && h.total_historico) {
+          sub.textContent = `${h.total_historico} tickets · ${today} · Resolución: ${h.resueltos_historico}/${h.total_historico} (${Math.round(h.resueltos_historico/h.total_historico*100)}%) · ${total} activos`;
+        } else {
+          sub.textContent = `${total} tickets · ${today} · Resolución: ${res}/${total} (${pct}%)`;
+        }
+      })
+      .catch(() => {
+        sub.textContent = `${total} tickets · ${today} · Resolución: ${res}/${total} (${pct}%)`;
+      });
   }
   // Update charts
   bacUpdateCharts(total, res, total - res);
@@ -5860,7 +5872,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Restaurar tickets BA Colaborativa desde localStorage (o usar datos por defecto)
   try {
     // Control de versión: limpiar localStorage viejo cuando se actualiza el hub
-    const BAC_VERSION = '2026-06-12-r3';
+    const BAC_VERSION = '2026-06-12-r4';
     if (localStorage.getItem('bac_version') !== BAC_VERSION) {
       localStorage.removeItem('bac_tickets');
       localStorage.removeItem('bac_v4');
