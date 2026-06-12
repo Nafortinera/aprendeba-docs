@@ -5863,6 +5863,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const BAC_VERSION = '2026-06-12';
     if (localStorage.getItem('bac_version') !== BAC_VERSION) {
       localStorage.removeItem('bac_tickets');
+      localStorage.removeItem('bac_v4');
       localStorage.setItem('bac_version', BAC_VERSION);
     }
     const saved = localStorage.getItem('bac_tickets');
