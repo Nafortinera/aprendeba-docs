@@ -3938,7 +3938,7 @@ flowchart LR
       </div>
 
       <!-- Conector visual alineado con el rombo de bloque 3 -->
-      <div id="connector-bloque3" style="font-size:2rem;color:#64748b;line-height:1.2;margin:4px 0;text-align:center">↓</div>
+      <div id="connector-bloque3" style="font-size:3rem;color:#64748b;line-height:1;margin:4px 0;text-align:center">↓</div>
 
       <!-- BLOQUE 3: Cierre, PPE y Efectivizacion -->
       <div class="mermaid">
@@ -4311,8 +4311,7 @@ flowchart TD
       const rect = cluster.querySelector('rect');
       if (!rect) return;
       const origY=parseFloat(rect.getAttribute('y')||0), origH=parseFloat(rect.getAttribute('height')||0);
-      rect.setAttribute('y', origY-BIM_TOP_PAD);
-      rect.setAttribute('height', origH+BIM_TOP_PAD);
+      rect.setAttribute('y', origY-BIM_TOP_PAD); rect.setAttribute('height', origH+BIM_TOP_PAD);
       const fo = cluster.querySelector('.cluster-label foreignObject');
       if (fo) {
         fo.setAttribute('y', origY-BIM_TOP_PAD+8);
@@ -4325,8 +4324,7 @@ flowchart TD
     if (!clRect) return;
     const clOrigY=parseFloat(clRect.getAttribute('y')||0), clOrigH=parseFloat(clRect.getAttribute('height')||0);
     const totalExp=CL_TOP_PAD+BIM_TOP_PAD, newClTop=clOrigY-totalExp;
-    clRect.setAttribute('y', newClTop);
-    clRect.setAttribute('height', clOrigH+totalExp+CL_BOTTOM_PAD);
+    clRect.setAttribute('y', newClTop); clRect.setAttribute('height', clOrigH+totalExp+CL_BOTTOM_PAD);
     const vb=svg.getAttribute('viewBox');
     if (vb) {
       const parts=vb.split(' ').map(parseFloat);
@@ -4349,14 +4347,12 @@ flowchart TD
       const scaleX=vbArr[2]/svgRect.width;
       const clCenterX=(clBounds.left-svgRect.left+clBounds.width/2)*scaleX+vbArr[0];
       const titleEl=document.createElementNS('http://www.w3.org/2000/svg','text');
-      titleEl.setAttribute('id','cl-title-text');
-      titleEl.setAttribute('x',clCenterX); titleEl.setAttribute('y',newClTop+50);
-      titleEl.setAttribute('text-anchor','middle');
-      titleEl.setAttribute('font-size',Math.round(26*scaleX));
-      titleEl.setAttribute('font-weight','bold'); titleEl.setAttribute('fill','#1e3a8a');
+      titleEl.setAttribute('id','cl-title-text'); titleEl.setAttribute('x',clCenterX);
+      titleEl.setAttribute('y',newClTop+50); titleEl.setAttribute('text-anchor','middle');
+      titleEl.setAttribute('font-size',Math.round(26*scaleX)); titleEl.setAttribute('font-weight','bold');
+      titleEl.setAttribute('fill','#1e3a8a');
       titleEl.setAttribute('font-family','-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif');
-      titleEl.textContent='🗓 CICLO LECTIVO';
-      svg.appendChild(titleEl);
+      titleEl.textContent='🗓 CICLO LECTIVO'; svg.appendChild(titleEl);
       const topGap=clBounds.top-svgRect.top; if (topGap>10) svg.style.marginTop=-(topGap-10)+'px';
       const botGap=svgRect.bottom-clBounds.bottom; if (botGap>20) svg.style.marginBottom=-(botGap-20)+'px';
       requestAnimationFrame(() => alignConnector(0));
@@ -4364,6 +4360,7 @@ flowchart TD
   }
 </script>
 </div><!-- /tab-flujos -->
+
 
 
 
