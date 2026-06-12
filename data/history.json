@@ -1,0 +1,13 @@
+{
+  "total_historico": 71,
+  "resueltos_historico": 60,
+  "ultima_actualizacion": "12/06/2026",
+  "periodos": [
+    {
+      "fecha": "12/06/2026",
+      "total": 71,
+      "resueltos": 60,
+      "activos": 26
+    }
+  ]
+}
