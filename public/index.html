@@ -3940,8 +3940,7 @@ flowchart LR
     class REC receso
       </div>
 
-      <!-- Conector visual alineado con el rombo de bloque 3 -->
-      <div id="connector-bloque3" style="font-size:3rem;color:#64748b;line-height:1;margin:4px 0;text-align:center">↓</div>
+      <div style="text-align:center;font-size:2rem;color:#64748b;line-height:1.2;margin:4px 0">↓</div>
 
       <!-- BLOQUE 3: Cierre, PPE y Efectivizacion -->
       <div class="mermaid">
@@ -4229,35 +4228,27 @@ flowchart TD
 </main>
 
 <script>
-  // NO llamar mermaid.initialize() — el hub ya lo hace
-  // Función para renderizar mermaid en los nodos aún no procesados
   function flujos_renderMermaid(container) {
     if (typeof mermaid === 'undefined') return;
-    var nodes = container ? container.querySelectorAll('.mermaid:not([data-processed])') 
-                           : document.querySelectorAll('#tab-flujos .mermaid:not([data-processed])');
+    var nodes = container
+      ? container.querySelectorAll('.mermaid:not([data-processed])')
+      : document.querySelectorAll('#tab-flujos .mermaid:not([data-processed])');
     if (nodes.length > 0) {
-      mermaid.run({ nodes: Array.from(nodes) }).then(function() {
-        setTimeout(function() { fixBimestresSvgSize(); alignConnector(0); }, 300);
-      }).catch(function(e){ console.warn('mermaid.run error', e); });
-    } else {
-      // Ya procesados, solo realinear
-      setTimeout(function() { fixBimestresSvgSize(); alignConnector(0); }, 100);
+      mermaid.run({ nodes: Array.from(nodes) }).catch(function(e){ console.warn('mermaid.run error', e); });
     }
   }
 
   function showTab(id, btn) {
     document.querySelectorAll('#tab-flujos .tab-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('#tab-flujos nav.flujos-nav button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#tab-flujos nav.flujos-nav button, #tab-flujos nav button').forEach(b => b.classList.remove('active'));
     var panel = document.getElementById(id);
     if (panel) {
       panel.classList.add('active');
-      // Renderizar mermaid en este panel
       setTimeout(function() { flujos_renderMermaid(panel); }, 50);
     }
     if (btn) btn.classList.add('active');
   }
 
-  // Hookear cambiarTab del hub para renderizar cuando se activa el tab Flujos
   document.addEventListener('DOMContentLoaded', function() {
     var originalCambiarTab = window.cambiarTab;
     if (originalCambiarTab) {
@@ -4272,158 +4263,6 @@ flowchart TD
       };
     }
   });
-
-  function alignConnector(attempt) {
-    attempt = attempt || 0;
-    const connector = document.getElementById('connector-bloque3');
-    if (!connector) return;
-    const mermaidDivs = document.querySelectorAll('#ciclo .mermaid');
-    const block2Div = mermaidDivs[1];
-    const block3Div = mermaidDivs[2];
-    if (!block2Div || !block3Div) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
-    const svg2 = block2Div.querySelector('svg');
-    const svg3 = block3Div.querySelector('svg');
-    if (!svg2 || !svg3) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
-
-    let recesoNode = null;
-    svg2.querySelectorAll('.node').forEach(n => {
-      if (n.textContent.includes('RECESO')) recesoNode = n;
-    });
-    let aprNode = null;
-    svg3.querySelectorAll('.node').forEach(n => {
-      if (n.textContent.includes('Aprobo')) aprNode = n;
-    });
-    if (!recesoNode || !aprNode) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
-
-    const recesoRect = recesoNode.getBoundingClientRect();
-    const aprRect    = aprNode.getBoundingClientRect();
-    if (recesoRect.width === 0 || aprRect.width === 0) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
-
-    const recesoCX = recesoRect.left + recesoRect.width / 2;
-    const aprCX    = aprRect.left + aprRect.width / 2;
-
-    const card = connector.closest('.diagram-card');
-    const cardRect = card.getBoundingClientRect();
-    const cardPadLeft = parseFloat(window.getComputedStyle(card).paddingLeft) || 0;
-    const targetLeft = recesoCX - cardRect.left - cardPadLeft;
-    connector.style.textAlign = 'left';
-    connector.style.paddingLeft = Math.max(0, targetLeft - 18) + 'px';
-
-    const shift = recesoCX - aprCX;
-    block3Div.style.transform = `translateX(${shift}px)`;
-    const card3Container = block3Div.closest('.diagram-card') || block3Div.parentElement;
-    if (card3Container) card3Container.style.overflowX = 'auto';
-  }
-
-  function fixBimestresSvgSize() {
-    const mermaidDivs = document.querySelectorAll('#ciclo .mermaid');
-    const block2Div = mermaidDivs[1];
-    if (!block2Div) return;
-    const svg = block2Div.querySelector('svg');
-    if (!svg) return;
-    if (svg.dataset.fixed) return;
-
-    svg.style.maxWidth = 'none';
-    svg.style.width = svg.getAttribute('width') || 'auto';
-
-    const CL_TOP_PAD    = 70;
-    const CL_BOTTOM_PAD = 40;
-    const BIM_TOP_PAD   = 70;
-
-    let clCluster = null;
-    let bimClusters = [];
-    svg.querySelectorAll('.cluster').forEach(cluster => {
-      const label = cluster.querySelector('.cluster-label');
-      if (label && label.textContent.includes('CICLO LECTIVO')) clCluster = cluster;
-      else bimClusters.push(cluster);
-    });
-    if (!clCluster) return;
-
-    bimClusters.forEach(cluster => {
-      const rect = cluster.querySelector('rect');
-      if (!rect) return;
-      const origY = parseFloat(rect.getAttribute('y') || 0);
-      const origH = parseFloat(rect.getAttribute('height') || 0);
-      rect.setAttribute('y', origY - BIM_TOP_PAD);
-      rect.setAttribute('height', origH + BIM_TOP_PAD);
-      const fo = cluster.querySelector('.cluster-label foreignObject');
-      if (fo) {
-        fo.setAttribute('y', origY - BIM_TOP_PAD + 8);
-        const foW = parseFloat(fo.getAttribute('width') || 0);
-        if (foW < 300) fo.setAttribute('width', 300);
-        const bimDiv = fo.querySelector('div, span, p');
-        if (bimDiv) {
-          bimDiv.style.fontSize   = '18px';
-          bimDiv.style.fontWeight = 'bold';
-          bimDiv.style.textAlign  = 'center';
-        }
-      }
-    });
-
-    const clRect = clCluster.querySelector('rect');
-    if (!clRect) return;
-    const clOrigY = parseFloat(clRect.getAttribute('y') || 0);
-    const clOrigH = parseFloat(clRect.getAttribute('height') || 0);
-    const totalExp = CL_TOP_PAD + BIM_TOP_PAD;
-    const newClTop = clOrigY - totalExp;
-    clRect.setAttribute('y', newClTop);
-    clRect.setAttribute('height', clOrigH + totalExp + CL_BOTTOM_PAD);
-
-    const vb = svg.getAttribute('viewBox');
-    if (vb) {
-      const parts = vb.split(' ').map(parseFloat);
-      if (parts.length === 4) {
-        const origMinY = parts[1];
-        const newMinY  = newClTop - 5;
-        const shift    = origMinY - newMinY;
-        parts[1]  = newMinY;
-        parts[3] += shift + CL_BOTTOM_PAD;
-        svg.setAttribute('viewBox', parts.join(' '));
-        const svgH = parseFloat(svg.getAttribute('height') || 0);
-        if (svgH > 0) svg.setAttribute('height', Math.max(100, svgH + shift + CL_BOTTOM_PAD));
-      }
-    }
-
-    clRect.style.fill   = '#a7f3d0';
-    clRect.style.stroke = '#2d9a6b';
-    clRect.style.strokeWidth = '2px';
-
-    const clFo = clCluster.querySelector('.cluster-label foreignObject');
-    if (clFo) clFo.style.display = 'none';
-
-    svg.dataset.fixed = '1';
-
-    requestAnimationFrame(() => {
-      const svgRect  = svg.getBoundingClientRect();
-      const clBounds = clRect.getBoundingClientRect();
-
-      const oldText = svg.querySelector('#cl-title-text');
-      if (oldText) oldText.remove();
-      const vb = svg.getAttribute('viewBox').split(' ').map(parseFloat);
-      const scaleX = vb[2] / svgRect.width;
-      const clCenterX = (clBounds.left - svgRect.left + clBounds.width / 2) * scaleX + vb[0];
-      const clTopY    = newClTop + 50;
-      const titleEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      titleEl.setAttribute('id', 'cl-title-text');
-      titleEl.setAttribute('x', clCenterX);
-      titleEl.setAttribute('y', clTopY);
-      titleEl.setAttribute('text-anchor', 'middle');
-      const targetScreenPx = 26;
-      const svgFontSize = Math.round(targetScreenPx * scaleX);
-      titleEl.setAttribute('font-size', svgFontSize);
-      titleEl.setAttribute('font-weight', 'bold');
-      titleEl.setAttribute('fill', '#1e3a8a');
-      titleEl.setAttribute('font-family', '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif');
-      titleEl.textContent = '🗓 CICLO LECTIVO';
-      svg.appendChild(titleEl);
-
-      const topGap = clBounds.top - svgRect.top;
-      if (topGap > 10) svg.style.marginTop = -(topGap - 10) + 'px';
-      const bottomGap = svgRect.bottom - clBounds.bottom;
-      if (bottomGap > 20) svg.style.marginBottom = -(bottomGap - 20) + 'px';
-      requestAnimationFrame(() => alignConnector(0));
-    });
-  }
 </script>
 </div><!-- /tab-flujos -->
 
