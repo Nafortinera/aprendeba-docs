@@ -4225,8 +4225,6 @@ flowchart TD
 
 </main>
 <script>
-  // NO llamar mermaid.initialize() — el hub ya lo hace
-
   function flujos_renderMermaid(container) {
     if (typeof mermaid === 'undefined') return;
     var nodes = (container || document.getElementById('tab-flujos'))
@@ -4266,7 +4264,6 @@ flowchart TD
     }
   });
 
-  // Alinea el rombo "Aprobó" justo bajo la flecha ↓
   function alignConnector(attempt) {
     attempt = attempt || 0;
     const connector = document.getElementById('connector-bloque3');
@@ -4275,25 +4272,20 @@ flowchart TD
     if (!connector || !block3Div) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
     const svg3 = block3Div.querySelector('svg');
     if (!svg3) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
-
     let aprNode = null;
     svg3.querySelectorAll('.node').forEach(n => {
       if (n.textContent.includes('Aprobo') || n.textContent.includes('Aprobó')) aprNode = n;
     });
     if (!aprNode) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
-
     const aprRect = aprNode.getBoundingClientRect();
     if (aprRect.width === 0) { if (attempt < 15) setTimeout(() => alignConnector(attempt+1), 400); return; }
-
     const connectorRect = connector.getBoundingClientRect();
     const connectorCX = connectorRect.left + connectorRect.width / 2;
-
     block3Div.style.transform = '';
     requestAnimationFrame(function() {
       const aprRect2 = aprNode.getBoundingClientRect();
       const aprCX2 = aprRect2.left + aprRect2.width / 2;
-      const shift = connectorCX - aprCX2;
-      block3Div.style.transform = 'translateX(' + shift + 'px)';
+      block3Div.style.transform = 'translateX(' + (connectorCX - aprCX2) + 'px)';
       const card3 = block3Div.closest('.diagram-card') || block3Div.parentElement;
       if (card3) card3.style.overflowX = 'visible';
     });
@@ -4304,108 +4296,75 @@ flowchart TD
     const block2Div = mermaidDivs[1];
     if (!block2Div) return;
     const svg = block2Div.querySelector('svg');
-    if (!svg) return;
-    if (svg.dataset.fixed) return;
-
+    if (!svg || svg.dataset.fixed) return;
     svg.style.maxWidth = 'none';
     svg.style.width = svg.getAttribute('width') || 'auto';
-
-    const CL_TOP_PAD    = 70;
-    const CL_BOTTOM_PAD = 40;
-    const BIM_TOP_PAD   = 70;
-
-    let clCluster = null;
-    let bimClusters = [];
+    const CL_TOP_PAD=70, CL_BOTTOM_PAD=40, BIM_TOP_PAD=70;
+    let clCluster=null, bimClusters=[];
     svg.querySelectorAll('.cluster').forEach(cluster => {
       const label = cluster.querySelector('.cluster-label');
       if (label && label.textContent.includes('CICLO LECTIVO')) clCluster = cluster;
       else bimClusters.push(cluster);
     });
     if (!clCluster) return;
-
     bimClusters.forEach(cluster => {
       const rect = cluster.querySelector('rect');
       if (!rect) return;
-      const origY = parseFloat(rect.getAttribute('y') || 0);
-      const origH = parseFloat(rect.getAttribute('height') || 0);
-      rect.setAttribute('y', origY - BIM_TOP_PAD);
-      rect.setAttribute('height', origH + BIM_TOP_PAD);
+      const origY=parseFloat(rect.getAttribute('y')||0), origH=parseFloat(rect.getAttribute('height')||0);
+      rect.setAttribute('y', origY-BIM_TOP_PAD);
+      rect.setAttribute('height', origH+BIM_TOP_PAD);
       const fo = cluster.querySelector('.cluster-label foreignObject');
       if (fo) {
-        fo.setAttribute('y', origY - BIM_TOP_PAD + 8);
-        const foW = parseFloat(fo.getAttribute('width') || 0);
-        if (foW < 300) fo.setAttribute('width', 300);
-        const bimDiv = fo.querySelector('div, span, p');
-        if (bimDiv) {
-          bimDiv.style.fontSize   = '18px';
-          bimDiv.style.fontWeight = 'bold';
-          bimDiv.style.textAlign  = 'center';
-        }
+        fo.setAttribute('y', origY-BIM_TOP_PAD+8);
+        if (parseFloat(fo.getAttribute('width')||0)<300) fo.setAttribute('width',300);
+        const d = fo.querySelector('div,span,p');
+        if (d) { d.style.fontSize='18px'; d.style.fontWeight='bold'; d.style.textAlign='center'; }
       }
     });
-
-    const clRect = clCluster.querySelector('rect');
+    const clRect=clCluster.querySelector('rect');
     if (!clRect) return;
-    const clOrigY = parseFloat(clRect.getAttribute('y') || 0);
-    const clOrigH = parseFloat(clRect.getAttribute('height') || 0);
-    const totalExp = CL_TOP_PAD + BIM_TOP_PAD;
-    const newClTop = clOrigY - totalExp;
+    const clOrigY=parseFloat(clRect.getAttribute('y')||0), clOrigH=parseFloat(clRect.getAttribute('height')||0);
+    const totalExp=CL_TOP_PAD+BIM_TOP_PAD, newClTop=clOrigY-totalExp;
     clRect.setAttribute('y', newClTop);
-    clRect.setAttribute('height', clOrigH + totalExp + CL_BOTTOM_PAD);
-
-    const vb = svg.getAttribute('viewBox');
+    clRect.setAttribute('height', clOrigH+totalExp+CL_BOTTOM_PAD);
+    const vb=svg.getAttribute('viewBox');
     if (vb) {
-      const parts = vb.split(' ').map(parseFloat);
-      if (parts.length === 4) {
-        const origMinY = parts[1];
-        const newMinY  = newClTop - 5;
-        const shift    = origMinY - newMinY;
-        parts[1]  = newMinY;
-        parts[3] += shift + CL_BOTTOM_PAD;
-        svg.setAttribute('viewBox', parts.join(' '));
-        const svgH = parseFloat(svg.getAttribute('height') || 0);
-        if (svgH > 0) svg.setAttribute('height', Math.max(100, svgH + shift + CL_BOTTOM_PAD));
+      const parts=vb.split(' ').map(parseFloat);
+      if (parts.length===4) {
+        const newMinY=newClTop-5, shift=parts[1]-newMinY;
+        parts[1]=newMinY; parts[3]+=shift+CL_BOTTOM_PAD;
+        svg.setAttribute('viewBox',parts.join(' '));
+        const svgH=parseFloat(svg.getAttribute('height')||0);
+        if (svgH>0) svg.setAttribute('height',Math.max(100,svgH+shift+CL_BOTTOM_PAD));
       }
     }
-
-    clRect.style.fill        = '#a7f3d0';
-    clRect.style.stroke      = '#2d9a6b';
-    clRect.style.strokeWidth = '2px';
-
-    const clFo = clCluster.querySelector('.cluster-label foreignObject');
-    if (clFo) clFo.style.display = 'none';
-    svg.dataset.fixed = '1';
-
+    clRect.style.fill='#a7f3d0'; clRect.style.stroke='#2d9a6b'; clRect.style.strokeWidth='2px';
+    const clFo=clCluster.querySelector('.cluster-label foreignObject');
+    if (clFo) clFo.style.display='none';
+    svg.dataset.fixed='1';
     requestAnimationFrame(() => {
-      const svgRect  = svg.getBoundingClientRect();
-      const clBounds = clRect.getBoundingClientRect();
-      const oldText = svg.querySelector('#cl-title-text');
-      if (oldText) oldText.remove();
-      const vbArr = svg.getAttribute('viewBox').split(' ').map(parseFloat);
-      const scaleX = vbArr[2] / svgRect.width;
-      const clCenterX = (clBounds.left - svgRect.left + clBounds.width / 2) * scaleX + vbArr[0];
-      const clTopY    = newClTop + 50;
-      const titleEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      titleEl.setAttribute('id', 'cl-title-text');
-      titleEl.setAttribute('x', clCenterX);
-      titleEl.setAttribute('y', clTopY);
-      titleEl.setAttribute('text-anchor', 'middle');
-      const svgFontSize = Math.round(26 * scaleX);
-      titleEl.setAttribute('font-size', svgFontSize);
-      titleEl.setAttribute('font-weight', 'bold');
-      titleEl.setAttribute('fill', '#1e3a8a');
-      titleEl.setAttribute('font-family', '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif');
-      titleEl.textContent = '🗓 CICLO LECTIVO';
+      const svgRect=svg.getBoundingClientRect(), clBounds=clRect.getBoundingClientRect();
+      const oldText=svg.querySelector('#cl-title-text'); if (oldText) oldText.remove();
+      const vbArr=svg.getAttribute('viewBox').split(' ').map(parseFloat);
+      const scaleX=vbArr[2]/svgRect.width;
+      const clCenterX=(clBounds.left-svgRect.left+clBounds.width/2)*scaleX+vbArr[0];
+      const titleEl=document.createElementNS('http://www.w3.org/2000/svg','text');
+      titleEl.setAttribute('id','cl-title-text');
+      titleEl.setAttribute('x',clCenterX); titleEl.setAttribute('y',newClTop+50);
+      titleEl.setAttribute('text-anchor','middle');
+      titleEl.setAttribute('font-size',Math.round(26*scaleX));
+      titleEl.setAttribute('font-weight','bold'); titleEl.setAttribute('fill','#1e3a8a');
+      titleEl.setAttribute('font-family','-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif');
+      titleEl.textContent='🗓 CICLO LECTIVO';
       svg.appendChild(titleEl);
-      const topGap = clBounds.top - svgRect.top;
-      if (topGap > 10) svg.style.marginTop = -(topGap - 10) + 'px';
-      const bottomGap = svgRect.bottom - clBounds.bottom;
-      if (bottomGap > 20) svg.style.marginBottom = -(bottomGap - 20) + 'px';
+      const topGap=clBounds.top-svgRect.top; if (topGap>10) svg.style.marginTop=-(topGap-10)+'px';
+      const botGap=svgRect.bottom-clBounds.bottom; if (botGap>20) svg.style.marginBottom=-(botGap-20)+'px';
       requestAnimationFrame(() => alignConnector(0));
     });
   }
 </script>
 </div><!-- /tab-flujos -->
+
 
 
 <div class="tab-content" id="tab-testing">
