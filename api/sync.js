@@ -60,11 +60,11 @@ module.exports = async (req, res) => {
 
   const { type } = req.query; // ?type=state or ?type=tickets
 
-  if (!type || !['state','tickets'].includes(type)) {
+  if (!type || !['state','tickets','history'].includes(type)) {
     return res.status(400).json({ error: 'type must be state or tickets' });
   }
 
-  const filename = type === 'state' ? 'state.json' : 'tickets.json';
+  const filename = type === 'state' ? 'state.json' : type === 'history' ? 'history.json' : 'tickets.json';
 
   if (req.method === 'GET') {
     try {
