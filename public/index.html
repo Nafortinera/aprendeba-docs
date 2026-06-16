@@ -540,6 +540,18 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 /* Ocultar columna Responsable en Doc & Inventario */
 #tabla-docs th:nth-child(4),
 #tabla-docs td:nth-child(4) { display: none; }
+
+  /* Twemoji inline sizing */
+  img.emoji {
+    height: 1em; width: 1em;
+    margin: 0 .05em 0 .1em;
+    vertical-align: -0.1em;
+  }
+  /* Cards del inicio — íconos más grandes */
+  .card img.emoji { height: 30px; width: 30px; margin: 0; vertical-align: middle; }
+  /* Nav botones */
+  nav button img.emoji { height: 1em; width: 1em; vertical-align: -0.1em; }
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
@@ -6434,5 +6446,29 @@ function showDer(id, btn) {
     fabOpen = false;
   }
 </script>
-<!-- ===== /ASISTENTE FLOTANTE ====--></body><!-- deploy forzado Jun 2026 -->
+<!-- ===== /ASISTENTE FLOTANTE ====-->
+<!-- Twemoji: emojis consistentes en todos los SO -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.js" crossorigin="anonymous"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    twemoji.parse(document.body, {
+      folder: 'svg',
+      ext: '.svg',
+      base: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/'
+    });
+    // Re-aplicar en cambios de tab dinámicos
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        m.addedNodes.forEach(function(n) {
+          if (n.nodeType === 1) twemoji.parse(n, {
+            folder: 'svg', ext: '.svg',
+            base: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/'
+          });
+        });
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+</script>
+</body><!-- deploy forzado Jun 2026 -->
 </html>
