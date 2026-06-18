@@ -608,6 +608,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <button data-tab="bacolaborativa" onclick="cambiarTab('bacolaborativa')">🤝 BA Colaborativa</button>
 <button data-tab="mantis" onclick="cambiarTab('mantis')">🐛 Mantis</button>
 <button data-tab="powerbi" onclick="cambiarTab('powerbi')">📊 Carga escuelas</button>
+<button data-tab="generador" onclick="cambiarTab('generador')">📝 Generador</button>
 </nav>
 <!-- SUB-NAV -->
 <nav class="nav-sub" id="subnav-instructivos">
@@ -6407,5 +6408,598 @@ function showDer(id, btn) {
     fabOpen = false;
   }
 </script>
-<!-- ===== /ASISTENTE FLOTANTE ====--></body><!-- deploy forzado Jun 2026 -->
+<!-- ===== /ASISTENTE FLOTANTE ====-->
+
+<!-- ════════════════════════════════════════════════════════════
+     TAB: GENERADOR DE DOCUMENTOS  (Nadia Delu)
+════════════════════════════════════════════════════════════ -->
+<div id="tab-generador" class="tab-content" style="display:none">
+
+<style>
+/* ── Generador de Docs ─────────────────────────────────────── */
+.gd-cards { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:24px; }
+@media(max-width:640px){ .gd-cards { grid-template-columns:1fr; } }
+
+.gd-card {
+  background:white; border-radius:12px; padding:22px 20px;
+  box-shadow:var(--sombra); cursor:pointer;
+  border-top:4px solid var(--azul);
+  transition:transform .18s, box-shadow .18s;
+}
+.gd-card:hover { transform:translateY(-3px); box-shadow:0 6px 18px rgba(26,77,143,.18); }
+.gd-card.prd-card { border-top-color:var(--violeta); }
+.gd-card-icon { font-size:28px; margin-bottom:8px; }
+.gd-card h3 { font-size:15px; font-weight:700; color:var(--azul); margin-bottom:4px; }
+.gd-card.prd-card h3 { color:var(--violeta); }
+.gd-card p { font-size:12.5px; color:var(--texto-suave); line-height:1.5; }
+.gd-card .gd-badge {
+  display:inline-block; font-size:10px; font-weight:700;
+  padding:2px 8px; border-radius:8px; margin-top:8px;
+  background:#e8f0fc; color:var(--azul);
+}
+.gd-card.prd-card .gd-badge { background:#f3edfb; color:var(--violeta); }
+
+/* Form panel */
+.gd-form-panel {
+  background:white; border-radius:12px; padding:26px 28px;
+  box-shadow:var(--sombra); margin-bottom:20px; display:none;
+}
+.gd-form-panel.activo { display:block; }
+.gd-form-title {
+  font-size:17px; font-weight:700; color:var(--texto);
+  margin-bottom:18px; padding-bottom:12px;
+  border-bottom:2px solid var(--gris-borde);
+  display:flex; align-items:center; gap:10px;
+}
+.gd-form-title span.emoji { font-size:22px; }
+
+.gd-field { margin-bottom:14px; }
+.gd-field label {
+  display:block; font-size:12.5px; font-weight:600;
+  color:var(--texto); margin-bottom:5px;
+}
+.gd-field label .opt { font-weight:400; color:var(--texto-suave); }
+.gd-field input, .gd-field textarea, .gd-field select {
+  width:100%; box-sizing:border-box;
+  border:1.5px solid var(--gris-borde); border-radius:7px;
+  padding:8px 11px; font-size:13px; font-family:inherit;
+  color:var(--texto); background:#fafbfd;
+  transition:border-color .15s;
+}
+.gd-field input:focus, .gd-field textarea:focus, .gd-field select:focus {
+  outline:none; border-color:var(--azul-claro);
+}
+.gd-field textarea { min-height:70px; resize:vertical; }
+
+/* Row layout */
+.gd-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media(max-width:640px){ .gd-row { grid-template-columns:1fr; } }
+
+/* Entrega dinámica */
+.gd-entrega-block {
+  border:1.5px solid var(--gris-borde); border-radius:9px;
+  padding:14px 16px; margin-bottom:10px; background:#f8fafc;
+  position:relative;
+}
+.gd-entrega-block .gd-entrega-num {
+  font-size:11px; font-weight:700; color:var(--azul);
+  text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px;
+}
+.gd-remove-btn {
+  position:absolute; top:10px; right:12px;
+  background:none; border:none; cursor:pointer;
+  color:var(--rojo); font-size:16px; padding:0; line-height:1;
+}
+.gd-remove-btn:hover { opacity:.7; }
+
+/* Add / action buttons */
+.gd-add-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--gris-bg); border:1.5px dashed var(--gris-borde);
+  color:var(--texto-suave); border-radius:7px;
+  padding:7px 14px; font-size:12.5px; font-weight:600;
+  cursor:pointer; transition:all .15s; margin-bottom:18px;
+}
+.gd-add-btn:hover { border-color:var(--azul-claro); color:var(--azul); background:white; }
+
+.gd-generate-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  background:linear-gradient(135deg,var(--azul),var(--azul-claro));
+  color:white; border:none; border-radius:8px;
+  padding:11px 22px; font-size:14px; font-weight:700;
+  cursor:pointer; transition:opacity .15s;
+}
+.gd-generate-btn.prd { background:linear-gradient(135deg,#6c3d9e,#9b59d0); }
+.gd-generate-btn:hover { opacity:.88; }
+
+.gd-back-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  background:none; border:1.5px solid var(--gris-borde);
+  color:var(--texto-suave); border-radius:7px;
+  padding:9px 16px; font-size:13px; font-weight:600;
+  cursor:pointer; margin-left:10px; transition:all .15s;
+}
+.gd-back-btn:hover { border-color:var(--azul); color:var(--azul); }
+
+/* Output */
+.gd-output {
+  margin-top:20px; display:none;
+}
+.gd-output.activo { display:block; }
+.gd-output-label {
+  font-size:12.5px; font-weight:700; color:var(--texto-suave);
+  text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px;
+  display:flex; align-items:center; gap:8px;
+}
+.gd-output-box {
+  background:#1e2a3a; color:#e2e8f0;
+  border-radius:10px; padding:18px 20px;
+  font-family:monospace; font-size:12.5px; line-height:1.7;
+  white-space:pre-wrap; word-break:break-word;
+  max-height:400px; overflow-y:auto;
+  border:1px solid #2d3d55;
+}
+.gd-copy-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--verde); color:white; border:none;
+  border-radius:7px; padding:8px 16px; font-size:13px;
+  font-weight:700; cursor:pointer; margin-top:10px;
+  transition:opacity .15s;
+}
+.gd-copy-btn:hover { opacity:.85; }
+.gd-copy-btn.copied { background:#888; }
+
+.gd-tip {
+  background:#fffbeb; border:1px solid #f7c24a;
+  border-radius:8px; padding:12px 16px; font-size:12.5px;
+  color:#7a5500; margin-top:14px; line-height:1.6;
+}
+.gd-tip strong { color:#5c3d00; }
+</style>
+
+<!-- Panel intro con cards -->
+<div class="panel">
+  <div class="panel-header">
+    <div class="panel-icon pi-azul">📝</div>
+    <div class="panel-title">
+      <h2>Generador de Documentos</h2>
+      <p>Completá los campos y generá la estructura lista para crear el documento con Claude</p>
+    </div>
+  </div>
+
+  <div class="gd-cards" id="gd-selector">
+    <div class="gd-card" onclick="gdShowForm('deploy')">
+      <div class="gd-card-icon">🚀</div>
+      <h3>Informe de Deploy</h3>
+      <p>Documentá las entregas implementadas en producción con el formato institucional DGPTE.</p>
+      <span class="gd-badge">Formato DGPTE · PDF + Word</span>
+    </div>
+    <div class="gd-card prd-card" onclick="gdShowForm('prd')">
+      <div class="gd-card-icon">📋</div>
+      <h3>Documento Funcional / PRD</h3>
+      <p>Generá la estructura de un documento de requerimientos funcionales o PRD de módulo.</p>
+      <span class="gd-badge">RF · HU · Criterios</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════ FORM: INFORME DE DEPLOY ════ -->
+<div class="gd-form-panel" id="gd-form-deploy">
+  <div class="gd-form-title">
+    <span class="emoji">🚀</span> Informe de Deploy — completá los datos
+  </div>
+
+  <!-- Encabezado -->
+  <div class="gd-row">
+    <div class="gd-field">
+      <label>Fecha del deploy a producción</label>
+      <input type="date" id="gd-dep-fecha">
+    </div>
+    <div class="gd-field">
+      <label>STG activo desde</label>
+      <input type="date" id="gd-dep-stg">
+    </div>
+  </div>
+  <div class="gd-row">
+    <div class="gd-field">
+      <label>PM/s responsables</label>
+      <input type="text" id="gd-dep-pm" value="Cristina Castellar y Nadia Delu">
+    </div>
+    <div class="gd-field">
+      <label>Proveedor</label>
+      <input type="text" id="gd-dep-proveedor" value="Phinxlab">
+    </div>
+  </div>
+
+  <!-- Entregas -->
+  <div class="gd-field">
+    <label>Entregas implementadas</label>
+  </div>
+  <div id="gd-dep-entregas">
+    <!-- Entrega 1 por defecto -->
+    <div class="gd-entrega-block" id="gd-dep-e-0">
+      <div class="gd-entrega-num">Entrega 1</div>
+      <button class="gd-remove-btn" onclick="gdRemoveEntrega(0)" title="Eliminar">✕</button>
+      <div class="gd-field"><label>Título</label>
+        <input type="text" id="gd-dep-e-0-titulo" placeholder="Ej: Autoguardado en Presentismo — Fase I">
+      </div>
+      <div class="gd-field"><label>Descripción</label>
+        <textarea id="gd-dep-e-0-desc" placeholder="Descripción breve de la entrega..."></textarea>
+      </div>
+      <div class="gd-field"><label>Incluye <span class="opt">(uno por línea)</span></label>
+        <textarea id="gd-dep-e-0-bullets" placeholder="Guardado automático periódico&#10;Configuración activación/desactivación&#10;Mensaje informativo al usuario" style="min-height:80px"></textarea>
+      </div>
+    </div>
+  </div>
+  <button class="gd-add-btn" onclick="gdAddEntrega()">+ Agregar entrega</button>
+
+  <!-- Mantis -->
+  <div class="gd-row">
+    <div class="gd-field">
+      <label>Tickets Mantis — Releases <span class="opt">(IDs separados por comas)</span></label>
+      <textarea id="gd-dep-releases" placeholder="60427, 60813, 60591, ..."></textarea>
+    </div>
+    <div class="gd-field">
+      <label>Tickets Mantis — Hotfixes <span class="opt">(IDs separados por comas)</span></label>
+      <textarea id="gd-dep-hotfixes" placeholder="7749, 7713, ..."></textarea>
+    </div>
+  </div>
+
+  <!-- Observaciones -->
+  <div class="gd-field">
+    <label>Observaciones adicionales <span class="opt">(opcional, una por línea)</span></label>
+    <textarea id="gd-dep-obs" placeholder="Ej: el pasaje se realizó a las 22:00 hs"></textarea>
+  </div>
+
+  <div style="margin-top:20px">
+    <button class="gd-generate-btn" onclick="gdGenerarDeploy()">✨ Generar prompt para Claude</button>
+    <button class="gd-back-btn" onclick="gdBack()">← Volver</button>
+  </div>
+
+  <!-- Output -->
+  <div class="gd-output" id="gd-dep-output">
+    <div class="gd-output-label">📋 Prompt generado — copiá y pegalo en tu chat con Claude</div>
+    <div class="gd-output-box" id="gd-dep-output-box"></div>
+    <button class="gd-copy-btn" id="gd-dep-copy" onclick="gdCopiar('gd-dep-output-box','gd-dep-copy')">📋 Copiar</button>
+    <div class="gd-tip">
+      <strong>¿Cómo usarlo?</strong> Copiá el texto → abrí un chat nuevo con Claude en Cowork → pegalo y envialo.
+      Claude va a generar el Informe de Deploy en PDF y Word con el formato institucional DGPTE automáticamente.
+    </div>
+  </div>
+</div>
+
+<!-- ════ FORM: DOCUMENTO FUNCIONAL / PRD ════ -->
+<div class="gd-form-panel" id="gd-form-prd">
+  <div class="gd-form-title">
+    <span class="emoji">📋</span> Documento Funcional / PRD — completá los datos
+  </div>
+
+  <div class="gd-row">
+    <div class="gd-field">
+      <label>Módulo / Funcionalidad</label>
+      <input type="text" id="gd-prd-modulo" placeholder="Ej: Gestión de Pases">
+    </div>
+    <div class="gd-field">
+      <label>Versión</label>
+      <input type="text" id="gd-prd-version" placeholder="v1.0">
+    </div>
+  </div>
+  <div class="gd-row">
+    <div class="gd-field">
+      <label>Autor/es</label>
+      <input type="text" id="gd-prd-autor" value="Nadia Delu / SSTEDU">
+    </div>
+    <div class="gd-field">
+      <label>Fecha</label>
+      <input type="date" id="gd-prd-fecha">
+    </div>
+  </div>
+  <div class="gd-field">
+    <label>Objetivo del documento</label>
+    <textarea id="gd-prd-objetivo" placeholder="¿Qué problema resuelve esta funcionalidad? ¿Qué se busca lograr?"></textarea>
+  </div>
+  <div class="gd-field">
+    <label>Alcance</label>
+    <textarea id="gd-prd-alcance" placeholder="Niveles, roles y establecimientos alcanzados por esta funcionalidad..."></textarea>
+  </div>
+  <div class="gd-field">
+    <label>Roles involucrados <span class="opt">(separados por comas)</span></label>
+    <input type="text" id="gd-prd-roles" placeholder="Ej: Directivo, Docente, Equipo de conducción, Supervisor">
+  </div>
+
+  <!-- Requerimientos funcionales -->
+  <div class="gd-field"><label>Requerimientos funcionales</label></div>
+  <div id="gd-prd-rfs">
+    <div class="gd-entrega-block" id="gd-prd-rf-0">
+      <div class="gd-entrega-num">RF-01</div>
+      <button class="gd-remove-btn" onclick="gdRemoveRF(0)" title="Eliminar">✕</button>
+      <div class="gd-row">
+        <div class="gd-field">
+          <label>Título del requerimiento</label>
+          <input type="text" id="gd-prd-rf-0-titulo" placeholder="Ej: El sistema debe permitir...">
+        </div>
+        <div class="gd-field">
+          <label>Prioridad</label>
+          <select id="gd-prd-rf-0-prioridad">
+            <option>Alta</option><option>Media</option><option>Baja</option>
+          </select>
+        </div>
+      </div>
+      <div class="gd-field"><label>Descripción</label>
+        <textarea id="gd-prd-rf-0-desc" placeholder="Descripción del requerimiento..."></textarea>
+      </div>
+    </div>
+  </div>
+  <button class="gd-add-btn" onclick="gdAddRF()">+ Agregar requerimiento</button>
+
+  <div class="gd-field">
+    <label>Criterios de aceptación generales <span class="opt">(uno por línea)</span></label>
+    <textarea id="gd-prd-ca" placeholder="Ej: Dado que el usuario es Directivo, cuando accede al módulo, entonces..."></textarea>
+  </div>
+  <div class="gd-field">
+    <label>Restricciones / fuera de alcance <span class="opt">(opcional)</span></label>
+    <textarea id="gd-prd-fuera" placeholder="Lo que NO incluye este documento..."></textarea>
+  </div>
+
+  <div style="margin-top:20px">
+    <button class="gd-generate-btn prd" onclick="gdGenerarPRD()">✨ Generar prompt para Claude</button>
+    <button class="gd-back-btn" onclick="gdBack()">← Volver</button>
+  </div>
+
+  <!-- Output -->
+  <div class="gd-output" id="gd-prd-output">
+    <div class="gd-output-label">📋 Prompt generado — copiá y pegalo en tu chat con Claude</div>
+    <div class="gd-output-box" id="gd-prd-output-box"></div>
+    <button class="gd-copy-btn" id="gd-prd-copy" onclick="gdCopiar('gd-prd-output-box','gd-prd-copy')">📋 Copiar</button>
+    <div class="gd-tip">
+      <strong>¿Cómo usarlo?</strong> Copiá el texto → abrí un chat nuevo con Claude en Cowork → pegalo y envialo.
+      Claude va a generar el Documento Funcional en Word con estructura profesional automáticamente.
+    </div>
+  </div>
+</div>
+
+<!-- ════ JAVASCRIPT ════ -->
+<script>
+(function(){
+  let entregaCount = 1;
+  let rfCount = 1;
+
+  window.gdShowForm = function(tipo) {
+    document.getElementById('gd-selector').style.display = 'none';
+    if(tipo === 'deploy') document.getElementById('gd-form-deploy').classList.add('activo');
+    else document.getElementById('gd-form-prd').classList.add('activo');
+    // Set today as default date
+    const today = new Date().toISOString().split('T')[0];
+    if(tipo==='deploy') {
+      if(!document.getElementById('gd-dep-fecha').value) document.getElementById('gd-dep-fecha').value = today;
+    } else {
+      if(!document.getElementById('gd-prd-fecha').value) document.getElementById('gd-prd-fecha').value = today;
+    }
+  };
+
+  window.gdBack = function() {
+    document.getElementById('gd-selector').style.display = '';
+    document.getElementById('gd-form-deploy').classList.remove('activo');
+    document.getElementById('gd-form-prd').classList.remove('activo');
+    document.getElementById('gd-dep-output').classList.remove('activo');
+    document.getElementById('gd-prd-output').classList.remove('activo');
+  };
+
+  window.gdAddEntrega = function() {
+    const idx = entregaCount++;
+    const container = document.getElementById('gd-dep-entregas');
+    const div = document.createElement('div');
+    div.className = 'gd-entrega-block';
+    div.id = 'gd-dep-e-' + idx;
+    div.innerHTML = `
+      <div class="gd-entrega-num">Entrega ${idx+1}</div>
+      <button class="gd-remove-btn" onclick="gdRemoveEntrega(${idx})" title="Eliminar">✕</button>
+      <div class="gd-field"><label>Título</label>
+        <input type="text" id="gd-dep-e-${idx}-titulo" placeholder="Título de la entrega">
+      </div>
+      <div class="gd-field"><label>Descripción</label>
+        <textarea id="gd-dep-e-${idx}-desc" placeholder="Descripción..."></textarea>
+      </div>
+      <div class="gd-field"><label>Incluye <span class="opt">(uno por línea)</span></label>
+        <textarea id="gd-dep-e-${idx}-bullets" style="min-height:80px" placeholder="Punto 1&#10;Punto 2"></textarea>
+      </div>`;
+    container.appendChild(div);
+  };
+
+  window.gdRemoveEntrega = function(idx) {
+    const el = document.getElementById('gd-dep-e-' + idx);
+    if(el) el.remove();
+  };
+
+  window.gdAddRF = function() {
+    const idx = rfCount++;
+    const num = String(idx+1).padStart(2,'0');
+    const container = document.getElementById('gd-prd-rfs');
+    const div = document.createElement('div');
+    div.className = 'gd-entrega-block';
+    div.id = 'gd-prd-rf-' + idx;
+    div.innerHTML = `
+      <div class="gd-entrega-num">RF-${num}</div>
+      <button class="gd-remove-btn" onclick="gdRemoveRF(${idx})" title="Eliminar">✕</button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="gd-field"><label>Título</label>
+          <input type="text" id="gd-prd-rf-${idx}-titulo" placeholder="El sistema debe permitir...">
+        </div>
+        <div class="gd-field"><label>Prioridad</label>
+          <select id="gd-prd-rf-${idx}-prioridad"><option>Alta</option><option>Media</option><option>Baja</option></select>
+        </div>
+      </div>
+      <div class="gd-field"><label>Descripción</label>
+        <textarea id="gd-prd-rf-${idx}-desc" placeholder="Descripción..."></textarea>
+      </div>`;
+    container.appendChild(div);
+  };
+
+  window.gdRemoveRF = function(idx) {
+    const el = document.getElementById('gd-prd-rf-' + idx);
+    if(el) el.remove();
+  };
+
+  function fmtDate(d) {
+    if(!d) return '[fecha]';
+    const [y,m,day] = d.split('-');
+    const meses = ['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    return `${parseInt(day)} de ${meses[parseInt(m)]} de ${y}`;
+  }
+
+  window.gdGenerarDeploy = function() {
+    const fecha    = fmtDate(document.getElementById('gd-dep-fecha').value);
+    const stg      = fmtDate(document.getElementById('gd-dep-stg').value);
+    const pm       = document.getElementById('gd-dep-pm').value || 'N/A';
+    const prov     = document.getElementById('gd-dep-proveedor').value || 'Phinxlab';
+    const releases = document.getElementById('gd-dep-releases').value.trim();
+    const hotfixes = document.getElementById('gd-dep-hotfixes').value.trim();
+    const obsExtra = document.getElementById('gd-dep-obs').value.trim();
+
+    // Collect entregas
+    let entregasTxt = '';
+    const bloques = document.querySelectorAll('[id^="gd-dep-e-"]');
+    let num = 1;
+    bloques.forEach(bloque => {
+      const idx = bloque.id.replace('gd-dep-e-','');
+      const titulo = (document.getElementById(`gd-dep-e-${idx}-titulo`) || {}).value || '';
+      const desc   = (document.getElementById(`gd-dep-e-${idx}-desc`) || {}).value || '';
+      const bulls  = (document.getElementById(`gd-dep-e-${idx}-bullets`) || {}).value || '';
+      if(!titulo) return;
+      entregasTxt += `\n${num}. ${titulo}\n   ${desc}`;
+      if(bulls.trim()) {
+        bulls.trim().split('\n').forEach(b => { if(b.trim()) entregasTxt += `\n   - ${b.trim()}`; });
+      }
+      num++;
+    });
+
+    let obsBase = `- El informe incluye únicamente funcionalidades disponibles en producción a partir del ${fecha}.`;
+    if(stg !== '[fecha]') obsBase += `\n- El entorno de staging (STG) estuvo activo desde el ${stg}.`;
+    obsBase += `\n- Proveedor responsable del desarrollo: ${prov}.`;
+    if(obsExtra) obsExtra.split('\n').forEach(l => { if(l.trim()) obsBase += `\n- ${l.trim()}`; });
+
+    let mantis = '';
+    if(releases) mantis += `\nReleases: ${releases}`;
+    if(hotfixes) mantis += `\nHotfixes: ${hotfixes}`;
+
+    const prompt = `Crear un Informe de Deploy con el formato institucional DGPTE (igual al informe del 17 de junio) con los siguientes datos:
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+DATOS DEL DEPLOY
+━━━━━━━━━━━━━━━━━━━━━━━━
+Fecha de producción: ${fecha}
+STG activo desde: ${stg}
+Equipo: Célula 5 / SSTEDU — PMs: ${pm}
+Proveedor: ${prov}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+ENTREGAS IMPLEMENTADAS
+━━━━━━━━━━━━━━━━━━━━━━━━
+${entregasTxt || '(completar entregas)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+TICKETS MANTIS
+━━━━━━━━━━━━━━━━━━━━━━━━${mantis || '\n(sin tickets cargados)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+OBSERVACIONES
+━━━━━━━━━━━━━━━━━━━━━━━━
+${obsBase}
+
+Por favor generá el Informe de Deploy en PDF y Word con el formato institucional DGPTE.`;
+
+    const box = document.getElementById('gd-dep-output-box');
+    box.textContent = prompt;
+    document.getElementById('gd-dep-output').classList.add('activo');
+    document.getElementById('gd-dep-copy').textContent = '📋 Copiar';
+    document.getElementById('gd-dep-copy').classList.remove('copied');
+    box.parentElement.scrollIntoView({ behavior:'smooth', block:'start' });
+  };
+
+  window.gdGenerarPRD = function() {
+    const modulo  = document.getElementById('gd-prd-modulo').value || '(módulo sin nombre)';
+    const version = document.getElementById('gd-prd-version').value || 'v1.0';
+    const autor   = document.getElementById('gd-prd-autor').value || 'SSTEDU';
+    const fecha   = fmtDate(document.getElementById('gd-prd-fecha').value);
+    const obj     = document.getElementById('gd-prd-objetivo').value.trim();
+    const alcance = document.getElementById('gd-prd-alcance').value.trim();
+    const roles   = document.getElementById('gd-prd-roles').value.trim();
+    const ca      = document.getElementById('gd-prd-ca').value.trim();
+    const fuera   = document.getElementById('gd-prd-fuera').value.trim();
+
+    let rfsTxt = '';
+    const bloques = document.querySelectorAll('[id^="gd-prd-rf-"]');
+    let num = 1;
+    bloques.forEach(bloque => {
+      const idx = bloque.id.replace('gd-prd-rf-','');
+      const titulo = (document.getElementById(`gd-prd-rf-${idx}-titulo`) || {}).value || '';
+      const prio   = (document.getElementById(`gd-prd-rf-${idx}-prioridad`) || {}).value || 'Alta';
+      const desc   = (document.getElementById(`gd-prd-rf-${idx}-desc`) || {}).value || '';
+      if(!titulo) return;
+      const pad = String(num).padStart(2,'0');
+      rfsTxt += `\nRF-${pad} [${prio}] ${titulo}\n   ${desc}`;
+      num++;
+    });
+
+    let caTxt = '';
+    if(ca) ca.split('\n').forEach(l => { if(l.trim()) caTxt += `\n- ${l.trim()}`; });
+
+    const prompt = `Crear un Documento Funcional en Word con los siguientes datos:
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+ENCABEZADO
+━━━━━━━━━━━━━━━━━━━━━━━━
+Módulo / Funcionalidad: ${modulo}
+Versión: ${version}
+Autor: ${autor}
+Fecha: ${fecha}
+Proyecto: AprendeBA — SSTEDU, Ministerio de Educación GCBA
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━━
+${obj || '(completar objetivo)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+ALCANCE
+━━━━━━━━━━━━━━━━━━━━━━━━
+${alcance || '(completar alcance)'}
+${roles ? '\nRoles involucrados: ' + roles : ''}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+REQUERIMIENTOS FUNCIONALES
+━━━━━━━━━━━━━━━━━━━━━━━━
+${rfsTxt || '(completar requerimientos)'}
+${ca ? '\n━━━━━━━━━━━━━━━━━━━━━━━━\nCRITERIOS DE ACEPTACIÓN\n━━━━━━━━━━━━━━━━━━━━━━━━' + caTxt : ''}
+${fuera ? '\n━━━━━━━━━━━━━━━━━━━━━━━━\nFUERA DE ALCANCE\n━━━━━━━━━━━━━━━━━━━━━━━━\n' + fuera : ''}
+
+Por favor generá este Documento Funcional en Word (.docx) con formato profesional institucional para AprendeBA.`;
+
+    const box = document.getElementById('gd-prd-output-box');
+    box.textContent = prompt;
+    document.getElementById('gd-prd-output').classList.add('activo');
+    document.getElementById('gd-prd-copy').textContent = '📋 Copiar';
+    document.getElementById('gd-prd-copy').classList.remove('copied');
+    box.parentElement.scrollIntoView({ behavior:'smooth', block:'start' });
+  };
+
+  window.gdCopiar = function(boxId, btnId) {
+    const text = document.getElementById(boxId).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById(btnId);
+      btn.textContent = '✅ Copiado';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '📋 Copiar';
+        btn.classList.remove('copied');
+      }, 2500);
+    });
+  };
+})();
+</script>
+
+</div><!-- /tab-generador -->
+
+
+</body><!-- deploy forzado Jun 2026 -->
 </html>
