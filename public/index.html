@@ -7539,7 +7539,7 @@ secundario: {
 // ════════════════════════════════════════════════════════════
 let currentNivel = 'inicial';
 
-function mrSetNivel(nivel) {
+window.mrSetNivel = function(nivel) {
   currentNivel = nivel;
   document.querySelectorAll('.mr-nivel-btn').forEach(b => {
     b.classList.toggle('activo', b.classList.contains(nivel));
@@ -7556,7 +7556,7 @@ function mrSetNivel(nivel) {
   mrRender();
 }
 
-function mrRender() {
+window.mrRender = function() {
   const nivel = DATA[currentNivel];
   const modName = document.getElementById('mr-modulo').value;
   const rolFiltro = document.getElementById('mr-rol').value;
@@ -7614,6 +7614,7 @@ mrSetNivel('inicial');
 })();
 </script>
 </div><!-- /tab-roles -->
+
 
 
 
