@@ -606,6 +606,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <button data-tab="bacolaborativa" onclick="cambiarTab('bacolaborativa')">🤝 BA Colaborativa</button>
 <button data-tab="mantis" onclick="cambiarTab('mantis')">🐛 Mantis</button>
 <button data-tab="generador" onclick="cambiarTab('generador')">📝 Generador</button>
+<button data-tab="roles" onclick="cambiarTab('roles')">🔐 Roles</button>
 </nav>
 <!-- SUB-NAV -->
 <nav class="nav-sub" id="subnav-instructivos">
@@ -6996,6 +6997,623 @@ Por favor generá este Documento Funcional en Word (.docx) con formato profesion
 </script>
 
 </div><!-- /tab-generador -->
+
+
+
+
+<!-- ════════════════════════════════════════════════════════════
+     TAB: MATRIZ DE ROLES
+════════════════════════════════════════════════════════════ -->
+<div id="tab-roles" class="tab-content">
+<style>
+/* ── Matriz de Roles ─────────────────────────────────────── */
+.mr-nivel-tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+.mr-nivel-btn {
+  padding:8px 20px; border-radius:20px; border:2px solid var(--gris-borde);
+  background:white; font-size:13px; font-weight:700; cursor:pointer;
+  color:var(--texto-suave); transition:all .15s;
+}
+.mr-nivel-btn.activo { background:var(--azul); color:white; border-color:var(--azul); }
+.mr-nivel-btn.inicial { }
+.mr-nivel-btn.primario { }
+.mr-nivel-btn.secundario { }
+.mr-nivel-btn.activo.inicial { background:#0e7490; border-color:#0e7490; }
+.mr-nivel-btn.activo.primario { background:#2e8b57; border-color:#2e8b57; }
+.mr-nivel-btn.activo.secundario { background:#6c3d9e; border-color:#6c3d9e; }
+
+.mr-controls { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:16px; }
+.mr-controls label { font-size:12.5px; font-weight:600; color:var(--texto-suave); }
+.mr-controls select {
+  border:1.5px solid var(--gris-borde); border-radius:7px;
+  padding:7px 12px; font-size:13px; color:var(--texto);
+  background:#fafbfd; cursor:pointer;
+}
+.mr-controls select:focus { outline:none; border-color:var(--azul-claro); }
+
+.mr-filter-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:#eff6ff; border:1px solid #bfdbfe;
+  border-radius:16px; padding:5px 12px; font-size:12px;
+  color:#1e40af; font-weight:600;
+}
+
+/* Table */
+.mr-table-wrap { overflow-x:auto; border-radius:10px; border:1px solid var(--gris-borde); }
+.mr-table {
+  width:100%; border-collapse:collapse;
+  font-size:12px; min-width:600px;
+}
+.mr-table th {
+  background:#f1f5f9; padding:9px 10px;
+  text-align:center; font-weight:700;
+  color:var(--texto); border-bottom:2px solid var(--gris-borde);
+  font-size:11px; white-space:nowrap;
+  position:sticky; top:0; z-index:2;
+}
+.mr-table th.col-accion {
+  text-align:left; min-width:200px; position:sticky; left:0;
+  background:#f1f5f9; z-index:3;
+}
+.mr-table td {
+  padding:7px 10px; border-bottom:1px solid #f1f5f9;
+  text-align:center; vertical-align:middle;
+}
+.mr-table td.col-accion {
+  text-align:left; position:sticky; left:0;
+  background:white; z-index:1;
+  font-size:12px; color:var(--texto);
+}
+.mr-table tr:hover td { background:#fafbff; }
+.mr-table tr:hover td.col-accion { background:#fafbff; }
+
+/* Group row */
+.mr-table tr.grupo td {
+  background:#e8f0fe; font-weight:700; font-size:12px;
+  color:#1a3a6b; padding:6px 10px;
+}
+.mr-table tr.grupo td.col-accion { background:#e8f0fe; }
+
+/* SI / NO badges */
+.badge-si {
+  display:inline-block; background:#dcfce7; color:#15803d;
+  border-radius:4px; padding:2px 8px; font-size:11px; font-weight:700;
+}
+.badge-no {
+  display:inline-block; background:#f1f5f9; color:#94a3b8;
+  border-radius:4px; padding:2px 6px; font-size:11px;
+}
+
+/* Highlighted role column */
+.mr-table th.col-highlight { background:#fef9c3; color:#713f12; }
+.mr-table td.col-highlight { background:#fffbeb; }
+.mr-table tr:hover td.col-highlight { background:#fef08a50; }
+
+/* Stats bar */
+.mr-stats {
+  display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;
+}
+.mr-stat {
+  background:white; border:1px solid var(--gris-borde); border-radius:8px;
+  padding:8px 14px; font-size:12px; color:var(--texto-suave);
+}
+.mr-stat strong { color:var(--texto); font-size:14px; display:block; }
+</style>
+
+<div class="panel">
+  <div class="panel-header">
+    <div class="panel-icon pi-violeta">🔐</div>
+    <div class="panel-title">
+      <h2>Matriz de Roles y Permisos</h2>
+      <p>Permisos por módulo y rol — Inicial · Primario · Secundario</p>
+    </div>
+  </div>
+
+  <!-- Nivel -->
+  <div class="mr-nivel-tabs">
+    <button class="mr-nivel-btn inicial activo" onclick="mrSetNivel('inicial')">🎨 Inicial</button>
+    <button class="mr-nivel-btn primario" onclick="mrSetNivel('primario')">📚 Primario</button>
+    <button class="mr-nivel-btn secundario" onclick="mrSetNivel('secundario')">🎓 Secundario</button>
+  </div>
+
+  <!-- Controls -->
+  <div class="mr-controls">
+    <div>
+      <label>Módulo</label><br>
+      <select id="mr-modulo" onchange="mrRender()"></select>
+    </div>
+    <div>
+      <label>Filtrar por rol</label><br>
+      <select id="mr-rol" onchange="mrRender()">
+        <option value="">— Todos los roles —</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="mr-stats" id="mr-stats"></div>
+
+  <!-- Table -->
+  <div class="mr-table-wrap">
+    <table class="mr-table" id="mr-table"></table>
+  </div>
+</div>
+
+<script>
+(function(){
+
+// ════════════════════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════════════════════
+const DATA = {
+
+inicial: {
+  roles: ["Dirección de área","Directivo","Docente","Equipo de conducción","Supervisor"],
+  modules: {
+    "Tablero": [
+      {g:"",a:"Ver item tablero", p:[1,1,0,1,1]}
+    ],
+    "Comunicaciones": [
+      {g:"",a:"Ver item muro", p:[1,1,1,1,1]},
+      {g:"",a:"Editar Muro", p:[1,1,1,1,1]},
+      {g:"",a:"Cargar Muro", p:[1,1,1,1,1]}
+    ],
+    "Matriculación": [
+      {g:"",a:"Ver item matriculación", p:[1,1,0,1,1]},
+      {g:"Secciones",a:"Ver solapa secciones", p:[1,1,0,1,1]},
+      {g:"Secciones",a:"Crear", p:[1,1,0,1,1]},
+      {g:"Secciones",a:"Copiar", p:[1,1,0,1,1]},
+      {g:"Secciones",a:"Editar", p:[1,1,0,1,1]},
+      {g:"Secciones",a:"Eliminar", p:[1,1,0,1,1]},
+      {g:"Secciones",a:"Ver", p:[1,1,0,1,1]},
+      {g:"Promoción",a:"Ver solapa Promoción", p:[1,1,0,1,1]},
+      {g:"Promoción",a:"Ver proyecciones", p:[1,1,0,1,1]},
+      {g:"Promoción",a:"Editar", p:[1,1,0,1,1]},
+      {g:"Promoción",a:"Realizar promoción", p:[1,1,0,1,1]},
+      {g:"Promoción",a:"Finalizar proyección", p:[1,1,0,1,0]},
+      {g:"Promoción",a:"Informar vacantes a IEL", p:[1,1,0,1,0]},
+      {g:"Promoción",a:"Efectivizar promoción", p:[1,1,0,1,0]},
+      {g:"Gestión de pase",a:"Ver solapa gestión de pase", p:[1,1,0,1,1]},
+      {g:"Gestión de pase",a:"Solicitar pase", p:[1,1,0,1,1]},
+      {g:"Gestión de pase",a:"Cancelar un pase", p:[1,1,0,1,0]},
+      {g:"Gestión de pase",a:"Configuración de pase", p:[1,1,0,1,1]},
+      {g:"Inscriptos",a:"Ver solapa inscriptos", p:[1,1,0,1,1]},
+      {g:"Inscriptos",a:"Matricular", p:[1,1,0,1,1]},
+      {g:"Inscriptos",a:"Dar de baja", p:[1,1,0,1,1]},
+      {g:"Inscriptos",a:"Agregar estudiante", p:[1,0,0,0,0]},
+      {g:"Inscriptos",a:"Ver legajo", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Ver solapa matriculados", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Cambiar de sección", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Cambiar Condición", p:[0,0,0,0,1]},
+      {g:"Matriculados",a:"Ver boletín/informe", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Descargar boletín/informe", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Descargar Informe de valoración", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Descargar Escuela de verano", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Descargar PIP", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Descargar PPS", p:[0,1,0,1,1]},
+      {g:"Matriculados",a:"Descargar Certificado 7°", p:[0,1,0,1,1]},
+      {g:"Matriculados",a:"Desmatricular", p:[0,1,0,1,1]},
+      {g:"Matriculados",a:"Ver legajo", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Constancia de alumno regular", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Descargar confirmación de matrícula", p:[1,1,0,1,0]},
+      {g:"Matriculados",a:"Confirmar matrícula", p:[1,1,0,1,0]},
+      {g:"Matriculados",a:"Actualizar", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Generar código único de vinculación", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Editar legajo", p:[1,1,0,1,1]},
+      {g:"Matriculados",a:"Editar FEM", p:[1,0,0,0,0]}
+    ],
+    "Presentismo": [
+      {g:"",a:"Ver item presentismo", p:[1,1,1,1,1]},
+      {g:"Toma de asistencia",a:"Tomar asistencia", p:[1,1,1,1,1]},
+      {g:"Toma de asistencia",a:"Guardar", p:[1,1,1,1,1]},
+      {g:"Toma de asistencia",a:"Cerrar semana", p:[0,1,1,1,0]},
+      {g:"Toma de asistencia",a:"Abrir semana", p:[0,1,0,1,0]},
+      {g:"Toma de asistencia",a:"Cerrar el día", p:[0,1,1,1,0]},
+      {g:"Toma de asistencia",a:"Abrir el día", p:[0,1,0,1,0]},
+      {g:"Toma de asistencia",a:"Ver reporte", p:[1,1,1,1,1]},
+      {g:"Toma de asistencia",a:"Ver observaciones diarias", p:[1,1,1,1,1]},
+      {g:"Toma de asistencia",a:"Cargar observaciones diarias", p:[1,1,1,1,1]},
+      {g:"Toma de asistencia",a:"Ver observaciones boletín", p:[1,1,1,1,1]},
+      {g:"Toma de asistencia",a:"Cargar observaciones boletín", p:[1,1,1,1,1]},
+      {g:"Toma de asistencia",a:"Ver Régimen especial", p:[1,1,1,1,1]},
+      {g:"Toma de asistencia",a:"Cargar régimen especial", p:[0,1,0,1,1]},
+      {g:"Toma de asistencia",a:"Histórico condición", p:[0,1,0,1,0]},
+      {g:"Toma de asistencia",a:"Cargar justificativo", p:[1,1,1,1,1]},
+      {g:"Toma de asistencia",a:"Editar justificativos", p:[1,1,1,1,1]},
+      {g:"Toma de asistencia",a:"Descargar", p:[1,1,1,1,1]},
+      {g:"Configuración de situaciones",a:"Ver configuración de situaciones", p:[0,1,0,1,0]},
+      {g:"Configuración de situaciones",a:"Alta de situación", p:[0,1,0,1,0]},
+      {g:"Configuración de situaciones",a:"Eliminar situación", p:[1,0,0,0,0]},
+      {g:"Regularidad",a:"Ver regularidad", p:[0,1,0,0,0]},
+      {g:"Regularidad",a:"Ver reporte", p:[0,1,0,0,0]}
+    ],
+    "PIP": [
+      {g:"",a:"Ver item PIP", p:[1,1,1,1,1]},
+      {g:"",a:"Cargar", p:[1,1,1,1,1]},
+      {g:"",a:"Cerrar PIP", p:[1,1,1,1,1]},
+      {g:"",a:"Guardar", p:[1,1,1,1,1]}
+    ],
+    "Informes": [
+      {g:"",a:"Ver item Informes", p:[1,1,0,1,1]},
+      {g:"",a:"Cargar", p:[1,1,0,1,1]},
+      {g:"",a:"Guardar", p:[1,1,0,1,1]},
+      {g:"",a:"Abrir PIP", p:[1,1,0,1,1]},
+      {g:"",a:"Cerrar PIP", p:[1,1,0,1,1]},
+      {g:"",a:"Descargar", p:[1,1,0,1,1]}
+    ],
+    "Generación de informes": [
+      {g:"",a:"Ver item Generación de informes", p:[1,1,1,1,1]},
+      {g:"",a:"Ver pendientes PIP", p:[1,1,1,1,1]},
+      {g:"",a:"Generar PIP", p:[1,1,0,1,1]}
+    ],
+    "Gestión de roles": [
+      {g:"",a:"Ver Item gestión de roles", p:[1,1,0,0,1]},
+      {g:"",a:"Aprobar un usuario", p:[1,1,0,0,1]},
+      {g:"",a:"Rechazar un usuario", p:[1,1,0,0,1]}
+    ]
+  }
+},
+
+primario: {
+  roles: ["Coordinador JE","Dirección de área","Directivo","Docente","Docente JE","Equipo de conducción","Supervisor","Estudiante"],
+  modules: {
+    "Matriculación": [
+      {g:"",a:"Ver item matriculación", p:[0,1,1,0,0,1,1,0]},
+      {g:"Secciones",a:"Ver solapa secciones", p:[0,1,1,0,0,1,1,0]},
+      {g:"Secciones",a:"Crear", p:[0,1,1,0,0,1,1,0]},
+      {g:"Secciones",a:"Copiar", p:[0,1,1,0,0,1,1,0]},
+      {g:"Secciones",a:"Editar", p:[0,1,1,0,0,1,1,0]},
+      {g:"Secciones",a:"Eliminar", p:[0,1,1,0,0,1,1,0]},
+      {g:"Secciones",a:"Ver", p:[0,1,1,0,0,1,1,0]},
+      {g:"Promoción",a:"Ver solapa Promoción", p:[0,1,1,0,0,1,1,0]},
+      {g:"Promoción",a:"Ver proyecciones", p:[0,1,1,0,0,1,1,0]},
+      {g:"Promoción",a:"Editar", p:[0,1,1,0,0,1,1,0]},
+      {g:"Promoción",a:"Realizar promoción", p:[0,1,1,0,0,1,1,0]},
+      {g:"Promoción",a:"Finalizar proyección", p:[0,1,1,0,0,1,0,0]},
+      {g:"Promoción",a:"Informar vacantes a IEL", p:[0,1,1,0,0,1,0,0]},
+      {g:"Promoción",a:"Efectivizar promoción", p:[0,1,1,0,0,1,0,0]},
+      {g:"Gestión de pase",a:"Ver solapa gestión de pase", p:[0,1,1,0,0,1,1,0]},
+      {g:"Gestión de pase",a:"Solicitar pase", p:[0,1,1,0,0,1,1,0]},
+      {g:"Gestión de pase",a:"Cancelar un pase", p:[0,1,1,0,0,1,0,0]},
+      {g:"Gestión de pase",a:"Configuración de pase", p:[0,1,1,0,0,1,1,0]},
+      {g:"Inscriptos",a:"Ver solapa inscriptos", p:[0,1,1,0,0,1,1,0]},
+      {g:"Inscriptos",a:"Matricular", p:[0,1,1,0,0,1,1,0]},
+      {g:"Inscriptos",a:"Dar de baja", p:[0,1,1,0,0,1,1,0]},
+      {g:"Inscriptos",a:"Agregar estudiante", p:[0,1,0,0,0,0,0,0]},
+      {g:"Inscriptos",a:"Ver legajo", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Ver solapa matriculados", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Cambiar de sección", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Cambiar Condición", p:[0,0,0,0,0,0,1,0]},
+      {g:"Matriculados",a:"Ver boletín/informe", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Descargar boletín/informe", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Descargar Informe de valoración", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Descargar Escuela de verano", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Descargar PIP", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Descargar PPS", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Descargar Certificado 7°", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Desmatricular", p:[0,0,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Ver legajo", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Constancia de alumno regular", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Descargar confirmación de matrícula", p:[0,1,1,0,0,1,0,0]},
+      {g:"Matriculados",a:"Confirmar matrícula", p:[0,1,1,0,0,1,0,0]},
+      {g:"Matriculados",a:"Actualizar", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Generar código único de vinculación", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Editar legajo", p:[0,1,1,0,0,1,1,0]},
+      {g:"Matriculados",a:"Editar FEM", p:[0,1,0,0,0,0,0,0]}
+    ],
+    "Tablero": [{g:"",a:"Ver item tablero", p:[0,1,1,0,0,1,1,0]}],
+    "Comunicaciones": [
+      {g:"",a:"Ver item muro", p:[1,1,1,1,1,1,0,1,1]},
+      {g:"",a:"Editar Muro", p:[1,1,1,1,1,1,0,1,0]},
+      {g:"",a:"Cargar Muro", p:[1,1,1,1,1,1,0,1,0]}
+    ],
+    "Espacio curriculares": [
+      {g:"",a:"Ver item espacio curricular", p:[0,1,1,1,1,1,0,0]},
+      {g:"Presentismo",a:"Tomar asistencia", p:[0,0,1,0,1,1,0,0]},
+      {g:"Presentismo",a:"Ver asistencia", p:[0,0,1,0,1,1,0,0]},
+      {g:"Presentismo",a:"Descargar reporte", p:[0,0,1,0,1,1,0,0]},
+      {g:"Presentismo",a:"Cierre de día", p:[0,0,1,0,1,1,0,0]},
+      {g:"Presentismo",a:"Editar días", p:[0,0,1,0,1,1,0,0]},
+      {g:"Presentismo",a:"Ver observaciones diarias", p:[0,0,1,0,1,1,0,0]},
+      {g:"Presentismo",a:"Agregar asistencia diaria", p:[0,0,1,0,1,1,0,0]},
+      {g:"Presentismo",a:"Guardar asistencia curricular", p:[0,0,1,0,1,1,0,0]},
+      {g:"Calificaciones",a:"Ver calificaciones", p:[0,1,1,1,1,1,1,0]},
+      {g:"Calificaciones",a:"Descargar", p:[0,1,1,1,1,1,1,0]},
+      {g:"Calificaciones",a:"Cargar calificaciones", p:[0,1,1,1,1,1,1,0]},
+      {g:"Calificaciones",a:"Abrir calificaciones", p:[0,0,1,0,0,1,0,0]},
+      {g:"Calificaciones",a:"Cerrar calificaciones", p:[0,1,1,1,1,1,1,0]},
+      {g:"Calificaciones",a:"Guardar", p:[0,1,1,1,1,1,1,0]}
+    ],
+    "Calificaciones": [
+      {g:"",a:"Ver item calificaciones", p:[0,1,1,1,1,1,1,0]},
+      {g:"",a:"Descargar", p:[0,1,1,1,1,1,1,0]},
+      {g:"",a:"Cargar calificaciones", p:[0,1,1,1,1,1,1,0]},
+      {g:"",a:"Abrir calificaciones", p:[0,0,1,0,0,1,0,0]},
+      {g:"",a:"Cerrar calificaciones", p:[0,1,1,1,1,1,1,0]},
+      {g:"",a:"Guardar", p:[0,1,1,1,1,1,1,0]}
+    ],
+    "Boletines e informes": [
+      {g:"",a:"Ver item boletín", p:[0,1,1,0,0,1,1,0]},
+      {g:"",a:"Generar", p:[0,1,1,0,0,1,1,0]},
+      {g:"",a:"Ver espacio curricular", p:[0,1,1,0,0,1,1,0]},
+      {g:"",a:"Ver PIP", p:[0,1,1,0,0,1,1,0]},
+      {g:"",a:"Generar PIP", p:[0,1,1,0,0,1,1,0]},
+      {g:"",a:"Abrir calificaciones", p:[0,1,1,0,0,1,1,0]}
+    ],
+    "Presentismo": [
+      {g:"",a:"Ver item presentismo", p:[0,1,1,1,0,1,1,0]},
+      {g:"Toma de asistencia",a:"Tomar asistencia", p:[0,1,1,1,0,1,1,0]},
+      {g:"Toma de asistencia",a:"Guardar", p:[0,1,1,1,0,1,1,0]},
+      {g:"Toma de asistencia",a:"Cerrar semana", p:[0,0,1,1,0,1,0,0]},
+      {g:"Toma de asistencia",a:"Abrir semana", p:[0,0,1,0,0,1,0,0]},
+      {g:"Toma de asistencia",a:"Cerrar el día", p:[0,0,1,1,0,1,0,0]},
+      {g:"Toma de asistencia",a:"Abrir el día", p:[0,0,1,0,0,1,0,0]},
+      {g:"Toma de asistencia",a:"Ver reporte", p:[0,1,1,1,0,1,1,0]},
+      {g:"Toma de asistencia",a:"Ver observaciones diarias", p:[0,1,1,1,0,1,1,0]},
+      {g:"Toma de asistencia",a:"Cargar observaciones diarias", p:[0,1,1,1,0,1,1,0]},
+      {g:"Toma de asistencia",a:"Ver observaciones boletín", p:[0,1,1,1,0,1,1,0]},
+      {g:"Toma de asistencia",a:"Cargar observaciones boletín", p:[0,1,1,1,0,1,1,0]},
+      {g:"Toma de asistencia",a:"Ver Régimen especial", p:[0,1,1,1,0,1,1,0]},
+      {g:"Toma de asistencia",a:"Cargar régimen especial", p:[0,0,1,0,0,1,1,0]},
+      {g:"Toma de asistencia",a:"Histórico condición", p:[0,0,1,0,0,1,0,0]},
+      {g:"Toma de asistencia",a:"Cargar justificativo", p:[0,1,1,1,0,1,1,0]},
+      {g:"Toma de asistencia",a:"Editar justificativos", p:[0,1,1,1,0,1,1,0]},
+      {g:"Toma de asistencia",a:"Descargar", p:[0,1,1,1,0,1,1,0]},
+      {g:"Configuración JE",a:"Ver configuración JE", p:[1,0,1,0,0,1,0,0]},
+      {g:"Configuración JE",a:"Agregar propuesta", p:[1,0,0,0,0,0,0,0]},
+      {g:"Configuración JE",a:"Ver propuesta", p:[1,0,1,0,0,1,0,0]},
+      {g:"Configuración JE",a:"Editar propuesta", p:[1,0,0,0,0,0,0,0]},
+      {g:"Configuración JE",a:"Eliminar propuesta", p:[1,0,0,0,0,0,0,0]},
+      {g:"Configuración JE",a:"Programar propuesta", p:[1,0,0,0,0,0,0,0]},
+      {g:"Asistencia JE",a:"Ver asistencia JE", p:[1,0,1,0,1,1,0,0]},
+      {g:"Asistencia JE",a:"Ver presentismo", p:[1,0,1,0,1,1,0,0]},
+      {g:"Asistencia JE",a:"Tomar asistencia", p:[1,0,0,0,1,0,0,0]},
+      {g:"Asistencia JE",a:"Guardar", p:[1,0,0,0,1,0,0,0]},
+      {g:"Asistencia JE",a:"Cerrar semana", p:[0,0,0,0,0,0,0,0]},
+      {g:"Asistencia JE",a:"Cerrar el día", p:[1,0,1,0,1,1,0,0]},
+      {g:"Asistencia JE",a:"Abrir el día", p:[1,0,1,0,0,1,0,0]},
+      {g:"Asistencia JE",a:"Ver reporte", p:[1,0,1,0,1,1,0,0]},
+      {g:"Asistencia JE",a:"Ver observaciones diarias", p:[1,0,1,0,1,0,0,0]},
+      {g:"Asistencia JE",a:"Cargar observaciones diarias", p:[1,0,0,0,1,0,0,0]},
+      {g:"Asistencia JE",a:"Ver observaciones boletín", p:[1,0,1,0,1,0,0,0]},
+      {g:"Asistencia JE",a:"Cargar observaciones boletín", p:[1,0,0,0,1,0,0,0]},
+      {g:"Asistencia JE",a:"Ver Régimen especial", p:[1,0,1,0,1,0,0,0]},
+      {g:"Asistencia JE",a:"Cargar régimen especial", p:[1,0,1,0,0,0,0,0]},
+      {g:"Asistencia JE",a:"Histórico condición", p:[0,0,1,0,1,0,0,0]},
+      {g:"Asistencia JE",a:"Editar justificativos", p:[0,0,1,0,1,0,0,0]},
+      {g:"Asistencia JE",a:"Descargar", p:[1,0,1,0,1,1,0,0]},
+      {g:"Configuración de situaciones",a:"Ver configuración de situaciones", p:[0,0,1,0,0,1,0,0]},
+      {g:"Configuración de situaciones",a:"Alta de situación", p:[0,0,1,0,0,1,0,0]},
+      {g:"Configuración de situaciones",a:"Eliminar situación", p:[0,1,0,0,0,0,0,0]},
+      {g:"Regularidad",a:"Ver regularidad", p:[0,0,1,0,0,0,0,0]},
+      {g:"Regularidad",a:"Ver reporte", p:[0,0,1,0,0,0,0,0]}
+    ],
+    "Gestión de roles": [
+      {g:"",a:"Ver Item gestión de roles", p:[0,1,1,0,0,0,1,0]},
+      {g:"",a:"Aprobar un usuario", p:[0,1,1,0,0,0,1,0]},
+      {g:"",a:"Rechazar un usuario", p:[0,1,1,0,0,0,1,0]}
+    ],
+    "PPS": [
+      {g:"",a:"Ver item PPS", p:[0,1,1,1,0,1,1,0]},
+      {g:"",a:"Cargar", p:[0,1,1,1,0,1,1,0]},
+      {g:"",a:"Cerrar PPS", p:[0,1,1,1,0,1,1,0]},
+      {g:"",a:"Abrir PPS", p:[0,1,1,0,0,1,1,0]},
+      {g:"",a:"Guardar", p:[0,1,1,1,0,1,1,0]}
+    ]
+  }
+},
+
+secundario: {
+  roles: ["Asesor pedagógico","Coord. Orientación","Coord. Área","Coord. JE","Dirección de área","Directivo","Docente","Docente JE","Equipo de conducción","Preceptor","Ref. ACAP","Supervisor","Estudiante"],
+  modules: {
+    "Matriculación": [
+      {g:"",a:"Ver item matriculación", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Secciones",a:"Ver solapa secciones", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Secciones",a:"Crear", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Secciones",a:"Copiar", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Secciones",a:"Editar", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Secciones",a:"Eliminar", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Secciones",a:"Ver", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Promoción",a:"Ver solapa Promoción", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Promoción",a:"Ver proyecciones", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Promoción",a:"Editar", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Promoción",a:"Realizar promoción", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Promoción",a:"Finalizar proyección", p:[0,0,0,0,1,1,0,0,1,0,0,0,0]},
+      {g:"Promoción",a:"Informar vacantes a IEL", p:[0,0,0,0,1,1,0,0,1,0,0,0,0]},
+      {g:"Promoción",a:"Efectivizar promoción", p:[0,0,0,0,1,1,0,0,1,0,0,0,0]},
+      {g:"Gestión de pase",a:"Ver solapa gestión de pase", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Gestión de pase",a:"Solicitar pase", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Gestión de pase",a:"Cancelar un pase", p:[0,0,0,0,1,1,0,0,1,0,0,0,0]},
+      {g:"Gestión de pase",a:"Configuración de pase", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Inscriptos",a:"Ver solapa inscriptos", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Inscriptos",a:"Matricular", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Inscriptos",a:"Dar de baja", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Inscriptos",a:"Agregar estudiante", p:[0,0,0,0,1,0,0,0,0,0,0,0,0]},
+      {g:"Inscriptos",a:"Ver legajo", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Matriculados",a:"Ver solapa matriculados", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Matriculados",a:"Cambiar de sección", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Matriculados",a:"Cambiar Condición", p:[0,0,0,0,0,0,0,0,0,0,0,1,0]},
+      {g:"Matriculados",a:"Ver boletín/informe", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Matriculados",a:"Descargar boletín/informe", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Matriculados",a:"Desmatricular", p:[0,0,0,0,0,1,0,0,1,1,0,1,0]},
+      {g:"Matriculados",a:"Ver legajo", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Matriculados",a:"Constancia de alumno regular", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Matriculados",a:"Actualizar", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Matriculados",a:"Generar código único de vinculación", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Matriculados",a:"Editar legajo", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Matriculados",a:"Cambio de FEM", p:[0,0,0,0,1,0,0,0,0,0,0,0,0]}
+    ],
+    "Tablero": [{g:"",a:"Ver item tablero", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]}],
+    "Comunicaciones": [
+      {g:"",a:"Ver item muro", p:[1,1,1,1,1,1,1,0,1,1,0,1,1]},
+      {g:"",a:"Editar Muro", p:[1,1,1,1,1,1,1,0,1,1,0,1,0]},
+      {g:"",a:"Cargar Muro", p:[1,1,1,1,1,1,1,0,1,1,0,1,0]}
+    ],
+    "Espacio curriculares": [
+      {g:"",a:"Ver item espacio curricular", p:[0,0,0,0,1,1,1,1,1,1,0,0,0]},
+      {g:"Presentismo",a:"Tomar asistencia", p:[0,0,0,0,0,1,1,1,1,1,0,0,0]},
+      {g:"Presentismo",a:"Ver asistencia", p:[0,0,0,0,0,1,1,1,1,1,0,0,0]},
+      {g:"Presentismo",a:"Descargar reporte", p:[0,0,0,0,0,1,1,1,1,1,0,0,0]},
+      {g:"Presentismo",a:"Cierre de día", p:[0,0,0,0,0,1,1,1,1,1,0,0,0]},
+      {g:"Presentismo",a:"Editar días", p:[0,0,0,0,0,1,1,1,1,1,0,0,0]},
+      {g:"Calificaciones",a:"Ver calificaciones", p:[1,0,1,0,1,1,1,1,1,1,0,1,0]},
+      {g:"Calificaciones",a:"Descargar", p:[1,0,1,0,1,1,1,1,1,1,0,1,0]},
+      {g:"Calificaciones",a:"Cargar calificaciones", p:[0,0,1,0,1,1,1,1,1,0,0,1,0]},
+      {g:"Calificaciones",a:"Abrir calificaciones", p:[0,0,0,0,0,1,0,0,1,0,0,0,0]},
+      {g:"Calificaciones",a:"Cerrar calificaciones", p:[0,0,1,0,1,1,1,1,1,0,0,1,0]},
+      {g:"Calificaciones",a:"Guardar", p:[0,0,1,0,1,1,1,1,1,0,0,1,0]}
+    ],
+    "Calificaciones": [
+      {g:"",a:"Ver item calificaciones", p:[0,0,0,0,1,1,1,1,1,1,0,1,0]},
+      {g:"",a:"Descargar", p:[0,0,0,0,1,1,1,1,1,1,0,1,0]},
+      {g:"",a:"Cargar calificaciones", p:[0,0,0,0,1,1,1,1,1,0,0,1,0]},
+      {g:"",a:"Abrir calificaciones", p:[0,0,0,0,0,1,0,0,1,0,0,0,0]},
+      {g:"",a:"Cerrar calificaciones", p:[0,0,0,0,1,1,1,1,1,0,0,1,0]},
+      {g:"",a:"Guardar", p:[0,0,0,0,1,1,1,1,1,0,0,1,0]}
+    ],
+    "Boletines e informes": [
+      {g:"",a:"Ver item boletín", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"",a:"Generar", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"",a:"Ver espacio curricular", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"",a:"Ver PIP", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"",a:"Generar PIP", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"",a:"Abrir calificaciones", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]}
+    ],
+    "Presentismo": [
+      {g:"",a:"Ver item presentismo", p:[0,0,1,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Toma de asistencia",a:"Tomar asistencia", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Toma de asistencia",a:"Guardar", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Toma de asistencia",a:"Cerrar semana", p:[0,0,0,0,0,1,0,0,1,1,0,0,0]},
+      {g:"Toma de asistencia",a:"Abrir semana", p:[0,0,0,0,0,1,0,0,1,0,0,0,0]},
+      {g:"Toma de asistencia",a:"Cerrar el día", p:[0,0,0,0,0,1,0,0,1,1,0,0,0]},
+      {g:"Toma de asistencia",a:"Abrir el día", p:[0,0,0,0,0,1,0,0,1,0,0,0,0]},
+      {g:"Toma de asistencia",a:"Ver reporte", p:[0,0,1,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Toma de asistencia",a:"Ver observaciones diarias", p:[0,0,1,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Toma de asistencia",a:"Cargar observaciones diarias", p:[0,0,1,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Toma de asistencia",a:"Ver observaciones boletín", p:[0,0,1,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Toma de asistencia",a:"Cargar observaciones boletín", p:[0,0,1,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Toma de asistencia",a:"Ver Régimen especial", p:[0,0,1,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Toma de asistencia",a:"Cargar régimen especial", p:[0,0,1,0,0,1,0,0,1,0,0,1,0]},
+      {g:"Toma de asistencia",a:"Histórico condición", p:[0,0,0,0,0,1,0,0,1,0,0,0,0]},
+      {g:"Toma de asistencia",a:"Cargar justificativo", p:[0,0,0,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Toma de asistencia",a:"Editar justificativos", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Toma de asistencia",a:"Descargar", p:[0,0,1,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Contraturnos",a:"Ver contraturno", p:[0,0,1,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Contraturnos",a:"Nuevo contraturno", p:[0,0,1,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Contraturnos",a:"Editar acción", p:[0,0,1,0,1,1,0,0,1,1,0,1,0]},
+      {g:"Contraturnos",a:"Eliminar acción", p:[0,0,0,0,1,1,0,0,1,0,0,1,0]},
+      {g:"Configuración JE",a:"Ver configuración JE", p:[0,0,0,1,0,1,0,0,1,0,0,0,0]},
+      {g:"Configuración JE",a:"Agregar propuesta", p:[0,0,0,1,0,0,0,0,0,0,0,0,0]},
+      {g:"Configuración JE",a:"Ver propuesta", p:[0,0,0,1,0,1,0,0,1,0,0,0,0]},
+      {g:"Configuración JE",a:"Editar propuesta", p:[0,0,0,1,0,0,0,0,0,0,0,0,0]},
+      {g:"Configuración JE",a:"Eliminar propuesta", p:[0,0,0,1,0,0,0,0,0,0,0,0,0]},
+      {g:"Configuración JE",a:"Programar propuesta", p:[0,0,0,1,0,0,0,0,0,0,0,0,0]},
+      {g:"Asistencia JE",a:"Ver asistencia JE", p:[0,0,0,1,0,1,0,1,1,0,0,0,0]},
+      {g:"Asistencia JE",a:"Ver presentismo", p:[0,0,0,1,0,1,0,1,1,0,0,0,0]},
+      {g:"Asistencia JE",a:"Tomar asistencia", p:[0,0,0,1,0,0,0,1,0,0,0,0,0]},
+      {g:"Asistencia JE",a:"Guardar", p:[0,0,0,1,0,0,0,1,0,0,0,0,0]},
+      {g:"Asistencia JE",a:"Cerrar el día", p:[0,0,0,1,0,1,0,1,1,0,0,0,0]},
+      {g:"Asistencia JE",a:"Abrir el día", p:[0,0,0,1,0,1,0,0,1,0,0,0,0]},
+      {g:"Asistencia JE",a:"Ver reporte", p:[0,0,0,1,0,1,0,1,1,0,0,0,0]},
+      {g:"Asistencia JE",a:"Ver observaciones diarias", p:[0,0,0,1,0,1,0,1,0,0,0,0,0]},
+      {g:"Asistencia JE",a:"Cargar observaciones diarias", p:[0,0,0,1,0,0,0,1,0,0,0,0,0]},
+      {g:"Asistencia JE",a:"Editar justificativos", p:[0,0,0,1,0,1,0,1,0,0,0,0,0]},
+      {g:"Asistencia JE",a:"Descargar", p:[0,0,0,1,0,1,0,1,1,0,0,0,0]},
+      {g:"Configuración de situaciones",a:"Ver configuración de situaciones", p:[0,0,0,1,0,1,0,0,1,0,0,0,0]},
+      {g:"Configuración de situaciones",a:"Alta de situación", p:[0,0,0,1,0,1,0,0,1,0,0,0,0]},
+      {g:"Configuración de situaciones",a:"Eliminar situación", p:[0,0,0,0,1,0,0,0,0,0,0,0,0]},
+      {g:"Regularidad",a:"Ver regularidad", p:[0,0,0,0,0,1,0,0,0,0,0,0,0]},
+      {g:"Regularidad",a:"Ver reporte", p:[0,0,0,0,0,1,0,0,0,0,0,0,0]}
+    ],
+    "Gestión de roles": [
+      {g:"",a:"Ver Item gestión de roles", p:[0,0,0,0,1,1,0,0,0,0,0,1,0]},
+      {g:"",a:"Aprobar un usuario", p:[0,0,0,0,1,1,0,0,0,0,0,1,0]},
+      {g:"",a:"Rechazar un usuario", p:[0,0,0,0,1,1,0,0,0,0,0,1,0]}
+    ]
+  }
+}
+
+}; // END DATA
+
+// ════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════
+let currentNivel = 'inicial';
+
+function mrSetNivel(nivel) {
+  currentNivel = nivel;
+  document.querySelectorAll('.mr-nivel-btn').forEach(b => {
+    b.classList.toggle('activo', b.classList.contains(nivel));
+  });
+  // Populate module select
+  const modSelect = document.getElementById('mr-modulo');
+  const mods = Object.keys(DATA[nivel].modules);
+  modSelect.innerHTML = mods.map(m => `<option value="${m}">${m}</option>`).join('');
+  // Populate role select
+  const rolSelect = document.getElementById('mr-rol');
+  const roles = DATA[nivel].roles;
+  rolSelect.innerHTML = '<option value="">— Todos los roles —</option>' +
+    roles.map(r => `<option value="${r}">${r}</option>`).join('');
+  mrRender();
+}
+
+function mrRender() {
+  const nivel = DATA[currentNivel];
+  const modName = document.getElementById('mr-modulo').value;
+  const rolFiltro = document.getElementById('mr-rol').value;
+  const rows = nivel.modules[modName] || [];
+  const roles = nivel.roles;
+  const rolIdx = rolFiltro ? roles.indexOf(rolFiltro) : -1;
+
+  // Stats
+  let totalSI = 0, totalCeldas = 0;
+  rows.forEach(r => r.p.forEach(v => { totalCeldas++; if(v) totalSI++; }));
+  const siPct = totalCeldas ? Math.round(totalSI/totalCeldas*100) : 0;
+  let rolSI = 0;
+  if(rolIdx >= 0) rows.forEach(r => { if(r.p[rolIdx]) rolSI++; });
+
+  const statsEl = document.getElementById('mr-stats');
+  statsEl.innerHTML = `
+    <div class="mr-stat"><strong>${rows.length}</strong> acciones</div>
+    <div class="mr-stat"><strong>${roles.length}</strong> roles</div>
+    <div class="mr-stat"><strong>${siPct}%</strong> permisos habilitados</div>
+    ${rolIdx>=0 ? `<div class="mr-stat"><strong>${rolSI}/${rows.length}</strong> acciones para "${rolFiltro}"</div>` : ''}
+  `;
+
+  // Build table
+  const table = document.getElementById('mr-table');
+  let html = '<thead><tr><th class="col-accion">Acción</th>';
+
+  // Filter columns if role selected
+  const colsToShow = rolIdx >= 0 ? [rolIdx] : roles.map((_,i)=>i);
+  colsToShow.forEach(i => {
+    const isHigh = (i === rolIdx);
+    html += `<th class="${isHigh?'col-highlight':''}">${roles[i]}</th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  let lastGroup = null;
+  rows.forEach(row => {
+    if(row.g && row.g !== lastGroup) {
+      lastGroup = row.g;
+      html += `<tr class="grupo"><td class="col-accion" colspan="${1+colsToShow.length}">${row.g}</td></tr>`;
+    }
+    html += `<tr><td class="col-accion">${row.a}</td>`;
+    colsToShow.forEach(i => {
+      const v = row.p[i] || 0;
+      const isHigh = (i === rolIdx);
+      html += `<td class="${isHigh?'col-highlight':''}">${v ? '<span class="badge-si">SI</span>' : '<span class="badge-no">NO</span>'}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+  table.innerHTML = html;
+}
+
+// Init
+mrSetNivel('inicial');
+})();
+</script>
+</div><!-- /tab-roles -->
 
 
 </body><!-- deploy forzado Jun 2026 -->
