@@ -8786,6 +8786,17 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <!-- /JS Documentacion -->
+
+<!-- MODAL DOCS POR ESTADO -->
+<div id="modal-estado" onclick="if(event.target===this)cerrarModalEstado()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:28px;max-width:560px;width:90%;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25);">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+      <div id="modal-estado-titulo" style="font-size:16px;font-weight:700;color:#1f2937;"></div>
+      <button onclick="cerrarModalEstado()" style="background:none;border:none;cursor:pointer;font-size:20px;color:#9ca3af;line-height:1;">✕</button>
+    </div>
+    <div id="modal-estado-lista" style="overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:10px;"></div>
+  </div>
+</div>
 </body><!-- deploy forzado Jun 2026 -->
 <!-- deploy trigger -->
 <!-- v2 -->
