@@ -301,7 +301,7 @@
   .dp-refresh-btn { background: none; border: 1px solid #dde3ef; color: #5a6a7e; padding: 3px 10px; border-radius: 7px; font-size: 11px; cursor: pointer; float: right; margin-top: -2px; }
   .dp-refresh-btn:hover { background: #f0f4f8; }
   /* ═══ BRANDING AprendeBA ═══ */
-  html { background: linear-gradient(155deg,#b8e8e8 0%,#cff2f2 25%,#e8fafa 55%,#f5fdfd 100%) fixed; }
+  html { background: linear-gradient(155deg,#b8e8e8 0%,#cff2f2 25%,#e8fafa 55%,#f5fdfd 100%) fixed; overflow-x: hidden; }
   
   
   
@@ -977,7 +977,7 @@ Abrir Google Drive
 </div>
 <div style="overflow-x:auto;border:1px solid var(--gris-borde);border-radius:12px;">
 <style>
-#tabla-docs { border-collapse:collapse; width:100%; table-layout:fixed; }
+#tabla-docs { border-collapse:collapse; width:auto; min-width:100%; }
 #tabla-docs th { overflow:hidden; white-space:nowrap; font-size:13px; }
 #tabla-docs td { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 #tabla-docs th.sortable { cursor:pointer; user-select:none; }
@@ -988,12 +988,12 @@ Abrir Google Drive
 </style>
 <table id="tabla-docs">
 <colgroup>
-  <col id="col-doc" style="width:260px;">
-  <col id="col-mod" style="width:120px;">
-  <col id="col-fc"  style="width:85px;">
-  <col id="col-fm"  style="width:85px;">
-  <col id="col-est" style="width:65px;">
-  <col id="col-abr" style="width:65px;">
+  <col id="col-doc" style="min-width:200px;">
+  <col id="col-mod" style="min-width:100px;">
+  <col id="col-fc"  style="min-width:80px;">
+  <col id="col-fm"  style="min-width:80px;">
+  <col id="col-est" style="min-width:60px;">
+  <col id="col-abr" style="min-width:60px;">
 </colgroup>
 <thead>
 <tr>
