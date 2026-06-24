@@ -82,7 +82,11 @@
   nav.nav-sub button { flex-shrink: 0; background: none; border: none; padding: 8px 14px; cursor: pointer; font-size: 12.5px; font-weight: 500; color: var(--texto-suave); border-bottom: 2px solid transparent; transition: all 0.15s; white-space: nowrap; }
   nav.nav-sub button:hover { color: var(--azul-claro); }
   #subnav-instructivos button.activo { color: var(--verde); border-bottom-color: var(--verde); font-weight: 700; }
-  #subnav-documentacion button.activo { color: var(--violeta); border-bottom-color: var(--violeta); font-weight: 700; }
+  /* Subnav Documentación — estilo tab con borde inferior */
+  #subnav-documentacion { background:#fff; border-top:1px solid #e5e7eb; border-bottom:3px solid var(--violeta); padding:0 20px; gap:0; }
+  #subnav-documentacion button { border-radius:0; border:none; border-bottom:3px solid transparent; margin-bottom:-3px; padding:9px 18px; font-size:13px; font-weight:500; color:#6b7280; background:none; transition:all .15s; }
+  #subnav-documentacion button:hover { background:#f5f3ff; color:var(--violeta); border-bottom-color:#c4b5fd; }
+  #subnav-documentacion button.activo { background:none; color:var(--violeta); border-bottom:3px solid var(--violeta); font-weight:700; }
   #subnav-procesos button.activo { color: var(--teal); border-bottom-color: var(--teal); font-weight: 700; }
 
   /* MAIN */
