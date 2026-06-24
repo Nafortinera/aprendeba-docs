@@ -880,891 +880,977 @@ function limpiarFiltrosInst() {
 </div><!-- /tab-instructivos -->
 <!-- ==================== DOCUMENTACIÓN ==================== -->
 <div class="tab-content" id="tab-documentacion">
-<!-- TABLA DOCUMENTOS - inventario completo -->
-<div class="sub-content activo" id="doc-tabla">
+
+<!-- HOME DOCUMENTACION -->
+<div class="sub-content activo" id="doc-home">
 <div class="panel">
 <div class="panel-header">
-<div class="panel-icon pi-violeta">📊</div>
+<div class="panel-icon pi-violeta">🗒️</div>
 <div class="panel-title">
-<h2>Inventario de Documentación Funcional</h2>
-<p>Fuente: Google Drive · Carpetas: Casos de uso Phinx, Documentos Funcionales, Drive personal</p>
+<h2>Documentación</h2>
+<p>Inventario funcional del proyecto AprendeBA — 87 documentos, 11 épicas, 48 historias de usuario.</p>
 </div>
 </div>
-<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
-<span class="eb eb-ok">✅ Implementado: 84</span>
-<span class="eb eb-warn">🔧 En desarrollo: 2</span>
-<span class="eb eb-err">⏳ Pendiente: 1</span>
-<span class="eb eb-info" style="margin-left:auto;">Total: 88 documentos</span>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;">
+<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;padding:14px 16px;">
+<div style="font-size:28px;font-weight:700;color:#15803d;">84</div>
+<div style="font-size:12px;color:#16a34a;margin-top:3px;">✅ Implementado</div>
 </div>
-<!-- ── CARDS POR FUENTE ── -->
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
-<div onclick="filtrarPorFuente('Drive / AprendeBA 2026')" onmouseout="this.style.borderColor='#93c5fd';this.style.transform=''" onmouseover="this.style.borderColor='#3b82f6';this.style.transform='translateY(-2px)'" style="background:linear-gradient(135deg,#e8f4fd,#f0f8ff);border:1.5px solid #93c5fd;border-radius:12px;padding:16px;cursor:pointer;transition:all .15s;">
-<div style="font-size:22px;margin-bottom:6px;">📁</div>
-<div style="font-weight:800;color:#1d4ed8;font-size:14px;">Documentos Funcionales</div>
-<div style="font-size:11.5px;color:#3b82f6;margin-top:3px;">Drive AprendeBA 2026 · 7 docs</div>
-<a href="https://drive.google.com/drive/folders/14YDYjI60SJpKMfJ87QbOtobj0Uy9K6UL?usp=drive_link" onclick="event.stopPropagation()" style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:11px;color:#1d4ed8;font-weight:600;text-decoration:none;" target="_blank">↗ Abrir Drive</a>
+<div onclick="mostrarDocsPorEstado('En desarrollo','🔧 En desarrollo','#a16207','#fefce8')" style="background:#fefce8;border:1.5px solid #fde047;border-radius:12px;padding:14px 16px;cursor:pointer;transition:box-shadow .15s;" onmouseover="this.style.boxShadow='0 4px 14px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow='none'">
+<div id="stat-desarrollo" style="font-size:28px;font-weight:700;color:#a16207;">2</div>
+<div style="font-size:12px;color:#ca8a04;margin-top:3px;">🔧 En desarrollo</div>
 </div>
-<div onclick="filtrarPorFuente('Drive / Miescuela 2025')" onmouseout="this.style.borderColor='#d8b4fe';this.style.transform=''" onmouseover="this.style.borderColor='#9333ea';this.style.transform='translateY(-2px)'" style="background:linear-gradient(135deg,#fdf4ff,#faf0ff);border:1.5px solid #d8b4fe;border-radius:12px;padding:16px;cursor:pointer;transition:all .15s;">
-<div style="font-size:22px;margin-bottom:6px;">🗂</div>
-<div style="font-weight:800;color:#7e22ce;font-size:14px;">Drive del equipo</div>
-<div style="font-size:11.5px;color:#9333ea;margin-top:3px;">Drive MiEscuela 2025 · 39 docs</div>
-<span style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:11px;color:#7e22ce;font-weight:600;">Filtrar →</span>
+<div onclick="mostrarDocsPorEstado('Pendiente','⏳ Pendiente','#be123c','#fff1f2')" style="background:#fff1f2;border:1.5px solid #fecdd3;border-radius:12px;padding:14px 16px;cursor:pointer;transition:box-shadow .15s;" onmouseover="this.style.boxShadow='0 4px 14px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow='none'">
+<div id="stat-pendiente" style="font-size:28px;font-weight:700;color:#be123c;">1</div>
+<div style="font-size:12px;color:#e11d48;margin-top:3px;">⏳ Pendiente</div>
 </div>
-<div onclick="filtrarPorFuente('Mail')" onmouseout="this.style.borderColor='#86efac';this.style.transform=''" onmouseover="this.style.borderColor='#16a34a';this.style.transform='translateY(-2px)'" style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1.5px solid #86efac;border-radius:12px;padding:16px;cursor:pointer;transition:all .15s;">
-<div style="font-size:22px;margin-bottom:6px;">📧</div>
-<div style="font-weight:800;color:#15803d;font-size:14px;">Correos / Comunicaciones</div>
-<div style="font-size:11.5px;color:#16a34a;margin-top:3px;">Emails del equipo · 14 docs</div>
-<span style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:11px;color:#15803d;font-weight:600;">Filtrar →</span>
+<div style="background:#f5f3ff;border:1.5px solid #ddd6fe;border-radius:12px;padding:14px 16px;">
+<div style="font-size:28px;font-weight:700;color:#6d28d9;">87</div>
+<div style="font-size:12px;color:#7c3aed;margin-top:3px;">📄 Total documentos</div>
 </div>
 </div>
-<div id="fuente-activa" style="display:none;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:8px 14px;margin-bottom:12px;align-items:center;gap:8px;font-size:12.5px;">
-<span id="fuente-label" style="font-weight:600;color:#0369a1;flex:1;"></span>
-<button onclick="limpiarFuente()" style="font-size:11px;color:#0369a1;border:none;background:none;cursor:pointer;font-weight:600;">✕ Mostrar todos</button>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+
+<div onclick="cambiarSub('documentacion','doc-tabla')" onmouseout="this.style.borderColor='#ddd6fe';this.style.transform=''" onmouseover="this.style.borderColor='#7c3aed';this.style.transform='translateY(-3px)'" style="background:#fff;border:1.5px solid #ddd6fe;border-radius:14px;padding:22px;cursor:pointer;transition:all .15s;">
+<div style="font-size:32px;margin-bottom:10px;">📊</div>
+<div style="font-weight:700;font-size:15px;color:#3b0764;margin-bottom:8px;">Inventario de Documentación</div>
+<div style="font-size:13px;color:#6b7280;margin-bottom:14px;line-height:1.5;">Tabla completa de los 87 documentos funcionales con filtros por módulo, estado y fuente.</div>
+<span style="font-size:12px;background:#ede9fe;color:#5b21b6;padding:4px 12px;border-radius:99px;font-weight:600;">Ver inventario →</span>
 </div>
-<div style="margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-<input id="filtro-docs" oninput="filtrarTablaDoc()" placeholder="🔍 Filtrar documentos..." style="padding:7px 14px;border:1px solid var(--gris-borde);border-radius:20px;font-size:13px;outline:none;width:260px;" type="text"/>
+
+<div onclick="cambiarSub('documentacion','doc-epicas')" onmouseout="this.style.borderColor='#bae6fd';this.style.transform=''" onmouseover="this.style.borderColor='#0369a1';this.style.transform='translateY(-3px)'" style="background:#fff;border:1.5px solid #bae6fd;border-radius:14px;padding:22px;cursor:pointer;transition:all .15s;">
+<div style="font-size:32px;margin-bottom:10px;">🗂</div>
+<div style="font-weight:700;font-size:15px;color:#0c4a6e;margin-bottom:8px;">Épicas</div>
+<div style="font-size:13px;color:#6b7280;margin-bottom:14px;line-height:1.5;">11 épicas derivadas del inventario, agrupadas por módulo funcional con sus documentos asociados.</div>
+<span style="font-size:12px;background:#e0f2fe;color:#0369a1;padding:4px 12px;border-radius:99px;font-weight:600;">Ver épicas →</span>
+</div>
+
+<div onclick="cambiarSub('documentacion','doc-hu')" onmouseout="this.style.borderColor='#bbf7d0';this.style.transform=''" onmouseover="this.style.borderColor='#15803d';this.style.transform='translateY(-3px)'" style="background:#fff;border:1.5px solid #bbf7d0;border-radius:14px;padding:22px;cursor:pointer;transition:all .15s;">
+<div style="font-size:32px;margin-bottom:10px;">📝</div>
+<div style="font-weight:700;font-size:15px;color:#14532d;margin-bottom:8px;">Historias de Usuario</div>
+<div style="font-size:13px;color:#6b7280;margin-bottom:14px;line-height:1.5;">48 historias de usuario organizadas por épica en formato Como / Quiero / Para.</div>
+<span style="font-size:12px;background:#dcfce7;color:#15803d;padding:4px 12px;border-radius:99px;font-weight:600;">Ver HUs →</span>
+</div>
+
+</div>
+</div>
+</div><!-- /doc-home -->
+
+<!-- TABLA DOCUMENTOS - inventario completo -->
+<div class="sub-content" id="doc-tabla">
+<div style="margin-bottom:12px;"><button onclick="cambiarSub('documentacion','doc-home')" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:13px;font-weight:600;padding:0;">← Volver al inicio</button></div>
+
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+<h2 style="margin:0;font-size:17px;font-weight:600;color:var(--texto);">Inventario de Documentación</h2>
+<span style="font-size:12px;background:#ede9fe;color:#5b21b6;padding:2px 10px;border-radius:99px;font-weight:600;">87 documentos</span>
+</div>
+<p style="margin:0 0 16px;font-size:13px;color:var(--texto-suave);">En esta tabla vas a ver los Casos de uso y documentos funcionales del proyecto.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">
+<input id="filtro-docs" oninput="filtrarTablaDoc()" placeholder="🔍 Buscar documento..." style="padding:7px 14px;border:1px solid var(--gris-borde);border-radius:20px;font-size:13px;outline:none;width:220px;" type="text"/>
+<select id="filtro-modulo" onchange="filtrarTablaDoc()" style="padding:7px 10px;border:1px solid var(--gris-borde);border-radius:8px;font-size:13px;">
+<option value="">Todos los módulos</option>
+<option value="Presentismo">Presentismo</option>
+<option value="Calificaciones">Calificaciones</option>
+<option value="Boletines">Boletines</option>
+<option value="Matriculación">Matriculación</option>
+<option value="Pases">Pases</option>
+<option value="ECP">ECP</option>
+<option value="Efectivización">Efectivización</option>
+<option value="Legajo">Legajo</option>
+<option value="PPI">PPI / Puentes</option>
+<option value="Roles">Roles / Usuarios</option>
+<option value="Backoffice">Backoffice</option>
+<option value="Certificados">Certificados</option>
+<option value="Inclusión">Inclusión Escolar</option>
+<option value="Tablero">Tablero / LMD</option>
+<option value="Regularidad">Regularidad</option>
+</select>
 <select id="filtro-estado" onchange="filtrarTablaDoc()" style="padding:7px 10px;border:1px solid var(--gris-borde);border-radius:8px;font-size:13px;">
 <option value="">Todos los estados</option>
 <option value="Implementado">✅ Implementado</option>
 <option value="En desarrollo">🔧 En desarrollo</option>
 <option value="Pendiente">⏳ Pendiente</option>
-<option value="En seguimiento">👁 En seguimiento</option>
 </select>
-<select id="filtro-modulo" onchange="filtrarTablaDoc()" style="padding:7px 10px;border:1px solid var(--gris-borde);border-radius:8px;font-size:13px;">
-<option value="">Todos los módulos</option>
-<option value="Presentismo">📋 Presentismo</option>
-<option value="Calificaciones">📝 Calificaciones</option>
-<option value="Boletines">📄 Boletines</option>
-<option value="Matriculación">🎓 Matriculación</option>
-<option value="Pases">🔀 Pases</option>
-<option value="ECP">📚 ECP</option>
-<option value="Efectivización">✅ Efectivización</option>
-<option value="Legajo">🗂 Legajo</option>
-<option value="PPI">📎 PPI / Puentes</option>
-<option value="Roles">👤 Roles / Usuarios</option>
-<option value="Backoffice">⚙️ Backoffice</option>
-<option value="Certificados">🏅 Certificados</option>
-<option value="Inclusión">🤝 Inclusión Escolar</option>
-<option value="Tablero">📊 Tablero / LMD</option>
-<option value="Regularidad">📈 Regularidad</option>
-</select>
-<span id="filtro-count" style="font-size:12.5px;color:var(--texto-suave);"></span>
+<span id="filtro-count" style="font-size:12px;color:var(--texto-suave);margin-left:auto;"></span>
+<a href="https://drive.google.com/drive/folders/14YDYjI60SJpKMfJ87QbOtobj0Uy9K6UL" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#1a73e8;color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;">
+<svg width="14" height="14" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
+Abrir Google Drive
+</a>
 </div>
-<div style="overflow-x:auto;">
+<div style="overflow-x:auto;border:1px solid var(--gris-borde);border-radius:12px;">
+<style>
+#tabla-docs { border-collapse:collapse; width:100%; table-layout:fixed; }
+#tabla-docs th { overflow:hidden; white-space:nowrap; font-size:13px; }
+#tabla-docs td { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#tabla-docs th.sortable { cursor:pointer; user-select:none; }
+#tabla-docs th.sortable:hover { background:rgba(124,58,237,.07); }
+#tabla-docs th.sortable .sa { margin-left:4px; font-size:10px; color:#bbb; }
+#tabla-docs th.sortable.asc .sa { color:#7c3aed; }
+#tabla-docs th.sortable.desc .sa { color:#7c3aed; }
+</style>
 <table id="tabla-docs">
+<colgroup>
+  <col id="col-doc" style="width:420px;">
+  <col id="col-mod" style="width:120px;">
+  <col id="col-fc"  style="width:85px;">
+  <col id="col-fm"  style="width:85px;">
+  <col id="col-est" style="width:65px;">
+  <col id="col-abr" style="width:65px;">
+</colgroup>
 <thead>
 <tr>
-<th style="width:36px;">#</th>
-<th>Nombre del documento</th>
-<th>Módulo</th>
-
-<th>Fecha</th>
-<th>Estado</th>
-<th>Archivo</th>
+<th class="sortable" onclick="sortTablaDoc(0)">Documento <span class="sa">↕</span></th>
+<th class="sortable" onclick="sortTablaDoc(1)">Módulo <span class="sa">↕</span></th>
+<th class="sortable" onclick="sortTablaDoc(2)">Fecha creación <span class="sa">↕</span></th>
+<th class="sortable" onclick="sortTablaDoc(3)">Fecha modificación <span class="sa">↕</span></th>
+<th class="sortable" onclick="sortTablaDoc(4)">Estado <span class="sa">↕</span></th>
+<th>Abrir</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">1</td>
+
 <td><strong style="font-size:13px;">CU - Módulo Presentismo</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Presentismo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Sep 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1MQ194_-t58gXXJY-2MpjuaiMLJ7RIIEg/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Sep 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1MQ194_-t58gXXJY-2MpjuaiMLJ7RIIEg/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">2</td>
+
 <td><strong style="font-size:13px;">CU - Módulo Reporte - Presentismo</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Presentismo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Oct 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Hk-NTGZ9ZxmEVc83l5AUs3037Q1SXEX1/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Oct 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Hk-NTGZ9ZxmEVc83l5AUs3037Q1SXEX1/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">3</td>
+
 <td><strong style="font-size:13px;">CU - Presentismo comedor</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Presentismo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Nov 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1xmdlaiaaRVuZFQsIEYbfiuiSQ9zjOXkp/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Nov 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1xmdlaiaaRVuZFQsIEYbfiuiSQ9zjOXkp/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">4</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Presentismo comedor V2</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Presentismo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Oct 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1lWGbomLhqXyfGJ633Ckk1_6DN4FIiW5p/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Oct 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1lWGbomLhqXyfGJ633Ckk1_6DN4FIiW5p/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">5</td>
+
 <td><strong style="font-size:13px;">CU - Calificaciones Jornada Extendida (Primaria) 2025</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Presentismo / Cal.</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Mar 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1xexL-FUmHAmiRjsyw6DTp0kYIy58uWYh/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Mar 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1xexL-FUmHAmiRjsyw6DTp0kYIy58uWYh/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">6</td>
+
 <td><strong style="font-size:13px;">CU - Calificaciones Jornada Extendida (Secundaria) 2025</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Presentismo / Cal.</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Mar 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1-CEkQdxVqlH_r35dZH2D_Y4HTyiCHByp/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Mar 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1-CEkQdxVqlH_r35dZH2D_Y4HTyiCHByp/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">7</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - App Presentismo Phinx</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Presentismo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ago 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1bAuE-aEiXNdruqaEQd2Cd2j3J42ejglY/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ago 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1bAuE-aEiXNdruqaEQd2Cd2j3J42ejglY/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">8</td>
+
 <td><strong style="font-size:13px;">CU - App Presentismo</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Presentismo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Sep 2024</td>
-<td><span class="eb eb-warn">🔧 En desarrollo</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1HvjbS0g-kILG5AjdeFJKou6GgCT5JhGp/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Sep 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-warn" title="En desarrollo" style="cursor:default;">🔧</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1HvjbS0g-kILG5AjdeFJKou6GgCT5JhGp/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">9</td>
+
 <td><strong style="font-size:13px;">Doc. Funcional - Boletín: Observaciones - Presentismo - I. Valorativo</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Presentismo / Boletines</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">May 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1HfR8aCdPw6GLt-p0NlbXnS_N9bq9piC1/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">May 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1HfR8aCdPw6GLt-p0NlbXnS_N9bq9piC1/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">10</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Módulo Calificaciones 2026</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Calificaciones</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Mar 2026</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1fdb7sg6YxANHux8QQz6r9n10EwvTMJQL/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Mar 2026</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1fdb7sg6YxANHux8QQz6r9n10EwvTMJQL/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">11</td>
+
 <td><strong style="font-size:13px;">Doc. Funcional - Calificaciones - Grados de nivelación / aceleración</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Calificaciones</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Feb 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1BPqmQYJe7pD9QCv7VUUY0ViNSxz2nfHi/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Feb 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1BPqmQYJe7pD9QCv7VUUY0ViNSxz2nfHi/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">12</td>
+
 <td><strong style="font-size:13px;">Doc Funcional - Calificaciones primaria - Inclusión de materias sin criterios</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Calificaciones</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Oct 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/18q7xgvStIA1YvTfsFqS0G0N7p5m_e3uH/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Oct 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/18q7xgvStIA1YvTfsFqS0G0N7p5m_e3uH/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">13</td>
+
 <td><strong style="font-size:13px;">Doc. funcional - Automatización Calificación General V3</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Calificaciones</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ago 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/16vbEE7VzjSJm1SSDK38x0OaC8VDVImPp/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ago 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/16vbEE7VzjSJm1SSDK38x0OaC8VDVImPp/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">14</td>
+
 <td><strong style="font-size:13px;">CU - Cambios Calificaciones Primaria CL 2025</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Calificaciones</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Dic 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1nNRi1rP_lVgUgAo4nYoSM4NI8ZGIjPkT/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Dic 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1nNRi1rP_lVgUgAo4nYoSM4NI8ZGIjPkT/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">15</td>
+
 <td><strong style="font-size:13px;">Docu. Funcional - Módulo Calificaciones - PPI y Descarga General</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Calificaciones</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Nov 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1-LYXdFSsafis98KR-nDtt-DSTVDFS3jp/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Nov 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1-LYXdFSsafis98KR-nDtt-DSTVDFS3jp/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">16</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Regularidad - Calificaciones y Boletines v1.0</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Calificaciones / Regular.</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Abr 2026</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Abr 2026</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/document/d/1887qclqRaK_lvlw59NMLNjZ2JGUocbyJDuwfyXvAEMs/edit" target="_blank">📝 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">17</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Tab regularidad 2026</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Calificaciones / Regular.</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ene 2026</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ene 2026</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/document/d/1JPchBYJT56rEpPUbSbP9wxueD2QUcPPc62MEHU7zdYk/edit" target="_blank">📝 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">18</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Impacto de la condición de Regularidad 2026</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Calificaciones / Regular.</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Dic 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Dic 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/document/d/1ogFnK7f-r2qJU1qYe4piSPL6ko7TWK4HXBuVu_Q8ItA/edit" target="_blank">📝 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">19</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Impacto de la condición de Regularidad</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Calificaciones / Regular.</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ago 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ago 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/document/d/1XvG-R4wtJfzJvR_MTGTuLdamnoxXNHGnxFFji-_5vvs/edit" target="_blank">📝 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">20</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Regularidad</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Calificaciones / Regular.</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ago 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ago 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/document/d/1K3-rA3ihaO59mwhr6M040RscCbXEDcXArkNHT8lU_Yk/edit" target="_blank">📝 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">21</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - recuperación de regularidad anual 2026</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Calificaciones / Regular.</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Mar 2026</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Mar 2026</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/document/d/1svr8Jcu6J42mW8NaJKfml7oiP93WGAbtf8ZAlH4kzJw/edit" target="_blank">📝 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">22</td>
+
 <td><strong style="font-size:13px;">CU - Cambios en Boletín Primaria CL 2025</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Boletines</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Dic 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1HIGWXU6eG8fVhwSUbZwW_iDoO45sMMTS/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Dic 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1HIGWXU6eG8fVhwSUbZwW_iDoO45sMMTS/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">23</td>
+
 <td><strong style="font-size:13px;">Doc. Funcional - Generación masiva boletines</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Boletines</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jul 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1C3xlHvdHPhBXVA6Tl6kpTsFtWQykmpiY/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jul 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1C3xlHvdHPhBXVA6Tl6kpTsFtWQykmpiY/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">24</td>
+
 <td><strong style="font-size:13px;">CFP Calificaciones y Boletines 2026</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Boletines / Cal.</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Dic 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1r8pzSGSAsdNY68XJtcgAtrKe01mOlrcV/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Dic 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1r8pzSGSAsdNY68XJtcgAtrKe01mOlrcV/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">25</td>
+
 <td><strong style="font-size:13px;">CFP Secundaria 2026 2.0</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Boletines / Cal.</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Dic 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1VZdA3nx3ZjAqDaSpvABsJG2-urYMWt97/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Dic 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1VZdA3nx3ZjAqDaSpvABsJG2-urYMWt97/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">26</td>
+
 <td><strong style="font-size:13px;">Adultos Secundaria 2026 2.0</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Boletines / Adultos</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Dic 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/17-hgvnY5DQQ8w_ho0xwM5LfAcgHJdgMW/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Dic 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/17-hgvnY5DQQ8w_ho0xwM5LfAcgHJdgMW/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">27</td>
+
 <td><strong style="font-size:13px;">Adultos Calificaciones, Boletines y Presentismo</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Boletines / Adultos</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Dic 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Dic 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/document/d/1KfOiO9GQL-PrL2t-GUPsEUrmGR1bLBVlnO97Uex2wn4/edit" target="_blank">📝 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">28</td>
+
 <td><strong style="font-size:13px;">Primaria Adultos 2026 2.0</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Boletines / Adultos</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Mar 2026</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1uhK8WCgG3cEzhY7YIAHEyraTaZrZf0-s/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Mar 2026</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1uhK8WCgG3cEzhY7YIAHEyraTaZrZf0-s/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">29</td>
+
 <td><strong style="font-size:13px;">CU - Reportes de Matriculación</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Matriculación</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Dic 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Fyf2AMMsKQaaFPMeKkdZbsp9gGxT5gzY/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Dic 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Fyf2AMMsKQaaFPMeKkdZbsp9gGxT5gzY/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">30</td>
+
 <td><strong style="font-size:13px;">CU - Módulo Gestión de Pases y Cambio de Sección</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Pases</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Sep 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1ais56q_ByVoQoeYeedJzocvlOlrqYCIs/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Sep 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1ais56q_ByVoQoeYeedJzocvlOlrqYCIs/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">31</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Gestión de pase, FEM y Cambio de sección</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Pases</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ago 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1jW9PSjs2nIm4-yFLL5O5hsPMyekx7mXS/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ago 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1jW9PSjs2nIm4-yFLL5O5hsPMyekx7mXS/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">32</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Arquitectura de Pases V2</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Pases</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ene 2026</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1DxcUf8iMyfLV-idbShBuD1J-7hYF6IDg/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ene 2026</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1DxcUf8iMyfLV-idbShBuD1J-7hYF6IDg/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">33</td>
+
 <td><strong style="font-size:13px;">Documento funcional - Reglas de negocio Desmatriculación-Matriculación-Gestión de pases</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Pases / Matriculación</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jul 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/11g5TZWP6aJg007mbAggjRriBQ-wW6TK-/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jul 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/11g5TZWP6aJg007mbAggjRriBQ-wW6TK-/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">34</td>
+
 <td><strong style="font-size:13px;">CU - Historial de movimientos</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Matriculación</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Sep 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1-sKMnTHigYNRjhlQYXouhCDKm0HWyr_0/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Sep 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1-sKMnTHigYNRjhlQYXouhCDKm0HWyr_0/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">35</td>
+
 <td><strong style="font-size:13px;">CU - Gestión de históricos</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Matriculación</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Sep 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1CEaYIsKaObHKzE4ZdqOYdtvMRr00usCz/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Sep 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1CEaYIsKaObHKzE4ZdqOYdtvMRr00usCz/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">36</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Vistas Migración Secundaria Aprende</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Matriculación / SA</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ene 2026</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Ft8aNVh4w27_H9RfUpkqdqlyDcs_8PAA/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ene 2026</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Ft8aNVh4w27_H9RfUpkqdqlyDcs_8PAA/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">37</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - integración con Secundaria Aprende</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Matriculación / SA</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Sep 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1n0oVzfGzuYROT9rIbCQJ2YW8WcD43wSd/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Sep 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1n0oVzfGzuYROT9rIbCQJ2YW8WcD43wSd/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">38</td>
+
 <td><strong style="font-size:13px;">Nuevo requerimiento EC pendientes</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">ECP</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Feb 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Feb 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/document/d/1l7bKNtLLfpJqC3cd2BdGOmgxnMfySJfY7b0z4U17uLQ/edit" target="_blank">📝 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">39</td>
+
 <td><strong style="font-size:13px;">Mejora en el Módulo ECP para edición de notas</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">ECP</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jul 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Fd-4pkt9N8_UplF7Ujk0EhocmpBRsHwa/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jul 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Fd-4pkt9N8_UplF7Ujk0EhocmpBRsHwa/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">40</td>
+
 <td><strong style="font-size:13px;">Reglas de negocio Libro calificador, ECP, Libro Matriz</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">ECP / LMD</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Abr 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1AV71chwQ3KQ3_AdRKdeDU4W_TElFGAbQ/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Abr 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1AV71chwQ3KQ3_AdRKdeDU4W_TElFGAbQ/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">41</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Escuelas Comerciales Nocturnas y de Reingreso</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Efectivización</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ene 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ene 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/document/d/1bkI4F08GqI-ErzFfOGs6UKnooZzJsD-YHRYho5GLbo8/edit" target="_blank">📝 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">42</td>
+
 <td><strong style="font-size:13px;">Proceso de proyección, promoción, efectivización 2025-2026 v2</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Efectivización</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jun 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1SlBKiR1Nv7_9CIql6MDFuvVMrM7Mtrf5/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jun 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1SlBKiR1Nv7_9CIql6MDFuvVMrM7Mtrf5/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">43</td>
+
 <td><strong style="font-size:13px;">CU - Alertas Promoción</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Efectivización</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Sep 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1PiKMr0GTbURTTOn-seGidoV3hw_HM-oW/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Sep 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1PiKMr0GTbURTTOn-seGidoV3hw_HM-oW/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">44</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Integración de información en el legajo de AprendeBA</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Legajo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jun 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1M87SVZiIAIvfa3ewxTVl1yPqxC1SRDIY/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jun 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1M87SVZiIAIvfa3ewxTVl1yPqxC1SRDIY/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">45</td>
+
 <td><strong style="font-size:13px;">CU - Documento funcional Integración en el legajo de AprendeBA</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Legajo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jul 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1trlSbkoRW5Z-6whoYXpbgNmLS8EXBPCa/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jul 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1trlSbkoRW5Z-6whoYXpbgNmLS8EXBPCa/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">46</td>
+
 <td><strong style="font-size:13px;">CU - Cambio en Legajo del Estudiante</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Legajo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jul 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1zHlDf9dBM8stLW_3p_KwDHk9b6mHwR8e/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jul 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1zHlDf9dBM8stLW_3p_KwDHk9b6mHwR8e/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">47</td>
+
 <td><strong style="font-size:13px;">Doc Funcional - Cambios en Legajos</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Legajo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jun 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1fvYEQDEn1A-OlDw3HArX0kSscIZZDrdd/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jun 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1fvYEQDEn1A-OlDw3HArX0kSscIZZDrdd/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">48</td>
+
 <td><strong style="font-size:13px;">CU - Código de Aula V2</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Legajo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ene 2026</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1sI9aUlJobbccsneNd5eV07UMilhcTCqM/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ene 2026</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1sI9aUlJobbccsneNd5eV07UMilhcTCqM/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">49</td>
+
 <td><strong style="font-size:13px;">CU - Número de CUIL en legajo</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Legajo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Oct 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1jpT8YB2z6iLG5xiC73M2uQ98-bVbw5YX/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Oct 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1jpT8YB2z6iLG5xiC73M2uQ98-bVbw5YX/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">50</td>
+
 <td><strong style="font-size:13px;">CU - Visualización PIP</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">PPI / Legajo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Feb 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Feb 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/document/d/1p4w9Z-gaT4FOsfEb7wKITq4dptZP3Y5ccmmjKXIzfug/edit" target="_blank">📝 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">51</td>
+
 <td><strong style="font-size:13px;">CU - Visualización PPS</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">PPI / Legajo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Feb 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1H5jAphIwal4FlE6gE1OfR-zoq4usOgJe/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Feb 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1H5jAphIwal4FlE6gE1OfR-zoq4usOgJe/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">52</td>
+
 <td><strong style="font-size:13px;">Doc Funcional - Cambios en PIP 2025</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">PPI / Legajo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Sep 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1ufBQdhHsZ85-A7eN8uK5CXpxFdgIQtjS/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Sep 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1ufBQdhHsZ85-A7eN8uK5CXpxFdgIQtjS/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">53</td>
+
 <td><strong style="font-size:13px;">Doc. Funcional - Apartado PPI y Visualización de Informes (Inicial y Secundaria)</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">PPI / Legajo</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ago 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1qBmCSqOHgUXJ7WpX6JOZTuMICb3yL1xS/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ago 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1qBmCSqOHgUXJ7WpX6JOZTuMICb3yL1xS/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">54</td>
+
 <td><strong style="font-size:13px;">CU - Otros Accesos</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Roles / Usuarios</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Feb 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Feb 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/document/d/129pQ3svTe_9Uw3Kx3rSknQI4ATLM-Z_x-8tnucL0F2Q/edit" target="_blank">📝 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">55</td>
+
 <td><strong style="font-size:13px;">Doc. Funcional - Otros accesos - 2025</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Roles / Usuarios</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Feb 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1gH_sLKPu8KvD_jgievljHqfkgkF5AwTU/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Feb 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1gH_sLKPu8KvD_jgievljHqfkgkF5AwTU/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">56</td>
+
 <td><strong style="font-size:13px;">Documento funcional - Rol solo visualización e Impersonar</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Roles / Usuarios</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ago 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1dfiQBombFHj3FudrQbF3Jyv4HHtIIHbm/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ago 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1dfiQBombFHj3FudrQbF3Jyv4HHtIIHbm/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">57</td>
+
 <td><strong style="font-size:13px;">Doc. Funcional - Gestión de roles: Dirección de área</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Roles / Usuarios</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jul 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1cYSfeEVg-nkcx-CkFJgNiUcwrq_4hVpi/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jul 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1cYSfeEVg-nkcx-CkFJgNiUcwrq_4hVpi/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">58</td>
+
 <td><strong style="font-size:13px;">Doc. Funcional - Dirección de área aprueba rol supervisor</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Roles / Usuarios</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jul 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1fMxb57ScZs4aQS3tWyV2kqEsEmP-478L/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jul 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1fMxb57ScZs4aQS3tWyV2kqEsEmP-478L/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">59</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Tarjeta de usuarios</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Roles / Usuarios</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Sep 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Vfx_JfXoFzCXpR0g8ZGOqNbAKB6NXPl4/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Sep 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Vfx_JfXoFzCXpR0g8ZGOqNbAKB6NXPl4/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">60</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Modificaciones accesos usuarios Secundaria Aprende</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Roles / Usuarios</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ene 2026</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1q7K6UxlpAKjW-qXIwdSyGT9CCCZol_fB/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ene 2026</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1q7K6UxlpAKjW-qXIwdSyGT9CCCZol_fB/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">61</td>
+
 <td><strong style="font-size:13px;">Actualización de flujo para Automatización v1.2</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Roles / Usuarios</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ene 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1OT2Kdcb3f23y9tuvXVgmz0P5vNvZlerX/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ene 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1OT2Kdcb3f23y9tuvXVgmz0P5vNvZlerX/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">62</td>
+
 <td><strong style="font-size:13px;">CU - Backoffice Planes de Estudio</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Backoffice</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Nov 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Kg8XIpw6bfOA-HRcgd1KioLClH7_V0fc/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Nov 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Kg8XIpw6bfOA-HRcgd1KioLClH7_V0fc/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">63</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Backoffice Planes de Estudio</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Backoffice</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Oct 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1d02NymZOwJNj288fQNf_n9brl_TXg12B/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Oct 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1d02NymZOwJNj288fQNf_n9brl_TXg12B/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">64</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Backoffice - 2025</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Backoffice</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ago 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1kDIayCCtqxPUo-VaFWmrgEgNuAIsfyBQ/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ago 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1kDIayCCtqxPUo-VaFWmrgEgNuAIsfyBQ/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">65</td>
+
 <td><strong style="font-size:13px;">Propuesta - Backoffice - 2025</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Backoffice</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ago 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1sckFr-G67nGIrsvBjrepDRyaPcz3jtny/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ago 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1sckFr-G67nGIrsvBjrepDRyaPcz3jtny/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">66</td>
+
 <td><strong style="font-size:13px;">Errores - Back office 2025</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Backoffice</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Sep 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Qs4GWRIgzb9D6xLKYq_F-AZ_uomsLl-B/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Sep 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1Qs4GWRIgzb9D6xLKYq_F-AZ_uomsLl-B/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">67</td>
+
 <td><strong style="font-size:13px;">Documento funcional - Backoffice alta de materias</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Backoffice</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Oct 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/19qs9J27ebfK1Q_LtV8oWXNNNy06q8TYH/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Oct 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/19qs9J27ebfK1Q_LtV8oWXNNNy06q8TYH/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">68</td>
+
 <td><strong style="font-size:13px;">BackOffice Gestión Plan de Estudio - MVP DEMO</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Backoffice</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Oct 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1pFdFBfBu9Q11NDiCr9yRhcJ5nRogNcJ4/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Oct 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1pFdFBfBu9Q11NDiCr9yRhcJ5nRogNcJ4/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">69</td>
+
 <td><strong style="font-size:13px;">Documento funcional - Inclusión Escolar</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Inclusión Escolar</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ene 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1-NL1EC3ku2S806RaFc-EUFq19KmAfOXh/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ene 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1-NL1EC3ku2S806RaFc-EUFq19KmAfOXh/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">70</td>
+
 <td><strong style="font-size:13px;">Doc. Funcional - Calificaciones - Grados de nivelación (Inclusión)</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Inclusión Escolar</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Feb 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1BPqmQYJe7pD9QCv7VUUY0ViNSxz2nfHi/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Feb 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1BPqmQYJe7pD9QCv7VUUY0ViNSxz2nfHi/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">71</td>
+
 <td><strong style="font-size:13px;">Documento Funcional-Condiciones Libro Matriz digital y Libro Clasificador</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Libro Matriz</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">May 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">May 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/document/d/1xmYo5rgt6vmQuYlyBM72NQQnCggrNyDyPi9ERI2Blj0/edit" target="_blank">📝 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">72</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Visualización del tablero SAT</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Tablero</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Feb 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1yK-Gb05kDIFgQJhJQGQrRF8p6cWFGkc3/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Feb 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1yK-Gb05kDIFgQJhJQGQrRF8p6cWFGkc3/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">73</td>
+
 <td><strong style="font-size:13px;">Certificado 7mo - 2025</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Certificados</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">May 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/18A2T3l5-Q6IyZIwYieIYTgtBTMBAsMuV/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">May 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/18A2T3l5-Q6IyZIwYieIYTgtBTMBAsMuV/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">74</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Certificados 7mo</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Certificados</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jun 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/19p_rywWNhHRmCaclGu9acq7jLL8UaGKd/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jun 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/19p_rywWNhHRmCaclGu9acq7jLL8UaGKd/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">75</td>
+
 <td><strong style="font-size:13px;">AprendeBA_Generación Certificado 7mo Primario</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Certificados</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Nov 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1wrSJmXTnvGSKsDVAvlAfRJW8WV0YJf99/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Nov 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1wrSJmXTnvGSKsDVAvlAfRJW8WV0YJf99/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">76</td>
+
 <td><strong style="font-size:13px;">CU - Configuración de alertas</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Alertas</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Oct 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/13ETSAvUta7vnx_bHN53T_5VFP0OdeoFh/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Oct 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/13ETSAvUta7vnx_bHN53T_5VFP0OdeoFh/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">77</td>
+
 <td><strong style="font-size:13px;">CU - Cartelera de novedades</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Notificaciones</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Oct 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1zTyxOfQ_u5joptFyGAR7N1F0pvjHnFV7/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Oct 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1zTyxOfQ_u5joptFyGAR7N1F0pvjHnFV7/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">78</td>
+
 <td><strong style="font-size:13px;">CU - Autoguardado</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">UX / General</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Sep 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1TT4-6RsyULgJXnsWtT9u069tSsFThRuc/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Sep 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1TT4-6RsyULgJXnsWtT9u069tSsFThRuc/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">79</td>
+
 <td><strong style="font-size:13px;">CU - Implementación de Migas de Pan y Botón Volver</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">UX / General</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Mar 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1NKS-U_fVAdJV6DaxTHX3ialO9TlHdMpA/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Mar 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1NKS-U_fVAdJV6DaxTHX3ialO9TlHdMpA/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">80</td>
+
 <td><strong style="font-size:13px;">Mejora - Cambio de Contraseña V2</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">UX / Seguridad</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ago 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1xxW-NTyyR6WDga5CPzGrochOww46NxlB/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ago 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1xxW-NTyyR6WDga5CPzGrochOww46NxlB/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">81</td>
+
 <td><strong style="font-size:13px;">Propuesta Ruteo de plataforma</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">UX / General</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">May 2025</td>
-<td><span class="eb eb-err">⏳ Pendiente</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1QdkgLW2vXGNg9XYa_99SBwBEXe6uUutt/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">May 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-err" title="Pendiente" style="cursor:default;">⏳</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1QdkgLW2vXGNg9XYa_99SBwBEXe6uUutt/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">82</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Módulo Acta de Reunión V1.2</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Gestión interna</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jul 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1QDfPLevuxyTvj_rk6uLOdrWA6DclJ9ni/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jul 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1QDfPLevuxyTvj_rk6uLOdrWA6DclJ9ni/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">83</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Aulas virtuales - Secundario</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Aulas virtuales</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ago 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1XKZhFgTCIGiL_ZrVr_kFCdc-Cf-ROg1u/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ago 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1XKZhFgTCIGiL_ZrVr_kFCdc-Cf-ROg1u/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">84</td>
+
 <td><strong style="font-size:13px;">Documento Funcional - Buscador Estudiantes</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Búsqueda</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jul 2025</td>
-<td><span class="eb eb-warn">🔧 En desarrollo</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1h4D5cOmG7vqEzTqX1TOnFVqiwrXgR62T/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jul 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-warn" title="En desarrollo" style="cursor:default;">🔧</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1h4D5cOmG7vqEzTqX1TOnFVqiwrXgR62T/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">85</td>
+
 <td><strong style="font-size:13px;">Mejora ACAP - Nuevo Rol</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">ACAP</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Dic 2024</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1cy5bmQhsVpxnGp9HWcEcz0zIuXSYcVbs/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Dic 2024</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1cy5bmQhsVpxnGp9HWcEcz0zIuXSYcVbs/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">86</td>
+
 <td><strong style="font-size:13px;">Documento funcional - Booti</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Bot / Asistente</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Jul 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
-<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1ZRekIB2QAj2cW82aC0qISNPgaGn0glyi/view" target="_blank">📄 Abrir</a></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Jul 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
+<td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1ZRekIB2QAj2cW82aC0qISNPgaGn0glyi/view" target="_blank">↗ Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">87</td>
+
 <td><strong style="font-size:13px;">Proyectos a desarrollar - Phinx</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Planificación</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ene 2025</td>
-<td><span class="eb eb-info">👁 En seguimiento</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ene 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-info" title="En seguimiento" style="cursor:default;">👁</span></td>
 <td><a class="dl-link drive-link" href="https://drive.google.com/file/d/1D7qYgfk8Yv8ZVkFzpyU5V2KogPhbwI4S/view" target="_blank">📊 Abrir</a></td>
 </tr>
 <tr>
-<td style="text-align:center;color:var(--texto-suave);font-size:12px;">88</td>
+
 <td><strong style="font-size:13px;">Relación dependencia funcional - Tipo de escuela</strong></td>
 <td><span style="font-size:11.5px;color:var(--texto-suave);">Planificación</span></td>
 
-<td style="font-size:12px;white-space:nowrap;">Ene 2025</td>
-<td><span class="eb eb-ok">✅ Implementado</span></td>
+<td style="font-size:12px;white-space:nowrap;min-width:100px;">Ene 2025</td><td style="font-size:12px;text-align:center;color:#999;">—</td>
+<td><span class="eb eb-ok" title="Implementado" style="cursor:default;">✅</span></td>
 <td><a class="dl-link drive-link" href="https://docs.google.com/spreadsheets/d/1fCi_TYUlgNkmSMNsutjf_oMhgGBRJYjOlUOaWOwurRA/edit" target="_blank">📊 Abrir</a></td>
 </tr>
 </tbody>
 </table>
+<script>
+(function(){
+  document.querySelectorAll('#tabla-docs tbody tr').forEach(function(row) {
+    var td = row.cells[0];
+    if (td) td.title = td.textContent.trim();
+  });
+})();
+
+function parseFechaDoc(str) {
+  var meses = {Ene:0,Feb:1,Mar:2,Abr:3,May:4,Jun:5,Jul:6,Ago:7,Sep:8,Oct:9,Nov:10,Dic:11};
+  if (!str || str.trim() === '—' || str.trim() === '') return -1;
+  var p = str.trim().split(' ');
+  if (p.length === 2 && meses[p[0]] !== undefined) return parseInt(p[1]) * 12 + meses[p[0]];
+  return -1;
+}
+
+function sortTablaDoc(colIdx) {
+  var table = document.getElementById('tabla-docs');
+  var tbody = table.querySelector('tbody');
+  var ths = table.querySelectorAll('thead th');
+  var th = ths[colIdx];
+  var asc = !th.classList.contains('asc');
+  ths.forEach(function(t) {
+    t.classList.remove('asc','desc');
+    var sa = t.querySelector('.sa');
+    if (sa) sa.textContent = '↕';
+  });
+  th.classList.add(asc ? 'asc' : 'desc');
+  var sa = th.querySelector('.sa');
+  if (sa) sa.textContent = asc ? '↑' : '↓';
+  var rows = Array.from(tbody.querySelectorAll('tr'));
+  rows.sort(function(a, b) {
+    var ca = a.cells[colIdx] ? a.cells[colIdx].textContent.trim() : '';
+    var cb = b.cells[colIdx] ? b.cells[colIdx].textContent.trim() : '';
+    if (colIdx === 2 || colIdx === 3) {
+      var da = parseFechaDoc(ca), db = parseFechaDoc(cb);
+      return asc ? da - db : db - da;
+    }
+    return asc ? ca.localeCompare(cb, 'es') : cb.localeCompare(ca, 'es');
+  });
+  rows.forEach(function(r) { tbody.appendChild(r); });
+}
+</script>
 </div>
 <div class="nota" style="margin-top:14px;">
 <strong>📁 Carpetas Drive:</strong>
 <a href="https://drive.google.com/drive/folders/1BxbOjGexUB-8rHmE9q_R6hPWwxK15LBc" style="color:var(--azul-claro);margin-left:8px;" target="_blank">Casos de uso - Phinx</a> ·
         <a href="https://drive.google.com/drive/folders/1sSy_7j5fZ7e9hv6DZ78TIQiy2goI7DwA" style="color:var(--azul-claro);margin-left:4px;" target="_blank">Documentos Funcionales</a> ·
         <a href="https://drive.google.com/drive/u/0/home" style="color:var(--azul-claro);margin-left:4px;" target="_blank">Mi Drive</a>
-</div>
 </div>
 </div>
 <!-- MATRICULACIÓN -->
@@ -2607,6 +2693,604 @@ function limpiarFiltrosInst() {
 </table>
 </div>
 </div>
+</div><!-- /inv-documentos -->
+
+<!-- ==================== ÉPICAS ==================== -->
+<div class="sub-content" id="doc-epicas">
+<div style="margin-bottom:12px;"><button onclick="cambiarSub('documentacion','doc-home')" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:13px;font-weight:600;padding:0;">← Volver al inicio</button></div>
+<div class="panel">
+<div class="panel-header">
+<div class="panel-icon pi-violeta">🗂</div>
+<div class="panel-title">
+<h2>Épicas Funcionales</h2>
+<p>Agrupación por módulo de los documentos funcionales del inventario. Cada épica representa una unidad de funcionalidad mayor.</p>
+</div>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+<span class="eb eb-ok">✅ Implementado: 10</span>
+<span class="eb eb-warn">🔧 En desarrollo: 1</span>
+<span class="eb eb-info" style="margin-left:auto;">Total: <span id="ep-count">11</span> épicas</span>
+</div>
+
+<!-- FILTROS ÉPICAS -->
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px;">
+  <input id="ep-search" type="text" placeholder="🔍 Buscar épica..." oninput="filtrarEpicas()" style="padding:7px 12px;border:1.5px solid #ddd6fe;border-radius:8px;font-size:13px;outline:none;min-width:220px;transition:border .15s;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#ddd6fe'">
+  <button class="ep-filtro activo-ep" onclick="filtrarEpicaEstado(this,'todos')" data-estado="todos" style="padding:6px 14px;border:1.5px solid #ddd6fe;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:#7c3aed;color:#fff;transition:all .15s;">Todos</button>
+  <button class="ep-filtro" onclick="filtrarEpicaEstado(this,'ok')" data-estado="ok" style="padding:6px 14px;border:1.5px solid #86efac;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:#15803d;transition:all .15s;">✅ Implementado</button>
+  <button class="ep-filtro" onclick="filtrarEpicaEstado(this,'warn')" data-estado="warn" style="padding:6px 14px;border:1.5px solid #fde047;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:#a16207;transition:all .15s;">🔧 En desarrollo</button>
+  <button onclick="limpiarFiltrosEpicas()" style="padding:6px 12px;border:1.5px solid #e5e7eb;border-radius:20px;font-size:12px;cursor:pointer;background:#fff;color:#9ca3af;transition:all .15s;margin-left:auto;" title="Limpiar filtros">✕ Limpiar</button>
+</div>
+<div id="ep-sin-resultados" style="display:none;text-align:center;padding:32px;color:#9ca3af;font-size:14px;">No se encontraron épicas con ese criterio.</div>
+
+<style>
+.ep-section-title { font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #ede9fe; }
+.ep-label { font-size:11px;font-weight:700;color:var(--texto-suave);text-transform:uppercase;display:block;margin-bottom:3px; }
+.ep-val { font-size:13px;margin:0;color:var(--texto);line-height:1.5; }
+.ep-grid-3 { display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px; }
+.ep-grid-2 { display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px; }
+.ep-block { margin-bottom:18px; }
+</style>
+
+<!-- ÉPICA 1: PRESENTISMO -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">🗂 EP-01 · Presentismo <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ Implementado</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<div class="ep-block"><div class="ep-section-title">Título y Asignación</div>
+<div class="ep-grid-3">
+<div><span class="ep-label">Módulo</span><p class="ep-val">Presentismo</p></div>
+<div><span class="ep-label">Responsable (Owner)</span><p class="ep-val">—</p></div>
+<div><span class="ep-label">Participantes</span><p class="ep-val">Equipo AprendeBA</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Narrativa y Contexto</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Planteamiento del problema</span><p class="ep-val">Las escuelas necesitan un sistema digital unificado para registrar y reportar la asistencia diaria de alumnos en todos los niveles, reemplazando procesos manuales o en papel.</p></div>
+<div><span class="ep-label">Contexto y supuestos</span><p class="ep-val">Opera en todos los niveles educativos (Inicial, Primario, Secundario). Se integra con la app móvil Phinx para registro en tiempo real y cubre presentismo de comedor y jornada extendida.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Alcance y Criterios de Aceptación</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Criterios de alto nivel</span><p class="ep-val">Registro de presentismo diario funcional. Reportes de ausentismo accesibles para directivos. App móvil Phinx operativa. Observaciones en boletín visibles.</p></div>
+<div><span class="ep-label">Fuera de alcance</span><p class="ep-val">Integración con sistemas de RRHH docente. Liquidación de haberes por asistencia. Notificaciones automáticas a familias.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Seguimiento</div>
+<span class="ep-label">Vínculos — Documentos asociados</span>
+<table style="margin-top:8px;font-size:12.5px;">
+<tr><th>#</th><th>Documento</th><th>Fecha</th></tr>
+<tr><td>1</td><td>CU - Módulo Presentismo</td><td>Sep 2024</td></tr>
+<tr><td>2</td><td>CU - Módulo Reporte - Presentismo</td><td>Oct 2024</td></tr>
+<tr><td>3</td><td>CU - Presentismo comedor</td><td>Nov 2024</td></tr>
+<tr><td>4</td><td>Documento Funcional - Presentismo comedor V2</td><td>Oct 2024</td></tr>
+<tr><td>5</td><td>CU - Calificaciones Jornada Extendida (Primaria) 2025</td><td>Mar 2025</td></tr>
+<tr><td>6</td><td>CU - Calificaciones Jornada Extendida (Secundaria) 2025</td><td>Mar 2025</td></tr>
+<tr><td>7</td><td>Documento Funcional - App Presentismo Phinx</td><td>Ago 2025</td></tr>
+<tr><td>8</td><td>CU - App Presentismo</td><td>Sep 2024</td></tr>
+<tr><td>9</td><td>Doc. Funcional - Boletín: Observaciones - Presentismo - I. Valorativo</td><td>May 2025</td></tr>
+</table>
+</div>
+</div></div>
+
+<!-- ÉPICA 2: CALIFICACIONES Y REGULARIDAD -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">🗂 EP-02 · Calificaciones y Regularidad <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ Implementado</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<div class="ep-block"><div class="ep-section-title">Título y Asignación</div>
+<div class="ep-grid-3">
+<div><span class="ep-label">Módulo</span><p class="ep-val">Calificaciones / Regularidad</p></div>
+<div><span class="ep-label">Responsable (Owner)</span><p class="ep-val">—</p></div>
+<div><span class="ep-label">Participantes</span><p class="ep-val">Equipo AprendeBA · Nivel Primario · Nivel Secundario</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Narrativa y Contexto</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Planteamiento del problema</span><p class="ep-val">Docentes y directivos necesitan gestionar calificaciones por período y bimestre con automatizaciones que calculen la condición de regularidad y promoción del alumno al cierre de cada ciclo lectivo.</p></div>
+<div><span class="ep-label">Contexto y supuestos</span><p class="ep-val">Abarca ciclos lectivos 2025 y 2026. Las reglas de calificación difieren por nivel (Primario, Secundario, Adultos). Depende de integración con el módulo de boletines y regularidad anual.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Alcance y Criterios de Aceptación</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Criterios de alto nivel</span><p class="ep-val">Carga de calificaciones por bimestre funcional. Automatización de calificación general activa. Condición de regularidad calculada correctamente. ECP gestionable desde la plataforma.</p></div>
+<div><span class="ep-label">Fuera de alcance</span><p class="ep-val">Calificaciones de actividades extracurriculares. Integración con sistemas de terceros para certificaciones externas. Gestión de calificaciones de modalidades no digitalizadas.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Seguimiento</div>
+<span class="ep-label">Vínculos — Documentos asociados</span>
+<table style="margin-top:8px;font-size:12.5px;">
+<tr><th>#</th><th>Documento</th><th>Fecha</th></tr>
+<tr><td>10</td><td>Documento Funcional - Módulo Calificaciones 2026</td><td>Mar 2026</td></tr>
+<tr><td>11</td><td>Doc. Funcional - Calificaciones - Grados de nivelación / aceleración</td><td>Feb 2025</td></tr>
+<tr><td>12</td><td>Doc Funcional - Calificaciones primaria - Inclusión de materias sin criterios</td><td>Oct 2025</td></tr>
+<tr><td>13</td><td>Doc. funcional - Automatización Calificación General V3</td><td>Ago 2025</td></tr>
+<tr><td>14</td><td>CU - Cambios Calificaciones Primaria CL 2025</td><td>Dic 2024</td></tr>
+<tr><td>15</td><td>Docu. Funcional - Módulo Calificaciones - PPI y Descarga General</td><td>Nov 2025</td></tr>
+<tr><td>16</td><td>Documento Funcional - Regularidad - Calificaciones y Boletines v1.0</td><td>Abr 2026</td></tr>
+<tr><td>17</td><td>Documento Funcional - Tab regularidad 2026</td><td>Ene 2026</td></tr>
+<tr><td>18</td><td>Documento Funcional - Impacto de la condición de Regularidad 2026</td><td>Dic 2025</td></tr>
+<tr><td>19</td><td>Documento Funcional - Impacto de la condición de Regularidad</td><td>Ago 2025</td></tr>
+<tr><td>20</td><td>Documento Funcional - Regularidad</td><td>Ago 2025</td></tr>
+<tr><td>21</td><td>Documento Funcional - recuperación de regularidad anual 2026</td><td>Mar 2026</td></tr>
+<tr><td>38</td><td>Nuevo requerimiento EC pendientes</td><td>Feb 2025</td></tr>
+<tr><td>39</td><td>Mejora en el Módulo ECP para edición de notas</td><td>Jul 2025</td></tr>
+<tr><td>40</td><td>Reglas de negocio Libro calificador, ECP, Libro Matriz</td><td>Abr 2025</td></tr>
+</table>
+</div>
+</div></div>
+
+<!-- ÉPICA 3: BOLETINES -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">🗂 EP-03 · Boletines <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ Implementado</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<div class="ep-block"><div class="ep-section-title">Título y Asignación</div>
+<div class="ep-grid-3">
+<div><span class="ep-label">Módulo</span><p class="ep-val">Boletines</p></div>
+<div><span class="ep-label">Responsable (Owner)</span><p class="ep-val">—</p></div>
+<div><span class="ep-label">Participantes</span><p class="ep-val">Equipo AprendeBA · Nivel Primario · Nivel Secundario · Adultos</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Narrativa y Contexto</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Planteamiento del problema</span><p class="ep-val">Familias y directivos necesitan acceder a boletines digitales actualizados que reflejen el rendimiento académico por período, diferenciados por nivel y modalidad.</p></div>
+<div><span class="ep-label">Contexto y supuestos</span><p class="ep-val">Los boletines dependen del módulo de calificaciones. Se requieren versiones diferenciadas por nivel y modalidad (adultos primaria y secundaria, CFP). Incluye generación individual y masiva.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Alcance y Criterios de Aceptación</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Criterios de alto nivel</span><p class="ep-val">Generación individual y masiva de boletines funcional. Acceso diferenciado por rol. Soporte para todas las modalidades y niveles educativos. CFP configurado correctamente.</p></div>
+<div><span class="ep-label">Fuera de alcance</span><p class="ep-val">Firma digital de boletines con validez legal. Envío automático por email a familias. Boletines de modalidades no digitalizadas en la plataforma.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Seguimiento</div>
+<span class="ep-label">Vínculos — Documentos asociados</span>
+<table style="margin-top:8px;font-size:12.5px;">
+<tr><th>#</th><th>Documento</th><th>Fecha</th></tr>
+<tr><td>22</td><td>CU - Cambios en Boletín Primaria CL 2025</td><td>Dic 2024</td></tr>
+<tr><td>23</td><td>Doc. Funcional - Generación masiva boletines</td><td>Jul 2025</td></tr>
+<tr><td>24</td><td>CFP Calificaciones y Boletines 2026</td><td>Dic 2025</td></tr>
+<tr><td>25</td><td>CFP Secundaria 2026 2.0</td><td>Dic 2025</td></tr>
+<tr><td>26</td><td>Adultos Secundaria 2026 2.0</td><td>Dic 2025</td></tr>
+<tr><td>27</td><td>Adultos Calificaciones, Boletines y Presentismo</td><td>Dic 2025</td></tr>
+<tr><td>28</td><td>Primaria Adultos 2026 2.0</td><td>Mar 2026</td></tr>
+</table>
+</div>
+</div></div>
+
+<!-- ÉPICA 4: MATRICULACIÓN Y PASES -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">🗂 EP-04 · Matriculación y Pases <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ Implementado</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<div class="ep-block"><div class="ep-section-title">Título y Asignación</div>
+<div class="ep-grid-3">
+<div><span class="ep-label">Módulo</span><p class="ep-val">Matriculación / Pases</p></div>
+<div><span class="ep-label">Responsable (Owner)</span><p class="ep-val">—</p></div>
+<div><span class="ep-label">Participantes</span><p class="ep-val">Equipo AprendeBA · Todos los niveles</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Narrativa y Contexto</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Planteamiento del problema</span><p class="ep-val">Las escuelas necesitan gestionar digitalmente el ciclo de vida completo del alumno: desde su inscripción hasta pases entre establecimientos, cambios de sección y desmatriculación.</p></div>
+<div><span class="ep-label">Contexto y supuestos</span><p class="ep-val">Integración con el sistema IEL y Secundaria Aprende. Aplica para todos los niveles. El FEM (Ficha de Estudiante Matriculado) es el documento central del proceso.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Alcance y Criterios de Aceptación</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Criterios de alto nivel</span><p class="ep-val">Flujo de pases completo y auditable. Historial de movimientos visible por directivos. Integración con Secundaria Aprende operativa. Reportes de matriculación disponibles.</p></div>
+<div><span class="ep-label">Fuera de alcance</span><p class="ep-val">Gestión de vacantes y preinscripción pública. Integración con IEL para asignación automática de vacantes. Procesos de desmatriculación masiva.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Seguimiento</div>
+<span class="ep-label">Vínculos — Documentos asociados</span>
+<table style="margin-top:8px;font-size:12.5px;">
+<tr><th>#</th><th>Documento</th><th>Fecha</th></tr>
+<tr><td>29</td><td>CU - Reportes de Matriculación</td><td>Dic 2024</td></tr>
+<tr><td>30</td><td>CU - Módulo Gestión de Pases y Cambio de Sección</td><td>Sep 2024</td></tr>
+<tr><td>31</td><td>Documento Funcional - Gestión de pase, FEM y Cambio de sección</td><td>Ago 2024</td></tr>
+<tr><td>32</td><td>Documento Funcional - Arquitectura de Pases V2</td><td>Ene 2026</td></tr>
+<tr><td>33</td><td>Doc. funcional - Reglas de negocio Desmatriculación-Matriculación-Gestión de pases</td><td>Jul 2025</td></tr>
+<tr><td>34</td><td>CU - Historial de movimientos</td><td>Sep 2024</td></tr>
+<tr><td>35</td><td>CU - Gestión de históricos</td><td>Sep 2024</td></tr>
+<tr><td>36</td><td>Documento Funcional - Vistas Migración Secundaria Aprende</td><td>Ene 2026</td></tr>
+<tr><td>37</td><td>Documento Funcional - integración con Secundaria Aprende</td><td>Sep 2025</td></tr>
+</table>
+</div>
+</div></div>
+
+<!-- ÉPICA 5: EFECTIVIZACIÓN -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">🗂 EP-05 · Efectivización <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ Implementado</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<div class="ep-block"><div class="ep-section-title">Título y Asignación</div>
+<div class="ep-grid-3">
+<div><span class="ep-label">Módulo</span><p class="ep-val">Efectivización</p></div>
+<div><span class="ep-label">Responsable (Owner)</span><p class="ep-val">—</p></div>
+<div><span class="ep-label">Participantes</span><p class="ep-val">Equipo AprendeBA · Nivel Secundario</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Narrativa y Contexto</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Planteamiento del problema</span><p class="ep-val">Al cierre de cada ciclo lectivo, se necesita proyectar y efectivizar la promoción de alumnos al año siguiente de forma sistemática y sin intervención manual masiva por parte de las escuelas.</p></div>
+<div><span class="ep-label">Contexto y supuestos</span><p class="ep-val">Proceso anual vinculado al cierre del ciclo lectivo, principalmente para Secundario. Incluye escuelas de modalidades especiales (comerciales nocturnas, reingreso). Depende del módulo de calificaciones y regularidad.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Alcance y Criterios de Aceptación</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Criterios de alto nivel</span><p class="ep-val">Proceso de proyección y efectivización ejecutable sin errores. Alertas de promoción configuradas y visibles. Soporte para escuelas comerciales nocturnas y de reingreso.</p></div>
+<div><span class="ep-label">Fuera de alcance</span><p class="ep-val">Efectivización de cargos docentes. Gestión de secciones del nuevo ciclo lectivo. Efectivización para niveles Inicial y Primario.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Seguimiento</div>
+<span class="ep-label">Vínculos — Documentos asociados</span>
+<table style="margin-top:8px;font-size:12.5px;">
+<tr><th>#</th><th>Documento</th><th>Fecha</th></tr>
+<tr><td>41</td><td>Documento Funcional - Escuelas Comerciales Nocturnas y de Reingreso</td><td>Ene 2025</td></tr>
+<tr><td>42</td><td>Proceso de proyección, promoción, efectivización 2025-2026 v2</td><td>Jun 2025</td></tr>
+<tr><td>43</td><td>CU - Alertas Promoción</td><td>Sep 2024</td></tr>
+</table>
+</div>
+</div></div>
+
+<!-- ÉPICA 6: LEGAJO Y PUENTES -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">🗂 EP-06 · Legajo del Estudiante y Puentes <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ Implementado</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<div class="ep-block"><div class="ep-section-title">Título y Asignación</div>
+<div class="ep-grid-3">
+<div><span class="ep-label">Módulo</span><p class="ep-val">Legajo / PPI / PPS</p></div>
+<div><span class="ep-label">Responsable (Owner)</span><p class="ep-val">—</p></div>
+<div><span class="ep-label">Participantes</span><p class="ep-val">Equipo AprendeBA · Inicial · Primario · Secundario</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Narrativa y Contexto</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Planteamiento del problema</span><p class="ep-val">Directivos y supervisores necesitan acceder a un legajo digital unificado del estudiante que integre datos de identidad, trayectoria educativa y puentes entre niveles, evitando la búsqueda en múltiples sistemas.</p></div>
+<div><span class="ep-label">Contexto y supuestos</span><p class="ep-val">Integra datos de múltiples fuentes (CUIL, código de aula, PIP, PPS). Requiere sincronización con sistemas de gestión de identidad del GCBA. Los puentes PIP y PPS son documentos institucionales de transición entre niveles.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Alcance y Criterios de Aceptación</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Criterios de alto nivel</span><p class="ep-val">Legajo con información centralizada y actualizada. Visualización de PIP y PPS funcional. CUIL y código de aula correctamente integrados. Informes accesibles desde el legajo.</p></div>
+<div><span class="ep-label">Fuera de alcance</span><p class="ep-val">Edición de datos de identidad por parte de docentes. Integración con legajos médicos o de salud. Gestión de legajos de personal docente.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Seguimiento</div>
+<span class="ep-label">Vínculos — Documentos asociados</span>
+<table style="margin-top:8px;font-size:12.5px;">
+<tr><th>#</th><th>Documento</th><th>Fecha</th></tr>
+<tr><td>44</td><td>Documento Funcional - Integración de información en el legajo de AprendeBA</td><td>Jun 2025</td></tr>
+<tr><td>45</td><td>CU - Documento funcional Integración en el legajo de AprendeBA</td><td>Jul 2025</td></tr>
+<tr><td>46</td><td>CU - Cambio en Legajo del Estudiante</td><td>Jul 2025</td></tr>
+<tr><td>47</td><td>Doc Funcional - Cambios en Legajos</td><td>Jun 2025</td></tr>
+<tr><td>48</td><td>CU - Código de Aula V2</td><td>Ene 2026</td></tr>
+<tr><td>49</td><td>CU - Número de CUIL en legajo</td><td>Oct 2024</td></tr>
+<tr><td>50</td><td>CU - Visualización PIP</td><td>Feb 2025</td></tr>
+<tr><td>51</td><td>CU - Visualización PPS</td><td>Feb 2025</td></tr>
+<tr><td>52</td><td>Doc Funcional - Cambios en PIP 2025</td><td>Sep 2025</td></tr>
+<tr><td>53</td><td>Doc. Funcional - Apartado PPI y Visualización de Informes (Inicial y Secundaria)</td><td>Ago 2025</td></tr>
+</table>
+</div>
+</div></div>
+
+<!-- ÉPICA 7: ROLES Y USUARIOS -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">🗂 EP-07 · Gestión de Roles y Usuarios <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ Implementado</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<div class="ep-block"><div class="ep-section-title">Título y Asignación</div>
+<div class="ep-grid-3">
+<div><span class="ep-label">Módulo</span><p class="ep-val">Roles / Usuarios</p></div>
+<div><span class="ep-label">Responsable (Owner)</span><p class="ep-val">—</p></div>
+<div><span class="ep-label">Participantes</span><p class="ep-val">Equipo AprendeBA · Todos los niveles</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Narrativa y Contexto</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Planteamiento del problema</span><p class="ep-val">La plataforma requiere un sistema robusto de control de accesos que garantice que cada actor (docente, directivo, supervisor, área) acceda únicamente a lo que le corresponde según su rol.</p></div>
+<div><span class="ep-label">Contexto y supuestos</span><p class="ep-val">Roles diferenciados por nivel y función. Incluye la posibilidad de impersonar usuarios para soporte interno. Integración con Secundaria Aprende para accesos específicos y flujo de aprobación de rol supervisor.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Alcance y Criterios de Aceptación</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Criterios de alto nivel</span><p class="ep-val">Roles configurados correctamente para todos los perfiles. Flujo de aprobación de rol supervisor operativo. Función de impersonar disponible para soporte. Tarjeta de usuario accesible.</p></div>
+<div><span class="ep-label">Fuera de alcance</span><p class="ep-val">Gestión de identidad centralizada (SSO). Roles para sistemas externos al ecosistema AprendeBA. Auditoría automática de accesos con alertas de seguridad.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Seguimiento</div>
+<span class="ep-label">Vínculos — Documentos asociados</span>
+<table style="margin-top:8px;font-size:12.5px;">
+<tr><th>#</th><th>Documento</th><th>Fecha</th></tr>
+<tr><td>54</td><td>CU - Otros Accesos</td><td>Feb 2025</td></tr>
+<tr><td>55</td><td>Doc. Funcional - Otros accesos - 2025</td><td>Feb 2025</td></tr>
+<tr><td>56</td><td>Documento funcional - Rol solo visualización e Impersonar</td><td>Ago 2025</td></tr>
+<tr><td>57</td><td>Doc. Funcional - Gestión de roles: Dirección de área</td><td>Jul 2025</td></tr>
+<tr><td>58</td><td>Doc. Funcional - Dirección de área aprueba rol supervisor</td><td>Jul 2025</td></tr>
+<tr><td>59</td><td>Documento Funcional - Tarjeta de usuarios</td><td>Sep 2025</td></tr>
+<tr><td>60</td><td>Documento Funcional - Modificaciones accesos usuarios Secundaria Aprende</td><td>Ene 2026</td></tr>
+<tr><td>61</td><td>Actualización de flujo para Automatización v1.2</td><td>Ene 2025</td></tr>
+</table>
+</div>
+</div></div>
+
+<!-- ÉPICA 8: BACKOFFICE -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">🗂 EP-08 · Backoffice — Planes de Estudio <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ Implementado</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<div class="ep-block"><div class="ep-section-title">Título y Asignación</div>
+<div class="ep-grid-3">
+<div><span class="ep-label">Módulo</span><p class="ep-val">Backoffice</p></div>
+<div><span class="ep-label">Responsable (Owner)</span><p class="ep-val">—</p></div>
+<div><span class="ep-label">Participantes</span><p class="ep-val">Equipo AprendeBA · Todos los niveles</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Narrativa y Contexto</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Planteamiento del problema</span><p class="ep-val">El equipo de gestión curricular necesita administrar planes de estudio, materias y configuraciones académicas desde el backoffice sin depender del equipo técnico para cada cambio.</p></div>
+<div><span class="ep-label">Contexto y supuestos</span><p class="ep-val">El backoffice es de uso interno del equipo AprendeBA. Los cambios en planes de estudio impactan directamente en calificaciones y boletines. Incluye MVP inicial evolucionado a versión 2025.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Alcance y Criterios de Aceptación</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Criterios de alto nivel</span><p class="ep-val">Alta y edición de materias funcional. Gestión de planes de estudio por nivel operativa. Propuestas de mejora 2025 implementadas. Errores identificados corregidos.</p></div>
+<div><span class="ep-label">Fuera de alcance</span><p class="ep-val">Gestión de planes de estudio de modalidades no digitalizadas. Aprobación curricular por organismos externos. Publicación automática de cambios curriculares en portales públicos.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Seguimiento</div>
+<span class="ep-label">Vínculos — Documentos asociados</span>
+<table style="margin-top:8px;font-size:12.5px;">
+<tr><th>#</th><th>Documento</th><th>Fecha</th></tr>
+<tr><td>62</td><td>CU - Backoffice Planes de Estudio</td><td>Nov 2024</td></tr>
+<tr><td>63</td><td>Documento Funcional - Backoffice Planes de Estudio</td><td>Oct 2024</td></tr>
+<tr><td>64</td><td>Documento Funcional - Backoffice - 2025</td><td>Ago 2025</td></tr>
+<tr><td>65</td><td>Propuesta - Backoffice - 2025</td><td>Ago 2025</td></tr>
+<tr><td>66</td><td>Errores - Back office 2025</td><td>Sep 2025</td></tr>
+<tr><td>67</td><td>Documento funcional - Backoffice alta de materias</td><td>Oct 2025</td></tr>
+<tr><td>68</td><td>BackOffice Gestión Plan de Estudio - MVP DEMO</td><td>Oct 2024</td></tr>
+</table>
+</div>
+</div></div>
+
+<!-- ÉPICA 9: INCLUSIÓN ESCOLAR -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">🗂 EP-09 · Inclusión Escolar <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ Implementado</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<div class="ep-block"><div class="ep-section-title">Título y Asignación</div>
+<div class="ep-grid-3">
+<div><span class="ep-label">Módulo</span><p class="ep-val">Inclusión Escolar</p></div>
+<div><span class="ep-label">Responsable (Owner)</span><p class="ep-val">—</p></div>
+<div><span class="ep-label">Participantes</span><p class="ep-val">Equipo AprendeBA · Primario · Secundario</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Narrativa y Contexto</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Planteamiento del problema</span><p class="ep-val">Los estudiantes con necesidades educativas especiales requieren configuraciones particulares en calificaciones y seguimiento que el sistema debe soportar sin forzarlos a los flujos estándar de evaluación.</p></div>
+<div><span class="ep-label">Contexto y supuestos</span><p class="ep-val">Aplica a Primario y Secundario. Las reglas de calificación difieren de la modalidad regular. Requiere integración con los módulos de calificaciones y boletines para reflejar correctamente la condición del alumno.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Alcance y Criterios de Aceptación</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Criterios de alto nivel</span><p class="ep-val">Grados de nivelación y aceleración configurables. Materias sin criterios de calificación incluibles. Flujo de calificación diferenciado para inclusión funcional y visible en boletín.</p></div>
+<div><span class="ep-label">Fuera de alcance</span><p class="ep-val">Gestión de apoyos externos (terapeutas, acompañantes). Integración con sistemas del Ministerio de Salud. Seguimiento de planes educativos individuales (PEI) como documentos digitales.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Seguimiento</div>
+<span class="ep-label">Vínculos — Documentos asociados</span>
+<table style="margin-top:8px;font-size:12.5px;">
+<tr><th>#</th><th>Documento</th><th>Fecha</th></tr>
+<tr><td>69</td><td>Documento funcional - Inclusión Escolar</td><td>Ene 2025</td></tr>
+<tr><td>70</td><td>Doc. Funcional - Calificaciones - Grados de nivelación (Inclusión)</td><td>Feb 2025</td></tr>
+</table>
+</div>
+</div></div>
+
+<!-- ÉPICA 10: CERTIFICADOS -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">🗂 EP-10 · Certificados <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ Implementado</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<div class="ep-block"><div class="ep-section-title">Título y Asignación</div>
+<div class="ep-grid-3">
+<div><span class="ep-label">Módulo</span><p class="ep-val">Certificados</p></div>
+<div><span class="ep-label">Responsable (Owner)</span><p class="ep-val">—</p></div>
+<div><span class="ep-label">Participantes</span><p class="ep-val">Equipo AprendeBA · Nivel Primario</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Narrativa y Contexto</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Planteamiento del problema</span><p class="ep-val">Los alumnos que finalizan 7mo grado primario necesitan un certificado digital generado por la plataforma que sea válido, descargable y alineado con los requisitos del GCBA.</p></div>
+<div><span class="ep-label">Contexto y supuestos</span><p class="ep-val">Aplica exclusivamente a Primario, 7mo grado. El proceso se ejecuta una vez por año al cierre del ciclo lectivo. El instructivo oficial está publicado en el portal GCBA y debe mantenerse actualizado.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Alcance y Criterios de Aceptación</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Criterios de alto nivel</span><p class="ep-val">Generación del certificado de 7mo grado funcional. Proceso ejecutable por directivos sin intervención técnica. Documento descargable en formato válido según requisitos GCBA.</p></div>
+<div><span class="ep-label">Fuera de alcance</span><p class="ep-val">Certificados de otros niveles o grados. Firma digital con validez legal externa. Envío automático a familias o sistemas de validación de títulos.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Seguimiento</div>
+<span class="ep-label">Vínculos — Documentos asociados</span>
+<table style="margin-top:8px;font-size:12.5px;">
+<tr><th>#</th><th>Documento</th><th>Fecha</th></tr>
+<tr><td>73</td><td>Certificado 7mo - 2025</td><td>May 2025</td></tr>
+<tr><td>74</td><td>Documento Funcional - Certificados 7mo</td><td>Jun 2025</td></tr>
+<tr><td>75</td><td>AprendeBA_Generación Certificado 7mo Primario</td><td>Nov 2025</td></tr>
+</table>
+</div>
+</div></div>
+
+<!-- ÉPICA 11: UX Y MEJORAS GENERALES -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">🗂 EP-11 · UX y Mejoras Generales <span class="eb eb-warn" style="margin-left:8px;font-size:11px;">🔧 En desarrollo</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<div class="ep-block"><div class="ep-section-title">Título y Asignación</div>
+<div class="ep-grid-3">
+<div><span class="ep-label">Módulo</span><p class="ep-val">UX / General</p></div>
+<div><span class="ep-label">Responsable (Owner)</span><p class="ep-val">—</p></div>
+<div><span class="ep-label">Participantes</span><p class="ep-val">Equipo AprendeBA · Todos los niveles</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Narrativa y Contexto</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Planteamiento del problema</span><p class="ep-val">La plataforma acumula deuda de usabilidad que genera fricción en tareas cotidianas de docentes y directivos, afectando la adopción y la experiencia general del sistema.</p></div>
+<div><span class="ep-label">Contexto y supuestos</span><p class="ep-val">Mejoras transversales que afectan a todos los módulos. Algunas funcionalidades (ruteo de plataforma) están aún en evaluación. Épica en desarrollo activo con entregas parciales ya implementadas.</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Alcance y Criterios de Aceptación</div>
+<div class="ep-grid-2">
+<div><span class="ep-label">Criterios de alto nivel</span><p class="ep-val">Autoguardado activo en módulos críticos. Navegación con migas de pan implementada. Bot Booti operativo y accesible. Cartelera de novedades publicada. Cambio de contraseña V2 disponible.</p></div>
+<div><span class="ep-label">Fuera de alcance</span><p class="ep-val">Rediseño completo de la interfaz. Cambios en la arquitectura de navegación de base. Propuesta de ruteo de plataforma (en evaluación, fuera del alcance actual).</p></div>
+</div></div>
+<div class="ep-block"><div class="ep-section-title">Seguimiento</div>
+<span class="ep-label">Vínculos — Documentos asociados</span>
+<table style="margin-top:8px;font-size:12.5px;">
+<tr><th>#</th><th>Documento</th><th>Fecha</th></tr>
+<tr><td>76</td><td>CU - Configuración de alertas</td><td>Oct 2024</td></tr>
+<tr><td>77</td><td>CU - Cartelera de novedades</td><td>Oct 2024</td></tr>
+<tr><td>78</td><td>CU - Autoguardado</td><td>Sep 2024</td></tr>
+<tr><td>79</td><td>CU - Implementación de Migas de Pan y Botón Volver</td><td>Mar 2025</td></tr>
+<tr><td>80</td><td>Mejora - Cambio de Contraseña V2</td><td>Ago 2025</td></tr>
+<tr><td>81</td><td>Propuesta Ruteo de plataforma</td><td>May 2025</td></tr>
+<tr><td>86</td><td>Documento funcional - Booti</td><td>Jul 2025</td></tr>
+</table>
+</div>
+</div></div>
+
+</div><!-- /panel -->
+</div><!-- /doc-epicas -->
+
+<!-- ==================== HISTORIAS DE USUARIO ==================== -->
+<div class="sub-content" id="doc-hu">
+<div style="margin-bottom:12px;"><button onclick="cambiarSub('documentacion','doc-home')" style="background:none;border:none;cursor:pointer;color:#7c3aed;font-size:13px;font-weight:600;padding:0;">← Volver al inicio</button></div>
+<div class="panel">
+<div class="panel-header">
+<div class="panel-icon pi-violeta">📝</div>
+<div class="panel-title">
+<h2>Historias de Usuario</h2>
+<p>Historias de usuario organizadas por épica. Formato: Como [rol], quiero [acción] para [beneficio].</p>
+</div>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+<span class="eb eb-ok">✅ Implementado: 10 épicas</span>
+<span class="eb eb-warn">🔧 En desarrollo: 1 épica</span>
+<span class="eb eb-info" style="margin-left:auto;">Total: <span id="hu-count">48</span> historias de usuario</span>
+</div>
+
+<!-- FILTROS HU -->
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px;">
+  <input id="hu-search" type="text" placeholder="🔍 Buscar historia de usuario..." oninput="filtrarHU()" style="padding:7px 12px;border:1.5px solid #ddd6fe;border-radius:8px;font-size:13px;outline:none;min-width:240px;transition:border .15s;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#ddd6fe'">
+  <button class="hu-filtro hu-activo" onclick="filtrarHURol(this,'todos')" data-rol="todos" style="padding:6px 14px;border:1.5px solid #7c3aed;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:#7c3aed;color:#fff;transition:all .15s;">Todos</button>
+  <button class="hu-filtro" onclick="filtrarHURol(this,'Docente')" data-rol="Docente" style="padding:6px 14px;border:1.5px solid #ddd6fe;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:#6b7280;transition:all .15s;">Docente</button>
+  <button class="hu-filtro" onclick="filtrarHURol(this,'Directivo')" data-rol="Directivo" style="padding:6px 14px;border:1.5px solid #ddd6fe;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:#6b7280;transition:all .15s;">Directivo</button>
+  <button class="hu-filtro" onclick="filtrarHURol(this,'Supervisor')" data-rol="Supervisor" style="padding:6px 14px;border:1.5px solid #ddd6fe;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:#6b7280;transition:all .15s;">Supervisor</button>
+  <button class="hu-filtro" onclick="filtrarHURol(this,'Administrador')" data-rol="Administrador" style="padding:6px 14px;border:1.5px solid #ddd6fe;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:#6b7280;transition:all .15s;">Administrador</button>
+  <button onclick="limpiarFiltrosHU()" style="padding:6px 12px;border:1.5px solid #e5e7eb;border-radius:20px;font-size:12px;cursor:pointer;background:#fff;color:#9ca3af;transition:all .15s;margin-left:auto;" title="Limpiar filtros">✕ Limpiar</button>
+</div>
+<div id="hu-sin-resultados" style="display:none;text-align:center;padding:32px;color:#9ca3af;font-size:14px;">No se encontraron historias de usuario con ese criterio.</div>
+
+<style>
+.hu-cwp { margin-top:7px; display:flex; flex-direction:column; gap:4px; }
+.hu-row { display:flex; gap:8px; align-items:baseline; }
+.hu-lbl { font-size:10px; font-weight:700; color:#7c3aed; width:44px; flex-shrink:0; text-transform:uppercase; padding-top:2px; }
+.hu-val { font-size:12.5px; color:var(--texto); line-height:1.4; }
+#doc-hu table { border-collapse:collapse; }
+#doc-hu table td { vertical-align:top; padding:12px 8px 16px; border-bottom:2px solid #ede9fe; }
+#doc-hu table th { padding:8px 8px; border-bottom:2px solid #7c3aed; }
+#doc-hu table tr:last-child td { border-bottom:none; }
+</style>
+
+<!-- EP-01 PRESENTISMO -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">📝 EP-01 · Presentismo <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ 6 HUs</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<table style="font-size:12.5px;">
+<tr><th style="width:80px;">ID</th><th>Historia de Usuario</th><th style="width:110px;">Rol</th></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-01-01</span></td><td><strong>Registro de asistencia diaria</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">docente</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">registrar la asistencia diaria de mis alumnos</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">llevar un control del presentismo escolar</span></div></div></td><td>Docente</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-01-02</span></td><td><strong>Reporte de ausentismo</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">ver el reporte de asistencia por sección y por alumno</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">tomar decisiones de seguimiento</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-01-03</span></td><td><strong>Presentismo de comedor</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">docente</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">registrar el presentismo del comedor escolar</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">controlar la concurrencia al servicio alimentario</span></div></div></td><td>Docente</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-01-04</span></td><td><strong>Asistencia en jornada extendida</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">docente de jornada extendida</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">registrar la asistencia de la jornada extendida por separado</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">diferenciarla del turno regular</span></div></div></td><td>Docente</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-01-05</span></td><td><strong>App móvil de presentismo</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">acceder a la app móvil de presentismo</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">registrar asistencia desde el celular sin necesidad de una PC</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-01-06</span></td><td><strong>Observaciones en boletín</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">docente</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">registrar observaciones de presentismo e informe valorativo en el boletín</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">comunicar el desempeño integral del alumno</span></div></div></td><td>Docente</td></tr>
+</table>
+</div></div>
+
+<!-- EP-02 CALIFICACIONES Y REGULARIDAD -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">📝 EP-02 · Calificaciones y Regularidad <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ 7 HUs</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<table style="font-size:12.5px;">
+<tr><th style="width:80px;">ID</th><th>Historia de Usuario</th><th style="width:110px;">Rol</th></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-02-01</span></td><td><strong>Carga de calificaciones por bimestre</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">docente</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">cargar las calificaciones de mis alumnos por bimestre</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">registrar su rendimiento académico</span></div></div></td><td>Docente</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-02-02</span></td><td><strong>Automatización de calificación general</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">docente</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">que el sistema calcule automáticamente la calificación general</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">evitar errores y ahorrar tiempo</span></div></div></td><td>Docente</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-02-03</span></td><td><strong>Visualización de regularidad</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">visualizar la condición de regularidad de cada alumno</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">gestionar las promociones al finalizar el ciclo lectivo</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-02-04</span></td><td><strong>Carga de ECP</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">docente</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">registrar los Espacios Curriculares Pendientes (ECP) de un alumno</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">documentar las materias adeudadas</span></div></div></td><td>Docente</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-02-05</span></td><td><strong>Calificaciones para alumnos de nivelación</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">docente</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">cargar calificaciones para alumnos de grados de nivelación o aceleración</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">adaptar los criterios de evaluación a su modalidad educativa</span></div></div></td><td>Docente</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-02-06</span></td><td><strong>Impacto de regularidad</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">ver cómo la condición de regularidad impacta en el estado del alumno</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">gestionar el cierre del ciclo lectivo correctamente</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-02-07</span></td><td><strong>Recuperación de regularidad anual</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">gestionar el proceso de recuperación de regularidad anual</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">que los alumnos que no alcanzaron los requisitos puedan regularizar su situación</span></div></div></td><td>Directivo</td></tr>
+</table>
+</div></div>
+
+<!-- EP-03 BOLETINES -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">📝 EP-03 · Boletines <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ 4 HUs</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<table style="font-size:12.5px;">
+<tr><th style="width:80px;">ID</th><th>Historia de Usuario</th><th style="width:110px;">Rol</th></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-03-01</span></td><td><strong>Generación de boletín individual</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">generar el boletín individual de un alumno</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">entregar la información académica a su familia</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-03-02</span></td><td><strong>Generación masiva de boletines</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">generar boletines de forma masiva para todo el establecimiento en un solo paso</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">optimizar el tiempo administrativo</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-03-03</span></td><td><strong>Boletines para educación de adultos</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo de un CENS o escuela de adultos</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">generar boletines adaptados al formato de educación de adultos</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">cumplir con los requisitos propios del nivel</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-03-04</span></td><td><strong>Verificación previa del boletín</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">docente</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">visualizar el boletín antes de su emisión</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">verificar que la información es correcta</span></div></div></td><td>Docente</td></tr>
+</table>
+</div></div>
+
+<!-- EP-04 MATRICULACIÓN Y PASES -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">📝 EP-04 · Matriculación y Pases <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ 5 HUs</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<table style="font-size:12.5px;">
+<tr><th style="width:80px;">ID</th><th>Historia de Usuario</th><th style="width:110px;">Rol</th></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-04-01</span></td><td><strong>Matriculación de nuevo estudiante</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">matricular un nuevo estudiante</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">registrarlo en la plataforma y habilitarlo en el sistema</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-04-02</span></td><td><strong>Solicitud de pase</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">solicitar un pase para un alumno que se traslada a otra escuela</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">gestionar su salida de forma ordenada</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-04-03</span></td><td><strong>Aprobación de pase recibido</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">aprobar o rechazar un pase recibido de otra institución</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">confirmar la incorporación del alumno</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-04-04</span></td><td><strong>Historial de movimientos</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">ver el historial completo de movimientos de un alumno</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">conocer su trayectoria en el sistema educativo</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-04-05</span></td><td><strong>Reportes de matriculación</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">supervisor</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">acceder a los reportes de matriculación de las escuelas a mi cargo</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">monitorear el estado de la matrícula</span></div></div></td><td>Supervisor</td></tr>
+</table>
+</div></div>
+
+<!-- EP-05 EFECTIVIZACIÓN -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">📝 EP-05 · Efectivización <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ 3 HUs</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<table style="font-size:12.5px;">
+<tr><th style="width:80px;">ID</th><th>Historia de Usuario</th><th style="width:110px;">Rol</th></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-05-01</span></td><td><strong>Efectivización de promoción</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">efectivizar la promoción de alumnos al siguiente año lectivo</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">iniciar el ciclo con el padrón actualizado</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-05-02</span></td><td><strong>Alertas de promoción</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">ver alertas de promoción</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">identificar alumnos en riesgo de no ser promovidos antes del cierre del ciclo</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-05-03</span></td><td><strong>Efectivización en escuelas nocturnas y de reingreso</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo de escuela nocturna o de reingreso</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">gestionar la efectivización con las reglas propias de mi institución</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">respetar la normativa específica</span></div></div></td><td>Directivo</td></tr>
+</table>
+</div></div>
+
+<!-- EP-06 LEGAJO Y PUENTES -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">📝 EP-06 · Legajo del Estudiante y Puentes <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ 5 HUs</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<table style="font-size:12.5px;">
+<tr><th style="width:80px;">ID</th><th>Historia de Usuario</th><th style="width:110px;">Rol</th></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-06-01</span></td><td><strong>Visualización del legajo completo</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">ver el legajo completo de un alumno</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">acceder a toda su información académica e institucional en un solo lugar</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-06-02</span></td><td><strong>Registro de CUIL en legajo</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">registrar el CUIL del alumno en su legajo</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">cumplir con los requisitos administrativos y legales</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-06-03</span></td><td><strong>Código de aula</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">docente</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">visualizar y gestionar el código de aula asignado a mis alumnos</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">facilitar el acceso a los recursos digitales</span></div></div></td><td>Docente</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-06-04</span></td><td><strong>Visualización del PIP</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo de primaria</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">visualizar el Puente Inicial-Primaria (PIP) de un alumno ingresante</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">conocer su trayectoria previa</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-06-05</span></td><td><strong>Visualización del PPS</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo de secundaria</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">visualizar el Puente Primaria-Secundaria (PPS)</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">conocer el informe de egreso del nivel anterior del alumno ingresante</span></div></div></td><td>Directivo</td></tr>
+</table>
+</div></div>
+
+<!-- EP-07 ROLES Y USUARIOS -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">📝 EP-07 · Gestión de Roles y Usuarios <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ 5 HUs</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<table style="font-size:12.5px;">
+<tr><th style="width:80px;">ID</th><th>Historia de Usuario</th><th style="width:110px;">Rol</th></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-07-01</span></td><td><strong>Solicitud de rol</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">solicitar un rol para un docente de mi institución</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">habilitarlo en las funciones que necesita</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-07-02</span></td><td><strong>Aprobación de rol</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">supervisor</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">aprobar o rechazar solicitudes de rol de las escuelas a mi cargo</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">mantener el control de los accesos</span></div></div></td><td>Supervisor</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-07-03</span></td><td><strong>Rol de solo visualización</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">administrador</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">asignar un rol de solo visualización</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">permitir que ciertos usuarios vean información sin poder modificarla</span></div></div></td><td>Administrador</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-07-04</span></td><td><strong>Impersonar usuario</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">administrador</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">impersonar a un usuario</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">verificar su vista en la plataforma y resolver incidencias de acceso</span></div></div></td><td>Administrador</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-07-05</span></td><td><strong>Gestión de otros accesos</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">gestionar otros accesos (no docentes)</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">habilitar personal administrativo o de conducción en el sistema</span></div></div></td><td>Directivo</td></tr>
+</table>
+</div></div>
+
+<!-- EP-08 BACKOFFICE -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">📝 EP-08 · Backoffice — Planes de Estudio <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ 4 HUs</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<table style="font-size:12.5px;">
+<tr><th style="width:80px;">ID</th><th>Historia de Usuario</th><th style="width:110px;">Rol</th></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-08-01</span></td><td><strong>Gestión de planes de estudio</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">administrador</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">gestionar los planes de estudio desde el backoffice</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">mantenerlos actualizados según la normativa vigente</span></div></div></td><td>Administrador</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-08-02</span></td><td><strong>Alta de materias</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">administrador</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">dar de alta nuevas materias en un plan de estudio</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">reflejar cambios curriculares</span></div></div></td><td>Administrador</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-08-03</span></td><td><strong>Corrección de errores en planes</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">administrador</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">corregir errores detectados en los planes de estudio</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">garantizar la consistencia de los datos en toda la plataforma</span></div></div></td><td>Administrador</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-08-04</span></td><td><strong>Visualización del plan de estudio</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">visualizar el plan de estudio de mi institución</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">verificar que las materias configuradas son correctas</span></div></div></td><td>Directivo</td></tr>
+</table>
+</div></div>
+
+<!-- EP-09 INCLUSIÓN ESCOLAR -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">📝 EP-09 · Inclusión Escolar <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ 3 HUs</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<table style="font-size:12.5px;">
+<tr><th style="width:80px;">ID</th><th>Historia de Usuario</th><th style="width:110px;">Rol</th></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-09-01</span></td><td><strong>Calificaciones con criterios de inclusión</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">docente</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">registrar calificaciones para alumnos con trayectoria de inclusión con criterios adaptados</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">respetar su modalidad de evaluación</span></div></div></td><td>Docente</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-09-02</span></td><td><strong>Inclusión en el legajo</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">ver la información de inclusión en el legajo del alumno</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">garantizar un seguimiento integral de su trayectoria</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-09-03</span></td><td><strong>Grados de nivelación y aceleración</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">gestionar alumnos en grados de nivelación o aceleración</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">adaptar su trayectoria escolar a sus necesidades</span></div></div></td><td>Directivo</td></tr>
+</table>
+</div></div>
+
+<!-- EP-10 CERTIFICADOS -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">📝 EP-10 · Certificados <span class="eb eb-ok" style="margin-left:8px;font-size:11px;">✅ 3 HUs</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<table style="font-size:12.5px;">
+<tr><th style="width:80px;">ID</th><th>Historia de Usuario</th><th style="width:110px;">Rol</th></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-10-01</span></td><td><strong>Generación de certificado de 7mo</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">generar el certificado de finalización de 7mo grado</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">los alumnos que egresan de primaria puedan acreditar su nivel</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-10-02</span></td><td><strong>Descarga del certificado</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">descargar el certificado en formato digital</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">entregarlo a las familias o archivarlo institucionalmente</span></div></div></td><td>Directivo</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-10-03</span></td><td><strong>Verificación del certificado</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">directivo</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">verificar los datos del certificado antes de su emisión</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">asegurar que la información es correcta</span></div></div></td><td>Directivo</td></tr>
+</table>
+</div></div>
+
+<!-- EP-11 UX Y MEJORAS -->
+<div class="ac"><div class="ac-h" onclick="tog(this)">📝 EP-11 · UX y Mejoras Generales <span class="eb eb-warn" style="margin-left:8px;font-size:11px;">🔧 4 HUs</span><span class="fl">▼</span></div>
+<div class="ac-b">
+<table style="font-size:12.5px;">
+<tr><th style="width:80px;">ID</th><th>Historia de Usuario</th><th style="width:110px;">Rol</th></tr>
+<tr><td><span class="eb eb-warn" style="font-size:11px;">HU-11-01</span></td><td><strong>Autoguardado</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">usuario</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">que el sistema guarde automáticamente mis cambios</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">no perder información ante cierres inesperados de sesión</span></div></div></td><td>Usuario</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-11-02</span></td><td><strong>Navegación con migas de pan</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">usuario</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">ver migas de pan y un botón "Volver" en todas las secciones</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">navegar fácilmente entre pantallas</span></div></div></td><td>Usuario</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-11-03</span></td><td><strong>Cambio de contraseña</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">usuario</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">cambiar mi contraseña de forma segura desde la plataforma</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">mantener la seguridad de mi cuenta</span></div></div></td><td>Usuario</td></tr>
+<tr><td><span class="eb eb-ok" style="font-size:11px;">HU-11-04</span></td><td><strong>Cartelera de novedades</strong><div class="hu-cwp"><div class="hu-row"><span class="hu-lbl">Como</span><span class="hu-val">usuario</span></div><div class="hu-row"><span class="hu-lbl">Quiero</span><span class="hu-val">recibir novedades y comunicados importantes desde la cartelera del sistema</span></div><div class="hu-row"><span class="hu-lbl">Para</span><span class="hu-val">estar informado sobre cambios en la plataforma</span></div></div></td><td>Usuario</td></tr>
+</table>
+</div></div>
+
+</div><!-- /panel -->
+</div><!-- /doc-hu -->
+
 </div><!-- /inv-documentos -->
 </div><!-- /tab-documentacion -->
 <!-- ==================== PROCESOS & ESTADO ==================== -->
@@ -7749,6 +8433,366 @@ mrSetNivel('inicial');
 
 <!-- Acceso directo Backoffice AprendeBA -->
 
+
+<!-- JS Documentacion -->
+<script>
+(function(){
+  document.querySelectorAll('#tabla-docs tbody tr').forEach(function(row) {
+    var td = row.cells[0];
+    if (td) td.title = td.textContent.trim();
+  });
+})();
+
+function parseFechaDoc(str) {
+  var meses = {Ene:0,Feb:1,Mar:2,Abr:3,May:4,Jun:5,Jul:6,Ago:7,Sep:8,Oct:9,Nov:10,Dic:11};
+  if (!str || str.trim() === '—' || str.trim() === '') return -1;
+  var p = str.trim().split(' ');
+  if (p.length === 2 && meses[p[0]] !== undefined) return parseInt(p[1]) * 12 + meses[p[0]];
+  return -1;
+}
+
+function sortTablaDoc(colIdx) {
+  var table = document.getElementById('tabla-docs');
+  var tbody = table.querySelector('tbody');
+  var ths = table.querySelectorAll('thead th');
+  var th = ths[colIdx];
+  var asc = !th.classList.contains('asc');
+  ths.forEach(function(t) {
+    t.classList.remove('asc','desc');
+    var sa = t.querySelector('.sa');
+    if (sa) sa.textContent = '↕';
+  });
+  th.classList.add(asc ? 'asc' : 'desc');
+  var sa = th.querySelector('.sa');
+  if (sa) sa.textContent = asc ? '↑' : '↓';
+  var rows = Array.from(tbody.querySelectorAll('tr'));
+  rows.sort(function(a, b) {
+    var ca = a.cells[colIdx] ? a.cells[colIdx].textContent.trim() : '';
+    var cb = b.cells[colIdx] ? b.cells[colIdx].textContent.trim() : '';
+    if (colIdx === 2 || colIdx === 3) {
+      var da = parseFechaDoc(ca), db = parseFechaDoc(cb);
+      return asc ? da - db : db - da;
+    }
+    return asc ? ca.localeCompare(cb, 'es') : cb.localeCompare(ca, 'es');
+  });
+  rows.forEach(function(r) { tbody.appendChild(r); });
+}
+</script>
+<script>
+function mostrarDocsPorEstado(estado, titulo, color, bgColor) {
+  var rows = document.querySelectorAll('#tabla-docs tbody tr');
+  var docs = [];
+  rows.forEach(function(row) {
+    var badge = row.cells[4] ? row.cells[4].querySelector('span[title]') : null;
+    if (badge && badge.getAttribute('title') === estado) {
+      var nombre = row.cells[0] ? row.cells[0].textContent.trim() : '(sin nombre)';
+      var link = row.cells[5] ? row.cells[5].querySelector('a') : null;
+      docs.push({ nombre: nombre, href: link ? link.href : null });
+    }
+  });
+
+  // Actualizar contadores
+  var statDesarrollo = document.getElementById('stat-desarrollo');
+  var statPendiente = document.getElementById('stat-pendiente');
+  if (statDesarrollo) statDesarrollo.textContent = document.querySelectorAll('#tabla-docs tbody tr td:nth-child(5) span[title="En desarrollo"]').length;
+  if (statPendiente) statPendiente.textContent = document.querySelectorAll('#tabla-docs tbody tr td:nth-child(5) span[title="Pendiente"]').length;
+
+  var lista = document.getElementById('modal-estado-lista');
+  var tituloEl = document.getElementById('modal-estado-titulo');
+  tituloEl.innerHTML = titulo + ' <span style="font-size:13px;font-weight:400;color:#6b7280;margin-left:6px;">(' + docs.length + ' documento' + (docs.length !== 1 ? 's' : '') + ')</span>';
+
+  if (docs.length === 0) {
+    lista.innerHTML = '<div style="text-align:center;color:#9ca3af;padding:32px 0;font-size:14px;">No hay documentos en este estado.</div>';
+  } else {
+    lista.innerHTML = docs.map(function(d) {
+      return '<div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">' +
+        '<span style="font-size:13px;font-weight:500;color:#1f2937;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + d.nombre + '">' + d.nombre + '</span>' +
+        (d.href ? '<a href="' + d.href + '" target="_blank" style="flex-shrink:0;font-size:12px;background:' + bgColor + ';color:' + color + ';border:1px solid ' + color + '33;padding:4px 12px;border-radius:8px;text-decoration:none;font-weight:600;white-space:nowrap;">↗ Abrir</a>' : '<span style="font-size:12px;color:#9ca3af;">Sin link</span>') +
+        '</div>';
+    }).join('');
+  }
+
+  var modal = document.getElementById('modal-estado');
+  modal.style.display = 'flex';
+}
+
+function cerrarModalEstado() {
+  document.getElementById('modal-estado').style.display = 'none';
+}
+
+// ===== FILTROS ÉPICAS =====
+var _epEstadoActivo = 'todos';
+
+function filtrarEpicas() {
+  var texto = (document.getElementById('ep-search').value || '').toLowerCase().trim();
+  var epicas = document.querySelectorAll('#doc-epicas .ac');
+  var visibles = 0;
+  epicas.forEach(function(ep) {
+    var contenido = ep.textContent.toLowerCase();
+    var badge = ep.querySelector('.eb-ok, .eb-warn');
+    var esOk = badge && badge.classList.contains('eb-ok');
+    var esWarn = badge && badge.classList.contains('eb-warn');
+    var pasaEstado = _epEstadoActivo === 'todos' ||
+      (_epEstadoActivo === 'ok' && esOk) ||
+      (_epEstadoActivo === 'warn' && esWarn);
+    var pasaTexto = !texto || contenido.includes(texto);
+    if (pasaEstado && pasaTexto) {
+      ep.style.display = '';
+      visibles++;
+    } else {
+      ep.style.display = 'none';
+    }
+  });
+  var contador = document.getElementById('ep-count');
+  if (contador) contador.textContent = visibles;
+  var sinRes = document.getElementById('ep-sin-resultados');
+  if (sinRes) sinRes.style.display = visibles === 0 ? 'block' : 'none';
+}
+
+function filtrarEpicaEstado(btn, estado) {
+  _epEstadoActivo = estado;
+  document.querySelectorAll('.ep-filtro').forEach(function(b) {
+    b.style.background = '#fff';
+    b.style.color = b.dataset.estado === 'ok' ? '#15803d' : b.dataset.estado === 'warn' ? '#a16207' : '#6b7280';
+    b.style.borderColor = b.dataset.estado === 'ok' ? '#86efac' : b.dataset.estado === 'warn' ? '#fde047' : '#ddd6fe';
+  });
+  btn.style.background = '#7c3aed';
+  btn.style.color = '#fff';
+  btn.style.borderColor = '#7c3aed';
+  filtrarEpicas();
+}
+
+// ===== LINKS EN TABLAS DE ÉPICAS =====
+function inyectarLinksEpicas() {
+  // Construir mapa nombre → href desde la tabla de inventario
+  var mapa = {};
+  document.querySelectorAll('#tabla-docs tbody tr').forEach(function(row) {
+    var nombre = row.cells[0] ? row.cells[0].textContent.trim() : '';
+    var link = row.cells[5] ? row.cells[5].querySelector('a') : null;
+    if (nombre && link && link.href) mapa[nombre] = link.href;
+  });
+
+  // Inyectar en cada tabla de épicas
+  document.querySelectorAll('#doc-epicas table').forEach(function(tabla) {
+    var filas = tabla.querySelectorAll('tr');
+    if (!filas.length) return;
+    var headerRow = filas[0];
+    if (headerRow.querySelector('th.ep-abrir-th')) return; // ya procesada
+    var th = document.createElement('th');
+    th.className = 'ep-abrir-th';
+    th.textContent = 'Abrir';
+    th.style.cssText = 'width:70px;text-align:center;';
+    headerRow.appendChild(th);
+
+    for (var i = 1; i < filas.length; i++) {
+      var row = filas[i];
+      var nombreCell = row.cells[1];
+      var nombre = nombreCell ? nombreCell.textContent.trim() : '';
+      var td = document.createElement('td');
+      td.style.cssText = 'text-align:center;';
+      var href = mapa[nombre];
+      if (href) {
+        var a = document.createElement('a');
+        a.href = href;
+        a.target = '_blank';
+        a.textContent = '↗ Abrir';
+        a.className = 'dl-link drive-link';
+        td.appendChild(a);
+      } else {
+        td.innerHTML = '<span style="color:#d1d5db;font-size:11px;">—</span>';
+      }
+      row.appendChild(td);
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() { inyectarLinksEpicas(); });
+// También ejecutar inmediatamente por si DOMContentLoaded ya pasó
+if (document.readyState === 'complete' || document.readyState === 'interactive') { setTimeout(inyectarLinksEpicas, 100); }
+
+// ===== CRITERIOS DE ACEPTACIÓN =====
+var CA = {
+'HU-01-01':[{g:'el docente está en la vista de presentismo de su sección',c:'registra "Presente" para un alumno',e:'el registro se guarda y el alumno aparece como presente en la lista del día'},{g:'el docente ya registró un alumno como presente',c:'cambia la marca a "Ausente"',e:'el sistema actualiza el registro y lo refleja en los reportes'}],
+'HU-01-02':[{g:'el directivo accede al módulo de presentismo',c:'selecciona ver reporte de ausentismo por sección',e:'el sistema muestra la lista de alumnos con sus ausencias acumuladas en el período seleccionado'},{g:'ningún alumno tuvo ausencias en la sección',c:'el directivo consulta el reporte',e:'el sistema muestra "Sin ausencias registradas" en lugar de una tabla vacía'}],
+'HU-01-03':[{g:'el docente está en la sección de presentismo de comedor',c:'registra la asistencia de los alumnos al servicio alimentario',e:'el registro queda guardado de forma independiente al presentismo escolar regular'},{g:'un alumno no está inscripto en el servicio de comedor',c:'el docente abre la lista de comedor',e:'el alumno no aparece en esa lista'}],
+'HU-01-04':[{g:'el docente de jornada extendida accede al módulo',c:'registra asistencia para la jornada extendida',e:'el registro se diferencia visualmente del turno regular y queda en una sección separada'},{g:'un alumno no está inscripto en jornada extendida',c:'el docente abre la lista de JE',e:'el alumno no aparece en la lista de jornada extendida'}],
+'HU-01-05':[{g:'el directivo tiene la app móvil instalada',c:'ingresa con sus credenciales y accede a su institución',e:'puede ver y registrar asistencia desde el dispositivo sin necesidad de una PC'},{g:'el dispositivo pierde conexión a internet',c:'el directivo intenta registrar asistencia',e:'la app notifica el estado offline y sincroniza los datos cuando se restaura la conexión'}],
+'HU-01-06':[{g:'el docente está en la pantalla de boletín del alumno',c:'escribe una observación de presentismo o informe valorativo',e:'la observación queda guardada y se refleja en el boletín al momento de generarlo'},{g:'el docente no ingresa ninguna observación',c:'se genera el boletín',e:'el boletín no muestra la sección de observaciones o la muestra vacía, sin errores'}],
+'HU-02-01':[{g:'el docente accede al módulo de calificaciones de su materia',c:'carga la nota del primer bimestre para todos sus alumnos',e:'las notas quedan guardadas y se toman en cuenta para el cálculo de la calificación general'},{g:'el docente ingresa un valor fuera del rango permitido',c:'intenta guardar',e:'el sistema muestra un error de validación y no guarda la nota'}],
+'HU-02-02':[{g:'el docente cargó las notas de todos los bimestres',c:'el sistema ejecuta el cálculo automático de calificación general',e:'la calificación general se muestra correctamente calculada según las reglas del nivel educativo'},{g:'faltan notas de algún bimestre',c:'el sistema intenta calcular',e:'el sistema muestra un aviso indicando que la calificación no puede calcularse hasta completar todos los períodos'}],
+'HU-02-03':[{g:'el directivo accede al módulo de regularidad',c:'consulta la condición de un alumno',e:'el sistema muestra claramente si el alumno es Regular, Condicional o Insuficiente según sus calificaciones'},{g:'la condición de regularidad cambia al actualizar una nota',c:'el directivo vuelve a consultar',e:'el sistema muestra la condición actualizada en tiempo real'}],
+'HU-02-04':[{g:'el docente accede al legajo académico de un alumno',c:'registra un ECP indicando la materia adeudada',e:'el ECP queda registrado, visible en el legajo y disponible para seguimiento'},{g:'el alumno ya tiene un ECP activo para esa materia',c:'el docente intenta registrar otro',e:'el sistema advierte que ya existe un ECP activo para esa materia'}],
+'HU-02-05':[{g:'el alumno está configurado con modalidad de nivelación o aceleración',c:'el docente accede a la carga de calificaciones',e:'el sistema muestra criterios de calificación adaptados, diferentes a los estándar'},{g:'el docente carga la calificación con criterios de inclusión',c:'se genera el boletín',e:'el boletín refleja la modalidad de nivelación/aceleración correctamente'}],
+'HU-02-06':[{g:'el directivo accede al módulo de regularidad',c:'consulta el impacto de la condición de un alumno',e:'el sistema muestra el estado resultante (promovido, previo, repitente) basado en su condición de regularidad'},{g:'la regularidad de un alumno cambia a Insuficiente',c:'el directivo revisa el cierre del ciclo',e:'el sistema actualiza automáticamente el estado del alumno para el proceso de efectivización'}],
+'HU-02-07':[{g:'el ciclo cerró y un alumno no alcanzó los requisitos de regularidad',c:'el directivo inicia el proceso de recuperación anual',e:'el sistema habilita el flujo y permite registrar el resultado del proceso'},{g:'el alumno aprueba la recuperación de regularidad',c:'el directivo registra el resultado',e:'la condición del alumno se actualiza y puede ser efectivizado al año siguiente'}],
+'HU-03-01':[{g:'el directivo accede al módulo de boletines',c:'selecciona un alumno y genera su boletín individual',e:'el boletín se genera con todas las calificaciones y observaciones del período, listo para descargar'},{g:'el alumno tiene calificaciones incompletas',c:'el directivo intenta generar el boletín',e:'el sistema advierte qué materias tienen datos faltantes antes de generar el documento'}],
+'HU-03-02':[{g:'el directivo selecciona una sección completa',c:'ejecuta la generación masiva de boletines',e:'el sistema genera todos los boletines del grupo en un solo proceso y los deja disponibles para descarga'},{g:'la generación masiva falla para algún alumno',c:'el proceso termina',e:'el sistema indica qué boletines no se pudieron generar y el motivo'}],
+'HU-03-03':[{g:'el directivo de un CENS accede al módulo de boletines',c:'genera un boletín para un alumno adulto',e:'el boletín respeta el formato y los campos propios de la educación de adultos'},{g:'la modalidad de la institución es Adultos Primaria',c:'se genera el boletín',e:'el sistema aplica automáticamente el formato correspondiente al nivel de adultos primaria'}],
+'HU-03-04':[{g:'el docente accede a la vista previa del boletín',c:'revisa los datos antes de la emisión',e:'puede ver exactamente cómo quedará el boletín con todas las calificaciones y observaciones cargadas'},{g:'el docente detecta un error en la vista previa',c:'vuelve a calificaciones para corregirlo',e:'la corrección se refleja inmediatamente en la vista previa'}],
+'HU-04-01':[{g:'el directivo tiene los datos del nuevo estudiante',c:'completa el formulario de matriculación y lo envía',e:'el alumno queda registrado, asignado a una sección y habilitado en el sistema'},{g:'el CUIL del estudiante ya existe en el sistema',c:'el directivo intenta matricularlo',e:'el sistema advierte que el alumno ya tiene un registro activo y evita la duplicación'}],
+'HU-04-02':[{g:'un alumno necesita trasladarse a otra escuela',c:'el directivo solicita el pase desde la plataforma',e:'la solicitud queda registrada como Pendiente y se notifica a la institución de destino'},{g:'el alumno tiene deuda académica pendiente',c:'el directivo solicita el pase',e:'el sistema muestra una advertencia indicando la situación académica antes de confirmar'}],
+'HU-04-03':[{g:'llega una solicitud de pase a la institución',c:'el directivo la aprueba',e:'el alumno queda incorporado, asignado a una sección y disponible en el sistema'},{g:'el directivo rechaza la solicitud de pase',c:'registra el motivo y confirma el rechazo',e:'la institución de origen recibe la notificación con el motivo indicado'}],
+'HU-04-04':[{g:'el directivo accede al legajo de un alumno',c:'consulta el historial de movimientos',e:'el sistema muestra una línea de tiempo con todos los pases, cambios de sección e inscripciones, ordenados cronológicamente'},{g:'el alumno nunca tuvo movimientos',c:'el directivo consulta el historial',e:'el sistema muestra únicamente el registro de inscripción inicial'}],
+'HU-04-05':[{g:'el supervisor accede al módulo de matriculación',c:'selecciona las escuelas a su cargo',e:'el sistema muestra los reportes de matrícula actualizados con totales por sección, nivel y estado'},{g:'ninguna escuela completó la matriculación',c:'el supervisor consulta el reporte',e:'el reporte indica que no hay datos cargados para ese período'}],
+'HU-05-01':[{g:'el directivo accede al módulo de efectivización al cierre del ciclo',c:'ejecuta la proyección de alumnos promovidos',e:'el sistema genera la lista de alumnos a efectivizar según su condición de regularidad'},{g:'el directivo confirma la efectivización',c:'el proceso se ejecuta',e:'los alumnos quedan matriculados en el año siguiente y el padrón del nuevo ciclo se actualiza'}],
+'HU-05-02':[{g:'el directivo accede al módulo de efectivización',c:'revisa las alertas de promoción',e:'el sistema muestra la lista de alumnos en riesgo con el detalle de los requisitos no cumplidos'},{g:'un alumno regulariza su situación después de aparecer en las alertas',c:'el directivo vuelve a consultar',e:'el alumno ya no aparece en la lista de alertas'}],
+'HU-05-03':[{g:'el directivo pertenece a una escuela nocturna o de reingreso',c:'accede al proceso de efectivización',e:'el sistema aplica las reglas específicas de esa modalidad, diferenciadas del flujo estándar'},{g:'la regla de la modalidad especial difiere de la secundaria estándar',c:'el sistema calcula la promoción',e:'el resultado respeta la normativa de la modalidad sin requerir configuración manual'}],
+'HU-06-01':[{g:'el directivo busca a un alumno por nombre o DNI',c:'accede a su legajo',e:'el sistema muestra toda la información académica e institucional centralizada: datos personales, sección, calificaciones, movimientos y documentos'},{g:'el alumno tiene datos incompletos en el legajo',c:'el directivo lo consulta',e:'el sistema indica claramente qué campos están pendientes de completar'}],
+'HU-06-02':[{g:'el directivo accede al legajo de un alumno sin CUIL registrado',c:'ingresa el número de CUIL y lo guarda',e:'el CUIL queda asociado al legajo y es visible para supervisores y administradores'},{g:'el CUIL ingresado no tiene el formato correcto',c:'el directivo intenta guardar',e:'el sistema muestra un error de validación y no guarda el dato'}],
+'HU-06-03':[{g:'el docente accede al listado de su sección',c:'consulta el código de aula de un alumno',e:'el sistema muestra el código asignado, listo para compartir con el alumno'},{g:'un alumno no tiene código de aula asignado',c:'el docente lo consulta',e:'el sistema indica que el código aún no fue generado y ofrece la opción de solicitarlo'}],
+'HU-06-04':[{g:'el directivo de primaria accede al legajo de un alumno ingresante',c:'consulta el PIP',e:'el sistema muestra el Puente Inicial-Primaria con el informe de egreso del nivel inicial'},{g:'el alumno no tiene PIP registrado',c:'el directivo lo consulta',e:'el sistema indica que no hay PIP disponible para ese alumno'}],
+'HU-06-05':[{g:'el directivo de secundaria accede al legajo de un alumno ingresante',c:'consulta el PPS',e:'el sistema muestra el Puente Primaria-Secundaria con el informe de egreso del nivel primario'},{g:'el PPS no está disponible',c:'el directivo lo consulta',e:'el sistema informa que el documento no fue cargado por la institución de origen'}],
+'HU-07-01':[{g:'el directivo accede a la gestión de usuarios de su institución',c:'solicita un nuevo rol para un docente',e:'la solicitud queda en estado Pendiente y el supervisor recibe la notificación'},{g:'el docente ya tiene el rol solicitado activo',c:'el directivo intenta solicitarlo nuevamente',e:'el sistema informa que el rol ya está asignado y no genera una solicitud duplicada'}],
+'HU-07-02':[{g:'el supervisor recibe una solicitud de rol pendiente',c:'la aprueba',e:'el rol queda activado y el docente puede acceder a las funcionalidades correspondientes inmediatamente'},{g:'el supervisor rechaza la solicitud',c:'registra el motivo',e:'el directivo que solicitó el rol recibe la notificación del rechazo con el motivo indicado'}],
+'HU-07-03':[{g:'el administrador asigna el rol de solo visualización a un usuario',c:'el usuario accede a la plataforma',e:'puede navegar por las secciones autorizadas pero no puede modificar ningún dato'},{g:'el usuario con rol de visualización intenta editar un campo',c:'lo intenta',e:'el sistema bloquea la acción y muestra un mensaje indicando que no tiene permisos de edición'}],
+'HU-07-04':[{g:'el administrador necesita reproducir un problema reportado',c:'activa la función de impersonar y selecciona al usuario',e:'el sistema carga la sesión del usuario y el administrador ve exactamente lo que ve ese usuario'},{g:'el administrador termina la impersonación',c:'cierra la vista impersonada',e:'el sistema vuelve a la sesión del administrador sin afectar la cuenta del usuario impersonado'}],
+'HU-07-05':[{g:'el directivo necesita habilitar a personal no docente',c:'lo habilita desde "Otros accesos"',e:'la persona queda habilitada con los permisos correspondientes a su función'},{g:'la persona ya tiene un acceso activo',c:'el directivo intenta crear otro',e:'el sistema advierte que ya existe un acceso activo para esa persona'}],
+'HU-08-01':[{g:'el administrador accede al backoffice de planes de estudio',c:'modifica un plan existente',e:'el cambio se guarda y se refleja en el módulo de calificaciones para todas las instituciones que usan ese plan'},{g:'el cambio afecta a instituciones con calificaciones ya cargadas',c:'el administrador intenta guardar',e:'el sistema advierte del impacto y solicita confirmación antes de aplicar el cambio'}],
+'HU-08-02':[{g:'el administrador accede al plan de estudio de un nivel',c:'da de alta una nueva materia con sus atributos',e:'la materia queda disponible en el plan y puede ser seleccionada por las instituciones del nivel'},{g:'la materia ya existe en el plan con el mismo nombre',c:'el administrador intenta darla de alta',e:'el sistema advierte la duplicación y no permite guardar hasta resolver el conflicto'}],
+'HU-08-03':[{g:'el administrador detecta un error en un plan de estudio',c:'accede y lo corrige',e:'el error queda corregido, el cambio se registra y se actualiza en todas las instituciones afectadas'},{g:'la corrección implica eliminar una materia con calificaciones cargadas',c:'el administrador intenta hacerlo',e:'el sistema bloquea la eliminación y muestra un mensaje indicando que hay datos asociados'}],
+'HU-08-04':[{g:'el directivo accede a la configuración de su institución',c:'consulta el plan de estudio asignado',e:'el sistema muestra el plan completo con todas las materias, años y modalidades configuradas'},{g:'hay una versión más nueva disponible',c:'el directivo consulta el plan',e:'el sistema indica que hay una actualización disponible y muestra qué cambios incluye'}],
+'HU-09-01':[{g:'el alumno tiene configurada la modalidad de inclusión en su legajo',c:'el docente accede a cargar sus calificaciones',e:'el sistema muestra una grilla adaptada con criterios de inclusión, diferente a la estándar'},{g:'el docente carga la calificación de inclusión',c:'se genera el boletín',e:'el boletín refleja la modalidad de inclusión con la leyenda correspondiente, sin notas numéricas estándar'}],
+'HU-09-02':[{g:'el directivo accede al legajo de un alumno con trayectoria de inclusión',c:'consulta la sección de inclusión',e:'el sistema muestra el historial, los apoyos configurados y el período de vigencia'},{g:'el alumno fue dado de alta en inclusión durante el ciclo',c:'el directivo consulta el legajo',e:'el sistema muestra la fecha de inicio de la trayectoria de inclusión dentro del período actual'}],
+'HU-09-03':[{g:'el directivo configura a un alumno en un grado de nivelación',c:'accede al legajo y activa la modalidad',e:'el alumno queda configurado y el sistema aplica las reglas curriculares correspondientes'},{g:'el alumno completa el grado de nivelación y pasa al regular',c:'el directivo actualiza la modalidad',e:'el sistema registra el cambio y aplica las reglas de calificación estándar a partir de ese momento'}],
+'HU-10-01':[{g:'el alumno completó 7mo grado y el directivo accede al módulo de certificados',c:'genera el certificado de finalización',e:'el sistema produce el certificado con los datos del alumno, la institución y el ciclo correctamente completados'},{g:'el alumno no completó todos los requisitos para egresar',c:'el directivo intenta generar el certificado',e:'el sistema bloquea la generación y muestra los requisitos pendientes'}],
+'HU-10-02':[{g:'el certificado fue generado exitosamente',c:'el directivo hace clic en Descargar',e:'el sistema descarga el certificado en PDF listo para entregar a la familia o archivar'},{g:'el certificado ya fue descargado anteriormente',c:'el directivo intenta descargarlo de nuevo',e:'el sistema permite descargarlo nuevamente sin necesidad de regenerarlo'}],
+'HU-10-03':[{g:'el certificado fue generado pero aún no emitido',c:'el directivo accede a la vista previa',e:'puede revisar nombre, DNI, institución, ciclo lectivo y firma antes de confirmar la emisión'},{g:'el directivo detecta un error en la vista previa',c:'cancela la emisión',e:'el sistema permite corregir los datos antes de volver a generar el certificado'}],
+'HU-11-01':[{g:'el docente está cargando calificaciones y ocurre un cierre inesperado de sesión',c:'el docente reingresa al sistema',e:'el sistema recupera automáticamente los datos guardados hasta el último autoguardado'},{g:'el autoguardado se activa y el docente quiere deshacer los cambios',c:'el docente lo solicita',e:'el sistema ofrece la opción de restaurar la versión anterior al autoguardado'}],
+'HU-11-02':[{g:'el usuario navega varios niveles dentro de la plataforma',c:'consulta las migas de pan',e:'el sistema muestra la ruta completa de navegación con links funcionales a cada nivel'},{g:'el usuario está en una sección de segundo nivel',c:'hace clic en Volver',e:'el sistema lo lleva a la pantalla anterior sin perder los datos ingresados'}],
+'HU-11-03':[{g:'el usuario accede a configuración de cuenta',c:'ingresa su contraseña actual y la nueva contraseña dos veces',e:'el sistema actualiza la contraseña y solicita que ingrese nuevamente con la nueva'},{g:'la nueva contraseña no cumple los requisitos de seguridad',c:'el usuario intenta guardar',e:'el sistema muestra los requisitos no cumplidos y no actualiza la contraseña'}],
+'HU-11-04':[{g:'el administrador publica una novedad en la cartelera',c:'el usuario accede a la plataforma',e:'la novedad aparece visible con su título, fecha y contenido, ordenada por fecha de publicación'},{g:'hay varias novedades publicadas',c:'el usuario accede a la cartelera',e:'las novedades se muestran en orden cronológico inverso, con las más recientes primero'}]
+};
+
+function toggleCA(btn, huId) {
+  var block = btn.nextElementSibling;
+  var isOpen = block.style.display !== 'none';
+  if (!isOpen && !block.innerHTML) {
+    var scenarios = CA[huId] || [];
+    block.innerHTML = scenarios.length === 0
+      ? '<p style="color:#9ca3af;font-size:12px;padding:8px 0;">Sin criterios registrados.</p>'
+      : scenarios.map(function(s, i) {
+          return '<div style="margin-bottom:8px;padding:10px 12px;background:#f9f7ff;border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;font-size:12px;">' +
+            '<div style="margin-bottom:3px;"><span style="font-weight:700;color:#5b21b6;">📌 Dado que</span> ' + s.g + '</div>' +
+            '<div style="margin-bottom:3px;"><span style="font-weight:700;color:#5b21b6;">⚡ Cuando</span> ' + s.c + '</div>' +
+            '<div><span style="font-weight:700;color:#5b21b6;">✅ Entonces</span> ' + s.e + '</div>' +
+            '</div>';
+        }).join('');
+  }
+  block.style.display = isOpen ? 'none' : 'block';
+  btn.textContent = isOpen ? '📋 Ver criterios de aceptación' : '▲ Ocultar criterios';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('#doc-hu table tr:not(:first-child)').forEach(function(row) {
+    var idCell = row.cells[0];
+    var contentCell = row.cells[1];
+    if (!idCell || !contentCell) return;
+    var badge = idCell.querySelector('span');
+    if (!badge) return;
+    var huId = badge.textContent.trim();
+    if (!CA[huId]) return;
+    var btn = document.createElement('button');
+    btn.textContent = '📋 Ver criterios de aceptación';
+    btn.style.cssText = 'margin-top:10px;padding:4px 10px;font-size:11px;font-weight:600;color:#7c3aed;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:6px;cursor:pointer;display:block;transition:background .15s;';
+    btn.onmouseover = function(){ this.style.background='#ede9fe'; };
+    btn.onmouseout = function(){ this.style.background='#f5f3ff'; };
+    btn.onclick = function(){ toggleCA(this, huId); };
+    var caDiv = document.createElement('div');
+    caDiv.style.display = 'none';
+    caDiv.style.marginTop = '8px';
+    contentCell.appendChild(btn);
+    contentCell.appendChild(caDiv);
+  });
+});
+
+// ===== FILTROS HISTORIAS DE USUARIO =====
+var _huRolActivo = 'todos';
+
+function filtrarHU() {
+  var texto = (document.getElementById('hu-search').value || '').toLowerCase().trim();
+  var acordeones = document.querySelectorAll('#doc-hu .ac');
+  var totalVisibles = 0;
+
+  acordeones.forEach(function(ac) {
+    var filas = ac.querySelectorAll('table tr:not(:first-child)');
+    var acVisible = false;
+
+    filas.forEach(function(row) {
+      var rolCell = row.cells[2] ? row.cells[2].textContent.trim() : '';
+      var contenido = row.textContent.toLowerCase();
+      var pasaRol = _huRolActivo === 'todos' || rolCell === _huRolActivo;
+      var pasaTexto = !texto || contenido.includes(texto);
+
+      if (pasaRol && pasaTexto) {
+        row.style.display = '';
+        acVisible = true;
+        totalVisibles++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    ac.style.display = acVisible ? '' : 'none';
+  });
+
+  var contador = document.getElementById('hu-count');
+  if (contador) contador.textContent = totalVisibles;
+  var sinRes = document.getElementById('hu-sin-resultados');
+  if (sinRes) sinRes.style.display = totalVisibles === 0 ? 'block' : 'none';
+}
+
+function filtrarHURol(btn, rol) {
+  _huRolActivo = rol;
+  document.querySelectorAll('.hu-filtro').forEach(function(b) {
+    b.style.background = '#fff';
+    b.style.color = '#6b7280';
+    b.style.borderColor = '#ddd6fe';
+  });
+  btn.style.background = '#7c3aed';
+  btn.style.color = '#fff';
+  btn.style.borderColor = '#7c3aed';
+  filtrarHU();
+}
+
+function limpiarFiltrosHU() {
+  document.getElementById('hu-search').value = '';
+  _huRolActivo = 'todos';
+  document.querySelectorAll('.hu-filtro').forEach(function(b) {
+    b.style.background = '#fff';
+    b.style.color = '#6b7280';
+    b.style.borderColor = '#ddd6fe';
+  });
+  var todosBtn = document.querySelector('.hu-filtro[data-rol="todos"]');
+  if (todosBtn) { todosBtn.style.background = '#7c3aed'; todosBtn.style.color = '#fff'; todosBtn.style.borderColor = '#7c3aed'; }
+  filtrarHU();
+}
+
+function limpiarFiltrosEpicas() {
+  document.getElementById('ep-search').value = '';
+  _epEstadoActivo = 'todos';
+  document.querySelectorAll('.ep-filtro').forEach(function(b) {
+    b.style.background = '#fff';
+    b.style.color = b.dataset.estado === 'ok' ? '#15803d' : b.dataset.estado === 'warn' ? '#a16207' : '#6b7280';
+    b.style.borderColor = b.dataset.estado === 'ok' ? '#86efac' : b.dataset.estado === 'warn' ? '#fde047' : '#ddd6fe';
+  });
+  var todosBtn = document.querySelector('.ep-filtro[data-estado="todos"]');
+  if (todosBtn) { todosBtn.style.background = '#7c3aed'; todosBtn.style.color = '#fff'; todosBtn.style.borderColor = '#7c3aed'; }
+  filtrarEpicas();
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') cerrarModalEstado();
+});
+
+// Actualizar contadores al cargar
+document.addEventListener('DOMContentLoaded', function() {
+  var statDesarrollo = document.getElementById('stat-desarrollo');
+  var statPendiente = document.getElementById('stat-pendiente');
+  if (statDesarrollo) statDesarrollo.textContent = document.querySelectorAll('#tabla-docs tbody tr td:nth-child(5) span[title="En desarrollo"]').length || 0;
+  if (statPendiente) statPendiente.textContent = document.querySelectorAll('#tabla-docs tbody tr td:nth-child(5) span[title="Pendiente"]').length || 0;
+});
+</script>
+<!-- /JS Documentacion -->
 </body><!-- deploy forzado Jun 2026 -->
 <!-- deploy trigger -->
 </html>
