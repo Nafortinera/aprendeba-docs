@@ -601,6 +601,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <!-- NAV PRINCIPAL -->
 <nav class="nav-principal">
 <button class="activo" data-tab="inicio" onclick="cambiarTab('inicio')">🏠 Inicio</button>
+<button data-tab="instructivos" onclick="cambiarTab('instructivos')">📋 Instructivos</button>
 <button data-tab="documentacion" onclick="cambiarTab('documentacion')">🗒️ Documentación</button>
 <button data-tab="procesos" onclick="cambiarTab('procesos')">🚀 Procesos &amp; Estado</button>
 <button data-tab="testing" onclick="cambiarTab('testing')">🧪 Testing</button>
@@ -5555,13 +5556,13 @@ function cambiarTab(tab) {
   // Mostrar/ocultar subnavs
   document.querySelectorAll('.nav-sub').forEach(n => n.style.display = 'none');
   const sub = document.getElementById('subnav-' + tab);
-  if (sub && tab !== 'documentacion') sub.style.display = 'flex';
+  if (sub) sub.style.display = 'flex';
   // Siempre garantizar un sub-content activo
   if (content) {
     // Resetear todos los sub-contents de ESTE tab
     if (tab === 'documentacion') {
       content.querySelectorAll('.sub-content').forEach(s => s.classList.remove('activo'));
-      const dt = document.getElementById('doc-tabla');
+      const dt = document.getElementById('doc-home');
       if (dt) dt.classList.add('activo');
     } else {
       const activeSub = content.querySelector('.sub-content.activo');
