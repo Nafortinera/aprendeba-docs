@@ -325,10 +325,8 @@
 nav.nav-principal button[data-tab="bacolaborativa"].activo { color: #1d4ed8; border-bottom-color: #3b82f6; }
 nav.nav-principal button[data-tab="powerbi"].activo { color: #f59e0b; border-bottom-color: #d97706; }
   nav.nav-principal button[data-tab="mantis"].activo { color: #b91c1c; border-bottom-color: #ef4444; }
-nav.nav-principal button[data-tab="backoffice"].activo { color: #6d28d9; border-bottom-color: #8b5cf6; }
 nav.nav-principal button[data-tab="generador"].activo { color: #0e7490; border-bottom-color: #06b6d4; }
 nav.nav-principal button[data-tab="roles"].activo { color: #6c3d9e; border-bottom-color: #a855f7; }
-.backoffice-frame { width:100%; height:82vh; border:none; border-radius:12px; box-shadow:0 2px 12px rgba(26,77,143,0.10); display:block; }
 .mantis-panel { background: white; border-radius: 12px; padding: 24px 28px; box-shadow: 0 2px 12px rgba(26,77,143,0.10); margin-bottom: 16px; }
 .mantis-issue { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 12px; }
 .mantis-issue:hover { background: #f9fafb; }
@@ -609,7 +607,6 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <button data-tab="flujos" onclick="cambiarTab('flujos')">🔀 Flujos</button>
 <button data-tab="bacolaborativa" onclick="cambiarTab('bacolaborativa')">🤝 BA Colaborativa</button>
 <button data-tab="mantis" onclick="cambiarTab('mantis')">🐛 Mantis</button>
-<button data-tab="backoffice" onclick="cambiarTab('backoffice')">🖥️ Backoffice</button>
 <button data-tab="generador" onclick="cambiarTab('generador')">📝 Generador</button>
 <button data-tab="roles" onclick="cambiarTab('roles')">🔐 Roles</button>
 </nav>
@@ -4746,11 +4743,6 @@ flowchart TD
 </div>
 </div>
 
-<div id="tab-backoffice" class="tab-content">
-<div class="panel-header" style="margin-bottom:16px;">
-  <h2 class="panel-title">&#x1F5A5;&#xFE0F; Backoffice AprendeBA</h2>
-  <p style="color:#6b7280;margin:4px 0 0;font-size:0.9rem;">Gestión interna de escuelas, planes, materias, roles y usuarios</p>
-</div>
 <iframe src="https://aprendeba-backoffice.vercel.app/" style="width:100%;height:82vh;border:none;border-radius:12px;box-shadow:0 2px 12px rgba(26,77,143,0.10);display:block;" frameborder="0" allowfullscreen title="Backoffice AprendeBA"></iframe>
 </div>
 </main>
