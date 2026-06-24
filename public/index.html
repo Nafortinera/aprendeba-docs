@@ -66,7 +66,7 @@
   .search-badge { background: rgba(255,255,255,0.18); padding: 3px 11px; border-radius: 10px; font-size: 12px; }
 
   /* NAV PRINCIPAL */
-  nav.nav-principal { background: white; border-bottom: 3px solid var(--apba-navy); display: flex; padding: 0 24px; overflow-x: auto; }
+  nav.nav-principal { background: white; border-bottom: none; flex: 1; min-width: 0; display: flex; padding: 0 24px; overflow-x: auto; }
   nav.nav-principal button { flex-shrink: 0; background: none; border: none; padding: 14px 22px; cursor: pointer; font-size: 13.5px; font-weight: 600; color: var(--texto-suave); border-bottom: 3px solid transparent; margin-bottom: -3px; transition: all 0.15s; display: flex; align-items: center; gap: 8px; white-space: nowrap;
     letter-spacing: 0.2px; font-weight: 600;
   }
@@ -548,18 +548,14 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 #tabla-docs th:nth-child(4),
 #tabla-docs td:nth-child(4) { display: none; }
 
+
   /* Nav scroll arrows */
-  .nav-pw { position: relative; background: white; }
-  .nav-arrow { position: absolute; top: 0; bottom: 3px; width: 36px; z-index: 10;
-    border: none; cursor: pointer; font-size: 18px; font-weight: 700;
+  .nav-pw { display: flex; align-items: stretch; background: white; border-bottom: 3px solid var(--apba-navy); }
+  .nav-arrow { flex-shrink: 0; width: 32px; border: none; cursor: pointer; font-size: 22px; font-weight: 700;
     display: none; align-items: center; justify-content: center;
-    background: transparent; color: var(--apba-navy); transition: background .15s; padding: 0; }
-  .nav-arrow:hover { background: rgba(0,0,0,.06); }
+    color: var(--apba-navy); background: white; padding: 0; transition: background .15s; }
+  .nav-arrow:hover { background: #f0f4f8; }
   .nav-arrow.visible { display: flex; }
-  .nav-arrow-l { left: 0; background: linear-gradient(to right, white 60%, transparent); }
-  .nav-arrow-r { right: 0; background: linear-gradient(to left, white 60%, transparent); }
-  .nav-arrow-l:hover { background: linear-gradient(to right, #f0f0f0 60%, transparent); }
-  .nav-arrow-r:hover { background: linear-gradient(to left, #f0f0f0 60%, transparent); }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
@@ -9396,17 +9392,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 #tabla-docs td:nth-child(4) { display: none; }
 
   /* Nav scroll arrows */
-  .nav-pw { position: relative; background: white; }
-  .nav-arrow { position: absolute; top: 0; bottom: 3px; width: 36px; z-index: 10;
-    border: none; cursor: pointer; font-size: 18px; font-weight: 700;
-    display: none; align-items: center; justify-content: center;
-    background: transparent; color: var(--apba-navy); transition: background .15s; padding: 0; }
-  .nav-arrow:hover { background: rgba(0,0,0,.06); }
-  .nav-arrow.visible { display: flex; }
-  .nav-arrow-l { left: 0; background: linear-gradient(to right, white 60%, transparent); }
-  .nav-arrow-r { right: 0; background: linear-gradient(to left, white 60%, transparent); }
-  .nav-arrow-l:hover { background: linear-gradient(to right, #f0f0f0 60%, transparent); }
-  .nav-arrow-r:hover { background: linear-gradient(to left, #f0f0f0 60%, transparent); }
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
