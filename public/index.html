@@ -601,6 +601,7 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <!-- NAV PRINCIPAL -->
 <nav class="nav-principal">
 <button class="activo" data-tab="inicio" onclick="cambiarTab('inicio')">🏠 Inicio</button>
+<button data-tab="documentacion" onclick="cambiarTab('documentacion')">🗒️ Documentación</button>
 <button data-tab="procesos" onclick="cambiarTab('procesos')">🚀 Procesos &amp; Estado</button>
 <button data-tab="testing" onclick="cambiarTab('testing')">🧪 Testing</button>
 <button data-tab="der" onclick="cambiarTab('der')">🗂️ Entidades</button>
@@ -613,20 +614,11 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <!-- SUB-NAV -->
 <nav class="nav-sub" id="subnav-instructivos">
 </nav>
-<nav class="nav-sub" id="subnav-documentacion" style="display:none!important">
-<button class="activo" data-sub="doc-tabla" onclick="cambiarSub('documentacion','doc-tabla')">📊 Tabla documentos</button>
-<button data-sub="doc-matriculacion" onclick="cambiarSub('documentacion','doc-matriculacion')">🎓 Matriculación</button>
-<button data-sub="doc-pases" onclick="cambiarSub('documentacion','doc-pases')">🔀 Pases</button>
-<button data-sub="doc-efectivizacion" onclick="cambiarSub('documentacion','doc-efectivizacion')">✅ Efectivización</button>
-<button data-sub="doc-ecp" onclick="cambiarSub('documentacion','doc-ecp')">📚 ECP</button>
-<button data-sub="doc-roles" onclick="cambiarSub('documentacion','doc-roles')">👤 Roles</button>
-<button data-sub="inv-todos" onclick="cambiarSub('documentacion','doc-tabla')">📄 Inv. completo</button>
-<button data-sub="inv-calificaciones" onclick="cambiarSub('documentacion','doc-tabla')">📝 Calificaciones</button>
-<button data-sub="inv-boletines" onclick="cambiarSub('documentacion','doc-tabla')">📄 Boletines</button>
-<button data-sub="inv-pases" onclick="cambiarSub('documentacion','doc-pases')">🔀 Pases inv.</button>
-<button data-sub="inv-presentismo" onclick="cambiarSub('documentacion','doc-tabla')">📋 Presentismo</button>
-<button data-sub="inv-legajo" onclick="cambiarSub('documentacion','doc-tabla')">🗂 Legajo</button>
-<button data-sub="inv-roles" onclick="cambiarSub('documentacion','doc-roles')">🔐 Roles inv.</button>
+<nav class="nav-sub" id="subnav-documentacion" style="display:none">
+<button class="activo" data-sub="doc-home" onclick="cambiarSub('documentacion','doc-home')">🏠 Inicio</button>
+<button data-sub="doc-tabla" onclick="cambiarSub('documentacion','doc-tabla')">📊 Inventario de Documentación</button>
+<button data-sub="doc-epicas" onclick="cambiarSub('documentacion','doc-epicas')">🗂 Épicas</button>
+<button data-sub="doc-hu" onclick="cambiarSub('documentacion','doc-hu')">📝 Historias de Usuario</button>
 </nav>
 <nav class="nav-sub" id="subnav-procesos">
 <button class="activo" data-sub="proc-estado" onclick="cambiarSub('procesos','proc-estado')">🟢 Estado módulos</button>
