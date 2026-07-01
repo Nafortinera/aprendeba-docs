@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AprendeBA — Panel Admin</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --navy:#1a3d4f;--teal:#4bbfbf;--yellow:#f7c24a;--red:#e05555;
+    --bg:linear-gradient(155deg,#b8e8e8 0%,#cff2f2 25%,#e8fafa 55%,#f5fdfd 100%);
+    --card:#ffffffdd;--shadow:0 4px 20px rgba(26,61,79,.12);--radius:14px;
+    --font:'Segoe UI',system-ui,sans-serif;
+  }
+  body{font-family:var(--font);background:var(--bg);min-height:100vh}
+  header{background:transparent;padding:14px 28px;display:flex;align-items:center;gap:14px;border-bottom:1px solid rgba(75,191,191,.2)}
+  header .brand-name{font-size:1.1rem;font-weight:700;color:var(--navy)}
+  header .brand-sub{font-size:.72rem;color:#4a7a8a}
+  header .hbadge{background:rgba(247,194,74,.25);color:#8a5c00;border-radius:6px;padding:3px 10px;font-size:.78rem;font-weight:700;margin-left:8px}
+  .back-btn{margin-left:auto;background:rgba(255,255,255,.7);border:1px solid rgba(75,191,191,.4);border-radius:8px;padding:6px 14px;font-size:.82rem;color:var(--navy);cursor:pointer;text-decoration:none;font-weight:500}
+  .back-btn:hover{background:#fff}
+
+  /* LOGIN */
+  .login-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 70px)}
+  .login-card{background:var(--card);border-radius:var(--radius);padding:36px;width:360px;box-shadow:var(--shadow);text-align:center}
+  .login-card h2{color:var(--navy);margin-bottom:8px}
+  .login-card p{color:#5a7a8a;font-size:.86rem;margin-bottom:24px}
+  .login-card input{width:100%;border:1.5px solid rgba(75,191,191,.4);border-radius:9px;padding:11px 14px;font-size:.9rem;outline:none;margin-bottom:14px}
+  .login-card input:focus{border-color:var(--teal)}
+  .login-card button{width:100%;background:var(--teal);border:none;border-radius:10px;padding:12px;color:#fff;font-weight:700;font-size:.95rem;cursor:pointer}
+  .login-card button:hover{background:#3aadad}
+  .error-msg{color:var(--red);font-size:.82rem;margin-top:-8px;margin-bottom:10px;display:none}
+
+  /* ADMIN PANEL */
+  .admin-panel{display:none;max-width:1100px;margin:0 auto;padding:24px 20px}
+  
+  /* STATS */
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+  .stat-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);text-align:center}
+  .stat-num{font-size:2.2rem;font-weight:800;color:var(--teal);line-height:1}
+  .stat-label{font-size:.78rem;color:#5a7a8a;margin-top:5px}
+
+  /* TABS */
+  .tabs{display:flex;gap:0;margin-bottom:20px;background:var(--card);border-radius:var(--radius);padding:6px;box-shadow:var(--shadow);width:fit-content}
+  .tab-btn{padding:8px 20px;border:none;border-radius:10px;background:none;font-size:.88rem;font-weight:600;color:#5a7a8a;cursor:pointer;transition:.15s}
+  .tab-btn.active{background:var(--teal);color:#fff}
+
+  /* FAQs */
+  .section{display:none}
+  .section.active{display:block}
+  .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .section-title h2{font-size:1.05rem;font-weight:700;color:var(--navy)}
+  .btn-add{background:var(--navy);border:none;border-radius:8px;padding:8px 16px;color:#fff;font-size:.84rem;font-weight:600;cursor:pointer;transition:.15s}
+  .btn-add:hover{background:#2a5d6f}
+  .faq-grid{display:flex;flex-direction:column;gap:10px}
+  .faq-item{background:var(--card);border-radius:var(--radius);padding:14px 18px;box-shadow:var(--shadow);display:flex;gap:14px;align-items:flex-start}
+  .faq-cat{background:rgba(75,191,191,.15);color:var(--teal);border-radius:6px;padding:2px 9px;font-size:.73rem;font-weight:700;white-space:nowrap}
+  .faq-body{flex:1}
+  .faq-q{font-weight:600;color:var(--navy);font-size:.88rem}
+  .faq-a{font-size:.82rem;color:#4a6a7a;margin-top:4px;line-height:1.4}
+  .faq-actions{display:flex;gap:6px;flex-shrink:0}
+  .btn-edit,.btn-del{border:none;border-radius:7px;padding:5px 11px;font-size:.78rem;font-weight:600;cursor:pointer;transition:.15s}
+  .btn-edit{background:rgba(75,191,191,.15);color:var(--teal)}
+  .btn-edit:hover{background:var(--teal);color:#fff}
+  .btn-del{background:rgba(224,85,85,.1);color:var(--red)}
+  .btn-del:hover{background:var(--red);color:#fff}
+
+  /* MÉTRICAS */
+  .metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .metric-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+  .metric-card h3{font-size:.82rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+  .metric-table{width:100%;border-collapse:collapse;font-size:.83rem}
+  .metric-table th{text-align:left;padding:6px 8px;color:#5a7a8a;font-weight:600;border-bottom:1px solid rgba(0,0,0,.06)}
+  .metric-table td{padding:6px 8px;border-bottom:1px solid rgba(0,0,0,.04);color:var(--navy)}
+  .metric-table tr:last-child td{border-bottom:none}
+
+  /* MODAL EDICIÓN */
+  .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:100;align-items:center;justify-content:center}
+  .modal-ov.show{display:flex}
+  .modal{background:#fff;border-radius:var(--radius);padding:28px;width:500px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.2)}
+  .modal h2{font-size:1.05rem;color:var(--navy);margin-bottom:18px}
+  .modal label{font-size:.82rem;font-weight:600;color:var(--navy);display:block;margin-bottom:5px;margin-top:12px}
+  .modal input,.modal textarea,.modal select{width:100%;border:1.5px solid rgba(75,191,191,.3);border-radius:8px;padding:9px 12px;font-size:.88rem;color:var(--navy);outline:none;background:#fafefe;resize:vertical}
+  .modal input:focus,.modal textarea:focus,.modal select:focus{border-color:var(--teal)}
+  .modal textarea{min-height:90px}
+  .modal-btns{display:flex;gap:10px;margin-top:18px}
+  .btn-save{flex:1;background:var(--teal);border:none;border-radius:9px;padding:10px;color:#fff;font-weight:700;font-size:.9rem;cursor:pointer}
+  .btn-cancel{flex:1;background:#f0f4f5;border:none;border-radius:9px;padding:10px;color:#5a7a8a;font-weight:600;font-size:.9rem;cursor:pointer}
+
+  @media(max-width:700px){
+    .stats-row{grid-template-columns:1fr 1fr}
+    .metrics-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="brand-name">AprendeBA <span class="hbadge">⚙ Admin</span></div>
+    <div class="brand-sub">Panel de administración · Célula 7</div>
+  </div>
+  <a href="bot.html" class="back-btn">← Volver al bot</a>
+</header>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <h2>🔐 Acceso admin</h2>
+    <p>Ingresá la contraseña del panel de administración</p>
+    <div class="error-msg" id="loginError">Contraseña incorrecta</div>
+    <input type="password" id="adminPwd" placeholder="Contraseña admin" onkeydown="if(event.key==='Enter')login()">
+    <button onclick="login()">Ingresar</button>
+  </div>
+</div>
+
+<!-- PANEL -->
+<div class="admin-panel" id="adminPanel">
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" id="s-conv">—</div><div class="stat-label">Conversaciones</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-questions">—</div><div class="stat-label">Preguntas</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-faqs">—</div><div class="stat-label">FAQs activas</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-today">—</div><div class="stat-label">Consultas hoy</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('faqs',this)">📋 FAQs</button>
+    <button class="tab-btn" onclick="switchTab('metrics',this)">📊 Métricas</button>
+  </div>
+
+  <!-- SECCIÓN FAQs -->
+  <div class="section active" id="sec-faqs">
+    <div class="section-title">
+      <h2>Preguntas Frecuentes</h2>
+      <button class="btn-add" onclick="openFaqModal()">+ Agregar FAQ</button>
+    </div>
+    <div class="faq-grid" id="faqGrid">Cargando...</div>
+  </div>
+
+  <!-- SECCIÓN MÉTRICAS -->
+  <div class="section" id="sec-metrics">
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <h3>📅 Últimos 10 días</h3>
+        <table class="metric-table">
+          <thead><tr><th>Fecha</th><th>Convs.</th><th>Preguntas</th><th>Fuente IA</th></tr></thead>
+          <tbody id="dailyBody"><tr><td colspan="4" style="color:#aaa">Cargando...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="metric-card">
+        <h3>🔥 Preguntas más frecuentes</h3>
+        <table class="metric-table">
+          <thead><tr><th>Pregunta</th><th>Veces</th></tr></thead>
+          <tbody id="topQBody"><tr><td colspan="2" style="color:#aaa">Cargando...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="metric-card">
+        <h3>👥 Consultas por rol</h3>
+        <table class="metric-table">
+          <thead><tr><th>Rol</th><th>Conversaciones</th></tr></thead>
+          <tbody id="roleBody"><tr><td colspan="2" style="color:#aaa">Cargando...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FAQ -->
+<div class="modal-ov" id="faqModal">
+  <div class="modal">
+    <h2 id="modalTitle">Nueva FAQ</h2>
+    <input type="hidden" id="faqId">
+    <label>Categoría</label>
+    <select id="faqCat">
+      <option value="acceso">Acceso</option>
+      <option value="autoregistración">Autoregistración</option>
+      <option value="matriculación">Matriculación</option>
+      <option value="calificaciones">Calificaciones</option>
+      <option value="asistencia">Asistencia</option>
+      <option value="ecp">ECP</option>
+      <option value="soporte">Soporte</option>
+      <option value="agenda">Agenda educativa</option>
+      <option value="roles">Roles y permisos</option>
+      <option value="otro">Otro</option>
+    </select>
+    <label>Pregunta</label>
+    <input type="text" id="faqQ" placeholder="¿Cómo...?">
+    <label>Respuesta</label>
+    <textarea id="faqA" placeholder="Escribí la respuesta completa aquí..."></textarea>
+    <label>Palabras clave (separadas por comas)</label>
+    <input type="text" id="faqKw" placeholder="ej: matricular, inscribir, alumno">
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeFaqModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveFaq()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let adminSecret = '';
+let faqs = [];
+
+async function login() {
+  const pwd = document.getElementById('adminPwd').value.trim();
+  if (!pwd) return;
+  // Verificar con /api/faqs GET — si devuelve bien, ok; si 401 con auth header, mal
+  try {
+    const r = await fetch('/api/faqs', {
+      headers: { 'Authorization': `Bearer ${pwd}` }
+    });
+    // Intentamos un GET de métricas para verificar la clave admin
+    const mr = await fetch('/api/metrics', {
+      headers: { 'Authorization': `Bearer ${pwd}` }
+    });
+    if (mr.status === 401) {
+      document.getElementById('loginError').style.display = 'block';
+      return;
+    }
+    adminSecret = pwd;
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadAll();
+  } catch {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+async function loadAll() {
+  await Promise.all([loadFaqs(), loadMetrics()]);
+}
+
+async function loadFaqs() {
+  const r = await fetch('/api/faqs');
+  faqs = await r.json();
+  document.getElementById('s-faqs').textContent = faqs.length;
+  renderFaqs();
+}
+
+function renderFaqs() {
+  const grid = document.getElementById('faqGrid');
+  if (!faqs.length) { grid.innerHTML = '<div style="color:#aaa;text-align:center;padding:20px">Sin FAQs. Agregá la primera.</div>'; return; }
+  grid.innerHTML = faqs.map(f => `
+    <div class="faq-item">
+      <span class="faq-cat">${f.category}</span>
+      <div class="faq-body">
+        <div class="faq-q">${esc(f.question)}</div>
+        <div class="faq-a">${esc(f.answer.substring(0,120))}${f.answer.length>120?'…':''}</div>
+      </div>
+      <div class="faq-actions">
+        <button class="btn-edit" onclick='editFaq(${JSON.stringify(f)})'>✏</button>
+        <button class="btn-del" onclick="deleteFaq('${f.id}')">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+async function loadMetrics() {
+  try {
+    const r = await fetch('/api/metrics', { headers: { 'Authorization': `Bearer ${adminSecret}` } });
+    if (!r.ok) return;
+    const d = await r.json();
+    document.getElementById('s-conv').textContent = d.totals?.conversations ?? '—';
+    document.getElementById('s-questions').textContent = d.totals?.questions ?? '—';
+
+    // Consultas hoy
+    const today = new Date().toISOString().split('T')[0];
+    const todayData = d.daily?.find(x => x.day === today);
+    document.getElementById('s-today').textContent = todayData?.questions ?? 0;
+
+    // Tabla diaria
+    const dailyBody = document.getElementById('dailyBody');
+    if (d.daily?.length) {
+      dailyBody.innerHTML = d.daily.slice(0,10).map(r =>
+        `<tr><td>${r.day}</td><td>${r.conversations}</td><td>${r.questions}</td><td>${r.ai_answers > 0 ? '🤖 IA' : r.faq_answers > 0 ? '📋 FAQ' : '—'}</td></tr>`
+      ).join('');
+    } else dailyBody.innerHTML = '<tr><td colspan="4" style="color:#aaa">Sin datos</td></tr>';
+
+    // Top preguntas
+    const topQBody = document.getElementById('topQBody');
+    if (d.topQuestions?.length) {
+      topQBody.innerHTML = d.topQuestions.map(q =>
+        `<tr><td>${esc(q.question.substring(0,50))}${q.question.length>50?'…':''}</td><td><strong>${q.frequency}</strong></td></tr>`
+      ).join('');
+    } else topQBody.innerHTML = '<tr><td colspan="2" style="color:#aaa">Sin datos</td></tr>';
+
+    // Roles
+    const roleBody = document.getElementById('roleBody');
+    if (d.roleStats?.length) {
+      roleBody.innerHTML = d.roleStats.map(r =>
+        `<tr><td>${r.role}</td><td>${r.conversations}</td></tr>`
+      ).join('');
+    } else roleBody.innerHTML = '<tr><td colspan="2" style="color:#aaa">Sin datos</td></tr>';
+
+  } catch (e) { console.error(e); }
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'metrics') loadMetrics();
+}
+
+function openFaqModal(faq = null) {
+  document.getElementById('faqId').value = faq?.id || '';
+  document.getElementById('faqCat').value = faq?.category || 'acceso';
+  document.getElementById('faqQ').value = faq?.question || '';
+  document.getElementById('faqA').value = faq?.answer || '';
+  document.getElementById('faqKw').value = faq?.keywords?.join(', ') || '';
+  document.getElementById('modalTitle').textContent = faq ? 'Editar FAQ' : 'Nueva FAQ';
+  document.getElementById('faqModal').classList.add('show');
+}
+
+function editFaq(faq) { openFaqModal(faq); }
+function closeFaqModal() { document.getElementById('faqModal').classList.remove('show'); }
+
+async function saveFaq() {
+  const id = document.getElementById('faqId').value;
+  const body = {
+    id: id || undefined,
+    category: document.getElementById('faqCat').value,
+    question: document.getElementById('faqQ').value.trim(),
+    answer: document.getElementById('faqA').value.trim(),
+    keywords: document.getElementById('faqKw').value.split(',').map(k => k.trim()).filter(Boolean)
+  };
+  if (!body.question || !body.answer) { alert('Completá pregunta y respuesta'); return; }
+
+  const r = await fetch('/api/faqs', {
+    method: id ? 'PUT' : 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${adminSecret}` },
+    body: JSON.stringify(body)
+  });
+  if (r.ok) { closeFaqModal(); loadFaqs(); }
+  else { alert('Error al guardar'); }
+}
+
+async function deleteFaq(id) {
+  if (!confirm('¿Desactivar esta FAQ?')) return;
+  await fetch('/api/faqs', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${adminSecret}` },
+    body: JSON.stringify({ id })
+  });
+  loadFaqs();
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+</script>
+</body>
+</html>
