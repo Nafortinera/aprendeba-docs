@@ -1,5 +1,6 @@
 {
   "name": "aprendeba-docs",
-  "version": "1.0.0",
-  "description": "AprendeBA · Hub de Documentación Funcional"
+  "version": "2.0.0",
+  "description": "AprendeBA — Hub de documentación y asistente virtual con IA",
+  "engines": { "node": "18.x" }
 }
