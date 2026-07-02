@@ -116,7 +116,7 @@ module.exports = async function handler(req, res) {
              '• BA Colaborativa\n' +
              '• Tel: 147 / 0800 999 2727\n' +
              '• Lunes a viernes 8 a 18hs';
-    source = 'fallback';
+    source = 'fallback'; return res.status(200).json({ answer, conversationId: convId, source, geminiError: err.message }); // DEBUG
   }
 
   // Guardar respuesta del asistente
