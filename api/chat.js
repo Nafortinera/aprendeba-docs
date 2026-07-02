@@ -91,7 +91,7 @@ module.exports = async function handler(req, res) {
     if (!GEMINI_API_KEY) throw new Error('GEMINI_API_KEY no configurada');
 
     const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -116,7 +116,7 @@ module.exports = async function handler(req, res) {
              '• BA Colaborativa\n' +
              '• Tel: 147 / 0800 999 2727\n' +
              '• Lunes a viernes 8 a 18hs';
-    source = 'fallback'; return res.status(200).json({ answer, conversationId: convId, source, geminiError: err.message }); // DEBUG
+    source = 'fallback'; 
   }
 
   // Guardar respuesta del asistente
