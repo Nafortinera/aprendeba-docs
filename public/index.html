@@ -6809,8 +6809,19 @@ function bacProcesar(text, filename) {
         const o = document.createElement('option'); o.value = m; o.textContent = m; sel.append(o);
       });
     }
-    // Si es CSV de BA Colaborativa (solo abiertos) → marcar el resto como resueltos
-    if (!filename.endsWith('.json')) {
+    // Marcar como resueltos los tickets con estado cerrado (formato Bandeja de Entrada)
+    const esBandeja = newTickets.length > 0 && newTickets[0]._formato === 'bandeja';
+    if (esBandeja) {
+      newTickets.forEach(t => {
+        if (t.estado === 'cerrado') {
+          if (!BAC_STATE[t.num]) BAC_STATE[t.num] = {};
+          BAC_STATE[t.num].r = true;
+        }
+      });
+      try { localStorage.setItem('bac_v4', JSON.stringify(BAC_STATE)); } catch(_) {}
+    }
+    // Si es CSV de BA Colaborativa normal (solo abiertos) → marcar el resto como resueltos
+    if (!esBandeja && !filename.endsWith('.json')) {
       const numsEnCSV = new Set(newTickets.map(t => t.num));
       let autoResolved = 0;
       BAC_T.forEach(t => {
@@ -6909,6 +6920,41 @@ function bacParseCSV(text) {
         })(),
       };
     }).filter(t => t.num);
+  }
+
+  // Detectar formato Bandeja de Entrada: tiene Prestación y Estado general pero NO Número
+  // Este formato exporta todos los tickets (abiertos y cerrados) sin ID de ticket
+  if (!hasNumero && headers.some(h => h.includes('Prestaci')) && headers.some(h => h.includes('Estado'))) {
+    return rawRows.map((r, i) => {
+      const prest = r['Prestación'] || '';
+      let nivel = 'secundaria';
+      if (/Nivel Primario/i.test(prest))  nivel = 'primaria';
+      else if (/Nivel Inicial/i.test(prest))   nivel = 'inicial';
+      else if (/Nivel Secundario/i.test(prest) || /Adultos/i.test(prest)) nivel = 'secundaria';
+      const partes = prest.split(' - ');
+      let modulo = partes[partes.length - 1] || 'General';
+      if (/Nivel (Primario|Secundario|Inicial)/i.test(modulo) || modulo === 'AprendeBA') {
+        modulo = partes[partes.length - 2] || 'General';
+      }
+      const estadoRaw = (r['Estado general'] || '').toLowerCase();
+      const estado = estadoRaw.includes('cerr') ? 'cerrado' : estadoRaw.includes('paus') ? 'pausado' : 'abierto';
+      return {
+        num:         'BDE-' + String(i + 1).padStart(4, '0'),
+        nivel,
+        modulo,
+        cue:             '',
+        establecimiento: '',
+        ciudadano:       '',
+        dni:             '',
+        email:           '',
+        cargo:           '',
+        adjunto:         'No',
+        fecha:           '',
+        descripcion:     prest,
+        estado,
+        _formato:        'bandeja',
+      };
+    });
   }
 
   // Formato genérico
