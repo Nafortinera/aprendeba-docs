@@ -6428,12 +6428,11 @@ function bacStats() {
   fetch('/api/sync?type=history', { cache:'no-store' })
     .then(r => r.json())
     .then(h => {
-      const total = (h && h.total_historico)    ? h.total_historico    : totalActivo;
-      const res   = (h && h.resueltos_historico) ? h.resueltos_historico : resActivo;
-      const pct   = total ? Math.round(res / total * 100) : 0;
-      if (s('bac-m-total')) s('bac-m-total').textContent = total;
-      if (s('bac-m-open'))  s('bac-m-open').textContent  = totalActivo;
-      if (s('bac-m-res'))   s('bac-m-res').textContent   = res;
+      // Usar valores del estado actual, no el historial almacenado (puede estar desactualizado)
+      const pct = totalActivo ? Math.round(resActivo / totalActivo * 100) : 0;
+      if (s('bac-m-total')) s('bac-m-total').textContent = totalActivo;
+      if (s('bac-m-open'))  s('bac-m-open').textContent  = totalActivo - resActivo;
+      if (s('bac-m-res'))   s('bac-m-res').textContent   = resActivo;
       if (s('bac-m-pct'))   s('bac-m-pct').textContent   = pct + '%';
       if (s('bac-m-bar'))   s('bac-m-bar').style.width   = pct + '%';
     })
@@ -6478,11 +6477,7 @@ function bacStats() {
     fetch('/api/sync?type=history', { cache:'no-store' })
       .then(r => r.json())
       .then(h => {
-        if (h && h.total_historico) {
-          sub.textContent = `${h.total_historico} tickets · ${today} · Resolución: ${h.resueltos_historico}/${h.total_historico} (${Math.round(h.resueltos_historico/h.total_historico*100)}%) · ${total} activos`;
-        } else {
-          sub.textContent = `${total} tickets · ${today} · Resolución: ${res}/${total} (${pct}%)`;
-        }
+        sub.textContent = `${total} tickets · ${today} · Resolución: ${res}/${total} (${pct}%) · ${total - res} pendientes`;
       })
       .catch(() => {
         sub.textContent = `${total} tickets · ${today} · Resolución: ${res}/${total} (${pct}%)`;
