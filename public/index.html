@@ -6810,9 +6810,9 @@ function bacProcesar(text, filename) {
       });
     }
     // Marcar como resueltos los tickets con estado cerrado (formato Bandeja de Entrada)
-    const esBandeja = newTickets.length > 0 && newTickets[0]._formato === 'bandeja';
+    const esBandeja = tickets.length > 0 && tickets[0]._formato === 'bandeja';
     if (esBandeja) {
-      newTickets.forEach(t => {
+      tickets.forEach(t => {
         if (t.estado === 'cerrado') {
           if (!BAC_STATE[t.num]) BAC_STATE[t.num] = {};
           BAC_STATE[t.num].r = true;
