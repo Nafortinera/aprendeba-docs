@@ -286,5 +286,277 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
 
+
+<!-- ===== ASISTENTE FAQ ===== -->
+<style>
+  /* Botón FAQ */
+  #faq-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: linear-gradient(135deg, #073244 0%, #0D6B5E 100%);
+    color: #fff;
+    border: none;
+    border-radius: 28px;
+    padding: 12px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(7,50,68,.35);
+    z-index: 8000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform .15s, box-shadow .15s;
+    font-family: inherit;
+  }
+  #faq-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(7,50,68,.45); }
+  /* Panel lateral */
+  #faq-panel {
+    position: fixed;
+    top: 0; right: -420px;
+    width: 400px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: -4px 0 32px rgba(0,0,0,.18);
+    z-index: 9000;
+    display: flex;
+    flex-direction: column;
+    transition: right .28s cubic-bezier(.4,0,.2,1);
+    font-family: inherit;
+  }
+  #faq-panel.open { right: 0; }
+  #faq-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    z-index: 8999;
+  }
+  #faq-overlay.open { display: block; }
+  /* Header del panel */
+  .faq-header {
+    background: linear-gradient(135deg, #073244 0%, #0D6B5E 100%);
+    color: #fff;
+    padding: 18px 20px 14px;
+    flex-shrink: 0;
+  }
+  .faq-header-top { display: flex; justify-content: space-between; align-items: center; }
+  .faq-header h2 { margin: 0; font-size: 16px; font-weight: 700; }
+  .faq-header p { margin: 4px 0 0; font-size: 12.5px; opacity: .82; }
+  #faq-close {
+    background: rgba(255,255,255,.18); border: none; color: #fff;
+    border-radius: 50%; width: 30px; height: 30px; font-size: 16px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .15s; flex-shrink: 0;
+  }
+  #faq-close:hover { background: rgba(255,255,255,.32); }
+  /* Búsqueda */
+  .faq-search-wrap { padding: 14px 16px 10px; flex-shrink: 0; border-bottom: 1px solid #e8edf2; }
+  .faq-search-wrap input {
+    width: 100%; box-sizing: border-box;
+    padding: 9px 14px 9px 36px;
+    border: 1.5px solid #d0dce5; border-radius: 8px;
+    font-size: 13.5px; font-family: inherit;
+    outline: none; transition: border .15s;
+    background: #f7fafc url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.868-3.833zm-5.242 1.156a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'/%3E%3C/svg%3E") no-repeat 11px center;
+  }
+  .faq-search-wrap input:focus { border-color: #0D6B5E; }
+  /* Categorías */
+  .faq-cats { display: flex; gap: 6px; padding: 10px 16px; flex-shrink: 0; border-bottom: 1px solid #e8edf2; flex-wrap: wrap; }
+  .faq-cat {
+    background: #eef2f6; border: none; border-radius: 20px;
+    padding: 5px 13px; font-size: 12px; font-weight: 600;
+    cursor: pointer; color: #4a6070; font-family: inherit;
+    transition: background .15s, color .15s;
+  }
+  .faq-cat.active, .faq-cat:hover { background: #073244; color: #fff; }
+  /* Lista de preguntas */
+  .faq-body { flex: 1; overflow-y: auto; padding: 10px 0; }
+  .faq-item { border-bottom: 1px solid #f0f4f7; }
+  .faq-q {
+    width: 100%; text-align: left; background: none; border: none;
+    padding: 13px 20px 13px 16px;
+    font-size: 13.5px; font-weight: 600; color: #073244;
+    cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; line-height: 1.4; font-family: inherit;
+    transition: background .12s;
+  }
+  .faq-q:hover { background: #f0f7f5; }
+  .faq-q .faq-arrow { flex-shrink: 0; font-size: 12px; margin-top: 2px; color: #0D6B5E; transition: transform .2s; }
+  .faq-q.open .faq-arrow { transform: rotate(180deg); }
+  .faq-a {
+    display: none; padding: 0 20px 14px 16px;
+    font-size: 13px; color: #445566; line-height: 1.6;
+    background: #f8fcfb;
+  }
+  .faq-a.open { display: block; }
+  .faq-a strong { color: #073244; }
+  /* Sin resultados */
+  .faq-empty { padding: 32px 20px; text-align: center; color: #8a9db0; font-size: 13.5px; }
+</style>
+
+<button id="faq-btn" onclick="faqOpen()">❓ Preguntas frecuentes</button>
+<div id="faq-overlay" onclick="faqClose()"></div>
+<div id="faq-panel">
+  <div class="faq-header">
+    <div class="faq-header-top">
+      <h2>Preguntas frecuentes</h2>
+      <button id="faq-close" onclick="faqClose()">✕</button>
+    </div>
+    <p>Casos de uso para Asesores de Escuelas</p>
+  </div>
+  <div class="faq-search-wrap">
+    <input type="text" id="faq-search" placeholder="Buscá una pregunta..." oninput="faqFilter()" autocomplete="off">
+  </div>
+  <div class="faq-cats">
+    <button class="faq-cat active" onclick="faqCat('todos',this)">Todos</button>
+    <button class="faq-cat" onclick="faqCat('presentismo',this)">Presentismo</button>
+    <button class="faq-cat" onclick="faqCat('matriculados',this)">Matriculados</button>
+    <button class="faq-cat" onclick="faqCat('calificaciones',this)">Calificaciones</button>
+    <button class="faq-cat" onclick="faqCat('acceso',this)">Acceso</button>
+  </div>
+  <div class="faq-body" id="faq-body">
+
+    <!-- ── PRESENTISMO ── -->
+    <div class="faq-item" data-cat="presentismo">
+      <button class="faq-q" onclick="faqToggle(this)">¿Cómo registro la asistencia diaria? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Ingresá al módulo <strong>Presentismo</strong>, seleccioná el año y la sección, y marcá el estado de cada estudiante: Presente, Ausente Justificado o Ausente Injustificado. El sistema cierra la carga al finalizar el día.</div>
+    </div>
+    <div class="faq-item" data-cat="presentismo">
+      <button class="faq-q" onclick="faqToggle(this)">¿Qué es el Dispositivo de Invierno? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Es el período de recuperación de regularidad durante el receso invernal. Los estudiantes que acumularon más de 20 inasistencias injustificadas (perdieron la regularidad anual) pueden recuperarla participando del dispositivo. Se registra desde la solapa <strong>Dispositivo de Invierno</strong> en el módulo Presentismo.</div>
+    </div>
+    <div class="faq-item" data-cat="presentismo">
+      <button class="faq-q" onclick="faqToggle(this)">¿Qué significa "Regularidad Anual"? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Es una condición nueva incorporada en 2026. Indica si el estudiante acumuló más de 20 inasistencias injustificadas en el año. Si la perdió, queda habilitado para el Dispositivo de Invierno. <strong>Es independiente de la regularidad bimestral.</strong></div>
+    </div>
+    <div class="faq-item" data-cat="presentismo">
+      <button class="faq-q" onclick="faqToggle(this)">¿Qué significa "Datos insuficientes" en regularidad? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Significa que el período no está cerrado aún, o que no hay suficiente información cargada para calcular la condición de regularidad. Se actualiza cuando el bimestre se cierra correctamente.</div>
+    </div>
+    <div class="faq-item" data-cat="presentismo">
+      <button class="faq-q" onclick="faqToggle(this)">¿Por qué está bloqueada la carga del 3er bimestre? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">El sistema bloquea la carga del 3er bimestre para Preceptores y Equipos de Conducción mientras no esté completo el registro del Dispositivo de Invierno para <strong>todos</strong> los alumnos que perdieron la regularidad anual en esa sección. La Dirección de Área no tiene este bloqueo.</div>
+    </div>
+    <div class="faq-item" data-cat="presentismo">
+      <button class="faq-q" onclick="faqToggle(this)">¿Puedo modificar una inasistencia ya cargada? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Depende del rol. Los Preceptores pueden modificar dentro del período abierto. Una vez cerrado el bimestre, las correcciones las realiza la Dirección de Área o el Equipo de Conducción según la configuración de la escuela.</div>
+    </div>
+
+    <!-- ── MATRICULADOS ── -->
+    <div class="faq-item" data-cat="matriculados">
+      <button class="faq-q" onclick="faqToggle(this)">¿Por qué no aparece un estudiante en el listado? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Usá el <strong>buscador global</strong> con el DNI del estudiante para verificar si está matriculado en otro establecimiento de tu zona. Si no aparece en ningún lado, la Dirección de Área debe gestionar el alta en el sistema.</div>
+    </div>
+    <div class="faq-item" data-cat="matriculados">
+      <button class="faq-q" onclick="faqToggle(this)">¿Qué es un pase pendiente y cómo afecta al legajo? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Un pase pendiente es un traslado iniciado que aún no fue confirmado por el establecimiento destino. Mientras esté en este estado, <strong>bloquea la edición del legajo</strong> del estudiante. Si el pase fue solicitado por error, el establecimiento puede cancelarlo.</div>
+    </div>
+    <div class="faq-item" data-cat="matriculados">
+      <button class="faq-q" onclick="faqToggle(this)">¿Por qué el secretario no puede editar el legajo? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Lo más probable es que el estudiante tenga un pase activo (estado Pendiente). Verificá en la solapa <strong>Pases</strong> del legajo. Si el pase es válido, debe completarse; si fue solicitado por error, se puede cancelar desde el establecimiento de origen.</div>
+    </div>
+    <div class="faq-item" data-cat="matriculados">
+      <button class="faq-q" onclick="faqToggle(this)">¿Cómo doy de alta a un estudiante nuevo? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">El alta de nuevos estudiantes es <strong>exclusiva de la Dirección de Área</strong>. El establecimiento debe elevar la solicitud con documentación completa: DNI, nombre completo, fecha de nacimiento y nivel. No es posible hacerlo desde el módulo sin esa intervención.</div>
+    </div>
+    <div class="faq-item" data-cat="matriculados">
+      <button class="faq-q" onclick="faqToggle(this)">¿Qué estados puede tener un estudiante matriculado? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a"><strong>Matriculado:</strong> activo en el ciclo actual. <strong>Baja:</strong> desvinculado por pase, abandono o desmatriculación. <strong>Egresado:</strong> completó el nivel. <strong>Pendiente de pase:</strong> traslado en curso. <strong>Ingresante:</strong> nuevo en la escuela durante este ciclo.</div>
+    </div>
+    <div class="faq-item" data-cat="matriculados">
+      <button class="faq-q" onclick="faqToggle(this)">El pase fue aprobado pero el estudiante sigue en la escuela de origen <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">El sistema puede demorar en reflejar el cambio. Si después de <strong>24 horas</strong> el estudiante no figura en el establecimiento destino, informá el caso a la Dirección de Área indicando la fecha de aprobación del pase.</div>
+    </div>
+    <div class="faq-item" data-cat="matriculados">
+      <button class="faq-q" onclick="faqToggle(this)">¿Qué muestra la solapa Regularidad en el módulo Matriculados? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Muestra la condición de regularidad <strong>por bimestre</strong> y la <strong>Regularidad Anual</strong> (nueva en 2026). Corresponde siempre al <em>último bimestre cerrado</em>, no al bimestre en curso. Si el período no cerró, aparecerá como "Datos insuficientes".</div>
+    </div>
+
+    <!-- ── CALIFICACIONES ── -->
+    <div class="faq-item" data-cat="calificaciones">
+      <button class="faq-q" onclick="faqToggle(this)">¿Cuándo se habilitan las calificaciones del 2do bimestre? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Las calificaciones del <strong>2do bimestre</strong> (Primaria y Secundaria) y el <strong>1er cuatrimestre de Inicial</strong> se habilitaron con el deploy del 15 de julio de 2026. Si la escuela no puede cargar, verificá que tenga las fechas de cierre configuradas.</div>
+    </div>
+    <div class="faq-item" data-cat="calificaciones">
+      <button class="faq-q" onclick="faqToggle(this)">¿Cómo se genera el boletín? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">El boletín se genera automáticamente a partir de las calificaciones cargadas en el módulo. Una vez cerrado el período, podés consultarlo o descargarlo desde <strong>Calificaciones → Boletines</strong>. El asesor tiene acceso de solo lectura.</div>
+    </div>
+    <div class="faq-item" data-cat="calificaciones">
+      <button class="faq-q" onclick="faqToggle(this)">¿La escuela puede modificar una calificación ya ingresada? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Depende del período. Mientras está abierto, el Docente o Secretario puede corregirla. Una vez cerrado el bimestre, las modificaciones requieren intervención de la Dirección de Área. Como asesor, orientá al establecimiento sobre el procedimiento.</div>
+    </div>
+
+    <!-- ── ACCESO ── -->
+    <div class="faq-item" data-cat="acceso">
+      <button class="faq-q" onclick="faqToggle(this)">¿Por qué no veo todos los establecimientos que debería? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">El acceso a establecimientos se configura en el sistema según tu zona asignada. Si faltan escuelas, <strong>comunicá la situación a la Dirección de Área</strong> para que verifiquen y corrijan la asignación.</div>
+    </div>
+    <div class="faq-item" data-cat="acceso">
+      <button class="faq-q" onclick="faqToggle(this)">¿Puedo modificar datos como asesor? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">No. El rol <strong>Asesor de Escuelas</strong> tiene acceso de solo lectura en todos los módulos. Podés consultar, filtrar y exportar información, pero no podés modificar datos directamente.</div>
+    </div>
+    <div class="faq-item" data-cat="acceso">
+      <button class="faq-q" onclick="faqToggle(this)">¿Qué hago si encuentro un error técnico en el sistema? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Reportá el problema a la <strong>Dirección de Área</strong>, que puede escalar al equipo técnico si es necesario. Incluí el nombre del módulo, la acción que intentabas realizar, y si es posible, una captura de pantalla del error.</div>
+    </div>
+    <div class="faq-item" data-cat="acceso">
+      <button class="faq-q" onclick="faqToggle(this)">¿Puedo compartir datos de estudiantes por WhatsApp o mail? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a"><strong>No.</strong> Los datos personales de estudiantes son confidenciales. Usá siempre los <strong>canales institucionales habilitados</strong> por el Ministerio de Educación GCBA para cualquier comunicación relacionada con información del sistema.</div>
+    </div>
+    <div class="faq-item" data-cat="acceso">
+      <button class="faq-q" onclick="faqToggle(this)">¿Qué es el buscador global de estudiantes? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Permite localizar a un estudiante en <strong>cualquier establecimiento de tu zona asignada</strong> sin tener que ingresar escuela por escuela. Podés buscar por nombre, apellido o DNI. Es especialmente útil para verificar si un estudiante ya está matriculado antes de gestionar un alta.</div>
+    </div>
+
+    <div id="faq-empty" class="faq-empty" style="display:none;">No se encontraron preguntas para tu búsqueda.</div>
+  </div>
+</div>
+
+<script>
+  var faqCatActual = 'todos';
+
+  function faqOpen() {
+    document.getElementById('faq-panel').classList.add('open');
+    document.getElementById('faq-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){ document.getElementById('faq-search').focus(); }, 300);
+  }
+  function faqClose() {
+    document.getElementById('faq-panel').classList.remove('open');
+    document.getElementById('faq-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function faqToggle(btn) {
+    var a = btn.nextElementSibling;
+    var isOpen = a.classList.contains('open');
+    // cerrar todos
+    document.querySelectorAll('.faq-a.open').forEach(function(el){ el.classList.remove('open'); });
+    document.querySelectorAll('.faq-q.open').forEach(function(el){ el.classList.remove('open'); });
+    if (!isOpen) { a.classList.add('open'); btn.classList.add('open'); }
+  }
+  function faqCat(cat, el) {
+    faqCatActual = cat;
+    document.querySelectorAll('.faq-cat').forEach(function(b){ b.classList.remove('active'); });
+    el.classList.add('active');
+    faqFilter();
+  }
+  function faqFilter() {
+    var q = document.getElementById('faq-search').value.toLowerCase().trim();
+    var items = document.querySelectorAll('.faq-item');
+    var shown = 0;
+    items.forEach(function(item) {
+      var catOk = faqCatActual === 'todos' || item.dataset.cat === faqCatActual;
+      var textOk = !q || item.textContent.toLowerCase().indexOf(q) !== -1;
+      if (catOk && textOk) { item.style.display = ''; shown++; }
+      else { item.style.display = 'none'; }
+    });
+    document.getElementById('faq-empty').style.display = shown === 0 ? 'block' : 'none';
+  }
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') faqClose(); });
+</script>
+<!-- ===== /ASISTENTE FAQ ===== -->
+
 </body>
 </html>
