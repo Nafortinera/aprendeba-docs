@@ -91,7 +91,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
 .badge-ini{background:#ede9fe;color:#5b21b6}
 .badge-pri{background:#dbeafe;color:#1e40af}
-.badge-sec{background:#fce7f3;color:#9d174d}
+.badge-sec{background:#fce7f3;color:#9d174d}.badge-purple{background:#f3e8ff;color:#6b21a8}.badge-blue{background:#dbeafe;color:#1e40af}.badge-orange{background:#fff7ed;color:#9a3412}
 .badge-teal{background:#ccfbf1;color:#0f766e}
 .badge-amber{background:#fef3c7;color:#92400e}
 .badge-ok{background:#d1fae5;color:#065f46}
@@ -370,6 +370,9 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
         <button class="filter-btn on" onclick="rnFilter(this,'mod','todos')">Todos</button>
         <button class="filter-btn" onclick="rnFilter(this,'mod','presentismo')">Presentismo</button>
         <button class="filter-btn" onclick="rnFilter(this,'mod','informes')">Informes</button>
+        <button class="filter-btn" onclick="rnFilter(this,'mod','calificaciones')">Calificaciones</button>
+        <button class="filter-btn" onclick="rnFilter(this,'mod','matriculacion')">Matriculación</button>
+        <button class="filter-btn" onclick="rnFilter(this,'mod','efectivizacion')">Efectivización</button>
         <span class="filter-label" style="margin-left:12px">Nivel:</span>
         <button class="filter-btn on" onclick="rnFilter(this,'niv','todos')">Todos</button>
         <button class="filter-btn" onclick="rnFilter(this,'niv','inicial')">Inicial</button>
@@ -482,6 +485,163 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span><span class="badge badge-ini">Inicial</span></span>
           <span class="tbl-cell-strong">Boletín generado sin informe: el alumno no tendrá sección de Informe Valorativo</span>
           <span style="font-size:12px;color:var(--text-muted)">Cargar el informe faltante y regenerar. Si cerró: Directivo gestiona con soporte</span>
+        </div>
+      
+        <div class="tbl-row rn-row" data-mod="calificaciones" data-niv="primario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-purple">Calificaciones</span></span>
+          <span><span class="badge badge-pri">Primario</span></span>
+          <span class="tbl-cell-strong">Escala de calificación: cualitativa (no numérica)</span>
+          <span style="font-size:12px;color:var(--text-muted)">Trabajo en el aula, Convivencia, Áreas de conocimiento</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="calificaciones" data-niv="primario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-purple">Calificaciones</span></span>
+          <span><span class="badge badge-pri">Primario</span></span>
+          <span class="tbl-cell-strong">Guardar ≠ Cerrar: Guardar conserva avance parcial; Cerrar es la entrega formal</span>
+          <span style="font-size:12px;color:var(--text-muted)">Un docente que solo guardó queda en estado "En proceso"</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="calificaciones" data-niv="primario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-purple">Calificaciones</span></span>
+          <span><span class="badge badge-pri">Primario</span></span>
+          <span class="tbl-cell-strong">Tras Cerrar calificaciones, solo el Directivo puede reabrir el período</span>
+          <span style="font-size:12px;color:var(--text-muted)">—</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="calificaciones" data-niv="primario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-purple">Calificaciones</span></span>
+          <span><span class="badge badge-pri">Primario</span></span>
+          <span class="tbl-cell-strong">Solapa Jornada Extendida visible solo en 2do y 4to bimestre</span>
+          <span style="font-size:12px;color:var(--text-muted)">Solo para docentes con sección JE asignada</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="calificaciones" data-niv="primario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-purple">Calificaciones</span></span>
+          <span><span class="badge badge-pri">Primario</span></span>
+          <span class="tbl-cell-strong">Estados del estudiante: Calificado / En proceso / No calificado</span>
+          <span style="font-size:12px;color:var(--text-muted)">No calificado = docente no inició la carga</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="calificaciones" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-purple">Calificaciones</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">Escala numérica 1–10 sin decimales</span>
+          <span style="font-size:12px;color:var(--text-muted)">El sistema no guarda automáticamente — el docente debe hacer clic en Guardar</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="calificaciones" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-purple">Calificaciones</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">Guardar ≠ Cerrar: Guardar conserva avance; Cerrar es la entrega formal</span>
+          <span style="font-size:12px;color:var(--text-muted)">Tras el cierre, solo el Directivo puede reabrir</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="calificaciones" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-purple">Calificaciones</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">Estados: Calificado / En proceso / Sin calificación</span>
+          <span style="font-size:12px;color:var(--text-muted)">Sin calificación = docente no inició la carga</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="calificaciones" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-purple">Calificaciones</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">El Preceptor/a solo visualiza — no puede cargar ni modificar calificaciones</span>
+          <span style="font-size:12px;color:var(--text-muted)">—</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="calificaciones" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-purple">Calificaciones</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">La regularidad mostrada en Matriculados corresponde al último bimestre cerrado, no al bimestre en curso</span>
+          <span style="font-size:12px;color:var(--text-muted)">—</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="matriculacion" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-blue">Matriculación</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">Estados del alumno: Matriculado / Baja / Egresado / Pendiente de pase / Ingresante</span>
+          <span style="font-size:12px;color:var(--text-muted)">—</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="matriculacion" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-blue">Matriculación</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">Pase entrante: debe ser aprobado por el establecimiento destino</span>
+          <span style="font-size:12px;color:var(--text-muted)">Estado Pendiente hasta aprobación</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="matriculacion" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-blue">Matriculación</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">Pase rechazado: el alumno permanece en el establecimiento de origen</span>
+          <span style="font-size:12px;color:var(--text-muted)">—</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="matriculacion" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-blue">Matriculación</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">Regularidad anual: más de 20 inasistencias injustificadas = No regular anual</span>
+          <span style="font-size:12px;color:var(--text-muted)">Determina acceso al Dispositivo de Invierno (2026)</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="matriculacion" data-niv="primario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-blue">Matriculación</span></span>
+          <span><span class="badge badge-pri">Primario</span></span>
+          <span class="tbl-cell-strong">Secretario/a gestiona legajo completo: matriculación, pases y desmatriculación</span>
+          <span style="font-size:12px;color:var(--text-muted)">—</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="matriculacion" data-niv="primario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-blue">Matriculación</span></span>
+          <span><span class="badge badge-pri">Primario</span></span>
+          <span class="tbl-cell-strong">Directivo aprueba pases entrantes</span>
+          <span style="font-size:12px;color:var(--text-muted)">—</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="efectivizacion" data-niv="primario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-orange">Efectivización</span></span>
+          <span><span class="badge badge-pri">Primario</span></span>
+          <span class="tbl-cell-strong">Requiere que TODOS los estudiantes tengan calificaciones cerradas — sin excepciones</span>
+          <span style="font-size:12px;color:var(--text-muted)">Si existen pendientes, el botón "Efectivizar Promoción" no se habilita</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="efectivizacion" data-niv="primario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-orange">Efectivización</span></span>
+          <span><span class="badge badge-pri">Primario</span></span>
+          <span class="tbl-cell-strong">La efectivización es irreversible</span>
+          <span style="font-size:12px;color:var(--text-muted)">Una vez confirmada, los alumnos quedan matriculados automáticamente</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="efectivizacion" data-niv="primario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-orange">Efectivización</span></span>
+          <span><span class="badge badge-pri">Primario</span></span>
+          <span class="tbl-cell-strong">Solo Directivo y Vicedirector pueden efectivizar</span>
+          <span style="font-size:12px;color:var(--text-muted)">Equipo de Conducción solo consulta</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="efectivizacion" data-niv="primario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-orange">Efectivización</span></span>
+          <span><span class="badge badge-pri">Primario</span></span>
+          <span class="tbl-cell-strong">Flujo PPE: Proyección → Promoción → Efectivización (en orden obligatorio)</span>
+          <span style="font-size:12px;color:var(--text-muted)">—</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="efectivizacion" data-niv="primario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-orange">Efectivización</span></span>
+          <span><span class="badge badge-pri">Primario</span></span>
+          <span class="tbl-cell-strong">Estado Pendiente en un alumno bloquea la efectivización del establecimiento completo</span>
+          <span style="font-size:12px;color:var(--text-muted)">El docente debe cerrar las calificaciones desde el módulo Calificaciones</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="efectivizacion" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-orange">Efectivización</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">Fecha límite general: 30 de marzo</span>
+          <span style="font-size:12px;color:var(--text-muted)">Secundaria Aprende: 17 de marzo; botón bloqueado hasta el 16 inclusive</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="efectivizacion" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-orange">Efectivización</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">Antes de la fecha límite: el sistema bloquea si hay alumnos con calificaciones pendientes</span>
+          <span style="font-size:12px;color:var(--text-muted)">El establecimiento debe regularizar todos los pendientes</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="efectivizacion" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-orange">Efectivización</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">Después de la fecha límite: el sistema habilita el botón aunque existan pendientes (flujo alternativo)</span>
+          <span style="font-size:12px;color:var(--text-muted)">Solo cuando se confirme la activación del flujo alternativo</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="efectivizacion" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-orange">Efectivización</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">Solo Directivo y Dirección de Área pueden efectivizar</span>
+          <span style="font-size:12px;color:var(--text-muted)">Equipo de Conducción y Supervisor no pueden efectivizar</span>
+        </div>
+        <div class="tbl-row rn-row" data-mod="efectivizacion" data-niv="secundario" style="grid-template-columns:90px 90px 1fr 200px">
+          <span><span class="badge badge-orange">Efectivización</span></span>
+          <span><span class="badge badge-sec">Secundario</span></span>
+          <span class="tbl-cell-strong">La efectivización es irreversible</span>
+          <span style="font-size:12px;color:var(--text-muted)">Una vez confirmada, los alumnos quedan matriculados automáticamente</span>
         </div>
       </div>
       <div id="rn-count" style="font-size:12px;color:var(--text-muted);text-align:right;margin-top:6px"></div>
