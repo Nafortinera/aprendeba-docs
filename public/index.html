@@ -882,11 +882,17 @@ flowchart TD
 </div><!-- /main -->
 
 <script>
-mermaid.initialize({startOnLoad:true, securityLevel:'loose'});
+mermaid.initialize({startOnLoad:false, securityLevel:'loose'});
 
 var rnMod = 'todos', rnNiv = 'todos';
 
-var mermaidRendered = {};
+document.addEventListener('DOMContentLoaded', function() {
+  var activeView = document.querySelector('.view.active');
+  if (activeView && activeView.querySelector('.mermaid')) {
+    try { mermaid.run({nodes: activeView.querySelectorAll('.mermaid')}); } catch(e) {}
+  }
+});
+
 function nav(id, el) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -896,11 +902,15 @@ function nav(id, el) {
   document.getElementById('bread-label').textContent = el ? el.textContent.trim() : id;
   if (id === 'reglas') setTimeout(rnApply, 50);
   // Re-render mermaid diagrams in this view if not done yet
-  if (!mermaidRendered[id] && v && v.querySelector('.mermaid')) {
-    mermaidRendered[id] = true;
+  if (v && v.querySelector('.mermaid')) {
     setTimeout(function() {
-      try { mermaid.run({nodes: v.querySelectorAll('.mermaid')}); } catch(e) {}
-    }, 80);
+      try {
+        v.querySelectorAll('.mermaid').forEach(function(el) {
+          el.removeAttribute('data-processed');
+        });
+        mermaid.run({nodes: v.querySelectorAll('.mermaid')});
+      } catch(e) { console.error('mermaid error', e); }
+    }, 100);
   }
 }
 
