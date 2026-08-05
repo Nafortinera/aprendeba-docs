@@ -524,8 +524,20 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
         <div class="view" id="view-ciclo">
       <div class="page-header"><h1>Ciclo lectivo anual</h1><p>Desde la apertura hasta la efectivización — Secundaria Común.</p></div>
       <div class="diagram-card">
-        <div class="mermaid">
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+        <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart TD
+    A([&quot;🏫 Reincorporacion equipos de conduccion&quot;]) --> EF
+    EF[&quot;⚙️ Efectivizacion<br/>Alumnos del año anterior quedan<br/>matriculados automaticamente&quot;] --> MATR
+    IEL1[&quot;🔄 Migracion IEL Ordinario&quot;] --> MAT
+    IEL2[&quot;🔄 Migracion IEL Complementario&quot;] --> MAT
+    MAT[&quot;📝 Matriculacion de inscriptos&quot;] --> MATR
+    MATR[(&quot;👥 ALUMNOS MATRICULADOS&quot;)]
+    classDef inicio fill:#dbeafe,stroke:#3b82f6,color:#1e3a8a,font-weight:bold
+    classDef db     fill:#e0f2fe,stroke:#0ea5e9,color:#0c4a6e,font-weight:bold
+    classDef proc   fill:#f8fafc,stroke:#94a3b8,color:#334155
+    class A inicio
+    class MATR db
+    class EF,IEL1,IEL2,MAT proc">%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
 flowchart TD
     A(["🏫 Reincorporacion equipos de conduccion"]) --> EF
     EF["⚙️ Efectivizacion<br/>Alumnos del año anterior quedan<br/>matriculados automaticamente"] --> MATR
@@ -538,11 +550,42 @@ flowchart TD
     classDef proc   fill:#f8fafc,stroke:#94a3b8,color:#334155
     class A inicio
     class MATR db
-    class EF,IEL1,IEL2,MAT proc
-      </div>
+    class EF,IEL1,IEL2,MAT proc</div>
 <div style="text-align:center;font-size:2rem;color:#64748b;margin:8px 0">↓</div>
-<div class="mermaid">
-%%{init: {'theme': 'base', 'flowchart': {'useMaxWidth': false}, 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'37px'}}}%%
+<div class="mermaid" data-def="%%{init: {'theme': 'base', 'flowchart': {'useMaxWidth': false}, 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'37px'}}}%%
+flowchart LR
+    subgraph CL[&quot;📅 CICLO LECTIVO&quot;]
+      direction LR
+      subgraph S1[&quot;📚 1er BIMESTRE&quot;]
+        direction TB
+        E1[&quot;Carga<br/>Presentismo&quot;] --> E2[&quot;Revision condicion<br/>de regularidad&quot;]
+        E3[&quot;Carga<br/>Calificaciones&quot;] --> E4[&quot;Generacion<br/>de Informes&quot;]
+        E2 --> E4
+      end
+      subgraph S2[&quot;📚 2do BIMESTRE&quot;]
+        direction TB
+        F1[&quot;Carga<br/>Presentismo&quot;] --> F2[&quot;Revision condicion<br/>de regularidad&quot;]
+        F3[&quot;Carga<br/>Calificaciones&quot;] --> F4[&quot;Generacion<br/>de Informes&quot;]
+        F2 --> F4
+      end
+      REC([&quot;RECESO<br/>INVERNAL&quot;])
+      subgraph S3[&quot;📚 3er BIMESTRE&quot;]
+        direction TB
+        G1[&quot;Carga<br/>Presentismo&quot;] --> G2[&quot;Revision condicion<br/>de regularidad&quot;]
+        G3[&quot;Carga<br/>Calificaciones&quot;] --> G4[&quot;Generacion<br/>de Informes&quot;]
+        G2 --> G4
+      end
+      subgraph S4[&quot;📚 4to BIMESTRE&quot;]
+        direction TB
+        H1[&quot;Carga<br/>Presentismo&quot;] --> H2[&quot;Revision condicion<br/>de regularidad&quot;]
+        H3[&quot;Carga<br/>Calificaciones&quot;] --> H4[&quot;Generacion<br/>de Informes&quot;]
+        H2 --> H4
+      end
+      S1 --> S2 --> REC --> S3 --> S4
+    end
+    classDef famapp fill:#ede9fe,stroke:#7c3aed,color:#3730a3
+    classDef receso fill:#fef3c7,stroke:#f59e0b,color:#78350f,font-weight:bold
+    class REC receso">%%{init: {'theme': 'base', 'flowchart': {'useMaxWidth': false}, 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'37px'}}}%%
 flowchart LR
     subgraph CL["📅 CICLO LECTIVO"]
       direction LR
@@ -575,11 +618,58 @@ flowchart LR
     end
     classDef famapp fill:#ede9fe,stroke:#7c3aed,color:#3730a3
     classDef receso fill:#fef3c7,stroke:#f59e0b,color:#78350f,font-weight:bold
-    class REC receso
-      </div>
+    class REC receso</div>
 <div style="text-align:center;font-size:2rem;color:#64748b;margin:8px 0">↓</div>
-<div class="mermaid">
-%%{init: {'theme': 'base', 'flowchart': {'nodeSpacing': 20, 'rankSpacing': 35}, 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+<div class="mermaid" data-def="%%{init: {'theme': 'base', 'flowchart': {'nodeSpacing': 20, 'rankSpacing': 35}, 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart TD
+    APR{&quot;Cierre del 4to Bimestre<br/>Por cada materia: ¿Aprobo?&quot;}
+    APR -->|&quot;Si&quot;| ND1([&quot;✅ Nota Definitiva&quot;])
+    APR -->|&quot;No&quot;| RD[&quot;📖 Recuperacion Diciembre&quot;]
+    RD --> QD{&quot;¿Aprueba en Diciembre?&quot;}
+    QD -->|&quot;Si&quot;| ND2([&quot;✅ Nota Definitiva&quot;])
+    QD -->|&quot;No&quot;| RF[&quot;📖 Recuperacion Febrero&quot;]
+    RF --> QF{&quot;¿Aprueba en Febrero?&quot;}
+    QF -->|&quot;Si&quot;| ND3([&quot;✅ Nota Definitiva&quot;])
+    QF -->|&quot;No&quot;| EPC[&quot;❌ Materia ADEUDADA — ECP&quot;]
+    ND1 --> CONT
+    ND2 --> CONT
+    ND3 --> CONT
+    EPC --> CONT
+    CONT[&quot;Conteo de ECP por alumno&quot;] --> AUTO
+    AUTO{&quot;Estado automatico<br/>segun año cursado + cantidad ECP&quot;}
+    AUTO -->|&quot;0 ECP&quot;| PD([&quot;✅ PROMOCION DIRECTA<br/>Pasa al año siguiente&quot;])
+    AUTO -->|&quot;1-4 ECP (1er año)<br/>1-5 ECP (2do+)&quot;| EPRO[&quot;⏳ EN PROCESO<br/>Resolucion manual requerida<br/>por equipo de conduccion&quot;]
+    AUTO -->|&quot;5+ ECP (1er año)<br/>6+ ECP (2do+)&quot;| PERM([&quot;🔁 PERMANECE<br/>Repite el año&quot;])
+    AUTO -->|&quot;Último año del plan&quot;| ULTO{&quot;¿Completo el plan de estudios?&quot;}
+    ULTO -->|&quot;Si&quot;| CPE([&quot;🎓 COMPLETO<br/>EL PLAN DE ESTUDIOS&quot;])
+    ULTO -->|&quot;No&quot;| NCPE([&quot;📋 NO COMPLETO<br/>EL PLAN DE ESTUDIOS&quot;])
+    EPRO --> RES{&quot;Resolucion manual:<br/>¿puede pasar de año?&quot;}
+    RES -->|&quot;Si, con acompañamiento&quot;| PCA([&quot;📚 PROMOCION CON APOYO<br/>Pasa al año siguiente con ECP&quot;])
+    RES -->|&quot;No puede avanzar&quot;| PERM
+    PD --> FPR
+    PCA --> FPR
+    PERM --> FPR
+    CPE --> FPR
+    NCPE --> FPR
+    FPR[&quot;Proyeccion Finalizada — Vacantes informadas a IEL&quot;] --> COND
+    COND[&quot;✅ Condiciones para efectivizar:<br/>Sin alumnos En Proceso · Calificaciones definitivas cargadas<br/>Ciclo lectivo iniciado por agenda&quot;]
+    COND -->|&quot;Todas cumplidas&quot;| EFV([&quot;⚙️ EFECTIVIZACION<br/>Alumnos matriculados en nuevo ciclo lectivo&quot;])
+    classDef ok     fill:#d1fae5,stroke:#059669,color:#064e3b,font-weight:bold
+    classDef noReg  fill:#fee2e2,stroke:#ef4444,color:#7f1d1d,font-weight:bold
+    classDef dec    fill:#fef9c3,stroke:#fcd34d,color:#713f12
+    classDef recup  fill:#fef3c7,stroke:#f59e0b,color:#78350f
+    classDef proc   fill:#f8fafc,stroke:#94a3b8,color:#334155
+    classDef inProc fill:#fff7ed,stroke:#f97316,color:#7c2d12,font-weight:bold
+    classDef efv    fill:#dbeafe,stroke:#2563eb,color:#1e3a8a,font-weight:bold
+    classDef cond   fill:#fefce8,stroke:#ca8a04,color:#713f12,font-weight:bold
+    class ND1,ND2,ND3,PD,PCA,CPE ok
+    class EPC,PERM,NCPE noReg
+    class APR,QD,QF,AUTO,ULTO,RES dec
+    class COND cond
+    class RD,RF recup
+    class CONT,FPR proc
+    class EPRO inProc
+    class EFV efv">%%{init: {'theme': 'base', 'flowchart': {'nodeSpacing': 20, 'rankSpacing': 35}, 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
 flowchart TD
     APR{"Cierre del 4to Bimestre<br/>Por cada materia: ¿Aprobo?"}
     APR -->|"Si"| ND1(["✅ Nota Definitiva"])
@@ -628,10 +718,10 @@ flowchart TD
     class RD,RF recup
     class CONT,FPR proc
     class EPRO inProc
-    class EFV efv
-      </div>
+    class EFV efv</div>
       </div>
     </div>
+    
     <div class="view" id="view-ciclo">
       <div class="page-header">
         <h1>Ciclo lectivo anual</h1>
@@ -755,8 +845,43 @@ flowchart TD
         <div class="view" id="view-matriculacion">
       <div class="page-header"><h1>Matriculación</h1><p>Flujo para incorporar alumnos a la plataforma y gestionar pases entre escuelas.</p></div>
       <div class="diagram-card">
-        <div class="mermaid">
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#f5f3ff','primaryTextColor':'#3b0764','primaryBorderColor':'#c4b5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+        <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#f5f3ff','primaryTextColor':'#3b0764','primaryBorderColor':'#c4b5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart TD
+    START([&quot;👤 Alumno no figura en la plataforma&quot;]) --> Q1
+
+    Q1{&quot;¿Donde estuvo<br/>el anio pasado?&quot;}
+
+    Q1 -->|&quot;Misma escuela&quot;| MS[&quot;📞 Contactar referente<br/>para normalizar situacion&quot;]
+    MS --> WARN([&quot;⚠️ Resolucion pendiente<br/>por referente&quot;])
+
+    Q1 -->|&quot;Otra escuela publica CABA&quot;| PA1{&quot;¿Se gestiono el pase<br/>en la plataforma?&quot;}
+    PA1 -->|&quot;No&quot;| PA2[&quot;📋 Gestionar pase<br/>desde la plataforma&quot;]
+    PA2 --> PA3[&quot;📨 Escuela de origen<br/>recibe solicitud de pase&quot;]
+    PA1 -->|&quot;Si&quot;| PA3
+    PA3 --> PA4{&quot;¿Asistencia cargada<br/>hasta fecha FEM?&quot;}
+    PA4 -->|&quot;No&quot;| PA5[&quot;⌨️ Cargar asistencia<br/>faltante&quot;]
+    PA5 --> PA4
+    PA4 -->|&quot;Si&quot;| PA6[&quot;✔️ Escuela de origen<br/>aprueba el pase&quot;]
+    PA6 --> OK1([&quot;✅ Alumno disponible<br/>para matricular&quot;])
+
+    Q1 -->|&quot;Otra jurisdiccion<br/>o escuela privada&quot;| IN1{&quot;¿Tiene inscripcion?&quot;}
+    IN1 -->|&quot;No&quot;| IN2[&quot;📢 Indicar que debe realizar<br/>inscripcion y solicitar vacante&quot;]
+    IN2 --> WARN
+    IN1 -->|&quot;Vacante asignada&quot;| OK2([&quot;✅ Figura como inscripto<br/>Proceder a matricular&quot;])
+    IN1 -->|&quot;Lista de espera&quot;| IN5[&quot;📣 Avisar a supervision&quot;]
+    IN5 --> WARN
+
+    classDef inicio  fill:#f5f3ff,stroke:#8b5cf6,color:#3b0764,font-weight:bold
+    classDef ok      fill:#d1fae5,stroke:#059669,color:#064e3b,font-weight:bold
+    classDef warn    fill:#fef3c7,stroke:#f59e0b,color:#78350f,font-weight:bold
+    classDef dec     fill:#faf5ff,stroke:#c4b5fd,color:#4c1d95
+    classDef proc    fill:#f8fafc,stroke:#94a3b8,color:#334155
+
+    class START inicio
+    class OK1,OK2 ok
+    class WARN warn
+    class Q1,PA1,PA4,IN1 dec
+    class MS,PA2,PA3,PA5,PA6,IN2,IN5 proc">%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#f5f3ff','primaryTextColor':'#3b0764','primaryBorderColor':'#c4b5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
 flowchart TD
     START(["👤 Alumno no figura en la plataforma"]) --> Q1
 
@@ -792,10 +917,10 @@ flowchart TD
     class OK1,OK2 ok
     class WARN warn
     class Q1,PA1,PA4,IN1 dec
-    class MS,PA2,PA3,PA5,PA6,IN2,IN5 proc
-      </div>
+    class MS,PA2,PA3,PA5,PA6,IN2,IN5 proc</div>
       </div>
     </div>
+    
     <div class="view" id="view-matriculacion">
       <div class="page-header">
         <h1>Matriculación</h1>
@@ -852,8 +977,87 @@ flowchart TD
         <div class="view" id="view-presentismo">
       <div class="page-header"><h1>Presentismo</h1><p>Carga diaria de asistencia y lógica de regularidad bimestral.</p></div>
       <div class="diagram-card">
-        <div class="mermaid">
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#f0fdfa','primaryTextColor':'#134e4a','primaryBorderColor':'#5eead4','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+        <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#f0fdfa','primaryTextColor':'#134e4a','primaryBorderColor':'#5eead4','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart TD
+    A([&quot;📅 Dia escolar — registro JN&quot;]) --> B
+
+    B{&quot;¿Cuantos turnos<br/>tiene el alumno ese dia?&quot;}
+
+    B -->|&quot;1 turno<br/>Jornada simple&quot;| T1[&quot;Puntaje base por registro:<br/>P / A / APC / NC = 1 pt<br/>RA / IT = 0.5 pt&quot;]
+
+    B -->|&quot;2 turnos<br/>Jornada doble o simple + contraturno&quot;| T2[&quot;Puntaje = valor base / 2<br/>P / A / APC / NC = 0.5 pt<br/>RA / IT = 0.25 pt&quot;]
+
+    B -->|&quot;3 turnos<br/>Simple + 2 contraturnos&quot;| T3[&quot;Puntaje = valor base / 3<br/>P / A / APC / NC = 0.33 pt<br/>RA / IT = 0.16 pt&quot;]
+
+    T1 --> REG[&quot;👩‍🏫 Docente o Preceptor<br/>carga tipo de registro&quot;]
+    T2 --> REG
+    T3 --> REG
+
+    REG --> C{&quot;Tipo de registro&quot;}
+    C -->|&quot;Presente P&quot;| PA[&quot;Suma al puntaje de Carga&quot;]
+    C -->|&quot;Aus. con presencia APC&quot;| PA
+    C -->|&quot;Retiro Anticipado RA&quot;| PA
+    C -->|&quot;Ingreso Tardio IT&quot;| PA
+    C -->|&quot;No Corresponde NC&quot;| PA
+
+    C -->|&quot;Ausente A&quot;| AUS{&quot;¿Tiene<br/>justificacion?&quot;}
+    AUS -->|&quot;No&quot;| AUSN[&quot;Suma como falta<br/>NO justificada<br/>🔴 Afecta regularidad&quot;]
+    AUS -->|&quot;Si&quot;| AUSJ[&quot;Ausente Justificado<br/>Suma a Justificaciones<br/>🟢 NO afecta regularidad&quot;]
+    AUSN --> PA
+    AUSJ --> PA
+
+    PA --> J[(&quot;📊 Acumulacion bimestral<br/>Solo impactan registros JN&quot;)]
+
+    J --> FAB[&quot;Calculo de puntajes derivados&quot;]
+
+    FAB --> F1[&quot;Justificaciones:<br/>suma de puntajes de ausentes justificados&quot;]
+    FAB --> F2[&quot;Carga:<br/>suma de todos los puntajes<br/>IT y RA se multiplican x2<br/>sin contar justificaciones&quot;]
+    FAB --> F3[&quot;Dias:<br/>dias del bimestre segun agenda<br/>menos dias sin matricula&quot;]
+
+    F1 --> CALC
+    F2 --> CALC
+    F3 --> CALC
+
+    CALC[&quot;⚙️ Calculo de Regularidad<br/>1 semana despues del cierre del bimestre&quot;] --> R1
+
+    R1{&quot;¿Regularidad modificada<br/>manualmente por directivo?&quot;}
+    R1 -->|&quot;Si&quot;| R1Y([&quot;🔵 CAMBIO MANUAL<br/>Requiere documentacion respaldatoria&quot;])
+    R1 -->|&quot;No&quot;| R2{&quot;¿Faltas NO justificadas<br/>anuales mayor a 25?&quot;}
+    R2 -->|&quot;Si&quot;| R2Y([&quot;🔴 NO REGULAR anual&quot;])
+    R2 -->|&quot;No&quot;| R3{&quot;¿Faltas bimestre<br/>> 15% de dias del bimestre?&quot;}
+    R3 -->|&quot;Si&quot;| R3Y([&quot;🔴 NO REGULAR bimestral&quot;])
+    R3 -->|&quot;No&quot;| R4{&quot;¿Faltas + falta de carga<br/>> 15% de dias del bimestre?&quot;}
+    R4 -->|&quot;Si&quot;| R4Y([&quot;🟡 DATOS INSUFICIENTES&quot;])
+    R4 -->|&quot;No&quot;| R5([&quot;🟢 REGULAR&quot;])
+
+    R3Y --> REC1[&quot;Se extiende al bimestre siguiente<br/>del mismo cuatrimestre&quot;]
+    R2Y --> REC2[&quot;No puede recuperar<br/>regularidad anual&quot;]
+    R5 --> REC3[&quot;Al inicio de cada cuatrimestre<br/>todos vuelven a ser Regulares<br/>excepto perdida de regularidad anual&quot;]
+
+    classDef inicio  fill:#ccfbf1,stroke:#14b8a6,color:#134e4a,font-weight:bold
+    classDef jornada fill:#e0f2fe,stroke:#0ea5e9,color:#0c4a6e
+    classDef ok      fill:#d1fae5,stroke:#059669,color:#064e3b,font-weight:bold
+    classDef noReg   fill:#fee2e2,stroke:#ef4444,color:#7f1d1d,font-weight:bold
+    classDef insuf   fill:#fef3c7,stroke:#f59e0b,color:#78350f,font-weight:bold
+    classDef manual  fill:#dbeafe,stroke:#3b82f6,color:#1e3a8a,font-weight:bold
+    classDef dec     fill:#f0fdfa,stroke:#5eead4,color:#134e4a
+    classDef db      fill:#e0f2fe,stroke:#0ea5e9,color:#0c4a6e
+    classDef fab     fill:#f8fafc,stroke:#94a3b8,color:#334155
+
+    class A inicio
+    class T1,T2,T3 jornada
+    class R5 ok
+    class R2Y,R3Y noReg
+    class R4Y insuf
+    class R1Y manual
+    classDef faltaNo  fill:#fee2e2,stroke:#ef4444,color:#7f1d1d
+    classDef faltaJus fill:#d1fae5,stroke:#059669,color:#064e3b
+
+    class B,R1,R2,R3,R4,C,AUS dec
+    class J db
+    class FAB,F1,F2,F3,CALC fab
+    class AUSN faltaNo
+    class AUSJ faltaJus">%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#f0fdfa','primaryTextColor':'#134e4a','primaryBorderColor':'#5eead4','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
 flowchart TD
     A(["📅 Dia escolar — registro JN"]) --> B
 
@@ -933,10 +1137,10 @@ flowchart TD
     class J db
     class FAB,F1,F2,F3,CALC fab
     class AUSN faltaNo
-    class AUSJ faltaJus
-      </div>
+    class AUSJ faltaJus</div>
       </div>
     </div>
+    
     <div class="view" id="view-presentismo">
       <div class="page-header">
         <h1>Presentismo</h1>
@@ -1049,8 +1253,37 @@ flowchart TD
         <div class="view" id="view-boletines">
       <div class="page-header"><h1>Informes y Boletines</h1><p>Generación del boletín y visibilidad de calificaciones según regularidad.</p></div>
       <div class="diagram-card">
-        <div class="mermaid">
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#fffbeb','primaryTextColor':'#451a03','primaryBorderColor':'#fcd34d','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+        <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#fffbeb','primaryTextColor':'#451a03','primaryBorderColor':'#fcd34d','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart TD
+    A([&quot;📝 Apertura del periodo de calificaciones&quot;]) --> B
+    B[&quot;👩‍🏫 Docente carga calificaciones<br/>SIEMPRE sin importar la regularidad&quot;] --> C
+    C{&quot;¿Que periodo?&quot;}
+    C -->|&quot;1er y 3er Bimestre&quot;| C1[&quot;Calificaciones CONCEPTUALES&quot;]
+    C -->|&quot;Cuatrimestral<br/>2do o 4to Bimestre&quot;| C2[&quot;Calificaciones NUMERICAS&quot;]
+    C1 --> D[&quot;📋 Directivo genera boletin por seccion&quot;]
+    C2 --> D
+    D --> E[&quot;👁️ Preceptor valida<br/>vista previa del boletin&quot;]
+    E --> F{&quot;¿El alumno es REGULAR<br/>en el bimestre?&quot;}
+    F -->|&quot;✅ Regular&quot;| G[&quot;Boletin muestra<br/>CALIFICACIONES del periodo&quot;]
+    F -->|&quot;❌ No regular&quot;| H[&quot;Boletin muestra<br/>NO REGULAR en todos<br/>los espacios curriculares&quot;]
+    G --> I[&quot;📁 Boletin impactado<br/>en el legajo del alumno&quot;]
+    H --> I
+    I --> J([&quot;📱 Familia visualiza<br/>en App Familias&quot;])
+    J --> P1[&quot;📊 Revision condicion<br/>de regularidad anual&quot;]
+    P1 --> P2{&quot;¿Regular en el anio?&quot;}
+    P2 -->|&quot;Si&quot;| P3([&quot;🎓 PROMOVIDO<br/>al anio siguiente&quot;])
+    P2 -->|&quot;No&quot;| P4[&quot;📖 Instancia de recuperacion<br/>de aprendizajes&quot;]
+    P4 --> P5{&quot;¿Aprueba<br/>recuperacion?&quot;}
+    P5 -->|&quot;Si&quot;| P3
+    P5 -->|&quot;No&quot;| P6([&quot;🔁 REPITE el anio&quot;])
+    classDef inicio fill:#fffbeb,stroke:#f59e0b,color:#451a03,font-weight:bold
+    classDef appfam fill:#dbeafe,stroke:#3b82f6,color:#1e3a8a,font-weight:bold
+    classDef promo  fill:#d1fae5,stroke:#059669,color:#064e3b,font-weight:bold
+    classDef repite fill:#fee2e2,stroke:#ef4444,color:#7f1d1d,font-weight:bold
+    class A inicio
+    class J appfam
+    class P3 promo
+    class P6 repite">%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#fffbeb','primaryTextColor':'#451a03','primaryBorderColor':'#fcd34d','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
 flowchart TD
     A(["📝 Apertura del periodo de calificaciones"]) --> B
     B["👩‍🏫 Docente carga calificaciones<br/>SIEMPRE sin importar la regularidad"] --> C
@@ -1080,10 +1313,10 @@ flowchart TD
     class A inicio
     class J appfam
     class P3 promo
-    class P6 repite
-      </div>
+    class P6 repite</div>
       </div>
     </div>
+    
     <!-- /main -->
 
 <script>
@@ -1092,9 +1325,11 @@ mermaid.initialize({startOnLoad:false, securityLevel:'loose'});
 var rnMod = 'todos', rnNiv = 'todos';
 
 document.addEventListener('DOMContentLoaded', function() {
-  var activeView = document.querySelector('.view.active');
-  if (activeView && activeView.querySelector('.mermaid')) {
-    try { mermaid.run({nodes: activeView.querySelectorAll('.mermaid')}); } catch(e) {}
+  // trigger nav for active item to render mermaid if needed
+  var activeNav = document.querySelector('.nav-item.active');
+  if (activeNav) {
+    var id = (activeNav.getAttribute('onclick')||'').match(/nav\('([^']+)'/);
+    if (id) nav(id[1], activeNav);
   }
 });
 
@@ -1106,16 +1341,21 @@ function nav(id, el) {
   if (el) el.classList.add('active');
   document.getElementById('bread-label').textContent = el ? el.textContent.trim() : id;
   if (id === 'reglas') setTimeout(rnApply, 50);
-  // Re-render mermaid diagrams in this view if not done yet
-  if (v && v.querySelector('.mermaid')) {
-    setTimeout(function() {
-      try {
-        v.querySelectorAll('.mermaid').forEach(function(el) {
-          el.removeAttribute('data-processed');
-        });
-        mermaid.run({nodes: v.querySelectorAll('.mermaid')});
-      } catch(e) { console.error('mermaid error', e); }
-    }, 100);
+  // Render mermaid diagrams in this view
+  if (v) {
+    v.querySelectorAll('.mermaid').forEach(function(el) {
+      if (el.getAttribute('data-rendered')) return;
+      var def = el.getAttribute('data-def') || el.textContent.trim();
+      el.setAttribute('data-def', def);
+      el.innerHTML = '<div style="padding:20px;color:#64748b;font-size:13px">Cargando diagrama...</div>';
+      var uid = 'mg' + Date.now() + Math.floor(Math.random()*9999);
+      mermaid.render(uid, def).then(function(result) {
+        el.innerHTML = result.svg;
+        el.setAttribute('data-rendered', '1');
+      }).catch(function(e) {
+        el.innerHTML = '<pre style="color:#ef4444;font-size:11px;white-space:pre-wrap">' + e.message.substring(0,300) + '</pre>';
+      });
+    });
   }
 }
 
