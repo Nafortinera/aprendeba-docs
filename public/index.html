@@ -757,6 +757,7 @@ mermaid.initialize({startOnLoad:true, securityLevel:'loose'});
 
 var rnMod = 'todos', rnNiv = 'todos';
 
+var mermaidRendered = {};
 function nav(id, el) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -765,6 +766,13 @@ function nav(id, el) {
   if (el) el.classList.add('active');
   document.getElementById('bread-label').textContent = el ? el.textContent.trim() : id;
   if (id === 'reglas') setTimeout(rnApply, 50);
+  // Re-render mermaid diagrams in this view if not done yet
+  if (!mermaidRendered[id] && v && v.querySelector('.mermaid')) {
+    mermaidRendered[id] = true;
+    setTimeout(function() {
+      try { mermaid.run({nodes: v.querySelectorAll('.mermaid')}); } catch(e) {}
+    }, 80);
+  }
 }
 
 function rnFilter(btn, type, val) {
