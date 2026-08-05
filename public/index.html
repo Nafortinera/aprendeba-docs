@@ -31,6 +31,24 @@ function docinvRefresh() {
   var ctr = document.getElementById('docinv-count');
   if (ctr) ctr.textContent = visible + ' documento' + (visible!==1?'s':'');
 }
+
+function flujoSelect(btn) {
+  document.querySelectorAll('#view-flujos .filter-btn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var key = btn.getAttribute('data-flujo');
+  document.querySelectorAll('.flujo-card').forEach(function(c){c.style.display='none';});
+  var card = document.getElementById('flujo-' + key);
+  if (card) {
+    card.style.display = '';
+    // render mermaid if not yet rendered
+    var el = card.querySelector('.mermaid[data-def]');
+    if (el && !el.querySelector('svg')) {
+      var uid = 'mermaid-f-' + key + '-' + Date.now();
+      var def = el.getAttribute('data-def');
+      mermaid.render(uid, def).then(function(res){ el.innerHTML = res.svg; }).catch(function(e){el.textContent='Error: '+e;});
+    }
+  }
+}
 </script>
 <style>
 :root {
@@ -2035,6 +2053,194 @@ flowchart TD
             <span><a href="https://docs.google.com/spreadsheets/d/1fCi_TYUlgNkmSMNsutjf_oMhgGBRJYjOlUOaWOwurRA/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
           </div>
           <div id="docinv-empty" style="display:none;padding:32px;text-align:center;color:var(--text-muted);font-size:13px">Sin resultados.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── FLUJOS ── -->
+    <div class="view" id="view-flujos">
+      <div class="page-header">
+        <h1>Flujos</h1>
+        <p>Diagramas de proceso por m&oacute;dulo</p>
+      </div>
+      <div class="filter-bar" style="margin-bottom:18px">
+        <button class="filter-btn on" data-flujo="mat" onclick="flujoSelect(this)">Matriculación</button>
+        <button class="filter-btn" data-flujo="pre" onclick="flujoSelect(this)">Presentismo</button>
+        <button class="filter-btn" data-flujo="cal" onclick="flujoSelect(this)">Calificaciones y Boletines</button>
+        <button class="filter-btn" data-flujo="cva" onclick="flujoSelect(this)">Ciclo de vida del alumno</button>
+        <button class="filter-btn" data-flujo="der" onclick="flujoSelect(this)">Entidades (DER simplificado)</button>
+        
+      </div>
+      <div id="flujo-container">
+        
+          <div class="flujo-card" id="flujo-mat" style="">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Flujo completo desde creación de secciones hasta alumno matriculado.</div>
+            <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;flowchart TD&#10;    subgraph INICIO[&quot;Inicio del ciclo lectivo&quot;]&#10;        A([Inicio]) --> B[Dirección de Área / Directivo\ncrea Secciones]&#10;        B --> C{¿Secciones\nlistas?}&#10;        C -->|No| B&#10;        C -->|Sí| D[Equipo de Conducción\nrealiza Proyección]&#10;    end&#10;    subgraph PROMO[&quot;Promoción&quot;]&#10;        D --> E[Directivo / Dir. de Área\nEdita proyección]&#10;        E --> F[Directivo / Dir. de Área\nFinaliza proyección]&#10;        F --> G[Directivo\nInforma vacantes a IEL]&#10;        G --> H[Directivo\nEfectiviza promoción]&#10;    end&#10;    subgraph INSCRIPTOS[&quot;Inscriptos&quot;]&#10;        H --> I[Equipo de Conducción\nVe inscriptos desde IEL]&#10;        I --> J[Equipo de Conducción\nMatricula alumnos]&#10;        J --> K{¿Alumno\nnuevo?}&#10;        K -->|Sí| L[Dir. de Área\nAgrega estudiante]&#10;        K -->|No| M[Equipo de Conducción\nAsigna a sección]&#10;        L --> M&#10;    end&#10;    subgraph MATRICULADOS[&quot;Matriculados&quot;]&#10;        M --> N[Equipo de Conducción / Directivo\nGenera código único vinculación]&#10;        N --> O[Equipo de Conducción / Directivo\nEdita legajo]&#10;        O --> P[Directivo\nConfirma matrícula]&#10;        P --> Q([Alumno matriculado])&#10;    end&#10;    style INICIO fill:#E0F4F8,stroke:#0E7490&#10;    style PROMO fill:#FEF3C7,stroke:#D97706&#10;    style INSCRIPTOS fill:#D1FAE5,stroke:#059669&#10;    style MATRICULADOS fill:#DBEAFE,stroke:#2563EB"></div>
+          </div>
+          <div class="flujo-card" id="flujo-pre" style="display:none">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Secuencia de toma de asistencia, cierre y justificaciones.</div>
+            <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;sequenceDiagram&#10;    participant D as Directivo&#10;    participant P as Preceptor/Docente&#10;    participant EC as Eq.Conducción&#10;    participant S as AprendeBA&#10;    Note over D,S: Inicio del período&#10;    P->>S: Selecciona sección y fecha&#10;    S-->>P: Muestra lista de alumnos&#10;    P->>S: Registra estado (P/A/IT/RA/APC)&#10;    S-->>P: Confirma guardado&#10;    alt Cierre del día&#10;        P->>S: Cierra el día&#10;        S-->>P: Día cerrado&#10;    end&#10;    alt Semana completa cargada&#10;        D->>S: Cierra la semana&#10;        S-->>D: Semana cerrada&#10;    end&#10;    alt Error de carga&#10;        EC->>D: Solicita corrección&#10;        D->>S: Abre semana/día&#10;        P->>S: Corrige asistencia&#10;        D->>S: Cierra nuevamente&#10;    end&#10;    alt Justificación&#10;        EC->>S: Carga justificativo&#10;        S-->>S: Actualiza regularidad&#10;    end"></div>
+          </div>
+          <div class="flujo-card" id="flujo-cal" style="display:none">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Ciclo de carga de notas, cierre de período y generación de boletines.</div>
+            <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;sequenceDiagram&#10;    participant D as Directivo&#10;    participant Doc as Docente&#10;    participant EC as Eq.Conducción&#10;    participant S as AprendeBA&#10;    Note over D,S: Apertura del período&#10;    D->>S: Abre período de calificaciones&#10;    S-->>D: Período abierto&#10;    S-->>Doc: Notifica disponibilidad&#10;    Doc->>S: Selecciona período, grado, sección&#10;    S-->>Doc: Muestra grilla de alumnos&#10;    Doc->>S: Carga Nota + PPI por alumno&#10;    alt PPI vacío&#10;        S-->>Doc: Error: PPI obligatorio&#10;        Doc->>S: Completa PPI&#10;    end&#10;    S-->>Doc: Calificaciones guardadas&#10;    alt Cierre del período&#10;        Doc->>S: Cierra calificaciones&#10;        EC->>S: Verifica completitud&#10;    end&#10;    Note over D,S: Generación de Boletines&#10;    D->>S: Solicita generar boletines&#10;    alt Datos incompletos&#10;        S-->>D: Faltan datos en sección/alumno&#10;        EC->>S: Completa datos faltantes&#10;        D->>S: Reintenta generar&#10;    end&#10;    S-->>D: Boletines generados en PDF"></div>
+          </div>
+          <div class="flujo-card" id="flujo-cva" style="display:none">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Estados del alumno en el sistema: inscripto → activo → baja/pase.</div>
+            <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;stateDiagram-v2&#10;    [*] --> Inscripto : Llega desde IEL&#10;    Inscripto --> Matriculado : Equipo Conducción\nmatricula al alumno&#10;    Matriculado --> Activo : Directivo confirma\ny genera código&#10;    Activo --> CambioDeSección : Directivo/Dir.Área\ncambia de sección&#10;    CambioDeSección --> Activo : Sección actualizada&#10;    Activo --> Baja : Directivo desmatricula&#10;    Activo --> Pase : Dir.Área/Directivo\nsolicita pase&#10;    Pase --> PaseConfirmado : Establecimiento destino\nacepta pase&#10;    PaseConfirmado --> [*] : Dado de baja\nen origen&#10;    Baja --> [*] : Fuera del sistema"></div>
+          </div>
+          <div class="flujo-card" id="flujo-der" style="display:none">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Relaciones principales entre las entidades del modelo de datos.</div>
+            <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;erDiagram&#10;    ESTABLECIMIENTOS ||--o{ SECCIONES : tiene&#10;    SECCIONES ||--o{ MATRICULACIONES : agrupa&#10;    ALUMNOS ||--o{ MATRICULACIONES : tiene&#10;    MATRICULACIONES ||--o{ ASISTENCIAS : registra&#10;    MATRICULACIONES ||--o{ CALIFICACIONES : tiene&#10;    MATRICULACIONES ||--o{ ECPS : acumula&#10;    MATRICULACIONES ||--o{ BOLETINES : genera&#10;    MATRICULACIONES ||--o| LIBRO_MATRIZ : produce&#10;    PLANES_ESTUDIO ||--o{ ESPACIOS_CURRICULARES : contiene&#10;    ESPACIOS_CURRICULARES ||--o{ CALIFICACIONES : califica&#10;    USUARIOS ||--o{ ROLES_ESTABLECIMIENTO : asignado&#10;    ESTABLECIMIENTOS ||--o{ ROLES_ESTABLECIMIENTO : tiene"></div>
+          </div>
+      </div>
+    </div>
+
+    <!-- ── ARQUITECTURA ── -->
+    <div class="view" id="view-arq">
+      <div class="page-header">
+        <h1>Arquitectura</h1>
+        <p>Modelo de datos, API y stack tecnol&oacute;gico</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        <div class="stat-card">
+          <div class="stat-label">Frontend</div>
+          <div style="font-size:13px;margin-top:6px;color:var(--text)">HTML/JS est&aacute;tico (Vercel) &rarr; React (migraci&oacute;n progresiva)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Backend</div>
+          <div style="font-size:13px;margin-top:6px;color:var(--text)">Node.js 20 + Express 4 · JWT · Railway/Render</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Base de datos</div>
+          <div style="font-size:13px;margin-top:6px;color:var(--text)">PostgreSQL 16 · Supabase · 13 tablas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Integraci&oacute;n</div>
+          <div style="font-size:13px;margin-top:6px;color:var(--text)">SiTED (Ministerio) · IEL (inscriptos) · BA Colaborativa</div>
+        </div>
+      </div>
+
+      <h3 style="font-size:14px;font-weight:600;margin:0 0 10px;color:var(--text)">Entidades principales</h3>
+      <div class="tbl-wrap" style="margin-bottom:20px">
+        <div class="tbl-head" style="grid-template-columns:160px 1fr 2fr">
+          <span>Tabla</span><span>Descripci&oacute;n</span><span>Campos clave</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
+          <span style="font-family:monospace;font-size:12px">alumnos</span>
+          <span>Padr&oacute;n de estudiantes</span>
+          <span style="font-size:12px;color:var(--text-muted)">id, dni, cuil, cuenta_alumno, apellido, nombre, fecha_nacimiento</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
+          <span style="font-family:monospace;font-size:12px">establecimientos</span>
+          <span>CFPs y escuelas</span>
+          <span style="font-size:12px;color:var(--text-muted)">id, cue, nombre, comuna, tipo, ciclo_lectivo</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
+          <span style="font-family:monospace;font-size:12px">secciones</span>
+          <span>Divisiones por a&ntilde;o/turno</span>
+          <span style="font-size:12px;color:var(--text-muted)">id, establecimiento_id, ciclo_lectivo, nivel, division, turno, jornada</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
+          <span style="font-family:monospace;font-size:12px">matriculaciones</span>
+          <span>Inscripci&oacute;n alumno/secci&oacute;n</span>
+          <span style="font-size:12px;color:var(--text-muted)">id, alumno_id, seccion_id, estado, motivo_baja, plan_id, nivel_cursando</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
+          <span style="font-family:monospace;font-size:12px">asistencias</span>
+          <span>Registro diario</span>
+          <span style="font-size:12px;color:var(--text-muted)">id, matriculacion_id, fecha, estado (P/A/T/R/J/N/X), modo_registro</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
+          <span style="font-family:monospace;font-size:12px">calificaciones</span>
+          <span>Notas por bimestre</span>
+          <span style="font-size:12px;color:var(--text-muted)">id, matriculacion_id, espacio_curricular_id, bimestre, nota, tipo</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
+          <span style="font-family:monospace;font-size:12px">ecps</span>
+          <span>Espacios Curriculares Pendientes</span>
+          <span style="font-size:12px;color:var(--text-muted)">id, matriculacion_id, espacio_curricular_id, motivo, estado</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
+          <span style="font-family:monospace;font-size:12px">boletines</span>
+          <span>Informes emitidos</span>
+          <span style="font-size:12px;color:var(--text-muted)">id, matriculacion_id, bimestre, tipo, fecha_emision, url_pdf</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
+          <span style="font-family:monospace;font-size:12px">libro_matriz</span>
+          <span>Folio digital</span>
+          <span style="font-size:12px;color:var(--text-muted)">id, matriculacion_id, estado, fecha_envio_sited, nro_resolucion</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
+          <span style="font-family:monospace;font-size:12px">usuarios / roles_establecimiento</span>
+          <span>Acceso y permisos</span>
+          <span style="font-size:12px;color:var(--text-muted)">cuil, email, rol (directivo/preceptor/docente/secretaria/supervisor)</span>
+        </div>
+      </div>
+
+      <h3 style="font-size:14px;font-weight:600;margin:0 0 10px;color:var(--text)">API REST — Endpoints principales</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div class="stat-card">
+          <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:8px;text-transform:uppercase">Alumnos &amp; Matrícula</div>
+          <div style="font-size:12px;font-family:monospace;line-height:1.8;color:var(--text-muted)">
+            GET /alumnos<br>GET /alumnos/:id<br>POST /alumnos<br>POST /matriculaciones<br>PUT /matriculaciones/:id<br>POST /matriculaciones/:id/desmatricular
+          </div>
+        </div>
+        <div class="stat-card">
+          <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:8px;text-transform:uppercase">Asistencias &amp; Calificaciones</div>
+          <div style="font-size:12px;font-family:monospace;line-height:1.8;color:var(--text-muted)">
+            POST /asistencias/bulk<br>PUT /asistencias/:id<br>POST /asistencias/:id/justificar<br>GET /asistencias/regularidad<br>POST /calificaciones/bulk<br>PUT /calificaciones/:id
+          </div>
+        </div>
+        <div class="stat-card">
+          <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:8px;text-transform:uppercase">Boletines &amp; Folio</div>
+          <div style="font-size:12px;font-family:monospace;line-height:1.8;color:var(--text-muted)">
+            POST /boletines/generar<br>GET /boletines/:id/pdf<br>PUT /libro-matriz/:id<br>POST /libro-matriz/:id/enviar-sited<br>GET /libro-matriz/:id/pdf
+          </div>
+        </div>
+        <div class="stat-card">
+          <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:8px;text-transform:uppercase">Tablero &amp; QRs</div>
+          <div style="font-size:12px;font-family:monospace;line-height:1.8;color:var(--text-muted)">
+            GET /tablero?establecimiento_id=<br>GET /tablero/asistencia-semana<br>GET /tablero/calificaciones<br>GET /qrs/:matriculacion_id<br>GET /qrs/seccion/:seccion_id<br>POST /asistencias/qr-scan
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-size:14px;font-weight:600;margin:0 0 10px;color:var(--text)">Roadmap de implementaci&oacute;n</h3>
+      <div class="tbl-wrap">
+        <div class="tbl-head" style="grid-template-columns:80px 1fr 100px">
+          <span>Fase</span><span>Alcance</span><span>Estimaci&oacute;n</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:80px 1fr 100px">
+          <span style="font-weight:600">Fase 0</span>
+          <span>Setup: repo, DB en Supabase, deploy backend en Railway</span>
+          <span style="color:var(--text-muted)">1 semana</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:80px 1fr 100px">
+          <span style="font-weight:600">Fase 1</span>
+          <span>Auth + Alumnos + Matriculaciones + Asistencias</span>
+          <span style="color:var(--text-muted)">3 semanas</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:80px 1fr 100px">
+          <span style="font-weight:600">Fase 2</span>
+          <span>Calificaciones + ECPs + Boletines (PDF)</span>
+          <span style="color:var(--text-muted)">3 semanas</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:80px 1fr 100px">
+          <span style="font-weight:600">Fase 3</span>
+          <span>Libro Matriz + integraci&oacute;n SiTED</span>
+          <span style="color:var(--text-muted)">2 semanas</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:80px 1fr 100px">
+          <span style="font-weight:600">Fase 4</span>
+          <span>Tablero en vivo + QRs funcionales</span>
+          <span style="color:var(--text-muted)">1 semana</span>
+        </div>
+        <div class="tbl-row" style="grid-template-columns:80px 1fr 100px">
+          <span style="font-weight:600">Fase 5</span>
+          <span>Migraci&oacute;n frontend a React (progresiva)</span>
+          <span style="color:var(--text-muted)">A definir</span>
         </div>
       </div>
     </div>
