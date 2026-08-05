@@ -1081,241 +1081,73 @@ flowchart TD
     <div class="view" id="view-mantis">
       <div class="page-header">
         <h1>Mantis</h1>
-        <p>Seguimiento de incidencias &middot; Informe activos al 08/07/2026</p>
+        <p id="mantis-subtitle">Cargando datos desde Mantis&hellip;</p>
       </div>
 
-      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr)">
+      <!-- Stats -->
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px">
         <div class="stat-card">
-          <div class="stat-label">Activos en PROD</div>
-          <div class="stat-val" style="color:#0e9e82">19</div>
-          <div class="stat-sub">al 08/07/2026</div>
+          <div class="stat-label">Total bugs</div>
+          <div class="stat-val" id="mn-total">&mdash;</div>
+          <div class="stat-sub">en todos los estados</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">M&aacute;s recientes</div>
-          <div class="stat-val">4</div>
-          <div class="stat-sub">jun&ndash;jul 2026</div>
+          <div class="stat-label">Abiertos</div>
+          <div class="stat-val" id="mn-open" style="color:#dc2626">&mdash;</div>
+          <div class="stat-sub">new / assigned / feedback</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">2&ordm; trimestre 2026</div>
-          <div class="stat-val">9</div>
-          <div class="stat-sub">abr&ndash;jun 2026</div>
+          <div class="stat-label">Resueltos</div>
+          <div class="stat-val" id="mn-closed" style="color:#0e9e82">&mdash;</div>
+          <div class="stat-sub">resolved / closed</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Antiguos &gt;6 meses</div>
-          <div class="stat-val" style="color:#dc2626">4</div>
-          <div class="stat-sub">feb-25 &middot; ago-25 &middot; oct-25 &middot; nov-25</div>
+          <div class="stat-label">% Resoluci&oacute;n</div>
+          <div class="stat-val" id="mn-pct">&mdash;</div>
+          <div style="background:#e2e8f0;border-radius:4px;height:6px;margin-top:6px">
+            <div id="mn-bar" style="background:#0e9e82;height:6px;border-radius:4px;width:0%;transition:width .4s"></div>
+          </div>
         </div>
       </div>
 
       <!-- Search + Filters -->
-      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;align-items:center">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;align-items:center">
         <input id="mantis-search" class="search-input" placeholder="Buscar por ID o descripci&oacute;n&hellip;" oninput="mantisRefresh()" style="width:260px">
         <div style="flex:1"></div>
-        <span id="mantis-count" style="font-size:12px;color:var(--text-muted)">19 tickets</span>
+        <button onclick="cargarMantisDash()" style="padding:5px 12px;border:1px solid var(--accent);border-radius:20px;background:#fff;color:var(--accent);cursor:pointer;font-size:12px;font-weight:600">&#8635; Actualizar</button>
+        <a href="https://mantis.bue.edu.ar" target="_blank" style="padding:5px 12px;border:1px solid var(--border);border-radius:20px;background:#fff;color:var(--text-soft);font-size:12px;text-decoration:none">&#8599; Abrir Mantis</a>
+        <span id="mantis-count" style="font-size:12px;color:var(--text-muted)"></span>
       </div>
 
       <div class="filter-bar">
         <span class="filter-label">M&oacute;dulo</span>
         <button class="filter-btn on" data-mf="todos" onclick="mantisSetFilter('mod',this)">Todos</button>
         <button class="filter-btn" data-mf="mat" onclick="mantisSetFilter('mod',this)">Matriculaci&oacute;n</button>
-        <button class="filter-btn" data-mf="leg" onclick="mantisSetFilter('mod',this)">Legajo / Resp.</button>
+        <button class="filter-btn" data-mf="leg" onclick="mantisSetFilter('mod',this)">Legajos</button>
         <button class="filter-btn" data-mf="pre" onclick="mantisSetFilter('mod',this)">Presentismo</button>
-        <button class="filter-btn" data-mf="rol" onclick="mantisSetFilter('mod',this)">Roles</button>
-        <button class="filter-btn" data-mf="acc" onclick="mantisSetFilter('mod',this)">Acceso / URL</button>
-        <button class="filter-btn" data-mf="dat" onclick="mantisSetFilter('mod',this)">Datos</button>
+        <button class="filter-btn" data-mf="cal" onclick="mantisSetFilter('mod',this)">Calificaciones</button>
+        <button class="filter-btn" data-mf="rol" onclick="mantisSetFilter('mod',this)">Roles / Acceso</button>
         <button class="filter-btn" data-mf="pla" onclick="mantisSetFilter('mod',this)">Plan estudios</button>
+        <button class="filter-btn" data-mf="otr" onclick="mantisSetFilter('mod',this)">Otros</button>
         <span style="width:1px;height:18px;background:var(--border);margin:0 4px"></span>
         <span class="filter-label">Estado</span>
         <button class="filter-btn on" data-ef="todos" onclick="mantisSetFilter('est',this)">Todos</button>
-        <button class="filter-btn" data-ef="abierto" onclick="mantisSetFilter('est',this)">Abierto</button>
-        <button class="filter-btn" data-ef="reabierto" onclick="mantisSetFilter('est',this)">Reabierto</button>
-        <button class="filter-btn" data-ef="mejora" onclick="mantisSetFilter('est',this)">Mejora</button>
-        <button class="filter-btn" data-ef="cerrado" onclick="mantisSetFilter('est',this)">Cerrado</button>
+        <button class="filter-btn" data-ef="abierto" onclick="mantisSetFilter('est',this)">Abiertos</button>
+        <button class="filter-btn" data-ef="resuelto" onclick="mantisSetFilter('est',this)">Resueltos</button>
       </div>
 
+      <!-- Table -->
       <div class="tbl-wrap">
-        <div class="tbl-head" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-          <span>ID</span><span>Resumen</span><span>M&oacute;dulo</span><span>Estado</span><span>Apertura</span><span>Antig.</span>
+        <div class="tbl-head" style="grid-template-columns:75px 1fr 140px 120px 95px 130px">
+          <span>ID</span><span>Resumen</span><span>Categor&iacute;a</span><span>Estado</span><span>Fecha</span><span>Asignado a</span>
         </div>
         <div id="mantis-rows">
-
-          <div class="tbl-row" data-mod="mat" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">62025</span>
-            <span>Error en JIN al descargar matr&iacute;cula &mdash; nro. sede en lugar del anexo</span>
-            <span><span class="badge badge-blue">Matriculaci&oacute;n</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>08/07/2026</span>
-            <span><span class="badge badge-ok">&lt;1 m</span></span>
+          <div style="padding:40px;text-align:center;color:var(--text-muted);font-size:13px" id="mantis-loading">
+            <svg style="width:24px;height:24px;animation:spin 1s linear infinite;margin-bottom:8px;display:block;margin:0 auto 8px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            Conectando con Mantis&hellip;
           </div>
-
-          <div class="tbl-row" data-mod="leg" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">61942</span>
-            <span>No deja entrar al legajo del alumno (vuelve a pantalla de secciones)</span>
-            <span><span class="badge badge-purple">Legajo</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>03/07/2026</span>
-            <span><span class="badge badge-ok">&lt;1 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="pre" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">61741</span>
-            <span>Pide carga de presentismo los d&iacute;as 23 y 24/feb seg&uacute;n FEM</span>
-            <span><span class="badge badge-teal">Presentismo</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>25/06/2026</span>
-            <span><span class="badge badge-ok">&lt;1 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="mat" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">61701</span>
-            <span>Adultos &mdash; CUE 200453 no puede mover alumnos de nivel</span>
-            <span><span class="badge badge-blue">Matriculaci&oacute;n</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>24/06/2026</span>
-            <span><span class="badge badge-ok">&lt;1 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="mat" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">61058</span>
-            <span>FEM de SecuAprende no contemplada en pases &mdash; alumnos en dos escuelas simult&aacute;neamente</span>
-            <span><span class="badge badge-blue">Matriculaci&oacute;n</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>27/05/2026</span>
-            <span><span class="badge badge-draft">1.5 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="mat" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">61035</span>
-            <span>Alumnos duplicados en el sistema</span>
-            <span><span class="badge badge-blue">Matriculaci&oacute;n</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>27/05/2026</span>
-            <span><span class="badge badge-draft">1.5 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="dat" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">60480</span>
-            <span>ID persona con m&aacute;s de un c&oacute;digo de vinculaci&oacute;n</span>
-            <span><span class="badge badge-amber">Datos</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>30/04/2026</span>
-            <span><span class="badge badge-draft">2.5 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="acc" data-est="reabierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">60383</span>
-            <span>Bot&oacute;n &lsquo;Abrir con la app&rsquo; en URL duplica la p&aacute;gina</span>
-            <span><span class="badge badge-warn">Acceso / URL</span></span>
-            <span><span class="badge badge-amber">Reabierto</span></span>
-            <span>28/04/2026</span>
-            <span><span class="badge badge-draft">2.5 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="rol" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">59624</span>
-            <span>Rol Direcci&oacute;n de &Aacute;rea &mdash; no accede a Educaci&oacute;n Media ni Art&iacute;stica</span>
-            <span><span class="badge badge-orange">Roles</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>31/03/2026</span>
-            <span><span class="badge badge-warn">3.5 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="pre" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">59136</span>
-            <span>Error impacto de la regularidad &mdash; alumnos figuran como &ldquo;No regular&rdquo; sin error t&eacute;cnico</span>
-            <span><span class="badge badge-teal">Presentismo</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>15/03/2026</span>
-            <span><span class="badge badge-warn">4 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="leg" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">59258</span>
-            <span>Responsables &mdash; &lsquo;Otro&rsquo; trae al mismo estudiante en el listado</span>
-            <span><span class="badge badge-purple">Legajo / Resp.</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>19/03/2026</span>
-            <span><span class="badge badge-warn">4 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="leg" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">59257</span>
-            <span>Datos de responsable vac&iacute;os (no llegan desde IEL ni App Familias)</span>
-            <span><span class="badge badge-purple">Legajo / Resp.</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>19/03/2026</span>
-            <span><span class="badge badge-warn">4 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="leg" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">59256</span>
-            <span>Responsables del legajo con datos incorrectos (hermanos con responsables cruzados)</span>
-            <span><span class="badge badge-purple">Legajo / Resp.</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>19/03/2026</span>
-            <span><span class="badge badge-warn">4 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="leg" data-est="mejora" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">59261</span>
-            <span>Agregar funcionalidad para eliminar responsable desde el legajo</span>
-            <span><span class="badge badge-purple">Legajo / Resp.</span></span>
-            <span><span class="badge badge-draft">Mejora</span></span>
-            <span>19/03/2026</span>
-            <span><span class="badge badge-warn">4 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="acc" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">58649</span>
-            <span>Bloqueo en URL &mdash; pantalla en blanco por cookies bloqueadas</span>
-            <span><span class="badge badge-warn">Acceso / URL</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>04/03/2026</span>
-            <span><span class="badge badge-warn">4 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="pre" data-est="reabierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">56668</span>
-            <span>Error al eliminar justificativos &mdash; persisten en el reporte tras confirmar eliminaci&oacute;n</span>
-            <span><span class="badge badge-teal">Presentismo</span></span>
-            <span><span class="badge badge-amber">Reabierto</span></span>
-            <span>07/11/2025</span>
-            <span><span class="badge" style="background:#fee2e2;color:#991b1b">8 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="pla" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">56034</span>
-            <span>Eliminar espacios curriculares duplicados (CUE 203035 &mdash; IDs 115559 y 115560)</span>
-            <span><span class="badge badge-sec">Plan estudios</span></span>
-            <span><span class="badge badge-ok">Abierto</span></span>
-            <span>14/10/2025</span>
-            <span><span class="badge" style="background:#fee2e2;color:#991b1b">9 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="pre" data-est="reabierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">54854</span>
-            <span>Error de conteo en alertas de ausentismo &mdash; feriados contados como ausentes</span>
-            <span><span class="badge badge-teal">Presentismo</span></span>
-            <span><span class="badge badge-amber">Reabierto</span></span>
-            <span>21/08/2025</span>
-            <span><span class="badge" style="background:#fee2e2;color:#991b1b">11 m</span></span>
-          </div>
-
-          <div class="tbl-row" data-mod="pla" data-est="reabierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
-            <span class="tbl-cell-strong">49870</span>
-            <span>Unificar materias de Educaci&oacute;n Art&iacute;stica en t&eacute;cnicas plan 4145</span>
-            <span><span class="badge badge-sec">Plan estudios</span></span>
-            <span><span class="badge badge-amber">Reabierto</span></span>
-            <span>05/02/2025</span>
-            <span><span class="badge" style="background:#fee2e2;color:#991b1b">17 m</span></span>
-          </div>
-
-          <div id="mantis-empty" style="display:none;padding:32px;text-align:center;color:var(--text-muted);font-size:13px">
-            Sin resultados para los filtros seleccionados.
-          </div>
-
-        </div><!-- /mantis-rows -->
-      </div><!-- /tbl-wrap -->
+        </div>
+      </div>
 
     </div>
 
@@ -1331,6 +1163,7 @@ function nav(id, el) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   var v = document.getElementById('view-'+id);
+  if (id === 'mantis' && !document.querySelector('#mantis-rows .tbl-row')) { cargarMantisDash(); }
   if (v) v.classList.add('active');
   if (el) el.classList.add('active');
   document.getElementById('bread-label').textContent = el ? el.textContent.trim() : id;
@@ -1392,13 +1225,121 @@ function rnApply(q) {
 document.addEventListener('DOMContentLoaded', rnApply);
 
 var mfMod = 'todos', mfEst = 'todos';
+var mnAllIssues = [];
+
+var mnModMap = {
+  'Matriculados':'mat','Gestión de pases':'mat','Inscriptos':'mat',
+  'Legajos':'leg','Cuenta Alu':'leg',
+  'Presentismo':'pre',
+  'Calificaciones':'cal','Boletines':'cal','Libro calificador':'cal','Libro matriz':'cal',
+  'Gestión de roles':'rol','Permisos':'rol',
+  'Plan de estudios':'pla','Espacio curriculares':'pla',
+};
+
+var mnEstMap = {
+  'new':'abierto','acknowledged':'abierto','confirmed':'abierto',
+  'assigned':'abierto','feedback':'abierto',
+  'resolved':'resuelto','closed':'resuelto',
+};
+
+var mnEstLabel = {
+  'new':'Nuevo','acknowledged':'Reconocido','confirmed':'Confirmado',
+  'assigned':'Asignado','feedback':'Feedback','resolved':'Resuelto','closed':'Cerrado',
+};
+
+var mnEstBadge = {
+  'new':'background:#fef3c7;color:#92400e',
+  'acknowledged':'background:#dbeafe;color:#1e40af',
+  'confirmed':'background:#ede9fe;color:#5b21b6',
+  'assigned':'background:#fff7ed;color:#9a3412',
+  'feedback':'background:#fce7f3;color:#9d174d',
+  'resolved':'background:#d1fae5;color:#065f46',
+  'closed':'background:#f1f5f9;color:#475569',
+};
+
 function mantisSetFilter(type, btn) {
-  var group = type === 'mod' ? '[data-mf]' : '[data-ef]';
-  document.querySelectorAll('#view-mantis .filter-btn' + group).forEach(function(b){ b.classList.remove('on'); });
+  document.querySelectorAll('#view-mantis .filter-btn' + (type==='mod'?'[data-mf]':'[data-ef]')).forEach(function(b){b.classList.remove('on');});
   btn.classList.add('on');
-  if (type === 'mod') mfMod = btn.getAttribute('data-mf');
+  if (type==='mod') mfMod = btn.getAttribute('data-mf');
   else mfEst = btn.getAttribute('data-ef');
   mantisRefresh();
+}
+
+function mantisRefresh() {
+  var q = (document.getElementById('mantis-search').value||'').toLowerCase();
+  var rows = document.querySelectorAll('#mantis-rows .tbl-row');
+  var visible = 0;
+  rows.forEach(function(row){
+    var modOk = mfMod==='todos' || row.getAttribute('data-mod')===mfMod;
+    var estOk = mfEst==='todos' || row.getAttribute('data-est')===mfEst;
+    var searchOk = !q || row.textContent.toLowerCase().indexOf(q)!==-1;
+    var show = modOk && estOk && searchOk;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  var empty = document.getElementById('mantis-empty');
+  if (empty) empty.style.display = visible===0 ? '' : 'none';
+  var ctr = document.getElementById('mantis-count');
+  if (ctr) ctr.textContent = visible + ' ticket' + (visible!==1?'s':'');
+}
+
+function renderMantisDash(data) {
+  var issues = data.issues || [];
+  // Stats
+  var setEl = function(id,v){var e=document.getElementById(id);if(e)e.textContent=v;};
+  setEl('mn-total', data.total);
+  setEl('mn-open',  data.abiertos);
+  setEl('mn-closed',data.cerrados);
+  setEl('mn-pct',   data.pct_resolucion + '%');
+  var bar = document.getElementById('mn-bar');
+  if (bar) bar.style.width = data.pct_resolucion + '%';
+  var sub = document.getElementById('mantis-subtitle');
+  if (sub) sub.textContent = data.total + ' tickets cargados desde Mantis · actualizado ahora';
+
+  // Rows
+  var colStyle = 'grid-template-columns:75px 1fr 140px 120px 95px 130px';
+  var html = issues.map(function(i){
+    var mod = mnModMap[i.categoria] || 'otr';
+    var est = mnEstMap[i.estado] || 'abierto';
+    var badge = mnEstBadge[i.estado] || 'background:#f1f5f9;color:#475569';
+    var label = mnEstLabel[i.estado] || i.estado;
+    var asig = (i.asignado_a||'—').replace(/\./g,' ');
+    return '<div class="tbl-row" data-mod="'+mod+'" data-est="'+est+'" style="'+colStyle+'">' +
+      '<span class="tbl-cell-strong"><a href="'+i.url+'" target="_blank" style="color:var(--text);text-decoration:none">#'+i.id+'</a></span>' +
+      '<span style="font-size:12px">'+escHtml(i.resumen||'—')+'</span>' +
+      '<span><span class="badge badge-draft" style="font-size:10px">'+escHtml(i.categoria||'—')+'</span></span>' +
+      '<span><span class="badge" style="'+badge+';font-size:10px">'+label+'</span></span>' +
+      '<span style="font-size:12px">'+escHtml(i.fecha||'—')+'</span>' +
+      '<span style="font-size:11px;color:var(--text-soft)">'+escHtml(asig)+'</span>' +
+      '</div>';
+  }).join('') +
+  '<div id="mantis-empty" style="display:none;padding:32px;text-align:center;color:var(--text-muted);font-size:13px">Sin resultados.</div>';
+
+  var container = document.getElementById('mantis-rows');
+  if (container) container.innerHTML = html;
+  mantisRefresh();
+}
+
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function cargarMantisDash() {
+  var loading = document.getElementById('mantis-loading');
+  var sub = document.getElementById('mantis-subtitle');
+  if (loading) { document.getElementById('mantis-rows').innerHTML = '<div id="mantis-loading" style="padding:40px;text-align:center;color:var(--text-muted);font-size:13px">Actualizando desde Mantis…</div>'; }
+  try {
+    await fetch('https://aprendebaas.netlify.app/.netlify/functions/mantis-issues?ping=1', {signal:AbortSignal.timeout(4000)});
+    var res = await fetch('https://aprendebaas.netlify.app/.netlify/functions/mantis-issues');
+    var data = await res.json();
+    if (data.error) throw new Error(data.error);
+    mnAllIssues = data.issues || [];
+    renderMantisDash(data);
+  } catch(e) {
+    var rows = document.getElementById('mantis-rows');
+    if (rows) rows.innerHTML = '<div style="padding:32px;text-align:center;color:#dc2626;font-size:13px">No se pudo conectar con Mantis: '+escHtml(e.message)+'</div>';
+    if (sub) sub.textContent = 'Error al cargar — verificar conexión';
+  }
 }
 function mantisRefresh() {
   var q = (document.getElementById('mantis-search').value || '').toLowerCase();
