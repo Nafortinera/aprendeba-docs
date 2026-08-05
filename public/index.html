@@ -1081,12 +1081,12 @@ flowchart TD
     <div class="view" id="view-mantis">
       <div class="page-header">
         <h1>Mantis</h1>
-        <p>Incidencias activas en producción &middot; Informe al 08/07/2026</p>
+        <p>Seguimiento de incidencias &middot; Informe activos al 08/07/2026</p>
       </div>
 
       <div class="stat-grid" style="grid-template-columns:repeat(4,1fr)">
         <div class="stat-card">
-          <div class="stat-label">Total activos en PROD</div>
+          <div class="stat-label">Activos en PROD</div>
           <div class="stat-val" style="color:#0e9e82">19</div>
           <div class="stat-sub">al 08/07/2026</div>
         </div>
@@ -1107,174 +1107,213 @@ flowchart TD
         </div>
       </div>
 
-      <div class="filter-bar">
+      <!-- Search + Filters -->
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;align-items:center">
+        <input id="mantis-search" class="search-input" placeholder="Buscar por ID o descripci&oacute;n&hellip;" oninput="mantisRefresh()" style="width:260px">
+        <div style="flex:1"></div>
+        <span id="mantis-count" style="font-size:12px;color:var(--text-muted)">19 tickets</span>
+      </div>
+
+      <div class="filter-bar" style="margin-bottom:8px">
         <span class="filter-label">M&oacute;dulo</span>
-        <button class="filter-btn on" onclick="mantisFilter(this,'todos')">Todos</button>
-        <button class="filter-btn" onclick="mantisFilter(this,'mat')">Matriculaci&oacute;n</button>
-        <button class="filter-btn" onclick="mantisFilter(this,'leg')">Legajo / Resp.</button>
-        <button class="filter-btn" onclick="mantisFilter(this,'pre')">Presentismo</button>
-        <button class="filter-btn" onclick="mantisFilter(this,'rol')">Roles</button>
-        <button class="filter-btn" onclick="mantisFilter(this,'acc')">Acceso / URL</button>
-        <button class="filter-btn" onclick="mantisFilter(this,'dat')">Datos</button>
-        <button class="filter-btn" onclick="mantisFilter(this,'pla')">Plan estudios</button>
+        <button class="filter-btn on" data-mf="todos" onclick="mantisSetFilter('mod',this)">Todos</button>
+        <button class="filter-btn" data-mf="mat" onclick="mantisSetFilter('mod',this)">Matriculaci&oacute;n</button>
+        <button class="filter-btn" data-mf="leg" onclick="mantisSetFilter('mod',this)">Legajo / Resp.</button>
+        <button class="filter-btn" data-mf="pre" onclick="mantisSetFilter('mod',this)">Presentismo</button>
+        <button class="filter-btn" data-mf="rol" onclick="mantisSetFilter('mod',this)">Roles</button>
+        <button class="filter-btn" data-mf="acc" onclick="mantisSetFilter('mod',this)">Acceso / URL</button>
+        <button class="filter-btn" data-mf="dat" onclick="mantisSetFilter('mod',this)">Datos</button>
+        <button class="filter-btn" data-mf="pla" onclick="mantisSetFilter('mod',this)">Plan estudios</button>
+      </div>
+
+      <div class="filter-bar">
+        <span class="filter-label">Estado</span>
+        <button class="filter-btn on" data-ef="todos" onclick="mantisSetFilter('est',this)">Todos</button>
+        <button class="filter-btn" data-ef="abierto" onclick="mantisSetFilter('est',this)">Abierto</button>
+        <button class="filter-btn" data-ef="reabierto" onclick="mantisSetFilter('est',this)">Reabierto</button>
+        <button class="filter-btn" data-ef="mejora" onclick="mantisSetFilter('est',this)">Mejora</button>
+        <button class="filter-btn" data-ef="cerrado" onclick="mantisSetFilter('est',this)">Cerrado</button>
       </div>
 
       <div class="tbl-wrap">
-        <div class="tbl-head" style="grid-template-columns:70px 1fr 160px 95px 90px">
-          <span>ID</span><span>Resumen</span><span>M&oacute;dulo</span><span>Apertura</span><span>Antig.</span>
+        <div class="tbl-head" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
+          <span>ID</span><span>Resumen</span><span>M&oacute;dulo</span><span>Estado</span><span>Apertura</span><span>Antig.</span>
         </div>
         <div id="mantis-rows">
 
-          <div class="tbl-row" data-mod="mat" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="mat" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">62025</span>
             <span>Error en JIN al descargar matr&iacute;cula &mdash; nro. sede en lugar del anexo</span>
             <span><span class="badge badge-blue">Matriculaci&oacute;n</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>08/07/2026</span>
-            <span><span class="badge badge-ok">&lt; 1 mes</span></span>
+            <span><span class="badge badge-ok">&lt;1 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="leg" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="leg" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">61942</span>
             <span>No deja entrar al legajo del alumno (vuelve a pantalla de secciones)</span>
             <span><span class="badge badge-purple">Legajo</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>03/07/2026</span>
-            <span><span class="badge badge-ok">&lt; 1 mes</span></span>
+            <span><span class="badge badge-ok">&lt;1 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="pre" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="pre" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">61741</span>
             <span>Pide carga de presentismo los d&iacute;as 23 y 24/feb seg&uacute;n FEM</span>
             <span><span class="badge badge-teal">Presentismo</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>25/06/2026</span>
-            <span><span class="badge badge-ok">&lt; 1 mes</span></span>
+            <span><span class="badge badge-ok">&lt;1 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="mat" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="mat" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">61701</span>
             <span>Adultos &mdash; CUE 200453 no puede mover alumnos de nivel</span>
             <span><span class="badge badge-blue">Matriculaci&oacute;n</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>24/06/2026</span>
-            <span><span class="badge badge-ok">&lt; 1 mes</span></span>
+            <span><span class="badge badge-ok">&lt;1 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="mat" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="mat" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">61058</span>
-            <span>FEM de SecuAprende no contemplada en pases &mdash; alumnos duplicados en dos escuelas</span>
+            <span>FEM de SecuAprende no contemplada en pases &mdash; alumnos en dos escuelas simult&aacute;neamente</span>
             <span><span class="badge badge-blue">Matriculaci&oacute;n</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>27/05/2026</span>
-            <span><span class="badge badge-draft">~1.5 m</span></span>
+            <span><span class="badge badge-draft">1.5 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="mat" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="mat" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">61035</span>
             <span>Alumnos duplicados en el sistema</span>
             <span><span class="badge badge-blue">Matriculaci&oacute;n</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>27/05/2026</span>
-            <span><span class="badge badge-draft">~1.5 m</span></span>
+            <span><span class="badge badge-draft">1.5 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="dat" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="dat" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">60480</span>
             <span>ID persona con m&aacute;s de un c&oacute;digo de vinculaci&oacute;n</span>
             <span><span class="badge badge-amber">Datos</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>30/04/2026</span>
-            <span><span class="badge badge-draft">~2.5 m</span></span>
+            <span><span class="badge badge-draft">2.5 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="acc" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="acc" data-est="reabierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">60383</span>
-            <span>[Reabierto] Bot&oacute;n &lsquo;Abrir con la app&rsquo; en URL duplica la p&aacute;gina</span>
+            <span>Bot&oacute;n &lsquo;Abrir con la app&rsquo; en URL duplica la p&aacute;gina</span>
             <span><span class="badge badge-warn">Acceso / URL</span></span>
+            <span><span class="badge badge-amber">Reabierto</span></span>
             <span>28/04/2026</span>
-            <span><span class="badge badge-draft">~2.5 m</span></span>
+            <span><span class="badge badge-draft">2.5 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="rol" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="rol" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">59624</span>
-            <span>Rol Direcci&oacute;n de &Aacute;rea &mdash; no accede a Media ni Art&iacute;stica</span>
+            <span>Rol Direcci&oacute;n de &Aacute;rea &mdash; no accede a Educaci&oacute;n Media ni Art&iacute;stica</span>
             <span><span class="badge badge-orange">Roles</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>31/03/2026</span>
-            <span><span class="badge badge-warn">~3.5 m</span></span>
+            <span><span class="badge badge-warn">3.5 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="pre" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="pre" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">59136</span>
             <span>Error impacto de la regularidad &mdash; alumnos figuran como &ldquo;No regular&rdquo; sin error t&eacute;cnico</span>
             <span><span class="badge badge-teal">Presentismo</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>15/03/2026</span>
-            <span><span class="badge badge-warn">~4 m</span></span>
+            <span><span class="badge badge-warn">4 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="leg" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="leg" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">59258</span>
             <span>Responsables &mdash; &lsquo;Otro&rsquo; trae al mismo estudiante en el listado</span>
             <span><span class="badge badge-purple">Legajo / Resp.</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>19/03/2026</span>
-            <span><span class="badge badge-warn">~4 m</span></span>
+            <span><span class="badge badge-warn">4 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="leg" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="leg" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">59257</span>
             <span>Datos de responsable vac&iacute;os (no llegan desde IEL ni App Familias)</span>
             <span><span class="badge badge-purple">Legajo / Resp.</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>19/03/2026</span>
-            <span><span class="badge badge-warn">~4 m</span></span>
+            <span><span class="badge badge-warn">4 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="leg" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="leg" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">59256</span>
             <span>Responsables del legajo con datos incorrectos (hermanos con responsables cruzados)</span>
             <span><span class="badge badge-purple">Legajo / Resp.</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>19/03/2026</span>
-            <span><span class="badge badge-warn">~4 m</span></span>
+            <span><span class="badge badge-warn">4 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="leg" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="leg" data-est="mejora" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">59261</span>
-            <span>[Mejora] Agregar funcionalidad para eliminar responsable desde el legajo</span>
+            <span>Agregar funcionalidad para eliminar responsable desde el legajo</span>
             <span><span class="badge badge-purple">Legajo / Resp.</span></span>
+            <span><span class="badge badge-draft">Mejora</span></span>
             <span>19/03/2026</span>
-            <span><span class="badge badge-warn">~4 m</span></span>
+            <span><span class="badge badge-warn">4 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="acc" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="acc" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">58649</span>
             <span>Bloqueo en URL &mdash; pantalla en blanco por cookies bloqueadas</span>
             <span><span class="badge badge-warn">Acceso / URL</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>04/03/2026</span>
-            <span><span class="badge badge-warn">~4 m</span></span>
+            <span><span class="badge badge-warn">4 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="pre" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="pre" data-est="reabierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">56668</span>
-            <span>[Reabierto] Error al eliminar justificativos &mdash; persisten en el reporte</span>
+            <span>Error al eliminar justificativos &mdash; persisten en el reporte tras confirmar eliminaci&oacute;n</span>
             <span><span class="badge badge-teal">Presentismo</span></span>
+            <span><span class="badge badge-amber">Reabierto</span></span>
             <span>07/11/2025</span>
             <span><span class="badge" style="background:#fee2e2;color:#991b1b">8 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="pla" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="pla" data-est="abierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">56034</span>
             <span>Eliminar espacios curriculares duplicados (CUE 203035 &mdash; IDs 115559 y 115560)</span>
             <span><span class="badge badge-sec">Plan estudios</span></span>
+            <span><span class="badge badge-ok">Abierto</span></span>
             <span>14/10/2025</span>
             <span><span class="badge" style="background:#fee2e2;color:#991b1b">9 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="pre" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="pre" data-est="reabierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">54854</span>
-            <span>[Reabierto] Error de conteo en alertas de ausentismo &mdash; feriados contados como ausentes</span>
+            <span>Error de conteo en alertas de ausentismo &mdash; feriados contados como ausentes</span>
             <span><span class="badge badge-teal">Presentismo</span></span>
+            <span><span class="badge badge-amber">Reabierto</span></span>
             <span>21/08/2025</span>
             <span><span class="badge" style="background:#fee2e2;color:#991b1b">11 m</span></span>
           </div>
 
-          <div class="tbl-row" data-mod="pla" style="grid-template-columns:70px 1fr 160px 95px 90px">
+          <div class="tbl-row" data-mod="pla" data-est="reabierto" style="grid-template-columns:65px 1fr 150px 120px 90px 80px">
             <span class="tbl-cell-strong">49870</span>
-            <span>[Reabierto] Unificar materias de Educaci&oacute;n Art&iacute;stica en t&eacute;cnicas plan 4145</span>
+            <span>Unificar materias de Educaci&oacute;n Art&iacute;stica en t&eacute;cnicas plan 4145</span>
             <span><span class="badge badge-sec">Plan estudios</span></span>
+            <span><span class="badge badge-amber">Reabierto</span></span>
             <span>05/02/2025</span>
             <span><span class="badge" style="background:#fee2e2;color:#991b1b">17 m</span></span>
+          </div>
+
+          <div id="mantis-empty" style="display:none;padding:32px;text-align:center;color:var(--text-muted);font-size:13px">
+            Sin resultados para los filtros seleccionados.
           </div>
 
         </div><!-- /mantis-rows -->
@@ -1354,12 +1393,31 @@ function rnApply(q) {
 
 document.addEventListener('DOMContentLoaded', rnApply);
 
-function mantisFilter(btn, mod) {
-  document.querySelectorAll('#view-mantis .filter-btn').forEach(function(b){ b.classList.remove('on'); });
+var mfMod = 'todos', mfEst = 'todos';
+function mantisSetFilter(type, btn) {
+  var group = type === 'mod' ? '[data-mf]' : '[data-ef]';
+  document.querySelectorAll('#view-mantis .filter-bar .filter-btn' + group).forEach(function(b){ b.classList.remove('on'); });
   btn.classList.add('on');
-  document.querySelectorAll('#mantis-rows .tbl-row').forEach(function(row){
-    row.style.display = (mod === 'todos' || row.getAttribute('data-mod') === mod) ? '' : 'none';
+  if (type === 'mod') mfMod = btn.getAttribute('data-mf');
+  else mfEst = btn.getAttribute('data-ef');
+  mantisRefresh();
+}
+function mantisRefresh() {
+  var q = (document.getElementById('mantis-search').value || '').toLowerCase();
+  var rows = document.querySelectorAll('#mantis-rows .tbl-row');
+  var visible = 0;
+  rows.forEach(function(row) {
+    var modOk = mfMod === 'todos' || row.getAttribute('data-mod') === mfMod;
+    var estOk = mfEst === 'todos' || row.getAttribute('data-est') === mfEst;
+    var searchOk = !q || row.textContent.toLowerCase().indexOf(q) !== -1;
+    var show = modOk && estOk && searchOk;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
   });
+  var empty = document.getElementById('mantis-empty');
+  if (empty) empty.style.display = visible === 0 ? '' : 'none';
+  var counter = document.getElementById('mantis-count');
+  if (counter) counter.textContent = visible + ' ticket' + (visible !== 1 ? 's' : '');
 }
 </script>
 </body>
