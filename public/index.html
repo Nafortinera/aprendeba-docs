@@ -145,6 +145,12 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
 .roles-grid .rg-cell:last-child,.roles-grid .rg-rol:last-child{border-right:none}
 .check{color:#059669;font-weight:700}
 .cross{color:#dc2626}
+
+.team-bar{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+.team-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.team-lbl{font-size:10px;color:var(--text-muted);font-weight:500}
+.team-chip{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;background:#f1f5f9;color:#475569;border:1px solid var(--border)}
+.team-chip.pm{background:#ccfbf1;color:#0f766e;border-color:#99f6e4}
 </style>
 </head>
 <body>
@@ -229,11 +235,18 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
   <div class="topbar">
     <div class="breadcrumb">AprendeBA &rsaquo; <span id="bread-label">Manuales</span></div>
     <div class="topbar-right">
-      <div class="user-chip">
-        <div class="user-avatar">ND</div>
-        <div class="user-info">
-          <div class="user-name">Nadia Delu</div>
-          <div class="user-role">PM · SSTEDU</div>
+      <div class="team-bar">
+        <div class="team-row">
+          <span class="team-lbl">Célula 5 · PM</span>
+          <span class="team-chip pm">Cristina Castellar</span>
+          <span class="team-chip pm">Nadia Delu</span>
+        </div>
+        <div class="team-row">
+          <span class="team-lbl">Equipo Funcional</span>
+          <span class="team-chip">Jesica Gómez</span>
+          <span class="team-chip">Maximiliano Ramírez</span>
+          <span class="team-chip">Rodrigo Pedro</span>
+          <span class="team-chip">Cristian Santillán</span>
         </div>
       </div>
     </div>
