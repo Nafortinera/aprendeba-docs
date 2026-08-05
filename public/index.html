@@ -1114,7 +1114,7 @@ flowchart TD
         <span id="mantis-count" style="font-size:12px;color:var(--text-muted)">19 tickets</span>
       </div>
 
-      <div class="filter-bar" style="margin-bottom:8px">
+      <div class="filter-bar">
         <span class="filter-label">M&oacute;dulo</span>
         <button class="filter-btn on" data-mf="todos" onclick="mantisSetFilter('mod',this)">Todos</button>
         <button class="filter-btn" data-mf="mat" onclick="mantisSetFilter('mod',this)">Matriculaci&oacute;n</button>
@@ -1124,9 +1124,7 @@ flowchart TD
         <button class="filter-btn" data-mf="acc" onclick="mantisSetFilter('mod',this)">Acceso / URL</button>
         <button class="filter-btn" data-mf="dat" onclick="mantisSetFilter('mod',this)">Datos</button>
         <button class="filter-btn" data-mf="pla" onclick="mantisSetFilter('mod',this)">Plan estudios</button>
-      </div>
-
-      <div class="filter-bar">
+        <span style="width:1px;height:18px;background:var(--border);margin:0 4px"></span>
         <span class="filter-label">Estado</span>
         <button class="filter-btn on" data-ef="todos" onclick="mantisSetFilter('est',this)">Todos</button>
         <button class="filter-btn" data-ef="abierto" onclick="mantisSetFilter('est',this)">Abierto</button>
@@ -1396,7 +1394,7 @@ document.addEventListener('DOMContentLoaded', rnApply);
 var mfMod = 'todos', mfEst = 'todos';
 function mantisSetFilter(type, btn) {
   var group = type === 'mod' ? '[data-mf]' : '[data-ef]';
-  document.querySelectorAll('#view-mantis .filter-bar .filter-btn' + group).forEach(function(b){ b.classList.remove('on'); });
+  document.querySelectorAll('#view-mantis .filter-btn' + group).forEach(function(b){ b.classList.remove('on'); });
   btn.classList.add('on');
   if (type === 'mod') mfMod = btn.getAttribute('data-mf');
   else mfEst = btn.getAttribute('data-ef');
