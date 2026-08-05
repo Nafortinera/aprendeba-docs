@@ -785,10 +785,45 @@ flowchart TD
         <h1>Calificaciones</h1>
         <p>Carga de notas y visibilidad según condición de regularidad.</p>
       </div>
-      <div class="placeholder">
-        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        Contenido del módulo Calificaciones — próximamente
+      <div class="diagram-card">
+        <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#f0fdf4','primaryTextColor':'#14532d','primaryBorderColor':'#86efac','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart TD
+    START([&quot;📋 Período de calificación abierto&quot;]) --&gt; Q1
+
+    Q1{&quot;¿Condición del alumno?&quot;}
+
+    Q1 --&gt;|&quot;Regular&quot;| REG[&quot;✏️ Docente carga nota&lt;br/&gt;en la plataforma&quot;]
+    Q1 --&gt;|&quot;No regular&quot;| NR[&quot;⛔ No habilita carga&lt;br/&gt;de nota&quot;]
+    Q1 --&gt;|&quot;Datos insuficientes&quot;| INS[&quot;⚠️ Sin asistencia&lt;br/&gt;suficiente cargada&quot;]
+
+    REG --&gt; RANGO{&quot;¿Nota válida?&quot;}
+    RANGO --&gt;|&quot;1 a 10&quot;| OK[&quot;✅ Nota guardada&quot;]
+    RANGO --&gt;|&quot;Fuera de rango&quot;| ERR[&quot;❌ Error — revisar entrada&quot;]
+    ERR --&gt; REG
+
+    OK --&gt; VIS{&quot;¿Boletín generado?&quot;}
+    VIS --&gt;|&quot;No&quot;| WAIT([&quot;⏳ Nota guardada,&lt;br/&gt;boletín pendiente&quot;])
+    VIS --&gt;|&quot;Sí&quot;| BOL([&quot;📄 Nota visible&lt;br/&gt;en el boletín&quot;])
+
+    NR --&gt; BOL_NR([&quot;📄 Boletín sin nota&lt;br/&gt;(condición No Regular)&quot;])
+    INS --&gt; BOL_INS([&quot;📄 Boletín sin nota&lt;br/&gt;(datos insuficientes)&quot;])
+
+    classDef inicio  fill:#f0fdf4,stroke:#4ade80,color:#14532d,font-weight:bold
+    classDef ok      fill:#d1fae5,stroke:#059669,color:#064e3b,font-weight:bold
+    classDef warn    fill:#fef3c7,stroke:#f59e0b,color:#78350f,font-weight:bold
+    classDef error   fill:#fee2e2,stroke:#ef4444,color:#7f1d1d,font-weight:bold
+    classDef dec     fill:#f0fdf4,stroke:#86efac,color:#14532d
+    classDef proc    fill:#f8fafc,stroke:#94a3b8,color:#334155
+
+    class START inicio
+    class OK,BOL ok
+    class WAIT warn
+    class NR,ERR,BOL_NR,BOL_INS error
+    class INS warn
+    class Q1,RANGO,VIS dec
+    class REG proc"></div>
       </div>
+    
     </div>
 
     <!-- ── BOLETINES ── -->
