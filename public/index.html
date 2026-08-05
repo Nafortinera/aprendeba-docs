@@ -4,7 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AprendeBA Hub — SSTEDU</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js">
+var dfMod = 'todos', dfEst = 'todos';
+function docinvFilter(type, btn) {
+  var attr = type === 'mod' ? '[data-df]' : '[data-ef2]';
+  document.querySelectorAll('#view-docinv .filter-btn' + attr).forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  if (type === 'mod') dfMod = btn.getAttribute('data-df');
+  else dfEst = btn.getAttribute('data-ef2');
+  docinvRefresh();
+}
+function docinvRefresh() {
+  var q = (document.getElementById('docinv-search').value||'').toLowerCase();
+  var rows = document.querySelectorAll('#docinv-rows .tbl-row');
+  var visible = 0;
+  rows.forEach(function(row){
+    var modOk = dfMod==='todos' || row.getAttribute('data-mod')===dfMod;
+    var estOk = dfEst==='todos' || row.getAttribute('data-est')===dfEst;
+    var searchOk = !q || row.textContent.toLowerCase().indexOf(q)!==-1;
+    var show = modOk && estOk && searchOk;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  var empty = document.getElementById('docinv-empty');
+  if (empty) empty.style.display = visible===0 ? '' : 'none';
+  var ctr = document.getElementById('docinv-count');
+  if (ctr) ctr.textContent = visible + ' documento' + (visible!==1?'s':'');
+}
+</script>
 <style>
 :root {
   --sidebar-bg: #073244;
@@ -219,6 +246,10 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
     <div class="nav-item active" onclick="nav('manuales',this)" id="nav-manuales">
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
       Manuales
+    </div>
+    <div class="nav-item" onclick="nav('docinv',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Doc Funcional
     </div>
   </div>
 
@@ -1151,6 +1182,862 @@ flowchart TD
 
     </div>
 
+
+    <!-- ── DOC FUNCIONAL ── -->
+    <div class="view" id="view-docinv">
+      <div class="page-header">
+        <h1>Doc Funcional</h1>
+        <p>Inventario de documentaci&oacute;n funcional &middot; 88 documentos</p>
+      </div>
+
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px">
+        <div class="stat-card">
+          <div class="stat-label">Total documentos</div>
+          <div class="stat-val" style="color:var(--accent)">88</div>
+          <div class="stat-sub">CUs + Doc Funcionales</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Implementados</div>
+          <div class="stat-val" style="color:#065f46">84</div>
+          <div class="stat-sub">95.5% del inventario</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">En desarrollo</div>
+          <div class="stat-val" style="color:#92400e">2</div>
+          <div class="stat-sub">&nbsp;</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pendientes</div>
+          <div class="stat-val" style="color:#991b1b">2</div>
+          <div class="stat-sub">1 pendiente &middot; 1 en seguimiento</div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;align-items:center">
+        <input id="docinv-search" class="search-input" placeholder="Buscar documento&hellip;" oninput="docinvRefresh()" style="width:260px">
+        <div style="flex:1"></div>
+        <span id="docinv-count" style="font-size:12px;color:var(--text-muted)">88 documentos</span>
+      </div>
+
+      <div class="filter-bar">
+        <span class="filter-label">M&oacute;dulo</span>
+        <button class="filter-btn on" data-df="todos" onclick="docinvFilter('mod',this)">Todos</button>
+        <button class="filter-btn" data-df="pre" onclick="docinvFilter('mod',this)">Presentismo</button>
+        <button class="filter-btn" data-df="cal" onclick="docinvFilter('mod',this)">Calificaciones</button>
+        <button class="filter-btn" data-df="bol" onclick="docinvFilter('mod',this)">Boletines</button>
+        <button class="filter-btn" data-df="mat" onclick="docinvFilter('mod',this)">Matriculaci&oacute;n / Pases</button>
+        <button class="filter-btn" data-df="leg" onclick="docinvFilter('mod',this)">Legajo</button>
+        <button class="filter-btn" data-df="rol" onclick="docinvFilter('mod',this)">Roles / Backoffice</button>
+        <button class="filter-btn" data-df="otr" onclick="docinvFilter('mod',this)">Otros</button>
+        <span style="width:1px;height:18px;background:var(--border);margin:0 4px"></span>
+        <span class="filter-label">Estado</span>
+        <button class="filter-btn on" data-ef2="todos" onclick="docinvFilter('est',this)">Todos</button>
+        <button class="filter-btn" data-ef2="implementado" onclick="docinvFilter('est',this)">Implementado</button>
+        <button class="filter-btn" data-ef2="desarrollo" onclick="docinvFilter('est',this)">En desarrollo</button>
+        <button class="filter-btn" data-ef2="pendiente" onclick="docinvFilter('est',this)">Pendiente</button>
+      </div>
+
+      <div class="tbl-wrap">
+        <div class="tbl-head" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+          <span>#</span><span>Documento</span><span>M&oacute;dulo</span><span>Responsable</span><span>Fecha</span><span>Estado</span><span>Archivo</span>
+        </div>
+        <div id="docinv-rows">
+          <div class="tbl-row" data-mod="pre" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">1</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Módulo Presentismo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Presentismo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Marcosdavid Perez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Sep 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1MQ194_-t58gXXJY-2MpjuaiMLJ7RIIEg/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="pre" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">2</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Módulo Reporte - Presentismo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Presentismo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Tamaral Tassopuente</span>
+            <span style="font-size:11px;color:var(--text-muted)">Oct 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1Hk-NTGZ9ZxmEVc83l5AUs3037Q1SXEX1/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="pre" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">3</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Presentismo comedor</span>
+            <span style="font-size:11px;color:var(--text-soft)">Presentismo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Tamaral Tassopuente</span>
+            <span style="font-size:11px;color:var(--text-muted)">Nov 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1xmdlaiaaRVuZFQsIEYbfiuiSQ9zjOXkp/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="pre" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">4</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Presentismo comedor V2</span>
+            <span style="font-size:11px;color:var(--text-soft)">Presentismo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Marcosdavid Perez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Oct 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1lWGbomLhqXyfGJ633Ckk1_6DN4FIiW5p/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="pre" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">5</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Calificaciones Jornada Extendida (Primaria) 2025</span>
+            <span style="font-size:11px;color:var(--text-soft)">Presentismo / Cal.</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Mar 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1xexL-FUmHAmiRjsyw6DTp0kYIy58uWYh/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="pre" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">6</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Calificaciones Jornada Extendida (Secundaria) 2025</span>
+            <span style="font-size:11px;color:var(--text-soft)">Presentismo / Cal.</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Mar 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1-CEkQdxVqlH_r35dZH2D_Y4HTyiCHByp/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="pre" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">7</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - App Presentismo Phinx</span>
+            <span style="font-size:11px;color:var(--text-soft)">Presentismo</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ago 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1bAuE-aEiXNdruqaEQd2Cd2j3J42ejglY/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="pre" data-est="desarrollo" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">8</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - App Presentismo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Presentismo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Sep 2024</span>
+            <span><span class="badge" style="background:#fef3c7;color:#92400e;font-size:10px">En desarrollo</span></span>
+            <span><a href="https://drive.google.com/file/d/1HvjbS0g-kILG5AjdeFJKou6GgCT5JhGp/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="pre" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">9</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Doc. Funcional - Boletín: Observaciones - Presentismo - I. Valorativo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Presentismo / Boletines</span>
+            <span style="font-size:11px;color:var(--text-soft)">Aprendeba Informa</span>
+            <span style="font-size:11px;color:var(--text-muted)">May 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1HfR8aCdPw6GLt-p0NlbXnS_N9bq9piC1/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="cal" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">10</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Módulo Calificaciones 2026</span>
+            <span style="font-size:11px;color:var(--text-soft)">Calificaciones</span>
+            <span style="font-size:11px;color:var(--text-soft)">Aprendeba Informa</span>
+            <span style="font-size:11px;color:var(--text-muted)">Mar 2026</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1fdb7sg6YxANHux8QQz6r9n10EwvTMJQL/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="cal" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">11</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Doc. Funcional - Calificaciones - Grados de nivelación / aceleración</span>
+            <span style="font-size:11px;color:var(--text-soft)">Calificaciones</span>
+            <span style="font-size:11px;color:var(--text-soft)">Aprendeba Informa</span>
+            <span style="font-size:11px;color:var(--text-muted)">Feb 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1BPqmQYJe7pD9QCv7VUUY0ViNSxz2nfHi/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="cal" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">12</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Doc Funcional - Calificaciones primaria - Inclusión de materias sin criterios</span>
+            <span style="font-size:11px;color:var(--text-soft)">Calificaciones</span>
+            <span style="font-size:11px;color:var(--text-soft)">Jesicaestefania Gomez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Oct 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/18q7xgvStIA1YvTfsFqS0G0N7p5m_e3uH/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="cal" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">13</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Doc. funcional - Automatización Calificación General V3</span>
+            <span style="font-size:11px;color:var(--text-soft)">Calificaciones</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ago 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/16vbEE7VzjSJm1SSDK38x0OaC8VDVImPp/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="cal" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">14</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Cambios Calificaciones Primaria CL 2025</span>
+            <span style="font-size:11px;color:var(--text-soft)">Calificaciones</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Dic 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1nNRi1rP_lVgUgAo4nYoSM4NI8ZGIjPkT/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="cal" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">15</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Docu. Funcional - Módulo Calificaciones - PPI y Descarga General</span>
+            <span style="font-size:11px;color:var(--text-soft)">Calificaciones</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Nov 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1-LYXdFSsafis98KR-nDtt-DSTVDFS3jp/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="cal" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">16</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Regularidad - Calificaciones y Boletines v1.0</span>
+            <span style="font-size:11px;color:var(--text-soft)">Calificaciones / Regular.</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Abr 2026</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/document/d/1887qclqRaK_lvlw59NMLNjZ2JGUocbyJDuwfyXvAEMs/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="cal" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">17</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Tab regularidad 2026</span>
+            <span style="font-size:11px;color:var(--text-soft)">Calificaciones / Regular.</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ene 2026</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/document/d/1JPchBYJT56rEpPUbSbP9wxueD2QUcPPc62MEHU7zdYk/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="cal" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">18</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Impacto de la condición de Regularidad 2026</span>
+            <span style="font-size:11px;color:var(--text-soft)">Calificaciones / Regular.</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Dic 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/document/d/1ogFnK7f-r2qJU1qYe4piSPL6ko7TWK4HXBuVu_Q8ItA/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="cal" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">19</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Impacto de la condición de Regularidad</span>
+            <span style="font-size:11px;color:var(--text-soft)">Calificaciones / Regular.</span>
+            <span style="font-size:11px;color:var(--text-soft)">Marcosdavid Perez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ago 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/document/d/1XvG-R4wtJfzJvR_MTGTuLdamnoxXNHGnxFFji-_5vvs/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="cal" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">20</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Regularidad</span>
+            <span style="font-size:11px;color:var(--text-soft)">Calificaciones / Regular.</span>
+            <span style="font-size:11px;color:var(--text-soft)">Marcosdavid Perez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ago 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/document/d/1K3-rA3ihaO59mwhr6M040RscCbXEDcXArkNHT8lU_Yk/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="cal" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">21</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - recuperación de regularidad anual 2026</span>
+            <span style="font-size:11px;color:var(--text-soft)">Calificaciones / Regular.</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Mar 2026</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/document/d/1svr8Jcu6J42mW8NaJKfml7oiP93WGAbtf8ZAlH4kzJw/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="bol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">22</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Cambios en Boletín Primaria CL 2025</span>
+            <span style="font-size:11px;color:var(--text-soft)">Boletines</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Dic 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1HIGWXU6eG8fVhwSUbZwW_iDoO45sMMTS/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="bol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">23</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Doc. Funcional - Generación masiva boletines</span>
+            <span style="font-size:11px;color:var(--text-soft)">Boletines</span>
+            <span style="font-size:11px;color:var(--text-soft)">Aprendeba Informa</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jul 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1C3xlHvdHPhBXVA6Tl6kpTsFtWQykmpiY/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="bol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">24</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CFP Calificaciones y Boletines 2026</span>
+            <span style="font-size:11px;color:var(--text-soft)">Boletines / Cal.</span>
+            <span style="font-size:11px;color:var(--text-soft)">Rodrigo Damian</span>
+            <span style="font-size:11px;color:var(--text-muted)">Dic 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1r8pzSGSAsdNY68XJtcgAtrKe01mOlrcV/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="bol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">25</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CFP Secundaria 2026 2.0</span>
+            <span style="font-size:11px;color:var(--text-soft)">Boletines / Cal.</span>
+            <span style="font-size:11px;color:var(--text-soft)">Rodrigo Damian</span>
+            <span style="font-size:11px;color:var(--text-muted)">Dic 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1VZdA3nx3ZjAqDaSpvABsJG2-urYMWt97/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="bol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">26</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Adultos Secundaria 2026 2.0</span>
+            <span style="font-size:11px;color:var(--text-soft)">Boletines / Adultos</span>
+            <span style="font-size:11px;color:var(--text-soft)">Maximiliano Ramirez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Dic 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/17-hgvnY5DQQ8w_ho0xwM5LfAcgHJdgMW/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="bol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">27</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Adultos Calificaciones, Boletines y Presentismo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Boletines / Adultos</span>
+            <span style="font-size:11px;color:var(--text-soft)">Rodrigo Damian</span>
+            <span style="font-size:11px;color:var(--text-muted)">Dic 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/document/d/1KfOiO9GQL-PrL2t-GUPsEUrmGR1bLBVlnO97Uex2wn4/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="bol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">28</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Primaria Adultos 2026 2.0</span>
+            <span style="font-size:11px;color:var(--text-soft)">Boletines / Adultos</span>
+            <span style="font-size:11px;color:var(--text-soft)">Rodrigo Damian</span>
+            <span style="font-size:11px;color:var(--text-muted)">Mar 2026</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1uhK8WCgG3cEzhY7YIAHEyraTaZrZf0-s/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">29</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Reportes de Matriculación</span>
+            <span style="font-size:11px;color:var(--text-soft)">Matriculación</span>
+            <span style="font-size:11px;color:var(--text-soft)">Marcosdavid Perez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Dic 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1Fyf2AMMsKQaaFPMeKkdZbsp9gGxT5gzY/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">30</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Módulo Gestión de Pases y Cambio de Sección</span>
+            <span style="font-size:11px;color:var(--text-soft)">Pases</span>
+            <span style="font-size:11px;color:var(--text-soft)">Marcosdavid Perez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Sep 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1ais56q_ByVoQoeYeedJzocvlOlrqYCIs/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">31</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Gestión de pase, FEM y Cambio de sección</span>
+            <span style="font-size:11px;color:var(--text-soft)">Pases</span>
+            <span style="font-size:11px;color:var(--text-soft)">Marcosdavid Perez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ago 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1jW9PSjs2nIm4-yFLL5O5hsPMyekx7mXS/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">32</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Arquitectura de Pases V2</span>
+            <span style="font-size:11px;color:var(--text-soft)">Pases</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ene 2026</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1DxcUf8iMyfLV-idbShBuD1J-7hYF6IDg/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">33</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento funcional - Reglas de negocio Desmatriculación-Matriculación-Gestión de pases</span>
+            <span style="font-size:11px;color:var(--text-soft)">Pases / Matriculación</span>
+            <span style="font-size:11px;color:var(--text-soft)">Tamaral Tassopuente</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jul 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/11g5TZWP6aJg007mbAggjRriBQ-wW6TK-/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">34</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Historial de movimientos</span>
+            <span style="font-size:11px;color:var(--text-soft)">Matriculación</span>
+            <span style="font-size:11px;color:var(--text-soft)">Marcosdavid Perez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Sep 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1-sKMnTHigYNRjhlQYXouhCDKm0HWyr_0/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">35</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Gestión de históricos</span>
+            <span style="font-size:11px;color:var(--text-soft)">Matriculación</span>
+            <span style="font-size:11px;color:var(--text-soft)">Marcosdavid Perez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Sep 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1CEaYIsKaObHKzE4ZdqOYdtvMRr00usCz/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">36</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Vistas Migración Secundaria Aprende</span>
+            <span style="font-size:11px;color:var(--text-soft)">Matriculación / SA</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ene 2026</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1Ft8aNVh4w27_H9RfUpkqdqlyDcs_8PAA/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">37</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - integración con Secundaria Aprende</span>
+            <span style="font-size:11px;color:var(--text-soft)">Matriculación / SA</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Sep 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1n0oVzfGzuYROT9rIbCQJ2YW8WcD43wSd/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">38</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Nuevo requerimiento EC pendientes</span>
+            <span style="font-size:11px;color:var(--text-soft)">ECP</span>
+            <span style="font-size:11px;color:var(--text-soft)">Aprendeba Informa</span>
+            <span style="font-size:11px;color:var(--text-muted)">Feb 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/document/d/1l7bKNtLLfpJqC3cd2BdGOmgxnMfySJfY7b0z4U17uLQ/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">39</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Mejora en el Módulo ECP para edición de notas</span>
+            <span style="font-size:11px;color:var(--text-soft)">ECP</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jul 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1Fd-4pkt9N8_UplF7Ujk0EhocmpBRsHwa/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">40</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Reglas de negocio Libro calificador, ECP, Libro Matriz</span>
+            <span style="font-size:11px;color:var(--text-soft)">ECP / LMD</span>
+            <span style="font-size:11px;color:var(--text-soft)">Marcosdavid Perez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Abr 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1AV71chwQ3KQ3_AdRKdeDU4W_TElFGAbQ/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">41</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Escuelas Comerciales Nocturnas y de Reingreso</span>
+            <span style="font-size:11px;color:var(--text-soft)">Efectivización</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ene 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/document/d/1bkI4F08GqI-ErzFfOGs6UKnooZzJsD-YHRYho5GLbo8/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">42</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Proceso de proyección, promoción, efectivización 2025-2026 v2</span>
+            <span style="font-size:11px;color:var(--text-soft)">Efectivización</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jun 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1SlBKiR1Nv7_9CIql6MDFuvVMrM7Mtrf5/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="mat" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">43</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Alertas Promoción</span>
+            <span style="font-size:11px;color:var(--text-soft)">Efectivización</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Sep 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1PiKMr0GTbURTTOn-seGidoV3hw_HM-oW/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="leg" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">44</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Integración de información en el legajo de AprendeBA</span>
+            <span style="font-size:11px;color:var(--text-soft)">Legajo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Tamaral Tassopuente</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jun 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1M87SVZiIAIvfa3ewxTVl1yPqxC1SRDIY/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="leg" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">45</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Documento funcional Integración en el legajo de AprendeBA</span>
+            <span style="font-size:11px;color:var(--text-soft)">Legajo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jul 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1trlSbkoRW5Z-6whoYXpbgNmLS8EXBPCa/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="leg" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">46</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Cambio en Legajo del Estudiante</span>
+            <span style="font-size:11px;color:var(--text-soft)">Legajo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jul 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1zHlDf9dBM8stLW_3p_KwDHk9b6mHwR8e/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="leg" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">47</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Doc Funcional - Cambios en Legajos</span>
+            <span style="font-size:11px;color:var(--text-soft)">Legajo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Aprendeba Informa</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jun 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1fvYEQDEn1A-OlDw3HArX0kSscIZZDrdd/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="leg" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">48</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Código de Aula V2</span>
+            <span style="font-size:11px;color:var(--text-soft)">Legajo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ene 2026</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1sI9aUlJobbccsneNd5eV07UMilhcTCqM/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="leg" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">49</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Número de CUIL en legajo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Legajo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Oct 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1jpT8YB2z6iLG5xiC73M2uQ98-bVbw5YX/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="leg" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">50</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Visualización PIP</span>
+            <span style="font-size:11px;color:var(--text-soft)">PPI / Legajo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Feb 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/document/d/1p4w9Z-gaT4FOsfEb7wKITq4dptZP3Y5ccmmjKXIzfug/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="leg" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">51</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Visualización PPS</span>
+            <span style="font-size:11px;color:var(--text-soft)">PPI / Legajo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Feb 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1H5jAphIwal4FlE6gE1OfR-zoq4usOgJe/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="leg" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">52</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Doc Funcional - Cambios en PIP 2025</span>
+            <span style="font-size:11px;color:var(--text-soft)">PPI / Legajo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Sep 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1ufBQdhHsZ85-A7eN8uK5CXpxFdgIQtjS/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="leg" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">53</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Doc. Funcional - Apartado PPI y Visualización de Informes (Inicial y Secundaria)</span>
+            <span style="font-size:11px;color:var(--text-soft)">PPI / Legajo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Aprendeba Informa</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ago 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1qBmCSqOHgUXJ7WpX6JOZTuMICb3yL1xS/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">54</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Otros Accesos</span>
+            <span style="font-size:11px;color:var(--text-soft)">Roles / Usuarios</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Feb 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/document/d/129pQ3svTe_9Uw3Kx3rSknQI4ATLM-Z_x-8tnucL0F2Q/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">55</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Doc. Funcional - Otros accesos - 2025</span>
+            <span style="font-size:11px;color:var(--text-soft)">Roles / Usuarios</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Feb 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1gH_sLKPu8KvD_jgievljHqfkgkF5AwTU/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">56</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento funcional - Rol solo visualización e Impersonar</span>
+            <span style="font-size:11px;color:var(--text-soft)">Roles / Usuarios</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ago 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1dfiQBombFHj3FudrQbF3Jyv4HHtIIHbm/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">57</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Doc. Funcional - Gestión de roles: Dirección de área</span>
+            <span style="font-size:11px;color:var(--text-soft)">Roles / Usuarios</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jul 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1cYSfeEVg-nkcx-CkFJgNiUcwrq_4hVpi/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">58</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Doc. Funcional - Dirección de área aprueba rol supervisor</span>
+            <span style="font-size:11px;color:var(--text-soft)">Roles / Usuarios</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jul 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1fMxb57ScZs4aQS3tWyV2kqEsEmP-478L/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">59</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Tarjeta de usuarios</span>
+            <span style="font-size:11px;color:var(--text-soft)">Roles / Usuarios</span>
+            <span style="font-size:11px;color:var(--text-soft)">Aprendeba Informa</span>
+            <span style="font-size:11px;color:var(--text-muted)">Sep 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1Vfx_JfXoFzCXpR0g8ZGOqNbAKB6NXPl4/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">60</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Modificaciones accesos usuarios Secundaria Aprende</span>
+            <span style="font-size:11px;color:var(--text-soft)">Roles / Usuarios</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ene 2026</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1q7K6UxlpAKjW-qXIwdSyGT9CCCZol_fB/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">61</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Actualización de flujo para Automatización v1.2</span>
+            <span style="font-size:11px;color:var(--text-soft)">Roles / Usuarios</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ene 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1OT2Kdcb3f23y9tuvXVgmz0P5vNvZlerX/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">62</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Backoffice Planes de Estudio</span>
+            <span style="font-size:11px;color:var(--text-soft)">Backoffice</span>
+            <span style="font-size:11px;color:var(--text-soft)">Tamaral Tassopuente</span>
+            <span style="font-size:11px;color:var(--text-muted)">Nov 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1Kg8XIpw6bfOA-HRcgd1KioLClH7_V0fc/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">63</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Backoffice Planes de Estudio</span>
+            <span style="font-size:11px;color:var(--text-soft)">Backoffice</span>
+            <span style="font-size:11px;color:var(--text-soft)">Tamaral Tassopuente</span>
+            <span style="font-size:11px;color:var(--text-muted)">Oct 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1d02NymZOwJNj288fQNf_n9brl_TXg12B/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">64</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Backoffice - 2025</span>
+            <span style="font-size:11px;color:var(--text-soft)">Backoffice</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ago 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1kDIayCCtqxPUo-VaFWmrgEgNuAIsfyBQ/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">65</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Propuesta - Backoffice - 2025</span>
+            <span style="font-size:11px;color:var(--text-soft)">Backoffice</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ago 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1sckFr-G67nGIrsvBjrepDRyaPcz3jtny/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">66</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Errores - Back office 2025</span>
+            <span style="font-size:11px;color:var(--text-soft)">Backoffice</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Sep 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1Qs4GWRIgzb9D6xLKYq_F-AZ_uomsLl-B/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">67</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento funcional - Backoffice alta de materias</span>
+            <span style="font-size:11px;color:var(--text-soft)">Backoffice</span>
+            <span style="font-size:11px;color:var(--text-soft)">Jesicaestefania Gomez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Oct 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/19qs9J27ebfK1Q_LtV8oWXNNNy06q8TYH/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="rol" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">68</span>
+            <span class="tbl-cell-strong" style="font-size:12px">BackOffice Gestión Plan de Estudio - MVP DEMO</span>
+            <span style="font-size:11px;color:var(--text-soft)">Backoffice</span>
+            <span style="font-size:11px;color:var(--text-soft)">Marcosdavid Perez</span>
+            <span style="font-size:11px;color:var(--text-muted)">Oct 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1pFdFBfBu9Q11NDiCr9yRhcJ5nRogNcJ4/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="leg" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">69</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento funcional - Inclusión Escolar</span>
+            <span style="font-size:11px;color:var(--text-soft)">Inclusión Escolar</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ene 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1-NL1EC3ku2S806RaFc-EUFq19KmAfOXh/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="leg" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">70</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Doc. Funcional - Calificaciones - Grados de nivelación (Inclusión)</span>
+            <span style="font-size:11px;color:var(--text-soft)">Inclusión Escolar</span>
+            <span style="font-size:11px;color:var(--text-soft)">Aprendeba Informa</span>
+            <span style="font-size:11px;color:var(--text-muted)">Feb 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1BPqmQYJe7pD9QCv7VUUY0ViNSxz2nfHi/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">71</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional-Condiciones Libro Matriz digital y Libro Clasificador</span>
+            <span style="font-size:11px;color:var(--text-soft)">Libro Matriz</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">May 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/document/d/1xmYo5rgt6vmQuYlyBM72NQQnCggrNyDyPi9ERI2Blj0/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">72</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Visualización del tablero SAT</span>
+            <span style="font-size:11px;color:var(--text-soft)">Tablero</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Feb 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1yK-Gb05kDIFgQJhJQGQrRF8p6cWFGkc3/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">73</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Certificado 7mo - 2025</span>
+            <span style="font-size:11px;color:var(--text-soft)">Certificados</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">May 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/18A2T3l5-Q6IyZIwYieIYTgtBTMBAsMuV/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">74</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Certificados 7mo</span>
+            <span style="font-size:11px;color:var(--text-soft)">Certificados</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jun 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/19p_rywWNhHRmCaclGu9acq7jLL8UaGKd/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">75</span>
+            <span class="tbl-cell-strong" style="font-size:12px">AprendeBA_Generación Certificado 7mo Primario</span>
+            <span style="font-size:11px;color:var(--text-soft)">Certificados</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Nov 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1wrSJmXTnvGSKsDVAvlAfRJW8WV0YJf99/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">76</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Configuración de alertas</span>
+            <span style="font-size:11px;color:var(--text-soft)">Alertas</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Oct 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/13ETSAvUta7vnx_bHN53T_5VFP0OdeoFh/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">77</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Cartelera de novedades</span>
+            <span style="font-size:11px;color:var(--text-soft)">Notificaciones</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Oct 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1zTyxOfQ_u5joptFyGAR7N1F0pvjHnFV7/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">78</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Autoguardado</span>
+            <span style="font-size:11px;color:var(--text-soft)">UX / General</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Sep 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1TT4-6RsyULgJXnsWtT9u069tSsFThRuc/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">79</span>
+            <span class="tbl-cell-strong" style="font-size:12px">CU - Implementación de Migas de Pan y Botón Volver</span>
+            <span style="font-size:11px;color:var(--text-soft)">UX / General</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Mar 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1NKS-U_fVAdJV6DaxTHX3ialO9TlHdMpA/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">80</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Mejora - Cambio de Contraseña V2</span>
+            <span style="font-size:11px;color:var(--text-soft)">UX / Seguridad</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ago 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1xxW-NTyyR6WDga5CPzGrochOww46NxlB/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="pendiente" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">81</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Propuesta Ruteo de plataforma</span>
+            <span style="font-size:11px;color:var(--text-soft)">UX / General</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">May 2025</span>
+            <span><span class="badge" style="background:#fee2e2;color:#991b1b;font-size:10px">Pendiente</span></span>
+            <span><a href="https://drive.google.com/file/d/1QdkgLW2vXGNg9XYa_99SBwBEXe6uUutt/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">82</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Módulo Acta de Reunión V1.2</span>
+            <span style="font-size:11px;color:var(--text-soft)">Gestión interna</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jul 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1QDfPLevuxyTvj_rk6uLOdrWA6DclJ9ni/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">83</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Aulas virtuales - Secundario</span>
+            <span style="font-size:11px;color:var(--text-soft)">Aulas virtuales</span>
+            <span style="font-size:11px;color:var(--text-soft)">Cristian Santillan</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ago 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1XKZhFgTCIGiL_ZrVr_kFCdc-Cf-ROg1u/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="desarrollo" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">84</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento Funcional - Buscador Estudiantes</span>
+            <span style="font-size:11px;color:var(--text-soft)">Búsqueda</span>
+            <span style="font-size:11px;color:var(--text-soft)">Tamaral Tassopuente</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jul 2025</span>
+            <span><span class="badge" style="background:#fef3c7;color:#92400e;font-size:10px">En desarrollo</span></span>
+            <span><a href="https://drive.google.com/file/d/1h4D5cOmG7vqEzTqX1TOnFVqiwrXgR62T/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">85</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Mejora ACAP - Nuevo Rol</span>
+            <span style="font-size:11px;color:var(--text-soft)">ACAP</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Dic 2024</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1cy5bmQhsVpxnGp9HWcEcz0zIuXSYcVbs/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">86</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Documento funcional - Booti</span>
+            <span style="font-size:11px;color:var(--text-soft)">Bot / Asistente</span>
+            <span style="font-size:11px;color:var(--text-soft)">Nadia Delu</span>
+            <span style="font-size:11px;color:var(--text-muted)">Jul 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://drive.google.com/file/d/1ZRekIB2QAj2cW82aC0qISNPgaGn0glyi/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="seguimiento" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">87</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Proyectos a desarrollar - Phinx</span>
+            <span style="font-size:11px;color:var(--text-soft)">Planificación</span>
+            <span style="font-size:11px;color:var(--text-soft)">ccastellar</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ene 2025</span>
+            <span><span class="badge" style="background:#dbeafe;color:#1e40af;font-size:10px">En seguimiento</span></span>
+            <span><a href="https://drive.google.com/file/d/1D7qYgfk8Yv8ZVkFzpyU5V2KogPhbwI4S/view" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div class="tbl-row" data-mod="otr" data-est="implementado" style="grid-template-columns:36px 1fr 160px 120px 80px 110px 70px">
+            <span style="font-size:11px;color:var(--text-muted);text-align:center">88</span>
+            <span class="tbl-cell-strong" style="font-size:12px">Relación dependencia funcional - Tipo de escuela</span>
+            <span style="font-size:11px;color:var(--text-soft)">Planificación</span>
+            <span style="font-size:11px;color:var(--text-soft)">Tamaral Tassopuente</span>
+            <span style="font-size:11px;color:var(--text-muted)">Ene 2025</span>
+            <span><span class="badge" style="background:#d1fae5;color:#065f46;font-size:10px">Implementado</span></span>
+            <span><a href="https://docs.google.com/spreadsheets/d/1fCi_TYUlgNkmSMNsutjf_oMhgGBRJYjOlUOaWOwurRA/edit" target="_blank" style="color:var(--accent);font-size:11px;font-weight:600">&#8599; Drive</a></span>
+          </div>
+          <div id="docinv-empty" style="display:none;padding:32px;text-align:center;color:var(--text-muted);font-size:13px">Sin resultados.</div>
+        </div>
+      </div>
+    </div>
   </div><!-- /content -->
 </div><!-- /main -->
 
