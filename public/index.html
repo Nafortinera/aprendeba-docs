@@ -556,7 +556,34 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
   .nav-arrow:hover { background: #f0f4f8; }
   .nav-arrow.visible { display: flex; }
   nav.nav-principal { flex: 1; min-width: 0; border-bottom: none !important; }
-</style>
+
+    .rn-filter {
+      padding: 5px 12px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 20px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      color: #6b7280;
+      transition: all 0.15s;
+    }
+    .rn-filter.active, .rn-filter:hover {
+      background: #4c1d95;
+      color: #fff;
+      border-color: #4c1d95;
+    }
+    .rn-tag { display:inline-block; padding:3px 9px; border-radius:12px; font-size:12px; font-weight:600; }
+    .rn-tag.teal  { background:#ccfbf1; color:#0f766e; }
+    .rn-tag.amber { background:#fef3c7; color:#92400e; }
+    .rn-nivel { display:inline-block; padding:2px 8px; border-radius:8px; font-size:11px; font-weight:600; }
+    .rn-nivel.inicial    { background:#ede9fe; color:#5b21b6; }
+    .rn-nivel.primario   { background:#dbeafe; color:#1e40af; }
+    .rn-nivel.secundario { background:#fce7f3; color:#9d174d; }
+    #tabla-reglas tbody tr:hover { background:#f9fafb; }
+    #tabla-reglas tbody tr.hidden { display:none; }
+
+  </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
 <script>
@@ -625,6 +652,9 @@ nav.nav-principal::-webkit-scrollbar-thumb { background: var(--teal); border-rad
 <button data-tab="mantis" onclick="cambiarTab('mantis')">🐛 Mantis</button>
 <button data-tab="generador" onclick="cambiarTab('generador')">📝 Generador</button>
 <button data-tab="roles" onclick="cambiarTab('roles')">🔐 Roles</button>
+  <button onclick="showTab('reglas',this)">
+    <span class="tab-icon">📐</span> Reglas de Negocio
+  </button>
 </nav>
 <!-- SUB-NAV -->
 <nav class="nav-sub" id="subnav-instructivos">
@@ -5067,6 +5097,170 @@ flowchart TD
   </div>
 
 
+
+  <!-- ══════════ TAB: REGLAS DE NEGOCIO ══════════ -->
+  <div id="reglas" class="tab-panel theme-violet" style="display:none">
+    <div class="panel-header">
+      <div class="panel-color-bar"></div>
+      <div>
+        <span class="badge">Doc Funcional</span>
+        <h2>Reglas de Negocio — AprendeBA</h2>
+        <p>Registro centralizado de las reglas que gobiernan la lógica del sistema: umbrales, plazos, roles y excepciones por módulo y nivel.</p>
+      </div>
+    </div>
+
+    <!-- Filtros -->
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;align-items:center;">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <span style="font-size:13px;font-weight:600;color:#6b7280;">Módulo:</span>
+        <button class="rn-filter active" onclick="filtrarRN(this,'modulo','todos')">Todos</button>
+        <button class="rn-filter" onclick="filtrarRN(this,'modulo','presentismo')">Presentismo</button>
+        <button class="rn-filter" onclick="filtrarRN(this,'modulo','informes')">Informes</button>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-left:16px;">
+        <span style="font-size:13px;font-weight:600;color:#6b7280;">Nivel:</span>
+        <button class="rn-filter active" onclick="filtrarRN(this,'nivel','todos')">Todos</button>
+        <button class="rn-filter" onclick="filtrarRN(this,'nivel','inicial')">Inicial</button>
+        <button class="rn-filter" onclick="filtrarRN(this,'nivel','primario')">Primario</button>
+        <button class="rn-filter" onclick="filtrarRN(this,'nivel','secundario')">Secundario</button>
+      </div>
+      <div style="margin-left:auto;">
+        <input id="rn-search" oninput="buscarRN(this.value)" placeholder="🔍 Buscar regla..." style="padding:6px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:13px;width:220px;">
+      </div>
+    </div>
+
+    <!-- Tabla de reglas -->
+    <div style="overflow-x:auto;">
+      <table id="tabla-reglas" style="width:100%;border-collapse:collapse;font-size:13.5px;">
+        <thead>
+          <tr style="background:#4c1d95;color:#fff;">
+            <th style="padding:10px 14px;text-align:left;border-radius:8px 0 0 0;font-weight:600;">Módulo</th>
+            <th style="padding:10px 14px;text-align:left;font-weight:600;">Nivel</th>
+            <th style="padding:10px 14px;text-align:left;font-weight:600;">Regla</th>
+            <th style="padding:10px 14px;text-align:left;border-radius:0 8px 0 0;font-weight:600;">Excepción / Nota</th>
+          </tr>
+        </thead>
+        <tbody id="rn-body">
+          <!-- PRESENTISMO - INICIAL -->
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="inicial">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel inicial">Inicial</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Umbral No regular:</strong> más de 5 inasistencias injustificadas en el bimestre</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">—</td>
+          </tr>
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="inicial">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel inicial">Inicial</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>NC (No Corresponde):</strong> disponible para todos los roles</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">Si el docente lo asignó por error, debe pedir al Directivo que lo modifique</td>
+          </tr>
+          <!-- PRESENTISMO - PRIMARIO -->
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="primario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel primario">Primario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Umbral No regular:</strong> más de 5 inasistencias injustificadas en el bimestre</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">—</td>
+          </tr>
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="primario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel primario">Primario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Jornada Extendida (JE):</strong> NO computa para el cálculo de regularidad del alumno</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">Los estados JE (incluido NC) solo los puede asignar la Dirección de Área</td>
+          </tr>
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="primario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel primario">Primario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>NC (No Corresponde):</strong> solo disponible para el rol Dirección de Área</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">—</td>
+          </tr>
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="primario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel primario">Primario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Justificación fuera de plazo:</strong> solo Dirección de Área</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">El Directivo solo puede justificar dentro del plazo habilitado</td>
+          </tr>
+          <!-- PRESENTISMO - SECUNDARIO -->
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="secundario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel secundario">Secundario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Umbral No regular (bimestre):</strong> más de 5 inasistencias injustificadas</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">Prioridad 2 en tabla de cálculo</td>
+          </tr>
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="secundario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel secundario">Secundario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Umbral No regular (anual):</strong> más de 20 inasistencias injustificadas anuales</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">Prioridad 3 en tabla de cálculo</td>
+          </tr>
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="secundario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel secundario">Secundario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Modificación manual de regularidad:</strong> solo Dirección de Área (válida 24 hs.), prevalece sobre el cálculo automático</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">Prioridad 1 — máxima jerarquía</td>
+          </tr>
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="secundario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel secundario">Secundario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>NC (No Corresponde):</strong> solo disponible para el rol Dirección de Área</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">Aplica tanto al espacio curricular como al presentismo general</td>
+          </tr>
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="secundario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel secundario">Secundario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Justificación fuera de plazo:</strong> solo Dirección de Área</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">El Directivo solo puede justificar dentro del plazo habilitado</td>
+          </tr>
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="secundario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel secundario">Secundario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Justificación retroactiva (períodos cerrados):</strong> SOLO Dirección de Área</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">El Directivo NO tiene acceso a justificaciones retroactivas. Ningún otro rol tiene habilitada esta acción</td>
+          </tr>
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="secundario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel secundario">Secundario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Contraturno:</strong> la carga es obligatoria</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">Si en un día o alumno puntual el contraturno no aplica, se puede registrar NC como caso excepcional</td>
+          </tr>
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="secundario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel secundario">Secundario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>APC:</strong> Ausente con presencia en clases (nombre del estado, no es Tarde)</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">Solo aplica en espacio curricular</td>
+          </tr>
+          <tr class="rn-row" data-modulo="presentismo" data-nivel="secundario">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag teal">Presentismo</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel secundario">Secundario</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Habilitación de días y horarios:</strong> paso previo obligatorio antes de cargar presentismo por espacio curricular</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">El Directivo define días, horarios y período; activa con el botón Habilitar</td>
+          </tr>
+          <!-- INFORMES - INICIAL -->
+          <tr class="rn-row" data-modulo="informes" data-nivel="inicial">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag amber">Informes</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel inicial">Inicial</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Descarga de boletines:</strong> no hay descarga masiva por sección</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">La descarga es individual por alumno: desde Matriculados &gt; legajo del alumno</td>
+          </tr>
+          <tr class="rn-row" data-modulo="informes" data-nivel="inicial">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag amber">Informes</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel inicial">Inicial</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Período de finalización:</strong> hay fecha por agenda educativa pero NO hay bloqueo de carga ni de generación de boletines</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">El sistema permite seguir cargando informes y generando boletines después de la fecha de finalización</td>
+          </tr>
+          <tr class="rn-row" data-modulo="informes" data-nivel="inicial">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-tag amber">Informes</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><span class="rn-nivel inicial">Inicial</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;"><strong>Boletín sin informe cargado:</strong> el alumno no tendrá sección de Informe Valorativo en su boletín</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#6b7280;">Para corregirlo: cargar el informe faltante y regenerar. Si el período cerró, el Directivo gestiona con soporte</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Contador -->
+    <div id="rn-count" style="margin-top:10px;font-size:12px;color:#9ca3af;text-align:right;"></div>
+  </div>
+
 </main>
 <script>
   function flujos_renderMermaid(container) {
@@ -8787,6 +8981,47 @@ document.addEventListener('DOMContentLoaded', function() {
   document.addEventListener('DOMContentLoaded', upd);
   setTimeout(upd, 100);
 })();
+
+  // Reglas de Negocio - filter logic
+  var rnFiltroModulo = 'todos';
+  var rnFiltroNivel  = 'todos';
+
+  function filtrarRN(btn, tipo, valor) {
+    // update active button
+    document.querySelectorAll('.rn-filter').forEach(function(b) {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + tipo + "'")) {
+        b.classList.remove('active');
+      }
+    });
+    btn.classList.add('active');
+
+    if (tipo === 'modulo') rnFiltroModulo = valor;
+    if (tipo === 'nivel')  rnFiltroNivel  = valor;
+    aplicarFiltrosRN();
+  }
+
+  function buscarRN(q) {
+    aplicarFiltrosRN(q.toLowerCase());
+  }
+
+  function aplicarFiltrosRN(q) {
+    if (q === undefined) q = (document.getElementById('rn-search') || {value:''}).value.toLowerCase();
+    var rows = document.querySelectorAll('.rn-row');
+    var visible = 0;
+    rows.forEach(function(row) {
+      var modOk  = rnFiltroModulo === 'todos' || row.dataset.modulo === rnFiltroModulo;
+      var nivOk  = rnFiltroNivel  === 'todos' || row.dataset.nivel  === rnFiltroNivel;
+      var textOk = !q || row.textContent.toLowerCase().includes(q);
+      if (modOk && nivOk && textOk) { row.classList.remove('hidden'); visible++; }
+      else { row.classList.add('hidden'); }
+    });
+    var counter = document.getElementById('rn-count');
+    if (counter) counter.textContent = visible + ' regla' + (visible !== 1 ? 's' : '') + ' mostrada' + (visible !== 1 ? 's' : '');
+  }
+
+  // init counter on load
+  document.addEventListener('DOMContentLoaded', function() { aplicarFiltrosRN(); });
+
 </script>
 </body><!-- deploy forzado Jun 2026 -->
 <!-- deploy trigger -->
