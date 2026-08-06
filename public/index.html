@@ -4,52 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AprendeBA Hub — SSTEDU</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js">
-var dfMod = 'todos', dfEst = 'todos';
-function docinvFilter(type, btn) {
-  var attr = type === 'mod' ? '[data-df]' : '[data-ef2]';
-  document.querySelectorAll('#view-docinv .filter-btn' + attr).forEach(function(b){b.classList.remove('on');});
-  btn.classList.add('on');
-  if (type === 'mod') dfMod = btn.getAttribute('data-df');
-  else dfEst = btn.getAttribute('data-ef2');
-  docinvRefresh();
-}
-function docinvRefresh() {
-  var q = (document.getElementById('docinv-search').value||'').toLowerCase();
-  var rows = document.querySelectorAll('#docinv-rows .tbl-row');
-  var visible = 0;
-  rows.forEach(function(row){
-    var modOk = dfMod==='todos' || row.getAttribute('data-mod')===dfMod;
-    var estOk = dfEst==='todos' || row.getAttribute('data-est')===dfEst;
-    var searchOk = !q || row.textContent.toLowerCase().indexOf(q)!==-1;
-    var show = modOk && estOk && searchOk;
-    row.style.display = show ? '' : 'none';
-    if (show) visible++;
-  });
-  var empty = document.getElementById('docinv-empty');
-  if (empty) empty.style.display = visible===0 ? '' : 'none';
-  var ctr = document.getElementById('docinv-count');
-  if (ctr) ctr.textContent = visible + ' documento' + (visible!==1?'s':'');
-}
-
-function flujoSelect(btn) {
-  document.querySelectorAll('#view-flujos .filter-btn').forEach(function(b){b.classList.remove('on');});
-  btn.classList.add('on');
-  var key = btn.getAttribute('data-flujo');
-  document.querySelectorAll('.flujo-card').forEach(function(c){c.style.display='none';});
-  var card = document.getElementById('flujo-' + key);
-  if (card) {
-    card.style.display = '';
-    // render mermaid if not yet rendered
-    var el = card.querySelector('.mermaid[data-def]');
-    if (el && !el.querySelector('svg')) {
-      var uid = 'mermaid-f-' + key + '-' + Date.now();
-      var def = el.getAttribute('data-def');
-      mermaid.render(uid, def).then(function(res){ el.innerHTML = res.svg; }).catch(function(e){el.textContent='Error: '+e;});
-    }
-  }
-}
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
 <style>
 :root {
   --sidebar-bg: #073244;
@@ -767,119 +722,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
     
 
     <!-- ── CICLO ── -->
-    <div class="view" id="view-ciclo">
-      <div class="page-header">
-        <h1>Ciclo lectivo anual</h1>
-        <p>Desde la apertura hasta la efectivización — Secundaria Común.</p>
-      </div>
-      <div class="diagram-card">
-        <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
-flowchart TD
-    A([&quot;🏫 Reincorporacion equipos de conduccion&quot;]) --&gt; EF
-    EF[&quot;⚙️ Efectivizacion&lt;br/&gt;Alumnos del año anterior quedan&lt;br/&gt;matriculados automaticamente&quot;] --&gt; MATR
-    IEL1[&quot;🔄 Migracion IEL Ordinario&quot;] --&gt; MAT
-    IEL2[&quot;🔄 Migracion IEL Complementario&quot;] --&gt; MAT
-    MAT[&quot;📝 Matriculacion de inscriptos&quot;] --&gt; MATR
-    MATR[(&quot;👥 ALUMNOS MATRICULADOS&quot;)]
-    classDef inicio fill:#dbeafe,stroke:#3b82f6,color:#1e3a8a,font-weight:bold
-    classDef db     fill:#e0f2fe,stroke:#0ea5e9,color:#0c4a6e,font-weight:bold
-    classDef proc   fill:#f8fafc,stroke:#94a3b8,color:#334155
-    class A inicio
-    class MATR db
-    class EF,IEL1,IEL2,MAT proc"></div>
-      <div style="text-align:center;font-size:2rem;color:#64748b;margin:2px 0">↓</div>
-      <div class="mermaid" data-def="%%{init: {'theme': 'base', 'flowchart': {'useMaxWidth': false}, 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
-flowchart LR
-    subgraph CL[&quot;📅 CICLO LECTIVO&quot;]
-      direction LR
-      subgraph S1[&quot;📚 1er BIMESTRE&quot;]
-        direction TB
-        E1[&quot;Carga&lt;br/&gt;Presentismo&quot;] --&gt; E2[&quot;Revision condicion&lt;br/&gt;de regularidad&quot;]
-        E3[&quot;Carga&lt;br/&gt;Calificaciones&quot;] --&gt; E4[&quot;Generacion&lt;br/&gt;de Informes&quot;]
-        E2 --&gt; E4
-      end
-      subgraph S2[&quot;📚 2do BIMESTRE&quot;]
-        direction TB
-        F1[&quot;Carga&lt;br/&gt;Presentismo&quot;] --&gt; F2[&quot;Revision condicion&lt;br/&gt;de regularidad&quot;]
-        F3[&quot;Carga&lt;br/&gt;Calificaciones&quot;] --&gt; F4[&quot;Generacion&lt;br/&gt;de Informes&quot;]
-        F2 --&gt; F4
-      end
-      REC([&quot;RECESO&lt;br/&gt;INVERNAL&quot;])
-      subgraph S3[&quot;📚 3er BIMESTRE&quot;]
-        direction TB
-        G1[&quot;Carga&lt;br/&gt;Presentismo&quot;] --&gt; G2[&quot;Revision condicion&lt;br/&gt;de regularidad&quot;]
-        G3[&quot;Carga&lt;br/&gt;Calificaciones&quot;] --&gt; G4[&quot;Generacion&lt;br/&gt;de Informes&quot;]
-        G2 --&gt; G4
-      end
-      subgraph S4[&quot;📚 4to BIMESTRE&quot;]
-        direction TB
-        H1[&quot;Carga&lt;br/&gt;Presentismo&quot;] --&gt; H2[&quot;Revision condicion&lt;br/&gt;de regularidad&quot;]
-        H3[&quot;Carga&lt;br/&gt;Calificaciones&quot;] --&gt; H4[&quot;Generacion&lt;br/&gt;de Informes&quot;]
-        H2 --&gt; H4
-      end
-      S1 --&gt; S2 --&gt; REC --&gt; S3 --&gt; S4
-    end
-    classDef famapp fill:#ede9fe,stroke:#7c3aed,color:#3730a3
-    classDef receso fill:#fef3c7,stroke:#f59e0b,color:#78350f,font-weight:bold
-    class REC receso"></div>
-      <div style="text-align:center;font-size:2rem;color:#64748b;margin:2px 0">↓</div>
-      <div class="mermaid" data-def="%%{init: {'theme': 'base', 'flowchart': {'nodeSpacing': 20, 'rankSpacing': 35}, 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
-flowchart TD
-    APR{&quot;Cierre del 4to Bimestre&lt;br/&gt;Por cada materia: ¿Aprobo?&quot;}
-    APR --&gt;|&quot;Si&quot;| ND1([&quot;✅ Nota Definitiva&quot;])
-    APR --&gt;|&quot;No&quot;| RD[&quot;📖 Recuperacion Diciembre&quot;]
-    RD --&gt; QD{&quot;¿Aprueba en Diciembre?&quot;}
-    QD --&gt;|&quot;Si&quot;| ND2([&quot;✅ Nota Definitiva&quot;])
-    QD --&gt;|&quot;No&quot;| RF[&quot;📖 Recuperacion Febrero&quot;]
-    RF --&gt; QF{&quot;¿Aprueba en Febrero?&quot;}
-    QF --&gt;|&quot;Si&quot;| ND3([&quot;✅ Nota Definitiva&quot;])
-    QF --&gt;|&quot;No&quot;| EPC[&quot;❌ Materia ADEUDADA — ECP&quot;]
-    ND1 --&gt; CONT
-    ND2 --&gt; CONT
-    ND3 --&gt; CONT
-    EPC --&gt; CONT
-    CONT[&quot;Conteo de ECP por alumno&quot;] --&gt; AUTO
-    AUTO{&quot;Estado automatico&lt;br/&gt;segun año cursado + cantidad ECP&quot;}
-    AUTO --&gt;|&quot;0 ECP&quot;| PD([&quot;✅ PROMOCION DIRECTA&lt;br/&gt;Pasa al año siguiente&quot;])
-    AUTO --&gt;|&quot;1-4 ECP (1er año)&lt;br/&gt;1-5 ECP (2do+)&quot;| EPRO[&quot;⏳ EN PROCESO&lt;br/&gt;Resolucion manual requerida&lt;br/&gt;por equipo de conduccion&quot;]
-    AUTO --&gt;|&quot;5+ ECP (1er año)&lt;br/&gt;6+ ECP (2do+)&quot;| PERM([&quot;🔁 PERMANECE&lt;br/&gt;Repite el año&quot;])
-    AUTO --&gt;|&quot;Último año del plan&quot;| ULTO{&quot;¿Completo el plan de estudios?&quot;}
-    ULTO --&gt;|&quot;Si&quot;| CPE([&quot;🎓 COMPLETO&lt;br/&gt;EL PLAN DE ESTUDIOS&quot;])
-    ULTO --&gt;|&quot;No&quot;| NCPE([&quot;📋 NO COMPLETO&lt;br/&gt;EL PLAN DE ESTUDIOS&quot;])
-    EPRO --&gt; RES{&quot;Resolucion manual:&lt;br/&gt;¿puede pasar de año?&quot;}
-    RES --&gt;|&quot;Si, con acompañamiento&quot;| PCA([&quot;📚 PROMOCION CON APOYO&lt;br/&gt;Pasa al año siguiente con ECP&quot;])
-    RES --&gt;|&quot;No puede avanzar&quot;| PERM
-    PD --&gt; FPR
-    PCA --&gt; FPR
-    PERM --&gt; FPR
-    CPE --&gt; FPR
-    NCPE --&gt; FPR
-    FPR[&quot;Proyeccion Finalizada — Vacantes informadas a IEL&quot;] --&gt; COND
-    COND[&quot;✅ Condiciones para efectivizar:&lt;br/&gt;Sin alumnos En Proceso · Calificaciones definitivas cargadas&lt;br/&gt;Ciclo lectivo iniciado por agenda&quot;]
-    COND --&gt;|&quot;Todas cumplidas&quot;| EFV([&quot;⚙️ EFECTIVIZACION&lt;br/&gt;Alumnos matriculados en nuevo ciclo lectivo&quot;])
-    classDef ok     fill:#d1fae5,stroke:#059669,color:#064e3b,font-weight:bold
-    classDef noReg  fill:#fee2e2,stroke:#ef4444,color:#7f1d1d,font-weight:bold
-    classDef dec    fill:#fef9c3,stroke:#fcd34d,color:#713f12
-    classDef recup  fill:#fef3c7,stroke:#f59e0b,color:#78350f
-    classDef proc   fill:#f8fafc,stroke:#94a3b8,color:#334155
-    classDef inProc fill:#fff7ed,stroke:#f97316,color:#7c2d12,font-weight:bold
-    classDef efv    fill:#dbeafe,stroke:#2563eb,color:#1e3a8a,font-weight:bold
-    classDef cond   fill:#fefce8,stroke:#ca8a04,color:#713f12,font-weight:bold
-    class ND1,ND2,ND3,PD,PCA,CPE ok
-    class EPC,PERM,NCPE noReg
-    class APR,QD,QF,AUTO,ULTO,RES dec
-    class COND cond
-    class RD,RF recup
-    class CONT,FPR proc
-    class EPRO inProc
-    class EFV efv"></div>
-      </div>
-      <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:#dbeafe;border:1.5px solid #3b82f6"></div>Apertura / Efectivización</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#fef3c7;border:1.5px solid #f59e0b"></div>Receso</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#f8fafc;border:1.5px solid #94a3b8"></div>Procesos bimestrales</div>
-      </div>
-    </div>
+    
 
     <!-- ── MATRICULACION ── -->
     <div class="view" id="view-matriculacion">
@@ -2076,9 +1919,9 @@ flowchart TD
         <button class="filter-btn" data-flujo="pre" onclick="flujoSelect(this)">Presentismo</button>
         <button class="filter-btn" data-flujo="cal" onclick="flujoSelect(this)">Calificaciones y Boletines</button>
         <button class="filter-btn" data-flujo="cva" onclick="flujoSelect(this)">Ciclo de vida del alumno</button>
-        <button class="filter-btn" data-flujo="der" onclick="flujoSelect(this)">Entidades (DER simplificado)</button>
-        
-      </div>
+        <button class="filter-btn" data-flujo="der" onclick="flujoSelect(this)">Entidades (DER)</button>
+        <button class="filter-btn" data-flujo="ciclo" onclick="flujoSelect(this)">Ciclo lectivo</button>
+        </div>
       <div id="flujo-container">
         
           <div class="flujo-card" id="flujo-mat" style="">
@@ -2100,6 +1943,118 @@ flowchart TD
           <div class="flujo-card" id="flujo-der" style="display:none">
             <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Relaciones principales entre las entidades del modelo de datos.</div>
             <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;erDiagram&#10;    ESTABLECIMIENTOS ||--o{ SECCIONES : tiene&#10;    SECCIONES ||--o{ MATRICULACIONES : agrupa&#10;    ALUMNOS ||--o{ MATRICULACIONES : tiene&#10;    MATRICULACIONES ||--o{ ASISTENCIAS : registra&#10;    MATRICULACIONES ||--o{ CALIFICACIONES : tiene&#10;    MATRICULACIONES ||--o{ ECPS : acumula&#10;    MATRICULACIONES ||--o{ BOLETINES : genera&#10;    MATRICULACIONES ||--o| LIBRO_MATRIZ : produce&#10;    PLANES_ESTUDIO ||--o{ ESPACIOS_CURRICULARES : contiene&#10;    ESPACIOS_CURRICULARES ||--o{ CALIFICACIONES : califica&#10;    USUARIOS ||--o{ ROLES_ESTABLECIMIENTO : asignado&#10;    ESTABLECIMIENTOS ||--o{ ROLES_ESTABLECIMIENTO : tiene"></div>
+          </div>
+          <div class="flujo-card" id="flujo-ciclo" style="display:none">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Proceso completo del ciclo lectivo: apertura, bimestres, cierre, efectivización — Secundaria Común.</div>
+            
+      <div class="diagram-card">
+        <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart TD
+    A([&quot;🏫 Reincorporacion equipos de conduccion&quot;]) --&gt; EF
+    EF[&quot;⚙️ Efectivizacion&lt;br/&gt;Alumnos del año anterior quedan&lt;br/&gt;matriculados automaticamente&quot;] --&gt; MATR
+    IEL1[&quot;🔄 Migracion IEL Ordinario&quot;] --&gt; MAT
+    IEL2[&quot;🔄 Migracion IEL Complementario&quot;] --&gt; MAT
+    MAT[&quot;📝 Matriculacion de inscriptos&quot;] --&gt; MATR
+    MATR[(&quot;👥 ALUMNOS MATRICULADOS&quot;)]
+    classDef inicio fill:#dbeafe,stroke:#3b82f6,color:#1e3a8a,font-weight:bold
+    classDef db     fill:#e0f2fe,stroke:#0ea5e9,color:#0c4a6e,font-weight:bold
+    classDef proc   fill:#f8fafc,stroke:#94a3b8,color:#334155
+    class A inicio
+    class MATR db
+    class EF,IEL1,IEL2,MAT proc"></div>
+      <div style="text-align:center;font-size:2rem;color:#64748b;margin:2px 0">↓</div>
+      <div class="mermaid" data-def="%%{init: {'theme': 'base', 'flowchart': {'useMaxWidth': false}, 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart LR
+    subgraph CL[&quot;📅 CICLO LECTIVO&quot;]
+      direction LR
+      subgraph S1[&quot;📚 1er BIMESTRE&quot;]
+        direction TB
+        E1[&quot;Carga&lt;br/&gt;Presentismo&quot;] --&gt; E2[&quot;Revision condicion&lt;br/&gt;de regularidad&quot;]
+        E3[&quot;Carga&lt;br/&gt;Calificaciones&quot;] --&gt; E4[&quot;Generacion&lt;br/&gt;de Informes&quot;]
+        E2 --&gt; E4
+      end
+      subgraph S2[&quot;📚 2do BIMESTRE&quot;]
+        direction TB
+        F1[&quot;Carga&lt;br/&gt;Presentismo&quot;] --&gt; F2[&quot;Revision condicion&lt;br/&gt;de regularidad&quot;]
+        F3[&quot;Carga&lt;br/&gt;Calificaciones&quot;] --&gt; F4[&quot;Generacion&lt;br/&gt;de Informes&quot;]
+        F2 --&gt; F4
+      end
+      REC([&quot;RECESO&lt;br/&gt;INVERNAL&quot;])
+      subgraph S3[&quot;📚 3er BIMESTRE&quot;]
+        direction TB
+        G1[&quot;Carga&lt;br/&gt;Presentismo&quot;] --&gt; G2[&quot;Revision condicion&lt;br/&gt;de regularidad&quot;]
+        G3[&quot;Carga&lt;br/&gt;Calificaciones&quot;] --&gt; G4[&quot;Generacion&lt;br/&gt;de Informes&quot;]
+        G2 --&gt; G4
+      end
+      subgraph S4[&quot;📚 4to BIMESTRE&quot;]
+        direction TB
+        H1[&quot;Carga&lt;br/&gt;Presentismo&quot;] --&gt; H2[&quot;Revision condicion&lt;br/&gt;de regularidad&quot;]
+        H3[&quot;Carga&lt;br/&gt;Calificaciones&quot;] --&gt; H4[&quot;Generacion&lt;br/&gt;de Informes&quot;]
+        H2 --&gt; H4
+      end
+      S1 --&gt; S2 --&gt; REC --&gt; S3 --&gt; S4
+    end
+    classDef famapp fill:#ede9fe,stroke:#7c3aed,color:#3730a3
+    classDef receso fill:#fef3c7,stroke:#f59e0b,color:#78350f,font-weight:bold
+    class REC receso"></div>
+      <div style="text-align:center;font-size:2rem;color:#64748b;margin:2px 0">↓</div>
+      <div class="mermaid" data-def="%%{init: {'theme': 'base', 'flowchart': {'nodeSpacing': 20, 'rankSpacing': 35}, 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
+flowchart TD
+    APR{&quot;Cierre del 4to Bimestre&lt;br/&gt;Por cada materia: ¿Aprobo?&quot;}
+    APR --&gt;|&quot;Si&quot;| ND1([&quot;✅ Nota Definitiva&quot;])
+    APR --&gt;|&quot;No&quot;| RD[&quot;📖 Recuperacion Diciembre&quot;]
+    RD --&gt; QD{&quot;¿Aprueba en Diciembre?&quot;}
+    QD --&gt;|&quot;Si&quot;| ND2([&quot;✅ Nota Definitiva&quot;])
+    QD --&gt;|&quot;No&quot;| RF[&quot;📖 Recuperacion Febrero&quot;]
+    RF --&gt; QF{&quot;¿Aprueba en Febrero?&quot;}
+    QF --&gt;|&quot;Si&quot;| ND3([&quot;✅ Nota Definitiva&quot;])
+    QF --&gt;|&quot;No&quot;| EPC[&quot;❌ Materia ADEUDADA — ECP&quot;]
+    ND1 --&gt; CONT
+    ND2 --&gt; CONT
+    ND3 --&gt; CONT
+    EPC --&gt; CONT
+    CONT[&quot;Conteo de ECP por alumno&quot;] --&gt; AUTO
+    AUTO{&quot;Estado automatico&lt;br/&gt;segun año cursado + cantidad ECP&quot;}
+    AUTO --&gt;|&quot;0 ECP&quot;| PD([&quot;✅ PROMOCION DIRECTA&lt;br/&gt;Pasa al año siguiente&quot;])
+    AUTO --&gt;|&quot;1-4 ECP (1er año)&lt;br/&gt;1-5 ECP (2do+)&quot;| EPRO[&quot;⏳ EN PROCESO&lt;br/&gt;Resolucion manual requerida&lt;br/&gt;por equipo de conduccion&quot;]
+    AUTO --&gt;|&quot;5+ ECP (1er año)&lt;br/&gt;6+ ECP (2do+)&quot;| PERM([&quot;🔁 PERMANECE&lt;br/&gt;Repite el año&quot;])
+    AUTO --&gt;|&quot;Último año del plan&quot;| ULTO{&quot;¿Completo el plan de estudios?&quot;}
+    ULTO --&gt;|&quot;Si&quot;| CPE([&quot;🎓 COMPLETO&lt;br/&gt;EL PLAN DE ESTUDIOS&quot;])
+    ULTO --&gt;|&quot;No&quot;| NCPE([&quot;📋 NO COMPLETO&lt;br/&gt;EL PLAN DE ESTUDIOS&quot;])
+    EPRO --&gt; RES{&quot;Resolucion manual:&lt;br/&gt;¿puede pasar de año?&quot;}
+    RES --&gt;|&quot;Si, con acompañamiento&quot;| PCA([&quot;📚 PROMOCION CON APOYO&lt;br/&gt;Pasa al año siguiente con ECP&quot;])
+    RES --&gt;|&quot;No puede avanzar&quot;| PERM
+    PD --&gt; FPR
+    PCA --&gt; FPR
+    PERM --&gt; FPR
+    CPE --&gt; FPR
+    NCPE --&gt; FPR
+    FPR[&quot;Proyeccion Finalizada — Vacantes informadas a IEL&quot;] --&gt; COND
+    COND[&quot;✅ Condiciones para efectivizar:&lt;br/&gt;Sin alumnos En Proceso · Calificaciones definitivas cargadas&lt;br/&gt;Ciclo lectivo iniciado por agenda&quot;]
+    COND --&gt;|&quot;Todas cumplidas&quot;| EFV([&quot;⚙️ EFECTIVIZACION&lt;br/&gt;Alumnos matriculados en nuevo ciclo lectivo&quot;])
+    classDef ok     fill:#d1fae5,stroke:#059669,color:#064e3b,font-weight:bold
+    classDef noReg  fill:#fee2e2,stroke:#ef4444,color:#7f1d1d,font-weight:bold
+    classDef dec    fill:#fef9c3,stroke:#fcd34d,color:#713f12
+    classDef recup  fill:#fef3c7,stroke:#f59e0b,color:#78350f
+    classDef proc   fill:#f8fafc,stroke:#94a3b8,color:#334155
+    classDef inProc fill:#fff7ed,stroke:#f97316,color:#7c2d12,font-weight:bold
+    classDef efv    fill:#dbeafe,stroke:#2563eb,color:#1e3a8a,font-weight:bold
+    classDef cond   fill:#fefce8,stroke:#ca8a04,color:#713f12,font-weight:bold
+    class ND1,ND2,ND3,PD,PCA,CPE ok
+    class EPC,PERM,NCPE noReg
+    class APR,QD,QF,AUTO,ULTO,RES dec
+    class COND cond
+    class RD,RF recup
+    class CONT,FPR proc
+    class EPRO inProc
+    class EFV efv"></div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#dbeafe;border:1.5px solid #3b82f6"></div>Apertura / Efectivización</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#fef3c7;border:1.5px solid #f59e0b"></div>Receso</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f8fafc;border:1.5px solid #94a3b8"></div>Procesos bimestrales</div>
+      </div>
+    
           </div>
       </div>
     </div>
@@ -2458,6 +2413,49 @@ function mantisRefresh() {
   if (empty) empty.style.display = visible === 0 ? '' : 'none';
   var counter = document.getElementById('mantis-count');
   if (counter) counter.textContent = visible + ' ticket' + (visible !== 1 ? 's' : '');
+}
+
+var dfMod = 'todos', dfEst = 'todos';
+function docinvFilter(type, btn) {
+  var attr = type === 'mod' ? '[data-df]' : '[data-ef2]';
+  document.querySelectorAll('#view-docinv .filter-btn' + attr).forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  if (type === 'mod') dfMod = btn.getAttribute('data-df');
+  else dfEst = btn.getAttribute('data-ef2');
+  docinvRefresh();
+}
+function docinvRefresh() {
+  var q = (document.getElementById('docinv-search').value||'').toLowerCase();
+  var rows = document.querySelectorAll('#docinv-rows .tbl-row');
+  var visible = 0;
+  rows.forEach(function(row){
+    var modOk = dfMod==='todos' || row.getAttribute('data-mod')===dfMod;
+    var estOk = dfEst==='todos' || row.getAttribute('data-est')===dfEst;
+    var searchOk = !q || row.textContent.toLowerCase().indexOf(q)!==-1;
+    var show = modOk && estOk && searchOk;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  var empty = document.getElementById('docinv-empty');
+  if (empty) empty.style.display = visible===0 ? '' : 'none';
+  var ctr = document.getElementById('docinv-count');
+  if (ctr) ctr.textContent = visible + ' documento' + (visible!==1?'s':'');
+}
+function flujoSelect(btn) {
+  document.querySelectorAll('#view-flujos .filter-btn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var key = btn.getAttribute('data-flujo');
+  document.querySelectorAll('.flujo-card').forEach(function(c){c.style.display='none';});
+  var card = document.getElementById('flujo-' + key);
+  if (!card) return;
+  card.style.display = '';
+  card.querySelectorAll('.mermaid[data-def]').forEach(function(el) {
+    if (el.getAttribute('data-rendered')) return;
+    el.setAttribute('data-rendered','1');
+    var uid = 'mf-' + key + '-' + Date.now().toString(36) + Math.random().toString(36).slice(2,5);
+    var def = el.getAttribute('data-def');
+    mermaid.render(uid, def).then(function(res){ el.innerHTML = res.svg; }).catch(function(e){ el.textContent='Error: '+e; });
+  });
 }
 </script>
 </body>
