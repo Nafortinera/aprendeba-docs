@@ -107,6 +107,17 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
 .search-input:focus{border-color:var(--accent)}
 
 /* DIAGRAM */
+
+/* FLUJOS */
+.flujo-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;overflow:auto;min-height:300px}
+.flujo-card .mermaid{display:flex;justify-content:center;transform-origin:top center}
+.flujo-card .mermaid svg{max-width:none !important;height:auto}
+.flujo-zoom{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.flujo-zoom input[type=range]{width:140px;accent-color:var(--accent)}
+.flujo-zoom button{background:var(--surface);border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text);display:flex;align-items:center;justify-content:center}
+.flujo-zoom button:hover{border-color:var(--accent);color:var(--accent)}
+.flujo-zoom .zoom-label{font-size:12px;color:var(--text-muted);min-width:36px;text-align:center}
+
 .diagram-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;overflow-x:auto}
 .legend{display:flex;flex-wrap:wrap;gap:12px;padding:12px 20px;background:#f8fafc;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px}
 .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-soft)}
@@ -1922,6 +1933,13 @@ flowchart TD
         <button class="filter-btn" data-flujo="der" onclick="flujoSelect(this)">Entidades (DER)</button>
         <button class="filter-btn" data-flujo="ciclo" onclick="flujoSelect(this)">Ciclo lectivo</button>
         </div>
+      <div class="flujo-zoom">
+        <button onclick="flujoZoom(-0.15)" title="Alejar">−</button>
+        <input type="range" id="flujo-range" min="0.4" max="2.5" step="0.05" value="1" oninput="flujoZoomSet(parseFloat(this.value))">
+        <button onclick="flujoZoom(0.15)" title="Acercar">+</button>
+        <span class="zoom-label" id="flujo-zoom-label">100%</span>
+        <button onclick="flujoZoomSet(1)" title="Restablecer" style="width:auto;padding:0 8px;font-size:11px">Reset</button>
+      </div>
       <div id="flujo-container">
         
           <div class="flujo-card" id="flujo-mat" style="">
@@ -2449,6 +2467,8 @@ function flujoSelect(btn) {
   var card = document.getElementById('flujo-' + key);
   if (!card) return;
   card.style.display = '';
+  var m = card.querySelector('.mermaid');
+  if (m) m.style.transform = 'scale(' + _flujoScale + ')';
   card.querySelectorAll('.mermaid[data-def]').forEach(function(el) {
     if (el.getAttribute('data-rendered')) return;
     el.setAttribute('data-rendered','1');
@@ -2457,6 +2477,20 @@ function flujoSelect(btn) {
     mermaid.render(uid, def).then(function(res){ el.innerHTML = res.svg; }).catch(function(e){ el.textContent='Error: '+e; });
   });
 }
+
+var _flujoScale = 1;
+function flujoZoomSet(val) {
+  _flujoScale = Math.max(0.4, Math.min(2.5, val));
+  var pct = Math.round(_flujoScale * 100);
+  document.getElementById('flujo-range').value = _flujoScale;
+  document.getElementById('flujo-zoom-label').textContent = pct + '%';
+  var active = document.querySelector('.flujo-card:not([style*="none"])');
+  if (active) {
+    var m = active.querySelector('.mermaid');
+    if (m) m.style.transform = 'scale(' + _flujoScale + ')';
+  }
+}
+function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
 </script>
 </body>
 </html>
