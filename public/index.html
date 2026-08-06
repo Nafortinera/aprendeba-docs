@@ -750,7 +750,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       </div>
 
       <!-- Stats horas -->
-      <div class="stat-grid" style="grid-template-columns:repeat(5,1fr);margin-bottom:16px">
+      <div class="stat-grid" style="grid-template-columns:repeat(6,1fr);margin-bottom:16px">
         <div class="stat-card">
           <div class="stat-label">Presupuesto total</div>
           <div class="stat-val" style="color:var(--accent)">9.646</div>
@@ -775,6 +775,11 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <div class="stat-label">Restantes</div>
           <div class="stat-val" style="color:#991b1b">476</div>
           <div class="stat-sub">hs sin asignar</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Módulos en PRD</div>
+          <div class="stat-val" id="prd-counter" style="color:#065f46">0</div>
+          <div class="stat-sub">de 25 módulos</div>
         </div>
       </div>
 
@@ -3759,6 +3764,12 @@ function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
     if (empty) empty.style.display = vis === 0 ? '' : 'none';
   }
 
+  function prdUpdateCounter() {
+    var count = document.querySelectorAll('.prd-check:checked').length;
+    var el = document.getElementById('prd-counter');
+    if (el) el.textContent = count;
+  }
+
   function prdToggle(id, checked) {
     try {
       var data = JSON.parse(localStorage.getItem('aprendeba_prd') || '{}');
@@ -3767,6 +3778,7 @@ function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
     } catch(e) {}
     var row = document.getElementById('prd-'+id);
     if (row) row.closest('.phinx-row').classList.toggle('en-prd', checked);
+    prdUpdateCounter();
   }
 
   function prdLoadState() {
@@ -3780,6 +3792,7 @@ function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
         }
       });
     } catch(e) {}
+    prdUpdateCounter();
   }
 
   // Load PRD state when navigating to estado
