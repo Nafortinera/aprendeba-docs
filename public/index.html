@@ -171,6 +171,21 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
 .phinx-row:last-child{border-bottom:none}
 .phinx-row:hover{background:#f8fafc}
 .phinx-row.en-prd{background:#f0fdf4}
+
+.deploy-tl{border-left:2px solid var(--border);padding-left:20px;margin-left:4px}
+.dtl{margin-bottom:20px;position:relative}
+.dtl::before{content:"";position:absolute;left:-25px;top:5px;width:10px;height:10px;border-radius:50%;background:#94a3b8}
+.dtl.prd::before{background:#16a34a;box-shadow:0 0 0 2px #dcfce7}
+.dtl.stg::before{background:#d97706;box-shadow:0 0 0 2px #fef3c7}
+.dtl.bug::before{background:#dc2626;box-shadow:0 0 0 2px #fee2e2}
+.dtl-f{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.dtl-t{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.dtl-e{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:6px}
+.dtl-e.prd{background:#dcfce7;color:#15803d}
+.dtl-e.stg{background:#fef3c7;color:#92400e}
+.dtl-e.bug{background:#fee2e2;color:#dc2626}
+.dtl-l{font-size:12.5px;color:var(--text-soft);padding-left:14px;margin:0}
+.dtl-l li{margin-bottom:3px}
 </style>
 </head>
 <body>
@@ -749,6 +764,208 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
         <p>Módulos AprendeBA 2026 · Presupuesto Phinx · Fechas de impacto en PRD</p>
       </div>
 
+
+      <!-- Módulos en producción -->
+      <h3 style="font-size:14px;font-weight:600;color:var(--text);margin:0 0 10px">Módulos en producción</h3>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px">
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;background:#f8fafc;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em">
+          <span>Módulo</span><span>Ambiente</span><span>Fecha / estado</span>
+        </div>
+
+        <!-- PRD confirmados -->
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Efectivización Flujo Alternativo</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Desde 10/02/2026</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">ID Aula</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Desde 10/03/2026</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Gestión de Pases — Secu Aprende</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Desde 20/04/2026</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Gestión de Pases — Adultos EPA/CENS</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Desde 28/04/2026</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Cal. y Boletines — Sec. Regularidad</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Desde 30/04/2026</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Cal. y Boletines — Sec. Adultos</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Desde 28/04/2026</span>
+        </div>
+        <!-- De STG → PRD (junio, confirmados por timeline) -->
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Mejoras UX/UI — Matrícula, Presentismo, Calificaciones, Pases</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">STG 09/06 → PRD Junio 2026</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Módulo Notificaciones — Domicilio Electrónico Escolar</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">STG 09/06 → PRD Junio 2026</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Back Office — Agenda Educativa (parametrización fechas)</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">STG 09/06 → PRD Junio 2026</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Cálculo Regularidad — N/C contraturno como media asistencia</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">STG 09/06 → PRD Junio 2026</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Gestión Suspensión y Emergencia</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">STG 09/06 → PRD Junio 2026</span>
+        </div>
+        <!-- Deploy 15/07/2026 -->
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Gestión de Pases Multiplataforma (sin Especiales)</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Desde 15/07/2026</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Receso de Invierno — Recuperación de Regularidad Anual</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#15803d">PRD</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Desde 15/07/2026</span>
+        </div>
+        <!-- En desarrollo -->
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center">
+          <span style="font-size:13px">Informe funcional y UX — Fase III</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">DEV</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Avance 60%</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 90px 1fr;padding:9px 16px;align-items:center">
+          <span style="font-size:13px">LUE — Libreta Única del Estudiante</span>
+          <span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">DEV</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">En desarrollo desde 09/09/2025</span>
+        </div>
+      </div>
+
+      <!-- Historial de deploys -->
+      <h3 style="font-size:14px;font-weight:600;color:var(--text);margin:0 0 14px">Historial de deploys 2026</h3>
+      <div style="display:flex;gap:16px;margin-bottom:14px;font-size:12px">
+        <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:#16a34a;display:inline-block"></span>PRD</span>
+        <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:#d97706;display:inline-block"></span>STG</span>
+        <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:#dc2626;display:inline-block"></span>Incidente</span>
+      </div>
+      <div class="deploy-tl">
+
+        <div class="dtl prd">
+          <div class="dtl-f">15 Julio 2026</div>
+          <div class="dtl-t">Deploy 15/07</div>
+          <span class="dtl-e prd">PRD</span>
+          <ul class="dtl-l">
+            <li><strong>Gestión de Pases Multiplataforma</strong> (Adultos↔Común, Común↔Secu Aprende, Adultos↔Secu Aprende)</li>
+            <li><strong>Receso de Invierno:</strong> Dispositivo de invierno · Regularidad Anual · Bloqueo 3er bimestre sin dispositivo completo · Columna Regularidad Anual en tab Regularidad</li>
+            <li>Mantis: 61730 (eliminar ECP duplicado), 61666 (cal. aspectos generales Primaria)</li>
+          </ul>
+        </div>
+
+        <div class="dtl stg">
+          <div class="dtl-f">09 Junio 2026</div>
+          <div class="dtl-t">Deploy STG 09/06 → PRD previsto 17/06</div>
+          <span class="dtl-e stg">STG</span>
+          <ul class="dtl-l">
+            <li><strong>Mejoras UX/UI Fase I:</strong> Consulta estado matriculación jurisdiccional, validaciones FEM con alertas, autoguardado en Presentismo</li>
+            <li><strong>Mejoras UX/UI Fase II:</strong> Gestión de pases con mensajes contextuales, indicadores capacidad secciones, desmatriculación con motivos tipificados</li>
+            <li><strong>Módulo Notificaciones:</strong> Domicilio electrónico escolar, adhesión y consentimientos, auditoría de comunicaciones</li>
+            <li><strong>Back Office – Agenda Educativa:</strong> Parametrización de fechas operativas sin intervención técnica</li>
+            <li><strong>Regularidad:</strong> Contraturno N/C = media asistencia · Tab condición vigente por bimestre</li>
+            <li><strong>Suspensión y Emergencia:</strong> Diferenciación eventos planificados vs. imprevistos</li>
+            <li>28 tickets Mantis resueltos (60427, 60813, 60591, 60931, 60846, 60953, 7946 y otros)</li>
+          </ul>
+        </div>
+
+        <div class="dtl prd">
+          <div class="dtl-f">28 Abril 2026</div>
+          <div class="dtl-t">Deploy 28/04</div>
+          <span class="dtl-e prd">PRD</span>
+          <ul class="dtl-l">
+            <li>Cal. y Boletines Secundaria — Regularidad (uso desde 30/4)</li>
+            <li>Gestión de «No Corresponde» en LMD</li>
+            <li>Cal. y Boletines Secundaria Adultos · Gestión de Pases Adultos EPA/CENS</li>
+            <li>11 tickets Mantis (59821, 59817, 59899, 59079, 60096–60097, 60178, 60200, 59810)</li>
+          </ul>
+        </div>
+
+        <div class="dtl prd">
+          <div class="dtl-f">20 Abril 2026</div>
+          <div class="dtl-t">Deploy 20/04</div>
+          <span class="dtl-e prd">PRD</span>
+          <ul class="dtl-l">
+            <li>Gestión de Pases Secundaria Aprende (completa)</li>
+            <li>Cal. y Boletines Secundaria Adultos · Mantis: 59995, MIES2-7152</li>
+          </ul>
+        </div>
+
+        <div class="dtl bug">
+          <div class="dtl-f">14 Abril 2026</div>
+          <div class="dtl-t">Deploy 14/04 — Incidentes</div>
+          <span class="dtl-e bug">Incidente</span>
+          <ul class="dtl-l">
+            <li>Pases y matriculación (CCOO 13/04)</li>
+            <li>Post-deploy: 11 establecimientos con inconvenientes · Bugs: eliminación alumnos, alertas ECP plan 5810</li>
+            <li>Resolución 15/4–16/4 mediante queries y atención directa</li>
+          </ul>
+        </div>
+
+        <div class="dtl prd">
+          <div class="dtl-f">17 Marzo 2026</div>
+          <div class="dtl-t">Deploy 17/03</div>
+          <span class="dtl-e prd">PRD</span>
+          <ul class="dtl-l">
+            <li>Gestión de Pases (Secu Aprende y ECP)</li>
+            <li>Efectivización con ECP «No calificable» · Legajo y ECP nuevo modelo</li>
+          </ul>
+        </div>
+
+        <div class="dtl prd">
+          <div class="dtl-f">10 Marzo 2026</div>
+          <div class="dtl-t">Deploy 10/03</div>
+          <span class="dtl-e prd">PRD</span>
+          <ul class="dtl-l">
+            <li>Efectivización Flujo Alternativo · Calificaciones EFA · ID Aula</li>
+            <li>API Histórico Secu Aprende · Regularidad Calificaciones · Mejora copia grupos</li>
+          </ul>
+        </div>
+
+        <div class="dtl prd">
+          <div class="dtl-f">19 Febrero 2026</div>
+          <div class="dtl-t">Deploy 19/02</div>
+          <span class="dtl-e prd">PRD</span>
+          <ul class="dtl-l">
+            <li>Secu Aprende: Proyección a secciones · Habilitar botón de proyecciones</li>
+          </ul>
+        </div>
+
+        <div class="dtl prd">
+          <div class="dtl-f">10 Febrero 2026</div>
+          <div class="dtl-t">Deploy 10/02 — Apertura ciclo 2026</div>
+          <span class="dtl-e prd">PRD</span>
+          <ul class="dtl-l">
+            <li>Efectivización Flujo Común · PPE Nocturnas, Reingreso y CBO</li>
+            <li>Autoregistración · Gestión de Usuarios · Alta de materias</li>
+            <li>PE Escuelas Especiales · Comunicaciones nuevo modelo</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- separator before Phinx roadmap -->
+      <h3 style="font-size:14px;font-weight:600;color:var(--text);margin:24px 0 10px">Roadmap Phinx 2026</h3>
+
       <!-- Stats horas -->
       <div class="stat-grid" style="grid-template-columns:repeat(6,1fr);margin-bottom:16px">
         <div class="stat-card">
@@ -777,9 +994,9 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <div class="stat-sub">hs sin asignar</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Módulos en PRD</div>
+          <div class="stat-label">Marcados en PRD</div>
           <div class="stat-val" id="prd-counter" style="color:#065f46">0</div>
-          <div class="stat-sub">de 25 módulos</div>
+          <div class="stat-sub">tildados en roadmap</div>
         </div>
       </div>
 
