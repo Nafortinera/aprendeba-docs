@@ -166,6 +166,11 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
 .team-lbl{font-size:10px;color:var(--text-muted);font-weight:500}
 .team-chip{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;background:#f1f5f9;color:#475569;border:1px solid var(--border)}
 .team-chip.pm{background:#ccfbf1;color:#0f766e;border-color:#99f6e4}
+
+.phinx-row{display:grid;grid-template-columns:1fr 110px 130px 160px 80px 80px 60px;padding:10px 16px;border-bottom:1px solid var(--border);align-items:center;gap:0;transition:background .1s}
+.phinx-row:last-child{border-bottom:none}
+.phinx-row:hover{background:#f8fafc}
+.phinx-row.en-prd{background:#f0fdf4}
 </style>
 </head>
 <body>
@@ -741,17 +746,502 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
     <div class="view" id="view-estado">
       <div class="page-header">
         <h1>Estado y deploys</h1>
-        <p>Módulos activos en producción e historial de publicaciones.</p>
+        <p>Módulos AprendeBA 2026 · Presupuesto Phinx · Fechas de impacto en PRD</p>
       </div>
-      <div class="stat-grid">
-        <div class="stat-card"><div class="stat-label">En producción</div><div class="stat-val">4</div><div class="stat-sub">módulos activos</div></div>
-        <div class="stat-card"><div class="stat-label">Último deploy</div><div class="stat-val">05/08</div><div class="stat-sub">Manuales Presentismo</div></div>
-        <div class="stat-card"><div class="stat-label">Manuales publicados</div><div class="stat-val">9</div><div class="stat-sub">en el hub</div></div>
+
+      <!-- Stats horas -->
+      <div class="stat-grid" style="grid-template-columns:repeat(5,1fr);margin-bottom:16px">
+        <div class="stat-card">
+          <div class="stat-label">Presupuesto total</div>
+          <div class="stat-val" style="color:var(--accent)">9.646</div>
+          <div class="stat-sub">horas Phinx 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Cert. Mayo</div>
+          <div class="stat-val" style="color:#065f46">3.390</div>
+          <div class="stat-sub">horas cerradas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Cert. Junio</div>
+          <div class="stat-val" style="color:#065f46">2.860</div>
+          <div class="stat-sub">horas cerradas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Cert. Julio</div>
+          <div class="stat-val" style="color:#d97706">1.460</div>
+          <div class="stat-sub">de 2.186 disponibles</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Restantes</div>
+          <div class="stat-val" style="color:#991b1b">476</div>
+          <div class="stat-sub">hs sin asignar</div>
+        </div>
       </div>
-      <div class="placeholder">
-        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        Historial de deploys — contenido por agregar
+
+      <!-- Filtros -->
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;align-items:center">
+        <input id="phinx-search" class="search-input" placeholder="Buscar módulo&hellip;" oninput="phinxRefresh()" style="width:260px">
+        <div style="flex:1"></div>
+        <span id="phinx-count" style="font-size:12px;color:var(--text-muted)">25 módulos</span>
       </div>
+      <div class="filter-bar" style="flex-wrap:wrap;gap:6px 14px;margin-bottom:8px">
+        <span class="filter-label">Estado</span>
+        <button class="filter-btn on" data-pf-est="todos"     onclick="phinxFilter('est',this)">Todos</button>
+        <button class="filter-btn"    data-pf-est="en_proceso"  onclick="phinxFilter('est',this)">En proceso</button>
+        <button class="filter-btn"    data-pf-est="en_analisis" onclick="phinxFilter('est',this)">En an&aacute;lisis</button>
+        <button class="filter-btn"    data-pf-est="sin_iniciar" onclick="phinxFilter('est',this)">Sin iniciar</button>
+        <span class="filter-label" style="margin-left:8px">Mes PRD</span>
+        <button class="filter-btn on" data-pf-mes="todos"  onclick="phinxFilter('mes',this)">Todos</button>
+        <button class="filter-btn"    data-pf-mes="mayo"   onclick="phinxFilter('mes',this)">Mayo</button>
+        <button class="filter-btn"    data-pf-mes="junio"  onclick="phinxFilter('mes',this)">Junio</button>
+        <button class="filter-btn"    data-pf-mes="julio"  onclick="phinxFilter('mes',this)">Julio</button>
+        <button class="filter-btn"    data-pf-mes="agosto" onclick="phinxFilter('mes',this)">Agosto</button>
+      </div>
+
+      <!-- Tabla módulos -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+        <div style="display:grid;grid-template-columns:1fr 110px 130px 160px 80px 80px 60px;padding:10px 16px;background:#f8fafc;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;align-items:center">
+          <span>M&oacute;dulo</span>
+          <span>Estado</span>
+          <span>% Avance</span>
+          <span>Fecha PRD objetivo</span>
+          <span style="text-align:right">Hs est.</span>
+          <span style="text-align:right">Hs cert.</span>
+          <span style="text-align:center">En PRD</span>
+        </div>
+        <div id="phinx-tbody">
+        <div class="phinx-row" data-estado="en_proceso" data-mes="mayo">
+          <span style="font-size:13px;line-height:1.4">Módulo Notificaciones</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#d1fae5;color:#065f46">En proceso</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:90%;height:100%;background:#0891b2;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">90%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Mayo 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">150 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">150 hs</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m01" class="prd-check" onchange="prdToggle('m01',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_proceso" data-mes="junio">
+          <span style="font-size:13px;line-height:1.4">BO - Agenda educativa</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#d1fae5;color:#065f46">En proceso</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:70%;height:100%;background:#0891b2;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">70%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Junio 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">200 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">200 hs</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m02" class="prd-check" onchange="prdToggle('m02',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_proceso" data-mes="mayo">
+          <span style="font-size:13px;line-height:1.4">Certificados Finalización - Adultos Primario</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#d1fae5;color:#065f46">En proceso</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:60%;height:100%;background:#0891b2;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">60%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Mayo 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">480 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">480 hs</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m03" class="prd-check" onchange="prdToggle('m03',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_proceso" data-mes="junio">
+          <span style="font-size:13px;line-height:1.4">Informe funcional y UX (Fase 1 + 2 y 3)</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#d1fae5;color:#065f46">En proceso</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:40%;height:100%;background:#d97706;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">40%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Junio 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">550 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">250 hs</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m04" class="prd-check" onchange="prdToggle('m04',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_analisis" data-mes="mayo">
+          <span style="font-size:13px;line-height:1.4">Cal. y Boletines — Regularidad Bimestre II</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">13 Mayo 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">300 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">300 hs</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m05" class="prd-check" onchange="prdToggle('m05',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_analisis" data-mes="mayo">
+          <span style="font-size:13px;line-height:1.4">Mejora config. períodos boletines y calificaciones</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">13 Mayo 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">180 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">180 hs</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m06" class="prd-check" onchange="prdToggle('m06',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_analisis" data-mes="junio">
+          <span style="font-size:13px;line-height:1.4">Creación multigrupo (Especiales)</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">22 Junio 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">200 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">200 hs</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m07" class="prd-check" onchange="prdToggle('m07',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_analisis" data-mes="junio">
+          <span style="font-size:13px;line-height:1.4">Escuelas escalafón B con más niveles (Especiales)</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">22 Junio 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">400 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">400 hs</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m08" class="prd-check" onchange="prdToggle('m08',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_analisis" data-mes="junio">
+          <span style="font-size:13px;line-height:1.4">API Legajo único — Etapa I</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Junio 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m09" class="prd-check" onchange="prdToggle('m09',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_analisis" data-mes="julio">
+          <span style="font-size:13px;line-height:1.4">Cal. y Boletines — Regularidad Bimestre III</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Julio 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">300 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">300 hs</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m10" class="prd-check" onchange="prdToggle('m10',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_analisis" data-mes="julio">
+          <span style="font-size:13px;line-height:1.4">Gestión de pases multiplataforma</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Finales Julio 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">600 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m11" class="prd-check" onchange="prdToggle('m11',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="sin_iniciar" data-mes="julio">
+          <span style="font-size:13px;line-height:1.4">Integración Vacunas</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Julio 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m12" class="prd-check" onchange="prdToggle('m12',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="sin_iniciar" data-mes="julio">
+          <span style="font-size:13px;line-height:1.4">LIBRO MATRIZ a SiTED — Nivel Secundario</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Finales Julio 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m13" class="prd-check" onchange="prdToggle('m13',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_analisis" data-mes="agosto">
+          <span style="font-size:13px;line-height:1.4">Cal. y Boletines — Regularidad Bimestre IV</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Agosto 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">500 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">500 hs</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m14" class="prd-check" onchange="prdToggle('m14',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_analisis" data-mes="agosto">
+          <span style="font-size:13px;line-height:1.4">Privadas — Primaria</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Agosto 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m15" class="prd-check" onchange="prdToggle('m15',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_analisis" data-mes="agosto">
+          <span style="font-size:13px;line-height:1.4">Privadas — Primaria Back Office</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Agosto 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m16" class="prd-check" onchange="prdToggle('m16',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="sin_iniciar" data-mes="agosto">
+          <span style="font-size:13px;line-height:1.4">Gestión de Proyección — Inicial</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Agosto 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">10 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m17" class="prd-check" onchange="prdToggle('m17',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="sin_iniciar" data-mes="agosto">
+          <span style="font-size:13px;line-height:1.4">PIP PPS</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Agosto 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m18" class="prd-check" onchange="prdToggle('m18',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="sin_iniciar" data-mes="agosto">
+          <span style="font-size:13px;line-height:1.4">PROMOCIÓN</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Agosto 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m19" class="prd-check" onchange="prdToggle('m19',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_analisis" data-mes="">
+          <span style="font-size:13px;line-height:1.4">Mejora — Suspensión y emergencia</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b"></span>
+          <span style="font-size:12px;color:#64748b;text-align:right">60 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">60 hs</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m20" class="prd-check" onchange="prdToggle('m20',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="en_analisis" data-mes="">
+          <span style="font-size:13px;line-height:1.4">Agregar link SID en pantalla principal</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b"></span>
+          <span style="font-size:12px;color:#64748b;text-align:right">20 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m21" class="prd-check" onchange="prdToggle('m21',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="sin_iniciar" data-mes="">
+          <span style="font-size:13px;line-height:1.4">Evitar reinscripción desde AprendeBA (Secu)</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b"></span>
+          <span style="font-size:12px;color:#64748b;text-align:right">135 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m22" class="prd-check" onchange="prdToggle('m22',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="sin_iniciar" data-mes="">
+          <span style="font-size:13px;line-height:1.4">Gestión de pases — Inscriptos Secu Aprende</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b"></span>
+          <span style="font-size:12px;color:#64748b;text-align:right">140 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m23" class="prd-check" onchange="prdToggle('m23',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="sin_iniciar" data-mes="">
+          <span style="font-size:13px;line-height:1.4">SATAE</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b"></span>
+          <span style="font-size:12px;color:#64748b;text-align:right">105 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m24" class="prd-check" onchange="prdToggle('m24',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        <div class="phinx-row" data-estado="sin_iniciar" data-mes="">
+          <span style="font-size:13px;line-height:1.4">N/C contraturno — cómputo asistencia</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b"></span>
+          <span style="font-size:12px;color:#64748b;text-align:right">40 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center">
+            <input type="checkbox" id="prd-m25" class="prd-check" onchange="prdToggle('m25',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+          </span>
+        </div>
+        </div>
+        <div id="phinx-empty" style="display:none;text-align:center;padding:32px;color:var(--text-muted);font-size:13px">Sin resultados.</div>
+      </div>
+
+      <p style="font-size:11px;color:var(--text-muted);margin-top:12px">
+        Fuente: Proyectos Hrs Phinx_VF.xlsx &middot; El check "En PRD" se guarda en el navegador y puede marcarse manualmente.
+      </p>
     </div>
 
     <!-- ── MANTIS ── -->
@@ -2844,6 +3334,7 @@ function nav(id, el) {
       if (activeCard) flujoAutofit(activeCard);
     }, 200);
   }
+  if (id === 'estado') { setTimeout(prdLoadState, 50); }
   if (id === 'actores') {
     setTimeout(function(){
       var activeCard = document.querySelector('#actor-container .flujo-card:not([style*="none"])');
@@ -3238,6 +3729,63 @@ function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
   // Auto-render first actor card on nav
   var _actorInit = false;
   var _origNav = typeof nav === 'function' ? nav : null;
+
+
+  // ── PHINX / ESTADO ───────────────────────
+  var _phinxF = {est:'todos', mes:'todos'};
+
+  function phinxFilter(type, btn) {
+    btn.closest('.filter-bar').querySelectorAll('[data-pf-'+type+']').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    _phinxF[type] = btn.getAttribute('data-pf-'+type);
+    phinxRefresh();
+  }
+
+  function phinxRefresh() {
+    var q = ((document.getElementById('phinx-search') || {}).value || '').toLowerCase();
+    var rows = document.querySelectorAll('#phinx-tbody .phinx-row');
+    var vis = 0;
+    rows.forEach(function(row) {
+      var okEst = _phinxF.est === 'todos' || row.dataset.estado === _phinxF.est;
+      var okMes = _phinxF.mes === 'todos' || row.dataset.mes === _phinxF.mes;
+      var okQ   = !q || row.textContent.toLowerCase().indexOf(q) !== -1;
+      var show = okEst && okMes && okQ;
+      row.style.display = show ? '' : 'none';
+      if (show) vis++;
+    });
+    var cnt = document.getElementById('phinx-count');
+    if (cnt) cnt.textContent = vis + ' módulo' + (vis !== 1 ? 's' : '');
+    var empty = document.getElementById('phinx-empty');
+    if (empty) empty.style.display = vis === 0 ? '' : 'none';
+  }
+
+  function prdToggle(id, checked) {
+    try {
+      var data = JSON.parse(localStorage.getItem('aprendeba_prd') || '{}');
+      data[id] = checked;
+      localStorage.setItem('aprendeba_prd', JSON.stringify(data));
+    } catch(e) {}
+    var row = document.getElementById('prd-'+id);
+    if (row) row.closest('.phinx-row').classList.toggle('en-prd', checked);
+  }
+
+  function prdLoadState() {
+    try {
+      var data = JSON.parse(localStorage.getItem('aprendeba_prd') || '{}');
+      Object.keys(data).forEach(function(id) {
+        var cb = document.getElementById('prd-'+id);
+        if (cb && data[id]) {
+          cb.checked = true;
+          cb.closest('.phinx-row').classList.add('en-prd');
+        }
+      });
+    } catch(e) {}
+  }
+
+  // Load PRD state when navigating to estado
+  document.addEventListener('DOMContentLoaded', function() {
+    prdLoadState();
+  });
 
 </script>
 </body>
