@@ -113,6 +113,10 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
 .flujo-card .mermaid{display:flex;justify-content:center;transform-origin:top center}
 .flujo-card .mermaid svg{max-width:none !important;height:auto}
 .flujo-zoom{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.hu-row{display:grid;grid-template-columns:72px 1fr 90px 130px 110px 70px 60px;gap:0;padding:10px 16px;border-bottom:1px solid var(--border);align-items:start;transition:background .1s}
+.hu-row:last-child{border-bottom:none}
+.hu-row:hover{background:#f8fafc}
+#ca-HU-001,#ca-HU-028,#ca-HU-033,#ca-HU-037{margin:0 16px 8px;border-radius:8px}
 .flujo-zoom input[type=range]{width:140px;accent-color:var(--accent)}
 .flujo-zoom button{background:var(--surface);border:1px solid var(--border);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--text);display:flex;align-items:center;justify-content:center}
 .flujo-zoom button:hover{border-color:var(--accent);color:var(--accent)}
@@ -195,6 +199,10 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
     <div class="nav-item" onclick="nav('arq',this)">
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 11v6c0 1.66 4 3 9 3s9-1.34 9-3v-6"/></svg>
       Arquitectura
+    </div>
+    <div class="nav-item" onclick="nav('hu',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      HU + CA
     </div>
 
   </div>
@@ -2205,6 +2213,583 @@ flowchart TD
         </div>
       </div>
     </div>
+
+
+    <!-- ── HU + CA ── -->
+    <div class="view" id="view-hu">
+      <div class="page-header">
+        <h1>Historias de Usuario</h1>
+        <p>Backlog completo · Hub y miEscuela · con Criterios de Aceptaci&oacute;n en Gherkin</p>
+      </div>
+
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px">
+        <div class="stat-card">
+          <div class="stat-label">Historias de usuario</div>
+          <div class="stat-val" style="color:var(--accent)">45</div>
+          <div class="stat-sub">Hub + miEscuela</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Épicas</div>
+          <div class="stat-val" style="color:#6366f1">12</div>
+          <div class="stat-sub">6 Hub · 6 miEscuela</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">CAs documentados</div>
+          <div class="stat-val" style="color:#15803d">12</div>
+          <div class="stat-sub">Gherkin Given/When/Then</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Prioridad alta</div>
+          <div class="stat-val" style="color:#dc2626">27</div>
+          <div class="stat-sub">60% del backlog</div>
+        </div>
+      </div>
+
+      <!-- Filtros -->
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;align-items:center">
+        <input id="hu-search" class="search-input" placeholder="Buscar historia de usuario&hellip;" oninput="huRefresh()" style="width:300px">
+        <div style="flex:1"></div>
+        <span id="hu-count" style="font-size:12px;color:var(--text-muted)">45 historias</span>
+      </div>
+
+      <div class="filter-bar" style="flex-wrap:wrap;gap:6px 14px;margin-bottom:8px">
+        <span class="filter-label">Sistema</span>
+        <button class="filter-btn on" data-hf-sis="todos" onclick="huFilter('sis',this)">Todos</button>
+        <button class="filter-btn" data-hf-sis="hub" onclick="huFilter('sis',this)">Hub</button>
+        <button class="filter-btn" data-hf-sis="sis" onclick="huFilter('sis',this)">miEscuela</button>
+        <span class="filter-label" style="margin-left:8px">Prioridad</span>
+        <button class="filter-btn on" data-hf-prio="todos" onclick="huFilter('prio',this)">Todas</button>
+        <button class="filter-btn" data-hf-prio="alta" onclick="huFilter('prio',this)">Alta</button>
+        <button class="filter-btn" data-hf-prio="media" onclick="huFilter('prio',this)">Media</button>
+        <button class="filter-btn" data-hf-prio="baja" onclick="huFilter('prio',this)">Baja</button>
+        <span class="filter-label" style="margin-left:8px">Actor</span>
+        <button class="filter-btn on" data-hf-actor="todos" onclick="huFilter('actor',this)">Todos</button>
+        <button class="filter-btn" data-hf-actor="ciudadano" onclick="huFilter('actor',this)">Ciudadano</button>
+        <button class="filter-btn" data-hf-actor="operador" onclick="huFilter('actor',this)">Operador</button>
+        <button class="filter-btn" data-hf-actor="administrador" onclick="huFilter('actor',this)">Administrador</button>
+        <span class="filter-label" style="margin-left:8px">CAs</span>
+        <button class="filter-btn on" data-hf-ca="todos" onclick="huFilter('ca',this)">Todos</button>
+        <button class="filter-btn" data-hf-ca="con" onclick="huFilter('ca',this)">Con CA</button>
+      </div>
+
+      <!-- Tabla -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+        <!-- Cabecera -->
+        <div style="display:grid;grid-template-columns:72px 1fr 90px 130px 110px 70px 60px;gap:0;padding:10px 16px;background:#f8fafc;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em">
+          <span>ID</span>
+          <span>Historia de usuario</span>
+          <span>Sistema</span>
+          <span>Épica</span>
+          <span>Actor</span>
+          <span>Prioridad</span>
+          <span>CA</span>
+        </div>
+        <!-- Filas -->
+        <div id="hu-tbody" style="padding:0 0 4px">
+        <div class="hu-row" data-sis="hub" data-mod="bac" data-prio="alta" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-001</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero importar un CSV de BA Colaborativa para cargar los tickets de escuelas en el hub sin ingresarlos manualmente.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">BA Colaborativa</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><button onclick="huToggleCA('HU-001')" style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f0fdf4;color:#15803d;border:1px solid #86efac;cursor:pointer">3 CA ▾</button></span>
+        </div>
+<div id="ca-HU-001" style="display:none;grid-column:1/-1;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin:4px 0 8px"><div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Criterios de Aceptación · HU-001</div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-01 · Happy path</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> el Operador está en el tab BA Colaborativa y tiene un CSV exportado de BA Colaborativa<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> arrastra el archivo CSV al área de importación o hace clic en &#x27;Importar tickets&#x27;<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> el sistema detecta el formato BA Colaborativa, importa los tickets y muestra la descripción real del problema de cada uno
+            </div>
+          </div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-02 · Auto-resolución</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> el Operador importa un CSV que solo contiene tickets abiertos<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> el sistema procesa la importación<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> los tickets que estaban en el hub pero no aparecen en el CSV nuevo quedan marcados automáticamente como resueltos
+            </div>
+          </div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-03 · Archivo inválido</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> el Operador intenta importar un archivo que no es CSV de BA Colaborativa<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> el sistema procesa el archivo<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> muestra el mensaje &#x27;No se encontraron columnas de escuela y porcentaje&#x27; y no importa ningún dato
+            </div>
+          </div>        </div>
+        <div class="hu-row" data-sis="hub" data-mod="bac" data-prio="alta" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-002</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero ver la descripción real del problema de cada ticket para entender la solicitud sin entrar a BA Colaborativa.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">BA Colaborativa</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="bac" data-prio="alta" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-003</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero generar una respuesta automática según el módulo del ticket para reducir el tiempo de respuesta a escuelas.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">BA Colaborativa</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="bac" data-prio="alta" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-004</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero tildar un ticket como respondido para que todo el equipo sepa que fue atendido.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">BA Colaborativa</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="bac" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-005</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero vincular un número de bug de Mantis a un ticket de BA Colaborativa para tener trazabilidad entre sistemas.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">BA Colaborativa</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="bac" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-006</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero ver el porcentaje de resolución del equipo en tiempo real para monitorear el avance operativo.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">BA Colaborativa</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="mantis" data-prio="alta" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-007</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero ver los bugs de Mantis agrupados por proyecto para identificar rápidamente el área más afectada.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Mantis</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="mantis" data-prio="alta" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-008</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero filtrar bugs por prioridad y estado en castellano para encontrar los más críticos sin demora.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Mantis</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="mantis" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-009</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero acceder directamente al bug en Mantis desde el hub para ver el detalle sin cambiar de herramienta.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Mantis</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="mantis" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-010</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero ver el porcentaje de resolución por proyecto para reportar avances al equipo de gestión.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Mantis</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="dash" data-prio="alta" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-011</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero ver el porcentaje de carga de boletines por establecimiento para identificar escuelas con bajo avance.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Dashboard</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="dash" data-prio="alta" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-012</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero importar un Excel de calificaciones y ver los datos actualizados para reportar avances por bimestre.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Dashboard</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="dash" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-013</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero filtrar establecimientos por Distrito Escolar y nivel para focalizar el seguimiento en un área específica.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Dashboard</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="dash" data-prio="alta" data-actor="administrador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-014</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero conectar el dashboard de presentismo al Apps Script de bue.edu.ar para tener datos en tiempo real sin exportar.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Dashboard</span>
+          <span style="font-size:12px;color:var(--text-soft)">Administrador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="docu" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-015</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero buscar documentos funcionales por módulo y estado para acceder rápidamente al que necesito.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Documentación</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="docu" data-prio="baja" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-016</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero ver los documentos ordenados del más reciente al más antiguo para encontrar la versión vigente.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Documentación</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#16a34a">Baja</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="docu" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-017</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero acceder a los diagramas de flujo de los módulos para consultar los permisos por rol según el nivel educativo.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Documentación</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="noti" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-018</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero recibir una notificación cuando llega un ticket nuevo de BA Colaborativa para atenderlo sin tener que revisar manualmente.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Notificaciones</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="noti" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-019</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero recibir una alerta cuando se registra un bug nuevo en Mantis para que el equipo esté informado en tiempo real.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Notificaciones</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="pwa" data-prio="alta" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-020</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero instalar la app de Acceso Presentismo en mi tablet para tomar asistencia sin necesidad de una computadora.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">PWA</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="hub" data-mod="pwa" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-021</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero que la app active la cámara automáticamente al seleccionar establecimiento y sección para agilizar el registro.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#eef2ff;color:#6366f1">Hub</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">PWA</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="mat" data-prio="alta" data-actor="administrador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-022</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Administrador, quiero crear y editar secciones del ciclo lectivo para organizar los grados antes de iniciar la matriculación.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Matriculación</span>
+          <span style="font-size:12px;color:var(--text-soft)">Administrador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="mat" data-prio="alta" data-actor="administrador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-023</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Administrador, quiero efectivizar el establecimiento para habilitar el proceso de matriculación de alumnos.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Matriculación</span>
+          <span style="font-size:12px;color:var(--text-soft)">Administrador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="mat" data-prio="alta" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-024</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero matricular un alumno inscripto asignándolo a una sección para registrar su ingreso al ciclo lectivo.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Matriculación</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="mat" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-025</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero solicitar el pase de un alumno hacia otro establecimiento para registrar el cambio institucional.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Matriculación</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="mat" data-prio="alta" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-026</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero generar el código único de vinculación de un alumno para conectar su legajo con la plataforma.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Matriculación</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="mat" data-prio="media" data-actor="administrador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-027</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Administrador, quiero cambiar la sección de un alumno matriculado para corregir asignaciones incorrectas.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Matriculación</span>
+          <span style="font-size:12px;color:var(--text-soft)">Administrador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="pre" data-prio="alta" data-actor="ciudadano">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-028</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Ciudadano, quiero registrar la asistencia diaria de los alumnos de mi sección para cumplir con el registro escolar.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Presentismo</span>
+          <span style="font-size:12px;color:var(--text-soft)">Ciudadano</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><button onclick="huToggleCA('HU-028')" style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f0fdf4;color:#15803d;border:1px solid #86efac;cursor:pointer">4 CA ▾</button></span>
+        </div>
+<div id="ca-HU-028" style="display:none;grid-column:1/-1;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin:4px 0 8px"><div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Criterios de Aceptación · HU-028</div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-01 · Happy path</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> el Docente/Preceptor ingresa a la plataforma con su usuario @bue.edu.ar y tiene asignada la sección<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> selecciona la sección y la fecha, registra el estado de cada alumno (P/A/IT/RA) y guarda<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> el sistema confirma el guardado y la asistencia queda registrada para esa fecha
+            </div>
+          </div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-02 · Cierre de día</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> el Docente ha registrado la asistencia completa del día<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> hace clic en &#x27;Cerrar el día&#x27;<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> el día queda cerrado y no permite modificaciones sin autorización del Directivo
+            </div>
+          </div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-03 · Reapertura por error</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> el Directivo detecta un error en la asistencia de una semana cerrada<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> hace clic en &#x27;Abrir semana&#x27;<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> el sistema habilita la edición para esa semana y el Docente puede corregir la asistencia
+            </div>
+          </div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-04 · Alumno no disponible</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> el Preceptor intenta registrar asistencia de un alumno que fue cambiado de sección<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> accede al listado de su sección<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> el alumno no aparece en la lista de la sección antigua y aparece correctamente en la nueva sección asignada
+            </div>
+          </div>        </div>
+        <div class="hu-row" data-sis="sis" data-mod="pre" data-prio="alta" data-actor="administrador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-029</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Administrador, quiero cerrar la semana de presentismo para consolidar el registro y habilitar el cómputo de regularidad.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Presentismo</span>
+          <span style="font-size:12px;color:var(--text-soft)">Administrador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="pre" data-prio="alta" data-actor="administrador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-030</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Administrador, quiero reabrir una semana cerrada de presentismo para que los docentes corrijan errores de carga.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Presentismo</span>
+          <span style="font-size:12px;color:var(--text-soft)">Administrador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="pre" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-031</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero cargar un justificativo de inasistencia para que no impacte en la condición de regularidad del alumno.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Presentismo</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="pre" data-prio="media" data-actor="ciudadano">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-032</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Ciudadano, quiero ver el reporte de asistencia de mi sección para monitorear la regularidad de los alumnos.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Presentismo</span>
+          <span style="font-size:12px;color:var(--text-soft)">Ciudadano</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="cal" data-prio="alta" data-actor="ciudadano">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-033</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Ciudadano, quiero cargar las calificaciones bimestrales de mis alumnos para registrar el resultado académico del período.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Calificaciones</span>
+          <span style="font-size:12px;color:var(--text-soft)">Ciudadano</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><button onclick="huToggleCA('HU-033')" style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f0fdf4;color:#15803d;border:1px solid #86efac;cursor:pointer">3 CA ▾</button></span>
+        </div>
+<div id="ca-HU-033" style="display:none;grid-column:1/-1;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin:4px 0 8px"><div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Criterios de Aceptación · HU-033</div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-01 · Happy path</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> el Docente accede a Calificaciones con el período abierto por el Directivo<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> selecciona período, grado y sección, ingresa nota y PPI para cada alumno y guarda<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> las calificaciones quedan registradas y el sistema confirma el guardado
+            </div>
+          </div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-02 · Campo PPI vacío</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> el Docente intenta guardar calificaciones con el campo PPI en blanco<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> hace clic en Guardar<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> el sistema bloquea el guardado y muestra el mensaje &#x27;El campo PPI es obligatorio&#x27;
+            </div>
+          </div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-03 · Período cerrado</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> el período de calificaciones fue cerrado por el Directivo<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> el Docente intenta acceder a cargar notas<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> el sistema muestra &#x27;El período de calificaciones está cerrado. Contactá al Directivo para reabrirlo&#x27;
+            </div>
+          </div>        </div>
+        <div class="hu-row" data-sis="sis" data-mod="cal" data-prio="alta" data-actor="administrador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-034</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Administrador, quiero abrir el período de calificaciones para que los docentes puedan ingresar las notas del bimestre.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Calificaciones</span>
+          <span style="font-size:12px;color:var(--text-soft)">Administrador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="cal" data-prio="alta" data-actor="ciudadano">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-035</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Ciudadano, quiero que el sistema me bloquee el guardado si el campo PPI está vacío para garantizar datos completos.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Calificaciones</span>
+          <span style="font-size:12px;color:var(--text-soft)">Ciudadano</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="cal" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-036</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero ver el resumen de calificaciones por materia para detectar alumnos sin nota antes del cierre.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Calificaciones</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="bol" data-prio="alta" data-actor="administrador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-037</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Administrador, quiero generar los boletines de una sección completa en un clic para agilizar el proceso de entrega.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Boletines</span>
+          <span style="font-size:12px;color:var(--text-soft)">Administrador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><button onclick="huToggleCA('HU-037')" style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f0fdf4;color:#15803d;border:1px solid #86efac;cursor:pointer">3 CA ▾</button></span>
+        </div>
+<div id="ca-HU-037" style="display:none;grid-column:1/-1;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin:4px 0 8px"><div style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Criterios de Aceptación · HU-037</div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-01 · Happy path</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> el Directivo verifica que todos los alumnos tienen calificaciones y presentismo completo<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> selecciona la sección y el bimestre y hace clic en &#x27;Generar boletines&#x27;<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> el sistema genera los boletines en PDF para todos los alumnos de la sección y los deja disponibles para descarga
+            </div>
+          </div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-02 · Calificaciones incompletas</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> algún alumno no tiene calificaciones cargadas en una o más materias<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> el Directivo intenta generar boletines<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> el sistema muestra &#x27;No se pueden generar boletines: falta calificación en [alumno] — [materia]&#x27;
+            </div>
+          </div>          <div style="margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:6px">
+            <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:8px">CA-03 · Presentismo incompleto</div>
+            <div style="font-size:12px;line-height:1.8">
+              <span style="color:#0891b2;font-weight:600">DADO QUE</span> el presentismo del período no está completo<br>
+              <span style="color:#0891b2;font-weight:600">CUANDO</span> el Directivo intenta generar boletines<br>
+              <span style="color:#0891b2;font-weight:600">ENTONCES</span> el sistema muestra &#x27;No se pueden generar boletines: falta presentismo en el período&#x27;
+            </div>
+          </div>        </div>
+        <div class="hu-row" data-sis="sis" data-mod="bol" data-prio="alta" data-actor="administrador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-038</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Administrador, quiero que el sistema me informe qué alumnos o materias faltan completar antes de generar boletines para evitar errores.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Boletines</span>
+          <span style="font-size:12px;color:var(--text-soft)">Administrador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="bol" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-039</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero descargar el boletín individual de un alumno en PDF para entregarlo a la familia.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Boletines</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="rol" data-prio="alta" data-actor="ciudadano">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-040</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Ciudadano, quiero solicitar un rol en la plataforma para acceder a los módulos que me corresponden según mi función.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Roles</span>
+          <span style="font-size:12px;color:var(--text-soft)">Ciudadano</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="rol" data-prio="alta" data-actor="administrador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-041</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Administrador, quiero aprobar o rechazar solicitudes de rol para controlar quién accede a cada módulo del sistema.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Roles</span>
+          <span style="font-size:12px;color:var(--text-soft)">Administrador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="rol" data-prio="media" data-actor="administrador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-042</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Administrador, quiero gestionar los roles asignados de un usuario para actualizar sus permisos cuando cambia su función.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">Roles</span>
+          <span style="font-size:12px;color:var(--text-soft)">Administrador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="ecp" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-043</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero actualizar los datos del legajo de un alumno para mantener la información personal vigente.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">ECP y Legajos</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="ecp" data-prio="media" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-044</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero registrar un espacio curricular pendiente de un alumno para llevar el seguimiento de materias adeudadas.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">ECP y Legajos</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#d97706">Media</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        <div class="hu-row" data-sis="sis" data-mod="ecp" data-prio="alta" data-actor="operador">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-045</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Operador, quiero marcar &#x27;No corresponde&#x27; en un ECP cuando el espacio no aplica al plan de estudios para evitar que bloquee la generación de boletines.</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
+          <span style="font-size:12px;color:var(--text-soft)">ECP y Legajos</span>
+          <span style="font-size:12px;color:var(--text-soft)">Operador</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#dc2626">Alta</span></span>
+          <span><span style="font-size:11px;color:var(--text-muted)">—</span></span>
+        </div>
+        </div>
+        <div id="hu-empty" style="display:none;text-align:center;padding:32px;color:var(--text-muted);font-size:13px">No se encontraron historias con esos filtros.</div>
+      </div>
+    </div>
   </div><!-- /content -->
 </div><!-- /main -->
 
@@ -2515,6 +3100,49 @@ function flujoZoomSet(val) {
   if (active) _flujoApplyScale(active, _flujoScale);
 }
 function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
+
+  // ── HU + CA ──────────────────────────────
+  var _huF = {sis:'todos', prio:'todos', actor:'todos', ca:'todos'};
+
+  function huFilter(type, btn) {
+    var bar = btn.closest('.filter-bar');
+    bar.querySelectorAll('[data-hf-'+type+']').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    _huF[type] = btn.getAttribute('data-hf-'+type);
+    huRefresh();
+  }
+
+  function huRefresh() {
+    var q = (document.getElementById('hu-search') || {}).value || '';
+    q = q.toLowerCase();
+    var rows = document.querySelectorAll('#hu-tbody .hu-row');
+    var vis = 0;
+    rows.forEach(function(row) {
+      var okSis   = _huF.sis   === 'todos' || row.dataset.sis   === _huF.sis;
+      var okPrio  = _huF.prio  === 'todos' || row.dataset.prio  === _huF.prio;
+      var okActor = _huF.actor === 'todos' || row.dataset.actor === _huF.actor;
+      var hasCa   = !!row.nextElementSibling && row.nextElementSibling.id && row.nextElementSibling.id.startsWith('ca-');
+      var okCa    = _huF.ca    === 'todos' || (_huF.ca === 'con' && hasCa);
+      var okQ     = !q || row.textContent.toLowerCase().indexOf(q) !== -1;
+      var show    = okSis && okPrio && okActor && okCa && okQ;
+      row.style.display = show ? '' : 'none';
+      // Also hide/show associated CA accordion
+      var ca = document.getElementById('ca-' + row.querySelector('[style*="monospace"]').textContent.trim());
+      if (ca) ca.style.display = 'none'; // collapse on filter
+      if (show) vis++;
+    });
+    var cnt = document.getElementById('hu-count');
+    if (cnt) cnt.textContent = vis + ' histori' + (vis === 1 ? 'a' : 'as');
+    var empty = document.getElementById('hu-empty');
+    if (empty) empty.style.display = vis === 0 ? '' : 'none';
+  }
+
+  function huToggleCA(id) {
+    var el = document.getElementById('ca-' + id);
+    if (!el) return;
+    el.style.display = el.style.display === 'none' ? '' : 'none';
+  }
+
 </script>
 </body>
 </html>
