@@ -196,6 +196,10 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="4" rx="1"/><rect x="15" y="3" width="6" height="4" rx="1"/><rect x="9" y="17" width="6" height="4" rx="1"/><path d="M6 7v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V7"/><line x1="12" y1="13" x2="12" y2="17"/></svg>
       Flujos
     </div>
+    <div class="nav-item" onclick="nav('actores',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      Actores
+    </div>
     <div class="nav-item" onclick="nav('arq',this)">
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 11v6c0 1.66 4 3 9 3s9-1.34 9-3v-6"/></svg>
       Arquitectura
@@ -1692,9 +1696,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
         <button class="filter-btn" data-flujo="pre" onclick="flujoSelect(this)">Presentismo</button>
         <button class="filter-btn" data-flujo="cal" onclick="flujoSelect(this)">Calificaciones</button>
         <button class="filter-btn" data-flujo="bol" onclick="flujoSelect(this)">Boletines</button>
-        <button class="filter-btn" data-flujo="pre-seq" onclick="flujoSelect(this)">Presentismo — Actores</button>
-        <button class="filter-btn" data-flujo="cal-seq" onclick="flujoSelect(this)">Cal. y Boletines — Actores</button>
-        <button class="filter-btn" data-flujo="roles" onclick="flujoSelect(this)">Permisos por Rol</button>
+
         
         
         
@@ -1930,18 +1932,6 @@ flowchart TD
           
           
           
-          <div class="flujo-card" id="flujo-pre-seq" style="display:none">
-            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Secuencia de interacción entre roles: toma de asistencia, cierres y correcciones.</div>
-            <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;sequenceDiagram&#10;    participant D as Directivo&#10;    participant P as Preceptor/Docente&#10;    participant EC as Eq.Conducción&#10;    participant S as AprendeBA&#10;    Note over D,S: Inicio del período&#10;    P->>S: Selecciona sección y fecha&#10;    S-->>P: Muestra lista de alumnos&#10;    P->>S: Registra estado (P/A/IT/RA/APC)&#10;    S-->>P: Confirma guardado&#10;    alt Cierre del día&#10;        P->>S: Cierra el día&#10;        S-->>P: Día cerrado&#10;    end&#10;    alt Semana completa cargada&#10;        D->>S: Cierra la semana&#10;        S-->>D: Semana cerrada&#10;    end&#10;    alt Error de carga&#10;        EC->>D: Solicita corrección&#10;        D->>S: Abre semana/día&#10;        P->>S: Corrige asistencia&#10;        D->>S: Cierra nuevamente&#10;    end&#10;    alt Justificación&#10;        EC->>S: Carga justificativo&#10;        S-->>S: Actualiza regularidad&#10;    end"></div>
-          </div>
-          <div class="flujo-card" id="flujo-cal-seq" style="display:none">
-            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Secuencia desde apertura del período hasta generación de boletines.</div>
-            <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;sequenceDiagram&#10;    participant D as Directivo&#10;    participant Doc as Docente&#10;    participant EC as Eq.Conducción&#10;    participant S as AprendeBA&#10;    Note over D,S: Apertura del período&#10;    D->>S: Abre período de calificaciones&#10;    S-->>D: Período abierto&#10;    S-->>Doc: Notifica disponibilidad&#10;    Doc->>S: Selecciona período, grado, sección&#10;    S-->>Doc: Muestra grilla de alumnos&#10;    Doc->>S: Carga Nota + PPI por alumno&#10;    alt PPI vacío&#10;        S-->>Doc: Error: PPI obligatorio&#10;        Doc->>S: Completa PPI&#10;    end&#10;    S-->>Doc: Calificaciones guardadas&#10;    alt Cierre del período&#10;        Doc->>S: Cierra calificaciones&#10;        EC->>S: Verifica completitud&#10;    end&#10;    Note over D,S: Generación de Boletines&#10;    D->>S: Solicita generar boletines&#10;    alt Datos incompletos&#10;        S-->>D: Faltan datos en sección/alumno&#10;        EC->>S: Completa datos faltantes&#10;        D->>S: Reintenta generar&#10;    end&#10;    S-->>D: Boletines generados en PDF"></div>
-          </div>
-          <div class="flujo-card" id="flujo-roles" style="display:none">
-            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Qué puede hacer cada rol en cada módulo (Matriculación, Presentismo, Calificaciones, Boletines).</div>
-            <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;flowchart LR&#10;    subgraph ROLES[&quot;Roles&quot;]&#10;        R1[&quot;Directivo&quot;]&#10;        R2[&quot;Eq. de Conducción&quot;]&#10;        R3[&quot;Docente&quot;]&#10;        R4[&quot;Preceptor&quot;]&#10;        R5[&quot;Supervisor&quot;]&#10;        R6[&quot;Dir. de Área&quot;]&#10;    end&#10;    subgraph MAT[&quot;Matriculación&quot;]&#10;        M1[Secciones]&#10;        M2[Matricular inscriptos]&#10;        M3[Ver/Descargar]&#10;        M4[Pases]&#10;        M5[Agregar alumno nuevo]&#10;    end&#10;    subgraph PRE[&quot;Presentismo&quot;]&#10;        P1[Tomar asistencia]&#10;        P2[Cerrar semana/día]&#10;        P3[Abrir semana/día]&#10;        P4[Cargar justificativo]&#10;        P5[Ver reporte]&#10;    end&#10;    subgraph CAL[&quot;Calificaciones&quot;]&#10;        C1[Ver calificaciones]&#10;        C2[Cargar calificaciones]&#10;        C3[Abrir período]&#10;        C4[Cerrar período]&#10;    end&#10;    subgraph BOL[&quot;Boletines&quot;]&#10;        B1[Ver boletín]&#10;        B2[Generar boletín]&#10;        B3[Abrir calificaciones]&#10;    end&#10;    R1 -->|SI| M1 & M2 & M3 & M4&#10;    R2 -->|SI| M1 & M2 & M3 & M4&#10;    R6 -->|SI| M1 & M2 & M3 & M4 & M5&#10;    R5 -->|SI| M1 & M2 & M3 & M4&#10;    R1 -->|SI| P1 & P2 & P3 & P4 & P5&#10;    R2 -->|SI| P1 & P2 & P3 & P4 & P5&#10;    R3 -->|SI| P1 & P4 & P5&#10;    R4 -->|SI| P1 & P4 & P5&#10;    R1 & R2 & R3 & R4 & R5 -->|SI| C1 & C2 & C4&#10;    R1 & R2 -->|SI| C3&#10;    R1 & R2 & R5 -->|SI| B1 & B2 & B3&#10;    R6 -->|SI| B1 & B2&#10;    style ROLES fill:#1A3C5E,color:#fff,stroke:#1A3C5E&#10;    style MAT fill:#DBEAFE,stroke:#2563EB&#10;    style PRE fill:#D1FAE5,stroke:#059669&#10;    style CAL fill:#FEF3C7,stroke:#D97706&#10;    style BOL fill:#FCE7F3,stroke:#DB2777"></div>
-          </div>
           <div class="flujo-card" id="flujo-cva" style="display:none">
             <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Estados del alumno en el sistema: inscripto → activo → baja/pase.</div>
             <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;stateDiagram-v2&#10;    [*] --> Inscripto : Llega desde IEL&#10;    Inscripto --> Matriculado : Equipo Conducción\nmatricula al alumno&#10;    Matriculado --> Activo : Directivo confirma\ny genera código&#10;    Activo --> CambioDeSección : Directivo/Dir.Área\ncambia de sección&#10;    CambioDeSección --> Activo : Sección actualizada&#10;    Activo --> Baja : Directivo desmatricula&#10;    Activo --> Pase : Dir.Área/Directivo\nsolicita pase&#10;    Pase --> PaseConfirmado : Establecimiento destino\nacepta pase&#10;    PaseConfirmado --> [*] : Dado de baja\nen origen&#10;    Baja --> [*] : Fuera del sistema"></div>
@@ -2064,6 +2054,47 @@ flowchart TD
           </div>
       </div>
     </div>
+
+    <!-- ── ACTORES ── -->
+    <div class="view" id="view-actores">
+      <div class="page-header">
+        <h1>Actores</h1>
+        <p>Diagramas de interacción y permisos por rol</p>
+      </div>
+
+      <div class="filter-bar" style="margin-bottom:18px">
+        <button class="filter-btn on" data-actor-tab="actor-pre"   onclick="actorSelect(this)">Presentismo — Actores</button>
+        <button class="filter-btn"    data-actor-tab="actor-cal"   onclick="actorSelect(this)">Cal. y Boletines — Actores</button>
+        <button class="filter-btn"    data-actor-tab="actor-roles" onclick="actorSelect(this)">Permisos por Rol</button>
+      </div>
+
+      <div class="flujo-zoom">
+        <button onclick="actorZoom(-0.15)" title="Alejar">−</button>
+        <input type="range" id="actor-range" min="0.4" max="2.5" step="0.05" value="1" oninput="actorZoomSet(parseFloat(this.value))">
+        <button onclick="actorZoom(0.15)" title="Acercar">+</button>
+        <span class="zoom-label" id="actor-zoom-label">100%</span>
+        <button onclick="actorZoomSet(1)" style="width:auto;padding:0 8px;font-size:11px">Reset</button>
+      </div>
+
+      <div id="actor-container">
+<div class="flujo-card" id="actor-pre" style="">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Secuencia de interacción entre roles: toma de asistencia, cierres y correcciones.</div>
+            <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;sequenceDiagram&#10;    participant D as Directivo&#10;    participant P as Preceptor/Docente&#10;    participant EC as Eq.Conducción&#10;    participant S as AprendeBA&#10;    Note over D,S: Inicio del período&#10;    P->>S: Selecciona sección y fecha&#10;    S-->>P: Muestra lista de alumnos&#10;    P->>S: Registra estado (P/A/IT/RA/APC)&#10;    S-->>P: Confirma guardado&#10;    alt Cierre del día&#10;        P->>S: Cierra el día&#10;        S-->>P: Día cerrado&#10;    end&#10;    alt Semana completa cargada&#10;        D->>S: Cierra la semana&#10;        S-->>D: Semana cerrada&#10;    end&#10;    alt Error de carga&#10;        EC->>D: Solicita corrección&#10;        D->>S: Abre semana/día&#10;        P->>S: Corrige asistencia&#10;        D->>S: Cierra nuevamente&#10;    end&#10;    alt Justificación&#10;        EC->>S: Carga justificativo&#10;        S-->>S: Actualiza regularidad&#10;    end"></div>
+          </div>
+          
+<div class="flujo-card" id="actor-cal" style="display:none">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Secuencia desde apertura del período hasta generación de boletines.</div>
+            <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;sequenceDiagram&#10;    participant D as Directivo&#10;    participant Doc as Docente&#10;    participant EC as Eq.Conducción&#10;    participant S as AprendeBA&#10;    Note over D,S: Apertura del período&#10;    D->>S: Abre período de calificaciones&#10;    S-->>D: Período abierto&#10;    S-->>Doc: Notifica disponibilidad&#10;    Doc->>S: Selecciona período, grado, sección&#10;    S-->>Doc: Muestra grilla de alumnos&#10;    Doc->>S: Carga Nota + PPI por alumno&#10;    alt PPI vacío&#10;        S-->>Doc: Error: PPI obligatorio&#10;        Doc->>S: Completa PPI&#10;    end&#10;    S-->>Doc: Calificaciones guardadas&#10;    alt Cierre del período&#10;        Doc->>S: Cierra calificaciones&#10;        EC->>S: Verifica completitud&#10;    end&#10;    Note over D,S: Generación de Boletines&#10;    D->>S: Solicita generar boletines&#10;    alt Datos incompletos&#10;        S-->>D: Faltan datos en sección/alumno&#10;        EC->>S: Completa datos faltantes&#10;        D->>S: Reintenta generar&#10;    end&#10;    S-->>D: Boletines generados en PDF"></div>
+          </div>
+          
+<div class="flujo-card" id="actor-roles" style="display:none">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Qué puede hacer cada rol en cada módulo (Matriculación, Presentismo, Calificaciones, Boletines).</div>
+            <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;flowchart LR&#10;    subgraph ROLES[&quot;Roles&quot;]&#10;        R1[&quot;Directivo&quot;]&#10;        R2[&quot;Eq. de Conducción&quot;]&#10;        R3[&quot;Docente&quot;]&#10;        R4[&quot;Preceptor&quot;]&#10;        R5[&quot;Supervisor&quot;]&#10;        R6[&quot;Dir. de Área&quot;]&#10;    end&#10;    subgraph MAT[&quot;Matriculación&quot;]&#10;        M1[Secciones]&#10;        M2[Matricular inscriptos]&#10;        M3[Ver/Descargar]&#10;        M4[Pases]&#10;        M5[Agregar alumno nuevo]&#10;    end&#10;    subgraph PRE[&quot;Presentismo&quot;]&#10;        P1[Tomar asistencia]&#10;        P2[Cerrar semana/día]&#10;        P3[Abrir semana/día]&#10;        P4[Cargar justificativo]&#10;        P5[Ver reporte]&#10;    end&#10;    subgraph CAL[&quot;Calificaciones&quot;]&#10;        C1[Ver calificaciones]&#10;        C2[Cargar calificaciones]&#10;        C3[Abrir período]&#10;        C4[Cerrar período]&#10;    end&#10;    subgraph BOL[&quot;Boletines&quot;]&#10;        B1[Ver boletín]&#10;        B2[Generar boletín]&#10;        B3[Abrir calificaciones]&#10;    end&#10;    R1 -->|SI| M1 & M2 & M3 & M4&#10;    R2 -->|SI| M1 & M2 & M3 & M4&#10;    R6 -->|SI| M1 & M2 & M3 & M4 & M5&#10;    R5 -->|SI| M1 & M2 & M3 & M4&#10;    R1 -->|SI| P1 & P2 & P3 & P4 & P5&#10;    R2 -->|SI| P1 & P2 & P3 & P4 & P5&#10;    R3 -->|SI| P1 & P4 & P5&#10;    R4 -->|SI| P1 & P4 & P5&#10;    R1 & R2 & R3 & R4 & R5 -->|SI| C1 & C2 & C4&#10;    R1 & R2 -->|SI| C3&#10;    R1 & R2 & R5 -->|SI| B1 & B2 & B3&#10;    R6 -->|SI| B1 & B2&#10;    style ROLES fill:#1A3C5E,color:#fff,stroke:#1A3C5E&#10;    style MAT fill:#DBEAFE,stroke:#2563EB&#10;    style PRE fill:#D1FAE5,stroke:#059669&#10;    style CAL fill:#FEF3C7,stroke:#D97706&#10;    style BOL fill:#FCE7F3,stroke:#DB2777"></div>
+          </div>
+          
+      </div>
+    </div>
+
 
     <!-- ── ARQUITECTURA ── -->
     <div class="view" id="view-arq">
@@ -2813,6 +2844,12 @@ function nav(id, el) {
       if (activeCard) flujoAutofit(activeCard);
     }, 200);
   }
+  if (id === 'actores') {
+    setTimeout(function(){
+      var activeCard = document.querySelector('#actor-container .flujo-card:not([style*="none"])');
+      if (activeCard) actorAutofit(activeCard);
+    }, 200);
+  }
   // Render mermaid diagrams (stored in data-def, never in textContent)
   if (v) {
     v.querySelectorAll('.mermaid[data-def]').forEach(function(el) {
@@ -3142,6 +3179,65 @@ function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
     if (!el) return;
     el.style.display = el.style.display === 'none' ? '' : 'none';
   }
+
+
+  // ── ACTORES ──────────────────────────────
+  var _actorScale = 1;
+
+  function _actorApplyScale(card, scale) {
+    var m = card.querySelector('.mermaid');
+    if (m) m.style.transform = 'scale(' + scale + ')';
+  }
+
+  function actorAutofit(card) {
+    setTimeout(function() {
+      var svg = card.querySelector('svg');
+      if (!svg) return;
+      var containerW = card.clientWidth - 48;
+      var maxW = svg.scrollWidth || svg.viewBox.baseVal.width || 600;
+      if (maxW > 0 && containerW > 0) {
+        var s = Math.min(1.8, Math.max(0.35, containerW / maxW));
+        actorZoomSet(s);
+      }
+    }, 120);
+  }
+
+  function actorSelect(btn) {
+    var key = btn.getAttribute('data-actor-tab');
+    btn.closest('.filter-bar').querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    var cards = document.querySelectorAll('#actor-container .flujo-card');
+    var promises = [];
+    cards.forEach(function(c) { c.style.display = 'none'; });
+    var target = document.getElementById(key);
+    if (!target) return;
+    target.style.display = '';
+    if (!target.dataset.rendered) {
+      var els = target.querySelectorAll('.mermaid[data-def]');
+      els.forEach(function(el) {
+        var def = el.getAttribute('data-def');
+        var uid = 'actor-' + Math.random().toString(36).substr(2,6);
+        promises.push(mermaid.render(uid, def).then(function(r){ el.innerHTML = r.svg; }));
+      });
+    }
+    Promise.all(promises).then(function(){ target.dataset.rendered='1'; actorAutofit(target); });
+  }
+
+  function actorZoomSet(val) {
+    _actorScale = Math.max(0.4, Math.min(2.5, val));
+    var rng = document.getElementById('actor-range');
+    var lbl = document.getElementById('actor-zoom-label');
+    if (rng) rng.value = _actorScale;
+    if (lbl) lbl.textContent = Math.round(_actorScale * 100) + '%';
+    var active = document.querySelector('#actor-container .flujo-card:not([style*="display:none"])');
+    if (active) _actorApplyScale(active, _actorScale);
+  }
+
+  function actorZoom(delta) { actorZoomSet(_actorScale + delta); }
+
+  // Auto-render first actor card on nav
+  var _actorInit = false;
+  var _origNav = typeof nav === 'function' ? nav : null;
 
 </script>
 </body>
