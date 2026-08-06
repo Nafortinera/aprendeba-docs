@@ -765,6 +765,15 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       </div>
 
 
+
+      <!-- Tab buttons -->
+      <div class="filter-bar" style="margin-bottom:18px">
+        <button class="filter-btn on" data-etab="estado" onclick="estadoTab(this)">Estado de m&#xF3;dulos</button>
+        <button class="filter-btn"    data-etab="roadmap" onclick="estadoTab(this)">Roadmap Phinx 2026</button>
+      </div>
+
+      <!-- Tab 1: Estado de módulos + historial -->
+      <div id="etab-estado">
       <!-- Módulos en producción -->
       <h3 style="font-size:14px;font-weight:600;color:var(--text);margin:0 0 10px">Módulos en producción</h3>
       <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px">
@@ -963,9 +972,11 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
 
       </div>
 
-      <!-- separator before Phinx roadmap -->
-      <h3 style="font-size:14px;font-weight:600;color:var(--text);margin:24px 0 10px">Roadmap Phinx 2026</h3>
 
+      </div>
+
+      <!-- Tab 2: Roadmap Phinx -->
+      <div id="etab-roadmap" style="display:none">
       <!-- Stats horas -->
       <div class="stat-grid" style="grid-template-columns:repeat(6,1fr);margin-bottom:16px">
         <div class="stat-card">
@@ -1464,6 +1475,8 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       <p style="font-size:11px;color:var(--text-muted);margin-top:12px">
         Fuente: Proyectos Hrs Phinx_VF.xlsx &middot; El check "En PRD" se guarda en el navegador y puede marcarse manualmente.
       </p>
+      </div>
+
     </div>
 
     <!-- ── MANTIS ── -->
@@ -4016,6 +4029,17 @@ function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
   document.addEventListener('DOMContentLoaded', function() {
     prdLoadState();
   });
+
+
+  // ── ESTADO TABS ──────────────────────────
+  function estadoTab(btn) {
+    btn.closest('.filter-bar').querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    var key = btn.getAttribute('data-etab');
+    document.getElementById('etab-estado').style.display  = key === 'estado'  ? '' : 'none';
+    document.getElementById('etab-roadmap').style.display = key === 'roadmap' ? '' : 'none';
+    if (key === 'roadmap') { setTimeout(prdLoadState, 50); }
+  }
 
 </script>
 </body>
