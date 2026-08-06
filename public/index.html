@@ -109,7 +109,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
 /* DIAGRAM */
 
 /* FLUJOS */
-.flujo-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;overflow:auto;min-height:300px}
+.flujo-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;overflow:hidden;min-height:300px}
 .flujo-card .mermaid{display:flex;justify-content:center;transform-origin:top center}
 .flujo-card .mermaid svg{max-width:none !important;height:auto}
 .flujo-zoom{display:flex;align-items:center;gap:10px;margin-bottom:14px}
@@ -2242,6 +2242,12 @@ function nav(id, el) {
   if (el) el.classList.add('active');
   document.getElementById('bread-label').textContent = el ? el.textContent.trim() : id;
   if (id === 'reglas') setTimeout(rnApply, 50);
+  if (id === 'flujos') {
+    setTimeout(function(){
+      var activeCard = document.querySelector('#flujo-container .flujo-card:not([style*="none"])');
+      if (activeCard) flujoAutofit(activeCard);
+    }, 200);
+  }
   // Render mermaid diagrams (stored in data-def, never in textContent)
   if (v) {
     v.querySelectorAll('.mermaid[data-def]').forEach(function(el) {
@@ -2459,6 +2465,43 @@ function docinvRefresh() {
   var ctr = document.getElementById('docinv-count');
   if (ctr) ctr.textContent = visible + ' documento' + (visible!==1?'s':'');
 }
+var _flujoScale = 1;
+
+function _flujoApplyScale(card, scale) {
+  card.querySelectorAll('.mermaid').forEach(function(m) {
+    m.style.transform = 'scale(' + scale + ')';
+    m.style.transformOrigin = 'top center';
+    // ajustar height del wrapper para que el card no quede cortado
+    var svg = m.querySelector('svg');
+    if (svg) {
+      var h = svg.getBoundingClientRect().height || svg.scrollHeight || 400;
+      m.style.height = (h * scale + 32) + 'px';
+    }
+  });
+}
+
+function flujoAutofit(card) {
+  // esperar a que el SVG esté en el DOM
+  setTimeout(function() {
+    var container = document.getElementById('flujo-container');
+    if (!container) return;
+    var containerW = container.clientWidth - 48;
+    var totalH = 0;
+    var maxW = 0;
+    card.querySelectorAll('svg').forEach(function(svg) {
+      var w = svg.scrollWidth || svg.viewBox.baseVal.width || 600;
+      if (w > maxW) maxW = w;
+    });
+    if (maxW > 0 && maxW !== containerW) {
+      var scale = Math.min(1.8, Math.max(0.35, containerW / maxW));
+      _flujoScale = scale;
+      document.getElementById('flujo-range').value = scale;
+      document.getElementById('flujo-zoom-label').textContent = Math.round(scale*100) + '%';
+    }
+    _flujoApplyScale(card, _flujoScale);
+  }, 120);
+}
+
 function flujoSelect(btn) {
   document.querySelectorAll('#view-flujos .filter-btn').forEach(function(b){b.classList.remove('on');});
   btn.classList.add('on');
@@ -2467,28 +2510,29 @@ function flujoSelect(btn) {
   var card = document.getElementById('flujo-' + key);
   if (!card) return;
   card.style.display = '';
-  var m = card.querySelector('.mermaid');
-  if (m) m.style.transform = 'scale(' + _flujoScale + ')';
+  var pending = [];
   card.querySelectorAll('.mermaid[data-def]').forEach(function(el) {
     if (el.getAttribute('data-rendered')) return;
     el.setAttribute('data-rendered','1');
     var uid = 'mf-' + key + '-' + Date.now().toString(36) + Math.random().toString(36).slice(2,5);
     var def = el.getAttribute('data-def');
-    mermaid.render(uid, def).then(function(res){ el.innerHTML = res.svg; }).catch(function(e){ el.textContent='Error: '+e; });
+    pending.push(mermaid.render(uid, def).then(function(res){ el.innerHTML = res.svg; }).catch(function(e){ el.textContent='Error: '+e; }));
   });
+  if (pending.length) {
+    Promise.all(pending).then(function(){ flujoAutofit(card); });
+  } else {
+    flujoAutofit(card);
+  }
 }
 
-var _flujoScale = 1;
 function flujoZoomSet(val) {
-  _flujoScale = Math.max(0.4, Math.min(2.5, val));
+  _flujoScale = Math.max(0.35, Math.min(2.5, val));
   var pct = Math.round(_flujoScale * 100);
   document.getElementById('flujo-range').value = _flujoScale;
   document.getElementById('flujo-zoom-label').textContent = pct + '%';
-  var active = document.querySelector('.flujo-card:not([style*="none"])');
-  if (active) {
-    var m = active.querySelector('.mermaid');
-    if (m) m.style.transform = 'scale(' + _flujoScale + ')';
-  }
+  var active = document.querySelector('#flujo-container .flujo-card:not([style*="display: none"]):not([style*="display:none"])');
+  if (!active) active = document.querySelector('#flujo-container .flujo-card');
+  if (active) _flujoApplyScale(active, _flujoScale);
 }
 function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
 </script>
