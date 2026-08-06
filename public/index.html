@@ -769,7 +769,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       <!-- Tab buttons -->
       <div class="filter-bar" style="margin-bottom:18px">
         <button class="filter-btn on" data-etab="estado" onclick="estadoTab(this)">Estado de m&#xF3;dulos</button>
-        <button class="filter-btn"    data-etab="historial" onclick="estadoTab(this)">Historial de deploys</button>
+        <button class="filter-btn"    data-etab="historial" onclick="estadoTab(this)">Historial AprendeBA</button>
         <button class="filter-btn"    data-etab="roadmap" onclick="estadoTab(this)">Roadmap Phinx 2026</button>
       </div>
 
@@ -863,8 +863,260 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
         </div>
       </div>
 
+
+      <!-- Tab 3: Historial de deploys -->
+      <div id="etab-historial" style="display:none">
+
+      <!-- Stats historial -->
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px">
+        <div class="stat-card">
+          <div class="stat-label">Deploys a PRD</div>
+          <div class="stat-val" style="color:#16a34a">25</div>
+          <div class="stat-sub">2024 – 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">En STG / no PRD</div>
+          <div class="stat-val" style="color:#d97706">3</div>
+          <div class="stat-sub">Inclus. Educativa · Buscador Legajo · otros</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Incidentes post-deploy</div>
+          <div class="stat-val" style="color:#dc2626">1</div>
+          <div class="stat-sub">14/04/2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Años cubiertos</div>
+          <div class="stat-val" style="color:var(--accent)">3</div>
+          <div class="stat-sub">2024 · 2025 · 2026</div>
+        </div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="filter-bar" style="margin-bottom:14px">
+        <button class="filter-btn on" data-hf="año" data-hv="todos" onclick="histFilter('año',this)">Todos los años</button>
+        <button class="filter-btn" data-hf="año" data-hv="2026" onclick="histFilter('año',this)">2026</button>
+        <button class="filter-btn" data-hf="año" data-hv="2025" onclick="histFilter('año',this)">2025</button>
+        <button class="filter-btn" data-hf="año" data-hv="2024" onclick="histFilter('año',this)">2024</button>
+        <span style="margin:0 6px;color:var(--muted)">|</span>
+        <button class="filter-btn on" data-hf="tipo" data-hv="todos" onclick="histFilter('tipo',this)">PRD + STG</button>
+        <button class="filter-btn" data-hf="tipo" data-hv="prd" onclick="histFilter('tipo',this)">Solo PRD</button>
+        <button class="filter-btn" data-hf="tipo" data-hv="stg" onclick="histFilter('tipo',this)">Solo STG / Incidentes</button>
+      </div>
+
+      <!-- Tabla -->
+      <div class="hist-header" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;padding:6px 10px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid var(--border)">
+        <span>Fecha</span>
+        <span>Año</span>
+        <span>Módulos / Descripción</span>
+        <span style="text-align:center">Tipo</span>
+      </div>
+
+      <div id="hist-tbody">
+
+        <!-- 2026 -->
+        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
+          <span style="font-size:12px;color:var(--text);font-weight:600">15 Jul 2026</span>
+          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Gestión de Pases Multiplataforma</strong> (Adultos↔Común, Común↔Secu Aprende, Adultos↔Secu Aprende) · Receso de Invierno – Regularidad Anual · Mantis 61730, 61666</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
+          <span style="font-size:12px;color:var(--text);font-weight:600">17 Jun 2026</span>
+          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Mejoras UX/UI Fase I y II</strong> · Módulo Notificaciones · Back Office Agenda Educativa · Regularidad doble · Suspensión y Emergencia · 28 tickets Mantis</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2026" data-tipo="stg" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #d97706">
+          <span style="font-size:12px;color:var(--text);font-weight:600">09 Jun 2026</span>
+          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
+          <span style="font-size:12px;color:var(--text)"><strong>STG Fase I+II</strong> — base de lo desplegado el 17/06 en PRD</span>
+          <span style="text-align:center"><span class="badge badge-stg">STG</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
+          <span style="font-size:12px;color:var(--text);font-weight:600">20 May 2026</span>
+          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Boletines con Regularidad 1er bimestre</strong> · Freezado Presentismo · Certificados 7° Adultos · 17 tickets Mantis</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
+          <span style="font-size:12px;color:var(--text);font-weight:600">28 Abr 2026</span>
+          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Cal. y Boletines Secundaria</strong> · Regularidad · Gestión NC en LMD · Cal. Adultos · Gestión de Pases EPA/CENS · 11 tickets Mantis</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
+          <span style="font-size:12px;color:var(--text);font-weight:600">20 Abr 2026</span>
+          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Gestión de Pases Secundaria Aprende</strong> (completa) · Cal. y Boletines Adultos · Mantis 59995, MIES2-7152</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2026" data-tipo="stg" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #dc2626">
+          <span style="font-size:12px;color:var(--text);font-weight:600">14 Abr 2026</span>
+          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
+          <span style="font-size:12px;color:var(--text)"><strong>⚠️ Incidente post-deploy</strong> — Pases y matriculación (11 establecimientos) · Resolución 15-16/04</span>
+          <span style="text-align:center"><span class="badge" style="background:#dc2626;color:#fff;font-size:10px">INC</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
+          <span style="font-size:12px;color:var(--text);font-weight:600">17 Mar 2026</span>
+          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Gestión de Pases</strong> con modificaciones al efectivizar · Regla "No calificable"</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
+          <span style="font-size:12px;color:var(--text);font-weight:600">10 Mar 2026</span>
+          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
+          <span style="font-size:12px;color:var(--text)"><strong>ECP Flujo Alternativo</strong> · API Histórico de estudiantes · Integración Legajo – ECP</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
+          <span style="font-size:12px;color:var(--text);font-weight:600">19 Feb 2026</span>
+          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Cambios Secundaria Aprende</strong> · App Presentismo habilitada · Cambios indicadores Primaria</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
+          <span style="font-size:12px;color:var(--text);font-weight:600">10 Feb 2026</span>
+          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Efectivización Flujo Alternativo</strong> · Nuevo rol "Admin Lite" · Otorgamiento de roles · Bloqueo botones PPE</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <!-- 2025 -->
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">Dic 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Generación masiva de boletines</strong> · Circuito CFP (Cal. y Boletines) · Cierre Adultos/CENS para 2026</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">Nov 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>PPI e Informes</strong> · <strong>Certificado 7° Primaria</strong> v2025</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">Oct 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Materias sin criterios</strong> (Primaria) · <strong>Backoffice</strong> — alta de materias operativa</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">Sep 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Módulo Regularidad</strong> (nuevo) · <strong>Tarjeta de Usuarios</strong> · Integración Secundaria Aprende</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">Ago 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Automatización Calificación V3</strong> · <strong>Aulas Virtuales Secundario</strong> · Backoffice 2025 · Cambio contraseña V2 · Roles Impersonar</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">Jul 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Generación masiva de boletines</strong> · Roles Dirección de Área (Supervisor) · Acta de Reunión · Booti · ⚠️ Buscador Legajo quedó "en desarrollo"</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">May 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Certificado 7° Primaria</strong> v2025 · 1er planilla oficial "AprendeBA" (07/05)</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">21 Abr 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Boletines Primaria 1er Bimestre</strong> · Paquete Mantis</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">10 Abr 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Calificaciones Primaria CL 2025</strong> · PIP/PPS · Mantis</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="stg" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #d97706">
+          <span style="font-size:12px;color:var(--text);font-weight:600">20 Mar 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>⚠️ Inclusión Educativa</strong> — entregado en STG, no llegó a PROD · Solo el cambio de texto del Bugfix 50812 fue a PRD el 27/03</span>
+          <span style="text-align:center"><span class="badge badge-stg">STG</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">27 Mar 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)">Bugfix v2 50812 + Cambio de texto</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">06 Mar 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)">Paquete tickets Mantis</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">24 Feb 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Nueva UI</strong> (Dashboard PBSA) · Paquete tickets Mantis</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">17 Feb 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>FEM</strong> · Escuelas Comerciales Nocturnas y Reingreso · ECP · Comedores · Backoffice · Carga Masiva LMD</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">06 Feb 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)">Paquete 20 tickets Mantis</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
+          <span style="font-size:12px;color:var(--text);font-weight:600">27 Ene 2025</span>
+          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Comedores</strong> · Backoffice · Nueva UI · LMD</span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+        <!-- 2024 -->
+        <div class="hist-row" data-año="2024" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #78716c">
+          <span style="font-size:12px;color:var(--text);font-weight:600">Ago–Dic 2024</span>
+          <span class="badge" style="background:#78716c;color:#fff;font-size:10px;width:fit-content">2024</span>
+          <span style="font-size:12px;color:var(--text)"><strong>Ciclo 2024 (miEscuela)</strong> — Presentismo, Cal./Boletines Primaria, Matriculación, Pases, Historial Movimientos, ACAP, Legajo (CUIL), Backoffice MVP, Alertas · 18+ tickets Mantis inmediatos · <em>⚠️ Sin log de deploys por fecha</em></span>
+          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
+        </div>
+
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:24px 0">
+
       <!-- Historial de deploys -->
-      <h3 style="font-size:14px;font-weight:600;color:var(--text);margin:0 0 14px">Historial de deploys</h3>
+      <h3 style="font-size:14px;font-weight:600;color:var(--text);margin:24px 0 14px">Timeline de deploys</h3>
       <div style="display:flex;gap:16px;margin-bottom:14px;font-size:12px">
         <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:#16a34a;display:inline-block"></span>PRD</span>
         <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:#d97706;display:inline-block"></span>STG</span>
@@ -1173,257 +1425,6 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
 
 
       </div>
-
-
-      </div>
-
-      <!-- Tab 3: Historial de deploys -->
-      <div id="etab-historial" style="display:none">
-
-      <!-- Stats historial -->
-      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px">
-        <div class="stat-card">
-          <div class="stat-label">Deploys a PRD</div>
-          <div class="stat-val" style="color:#16a34a">25</div>
-          <div class="stat-sub">2024 – 2026</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">En STG / no PRD</div>
-          <div class="stat-val" style="color:#d97706">3</div>
-          <div class="stat-sub">Inclus. Educativa · Buscador Legajo · otros</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Incidentes post-deploy</div>
-          <div class="stat-val" style="color:#dc2626">1</div>
-          <div class="stat-sub">14/04/2026</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Años cubiertos</div>
-          <div class="stat-val" style="color:var(--accent)">3</div>
-          <div class="stat-sub">2024 · 2025 · 2026</div>
-        </div>
-      </div>
-
-      <!-- Filtros -->
-      <div class="filter-bar" style="margin-bottom:14px">
-        <button class="filter-btn on" data-hf="año" data-hv="todos" onclick="histFilter('año',this)">Todos los años</button>
-        <button class="filter-btn" data-hf="año" data-hv="2026" onclick="histFilter('año',this)">2026</button>
-        <button class="filter-btn" data-hf="año" data-hv="2025" onclick="histFilter('año',this)">2025</button>
-        <button class="filter-btn" data-hf="año" data-hv="2024" onclick="histFilter('año',this)">2024</button>
-        <span style="margin:0 6px;color:var(--muted)">|</span>
-        <button class="filter-btn on" data-hf="tipo" data-hv="todos" onclick="histFilter('tipo',this)">PRD + STG</button>
-        <button class="filter-btn" data-hf="tipo" data-hv="prd" onclick="histFilter('tipo',this)">Solo PRD</button>
-        <button class="filter-btn" data-hf="tipo" data-hv="stg" onclick="histFilter('tipo',this)">Solo STG / Incidentes</button>
-      </div>
-
-      <!-- Tabla -->
-      <div class="hist-header" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;padding:6px 10px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid var(--border)">
-        <span>Fecha</span>
-        <span>Año</span>
-        <span>Módulos / Descripción</span>
-        <span style="text-align:center">Tipo</span>
-      </div>
-
-      <div id="hist-tbody">
-
-        <!-- 2026 -->
-        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
-          <span style="font-size:12px;color:var(--text);font-weight:600">15 Jul 2026</span>
-          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Gestión de Pases Multiplataforma</strong> (Adultos↔Común, Común↔Secu Aprende, Adultos↔Secu Aprende) · Receso de Invierno – Regularidad Anual · Mantis 61730, 61666</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
-          <span style="font-size:12px;color:var(--text);font-weight:600">17 Jun 2026</span>
-          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Mejoras UX/UI Fase I y II</strong> · Módulo Notificaciones · Back Office Agenda Educativa · Regularidad doble · Suspensión y Emergencia · 28 tickets Mantis</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2026" data-tipo="stg" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #d97706">
-          <span style="font-size:12px;color:var(--text);font-weight:600">09 Jun 2026</span>
-          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
-          <span style="font-size:12px;color:var(--text)"><strong>STG Fase I+II</strong> — base de lo desplegado el 17/06 en PRD</span>
-          <span style="text-align:center"><span class="badge badge-stg">STG</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
-          <span style="font-size:12px;color:var(--text);font-weight:600">20 May 2026</span>
-          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Boletines con Regularidad 1er bimestre</strong> · Freezado Presentismo · Certificados 7° Adultos · 17 tickets Mantis</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
-          <span style="font-size:12px;color:var(--text);font-weight:600">28 Abr 2026</span>
-          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Cal. y Boletines Secundaria</strong> · Regularidad · Gestión NC en LMD · Cal. Adultos · Gestión de Pases EPA/CENS · 11 tickets Mantis</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
-          <span style="font-size:12px;color:var(--text);font-weight:600">20 Abr 2026</span>
-          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Gestión de Pases Secundaria Aprende</strong> (completa) · Cal. y Boletines Adultos · Mantis 59995, MIES2-7152</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2026" data-tipo="stg" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #dc2626">
-          <span style="font-size:12px;color:var(--text);font-weight:600">14 Abr 2026</span>
-          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
-          <span style="font-size:12px;color:var(--text)"><strong>⚠️ Incidente post-deploy</strong> — Pases y matriculación (11 establecimientos) · Resolución 15-16/04</span>
-          <span style="text-align:center"><span class="badge" style="background:#dc2626;color:#fff;font-size:10px">INC</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
-          <span style="font-size:12px;color:var(--text);font-weight:600">17 Mar 2026</span>
-          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Gestión de Pases</strong> con modificaciones al efectivizar · Regla "No calificable"</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
-          <span style="font-size:12px;color:var(--text);font-weight:600">10 Mar 2026</span>
-          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
-          <span style="font-size:12px;color:var(--text)"><strong>ECP Flujo Alternativo</strong> · API Histórico de estudiantes · Integración Legajo – ECP</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
-          <span style="font-size:12px;color:var(--text);font-weight:600">19 Feb 2026</span>
-          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Cambios Secundaria Aprende</strong> · App Presentismo habilitada · Cambios indicadores Primaria</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2026" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #0ea5e9">
-          <span style="font-size:12px;color:var(--text);font-weight:600">10 Feb 2026</span>
-          <span class="badge" style="background:#0ea5e9;color:#fff;font-size:10px;width:fit-content">2026</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Efectivización Flujo Alternativo</strong> · Nuevo rol "Admin Lite" · Otorgamiento de roles · Bloqueo botones PPE</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <!-- 2025 -->
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">Dic 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Generación masiva de boletines</strong> · Circuito CFP (Cal. y Boletines) · Cierre Adultos/CENS para 2026</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">Nov 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>PPI e Informes</strong> · <strong>Certificado 7° Primaria</strong> v2025</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">Oct 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Materias sin criterios</strong> (Primaria) · <strong>Backoffice</strong> — alta de materias operativa</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">Sep 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Módulo Regularidad</strong> (nuevo) · <strong>Tarjeta de Usuarios</strong> · Integración Secundaria Aprende</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">Ago 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Automatización Calificación V3</strong> · <strong>Aulas Virtuales Secundario</strong> · Backoffice 2025 · Cambio contraseña V2 · Roles Impersonar</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">Jul 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Generación masiva de boletines</strong> · Roles Dirección de Área (Supervisor) · Acta de Reunión · Booti · ⚠️ Buscador Legajo quedó "en desarrollo"</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">May 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Certificado 7° Primaria</strong> v2025 · 1er planilla oficial "AprendeBA" (07/05)</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">21 Abr 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Boletines Primaria 1er Bimestre</strong> · Paquete Mantis</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">10 Abr 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Calificaciones Primaria CL 2025</strong> · PIP/PPS · Mantis</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="stg" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #d97706">
-          <span style="font-size:12px;color:var(--text);font-weight:600">20 Mar 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>⚠️ Inclusión Educativa</strong> — entregado en STG, no llegó a PROD · Solo el cambio de texto del Bugfix 50812 fue a PRD el 27/03</span>
-          <span style="text-align:center"><span class="badge badge-stg">STG</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">27 Mar 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)">Bugfix v2 50812 + Cambio de texto</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">06 Mar 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)">Paquete tickets Mantis</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">24 Feb 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Nueva UI</strong> (Dashboard PBSA) · Paquete tickets Mantis</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">17 Feb 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>FEM</strong> · Escuelas Comerciales Nocturnas y Reingreso · ECP · Comedores · Backoffice · Carga Masiva LMD</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">06 Feb 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)">Paquete 20 tickets Mantis</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <div class="hist-row" data-año="2025" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #7c3aed">
-          <span style="font-size:12px;color:var(--text);font-weight:600">27 Ene 2025</span>
-          <span class="badge" style="background:#7c3aed;color:#fff;font-size:10px;width:fit-content">2025</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Comedores</strong> · Backoffice · Nueva UI · LMD</span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
-
-        <!-- 2024 -->
-        <div class="hist-row" data-año="2024" data-tipo="prd" style="display:grid;grid-template-columns:90px 50px 1fr 70px;gap:0 10px;align-items:start;padding:8px 10px;border-bottom:1px solid var(--border);border-left:3px solid #78716c">
-          <span style="font-size:12px;color:var(--text);font-weight:600">Ago–Dic 2024</span>
-          <span class="badge" style="background:#78716c;color:#fff;font-size:10px;width:fit-content">2024</span>
-          <span style="font-size:12px;color:var(--text)"><strong>Ciclo 2024 (miEscuela)</strong> — Presentismo, Cal./Boletines Primaria, Matriculación, Pases, Historial Movimientos, ACAP, Legajo (CUIL), Backoffice MVP, Alertas · 18+ tickets Mantis inmediatos · <em>⚠️ Sin log de deploys por fecha</em></span>
-          <span style="text-align:center"><span class="badge badge-prd">PRD</span></span>
-        </div>
 
       </div>
       </div>
