@@ -170,6 +170,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
 .phinx-row{display:grid;grid-template-columns:1fr 110px 130px 160px 80px 80px 60px;padding:10px 16px;border-bottom:1px solid var(--border);align-items:center;gap:0;transition:background .1s}
 .phinx-row:last-child{border-bottom:none}
 .phinx-row:hover{background:#f8fafc}
+.phinx-row.pausado{opacity:0.48;background:#f8fafc}
 .phinx-row.en-prd{background:#f0fdf4}
 
 .deploy-tl{border-left:2px solid var(--border);padding-left:20px;margin-left:4px}
@@ -1434,7 +1435,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       <!-- Tab 2: Roadmap Phinx -->
       <div id="etab-roadmap" style="display:none">
       <!-- Stats horas -->
-      <div class="stat-grid" style="grid-template-columns:repeat(6,1fr);margin-bottom:16px">
+      <div class="stat-grid" style="grid-template-columns:repeat(7,1fr)argin-bottom:16px">
         <div class="stat-card">
           <div class="stat-label">Presupuesto total</div>
           <div class="stat-val" style="color:var(--accent)">9.646</div>
@@ -1465,6 +1466,11 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <div class="stat-val" id="prd-counter" style="color:#065f46">0</div>
           <div class="stat-sub">tildados en roadmap</div>
         </div>
+        <div class="stat-card">
+          <div class="stat-label">Pausados</div>
+          <div class="stat-val" id="pausado-counter" style="color:#78716c">0</div>
+          <div class="stat-sub">en pausa</div>
+        </div>
       </div>
 
       <!-- Filtros -->
@@ -1479,6 +1485,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
         <button class="filter-btn"    data-pf-est="en_proceso"  onclick="phinxFilter('est',this)">En proceso</button>
         <button class="filter-btn"    data-pf-est="en_analisis" onclick="phinxFilter('est',this)">En an&aacute;lisis</button>
         <button class="filter-btn"    data-pf-est="sin_iniciar" onclick="phinxFilter('est',this)">Sin iniciar</button>
+        <button class="filter-btn"    data-pf-est="pausado"     onclick="phinxFilter('est',this)">&#9208; Pausado</button>
         <span class="filter-label" style="margin-left:8px">Mes PRD</span>
         <button class="filter-btn on" data-pf-mes="todos"  onclick="phinxFilter('mes',this)">Todos</button>
         <button class="filter-btn"    data-pf-mes="mayo"   onclick="phinxFilter('mes',this)">Mayo</button>
@@ -1499,7 +1506,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="text-align:center">En PRD</span>
         </div>
         <div id="phinx-tbody">
-        <div class="phinx-row" data-estado="en_proceso" data-mes="mayo">
+        <div class="phinx-row" data-pausado="false" data-estado="en_proceso" data-mes="mayo">
           <span style="font-size:13px;line-height:1.4">Módulo Notificaciones</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#d1fae5;color:#065f46">En proceso</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1511,12 +1518,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Mayo 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">150 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">150 hs</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m01" class="prd-check" onchange="prdToggle('m01',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m01" onclick="pausadoToggle('m01')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_proceso" data-mes="junio">
+        <div class="phinx-row" data-pausado="false" data-estado="en_proceso" data-mes="junio">
           <span style="font-size:13px;line-height:1.4">BO - Agenda educativa</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#d1fae5;color:#065f46">En proceso</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1528,12 +1537,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Junio 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">200 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">200 hs</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m02" class="prd-check" onchange="prdToggle('m02',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m02" onclick="pausadoToggle('m02')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_proceso" data-mes="mayo">
+        <div class="phinx-row" data-pausado="false" data-estado="en_proceso" data-mes="mayo">
           <span style="font-size:13px;line-height:1.4">Certificados Finalización - Adultos Primario</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#d1fae5;color:#065f46">En proceso</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1545,12 +1556,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Mayo 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">480 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">480 hs</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m03" class="prd-check" onchange="prdToggle('m03',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m03" onclick="pausadoToggle('m03')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_proceso" data-mes="junio">
+        <div class="phinx-row" data-pausado="false" data-estado="en_proceso" data-mes="junio">
           <span style="font-size:13px;line-height:1.4">Informe funcional y UX (Fase 1 + 2 y 3)</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#d1fae5;color:#065f46">En proceso</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1562,12 +1575,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Junio 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">550 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">250 hs</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m04" class="prd-check" onchange="prdToggle('m04',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m04" onclick="pausadoToggle('m04')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_analisis" data-mes="mayo">
+        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="mayo">
           <span style="font-size:13px;line-height:1.4">Cal. y Boletines — Regularidad Bimestre II</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1579,12 +1594,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">13 Mayo 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">300 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">300 hs</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m05" class="prd-check" onchange="prdToggle('m05',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m05" onclick="pausadoToggle('m05')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_analisis" data-mes="mayo">
+        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="mayo">
           <span style="font-size:13px;line-height:1.4">Mejora config. períodos boletines y calificaciones</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1596,12 +1613,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">13 Mayo 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">180 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">180 hs</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m06" class="prd-check" onchange="prdToggle('m06',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m06" onclick="pausadoToggle('m06')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_analisis" data-mes="junio">
+        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="junio">
           <span style="font-size:13px;line-height:1.4">Creación multigrupo (Especiales)</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1613,12 +1632,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">22 Junio 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">200 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">200 hs</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m07" class="prd-check" onchange="prdToggle('m07',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m07" onclick="pausadoToggle('m07')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_analisis" data-mes="junio">
+        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="junio">
           <span style="font-size:13px;line-height:1.4">Escuelas escalafón B con más niveles (Especiales)</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1630,12 +1651,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">22 Junio 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">400 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">400 hs</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m08" class="prd-check" onchange="prdToggle('m08',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m08" onclick="pausadoToggle('m08')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_analisis" data-mes="junio">
+        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="junio">
           <span style="font-size:13px;line-height:1.4">API Legajo único — Etapa I</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1647,12 +1670,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Junio 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m09" class="prd-check" onchange="prdToggle('m09',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m09" onclick="pausadoToggle('m09')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_analisis" data-mes="julio">
+        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="julio">
           <span style="font-size:13px;line-height:1.4">Cal. y Boletines — Regularidad Bimestre III</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1664,12 +1689,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Julio 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">300 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">300 hs</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m10" class="prd-check" onchange="prdToggle('m10',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m10" onclick="pausadoToggle('m10')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_analisis" data-mes="julio">
+        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="julio">
           <span style="font-size:13px;line-height:1.4">Gestión de pases multiplataforma</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1681,12 +1708,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Finales Julio 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">600 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m11" class="prd-check" onchange="prdToggle('m11',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m11" onclick="pausadoToggle('m11')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="sin_iniciar" data-mes="julio">
+        <div class="phinx-row" data-pausado="false" data-estado="sin_iniciar" data-mes="julio">
           <span style="font-size:13px;line-height:1.4">Integración Vacunas</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1698,12 +1727,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Julio 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m12" class="prd-check" onchange="prdToggle('m12',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m12" onclick="pausadoToggle('m12')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="sin_iniciar" data-mes="julio">
+        <div class="phinx-row" data-pausado="false" data-estado="sin_iniciar" data-mes="julio">
           <span style="font-size:13px;line-height:1.4">LIBRO MATRIZ a SiTED — Nivel Secundario</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1715,12 +1746,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Finales Julio 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m13" class="prd-check" onchange="prdToggle('m13',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m13" onclick="pausadoToggle('m13')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_analisis" data-mes="agosto">
+        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="agosto">
           <span style="font-size:13px;line-height:1.4">Cal. y Boletines — Regularidad Bimestre IV</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1732,12 +1765,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Agosto 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">500 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">500 hs</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m14" class="prd-check" onchange="prdToggle('m14',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m14" onclick="pausadoToggle('m14')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_analisis" data-mes="agosto">
+        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="agosto">
           <span style="font-size:13px;line-height:1.4">Privadas — Primaria</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1749,12 +1784,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Agosto 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m15" class="prd-check" onchange="prdToggle('m15',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m15" onclick="pausadoToggle('m15')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_analisis" data-mes="agosto">
+        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="agosto">
           <span style="font-size:13px;line-height:1.4">Privadas — Primaria Back Office</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1766,12 +1803,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Agosto 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m16" class="prd-check" onchange="prdToggle('m16',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m16" onclick="pausadoToggle('m16')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="sin_iniciar" data-mes="agosto">
+        <div class="phinx-row" data-pausado="false" data-estado="sin_iniciar" data-mes="agosto">
           <span style="font-size:13px;line-height:1.4">Gestión de Proyección — Inicial</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1783,12 +1822,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Agosto 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">10 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m17" class="prd-check" onchange="prdToggle('m17',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m17" onclick="pausadoToggle('m17')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="sin_iniciar" data-mes="agosto">
+        <div class="phinx-row" data-pausado="false" data-estado="sin_iniciar" data-mes="agosto">
           <span style="font-size:13px;line-height:1.4">PIP PPS</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1800,12 +1841,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Agosto 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m18" class="prd-check" onchange="prdToggle('m18',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m18" onclick="pausadoToggle('m18')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="sin_iniciar" data-mes="agosto">
+        <div class="phinx-row" data-pausado="false" data-estado="sin_iniciar" data-mes="agosto">
           <span style="font-size:13px;line-height:1.4">PROMOCIÓN</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1817,12 +1860,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b">Agosto 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m19" class="prd-check" onchange="prdToggle('m19',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m19" onclick="pausadoToggle('m19')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_analisis" data-mes="">
+        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="">
           <span style="font-size:13px;line-height:1.4">Mejora — Suspensión y emergencia</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1834,12 +1879,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b"></span>
           <span style="font-size:12px;color:#64748b;text-align:right">60 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">60 hs</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m20" class="prd-check" onchange="prdToggle('m20',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m20" onclick="pausadoToggle('m20')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="en_analisis" data-mes="">
+        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="">
           <span style="font-size:13px;line-height:1.4">Agregar link SID en pantalla principal</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1851,12 +1898,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b"></span>
           <span style="font-size:12px;color:#64748b;text-align:right">20 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m21" class="prd-check" onchange="prdToggle('m21',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m21" onclick="pausadoToggle('m21')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="sin_iniciar" data-mes="">
+        <div class="phinx-row" data-pausado="false" data-estado="sin_iniciar" data-mes="">
           <span style="font-size:13px;line-height:1.4">Evitar reinscripción desde AprendeBA (Secu)</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1868,12 +1917,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b"></span>
           <span style="font-size:12px;color:#64748b;text-align:right">135 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m22" class="prd-check" onchange="prdToggle('m22',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m22" onclick="pausadoToggle('m22')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="sin_iniciar" data-mes="">
+        <div class="phinx-row" data-pausado="false" data-estado="sin_iniciar" data-mes="">
           <span style="font-size:13px;line-height:1.4">Gestión de pases — Inscriptos Secu Aprende</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1885,12 +1936,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b"></span>
           <span style="font-size:12px;color:#64748b;text-align:right">140 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m23" class="prd-check" onchange="prdToggle('m23',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m23" onclick="pausadoToggle('m23')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="sin_iniciar" data-mes="">
+        <div class="phinx-row" data-pausado="false" data-estado="sin_iniciar" data-mes="">
           <span style="font-size:13px;line-height:1.4">SATAE</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1902,12 +1955,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b"></span>
           <span style="font-size:12px;color:#64748b;text-align:right">105 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m24" class="prd-check" onchange="prdToggle('m24',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m24" onclick="pausadoToggle('m24')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-estado="sin_iniciar" data-mes="">
+        <div class="phinx-row" data-pausado="false" data-estado="sin_iniciar" data-mes="">
           <span style="font-size:13px;line-height:1.4">N/C contraturno — cómputo asistencia</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
@@ -1919,9 +1974,11 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="font-size:12px;color:#64748b"></span>
           <span style="font-size:12px;color:#64748b;text-align:right">40 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">—</span>
-          <span style="text-align:center">
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
             <input type="checkbox" id="prd-m25" class="prd-check" onchange="prdToggle('m25',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m25" onclick="pausadoToggle('m25')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
         </div>
@@ -4437,7 +4494,10 @@ function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
     var rows = document.querySelectorAll('#phinx-tbody .phinx-row');
     var vis = 0;
     rows.forEach(function(row) {
-      var okEst = _phinxF.est === 'todos' || row.dataset.estado === _phinxF.est;
+      var isPausado = row.dataset.pausado === 'true';
+      var okEst = _phinxF.est === 'pausado'
+        ? isPausado
+        : (_phinxF.est === 'todos' || row.dataset.estado === _phinxF.est) && !isPausado;
       var okMes = _phinxF.mes === 'todos' || row.dataset.mes === _phinxF.mes;
       var okQ   = !q || row.textContent.toLowerCase().indexOf(q) !== -1;
       var show = okEst && okMes && okQ;
@@ -4453,6 +4513,50 @@ function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
   function prdUpdateCounter() {
     var count = document.querySelectorAll('.prd-check:checked').length;
     var el = document.getElementById('prd-counter');
+    if (el) el.textContent = count;
+  }
+
+
+  function pausadoToggle(id) {
+    var prdEl = document.getElementById('prd-'+id);
+    if (!prdEl) return;
+    var row = prdEl.closest('.phinx-row');
+    var paused = row.dataset.pausado !== 'true';
+    row.dataset.pausado = paused ? 'true' : 'false';
+    row.classList.toggle('pausado', paused);
+    var btn = document.getElementById('pause-'+id);
+    if (btn) btn.style.color = paused ? '#f59e0b' : '#cbd5e1';
+    try {
+      var data = JSON.parse(localStorage.getItem('aprendeba_pausado') || '{}');
+      if (paused) data[id] = true; else delete data[id];
+      localStorage.setItem('aprendeba_pausado', JSON.stringify(data));
+    } catch(e) {}
+    pausadoUpdateCounter();
+    phinxRefresh();
+  }
+
+  function pausadoLoadState() {
+    try {
+      var data = JSON.parse(localStorage.getItem('aprendeba_pausado') || '{}');
+      Object.keys(data).forEach(function(id) {
+        if (data[id]) {
+          var prdEl = document.getElementById('prd-'+id);
+          if (prdEl) {
+            var row = prdEl.closest('.phinx-row');
+            row.dataset.pausado = 'true';
+            row.classList.add('pausado');
+            var btn = document.getElementById('pause-'+id);
+            if (btn) btn.style.color = '#f59e0b';
+          }
+        }
+      });
+    } catch(e) {}
+    pausadoUpdateCounter();
+  }
+
+  function pausadoUpdateCounter() {
+    var count = document.querySelectorAll('#phinx-tbody .phinx-row.pausado').length;
+    var el = document.getElementById('pausado-counter');
     if (el) el.textContent = count;
   }
 
@@ -4496,7 +4600,7 @@ function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
     var eh = document.getElementById('etab-historial');
     if(eh) eh.style.display = key === 'historial' ? '' : 'none';
     document.getElementById('etab-roadmap').style.display  = key === 'roadmap'  ? '' : 'none';
-    if (key === 'roadmap') { setTimeout(prdLoadState, 50); }
+    if (key === 'roadmap') { setTimeout(prdLoadState, 50); setTimeout(pausadoLoadState, 60); }
   }
 
 
