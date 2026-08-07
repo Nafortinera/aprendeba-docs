@@ -233,6 +233,10 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="2" width="8" height="6" rx="1"/><rect x="14" y="2" width="8" height="6" rx="1"/><rect x="7" y="16" width="10" height="6" rx="1"/><path d="M6 8v4h12V8"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
       DER / Entidades
     </div>
+    <div class="nav-item" onclick="nav('integraciones',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Integraciones
+    </div>
 
   </div>
 
@@ -3489,6 +3493,146 @@ flowchart TD
 
 
     <!-- ── HU + CA ── -->
+    <div class="view" id="view-integraciones">
+      <div class="page-header">
+        <h1>Integraciones</h1>
+        <p>Sistemas externos conectados a AprendeBA: estado, tipo de conexión y detalles técnicos.</p>
+      </div>
+
+      <!-- Summary cards -->
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+        <div class="stat-card">
+          <div class="stat-label">Total integraciones</div>
+          <div class="stat-val" style="color:var(--accent)">5</div>
+          <div class="stat-sub">sistemas externos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Activas</div>
+          <div class="stat-val" style="color:#065f46">2</div>
+          <div class="stat-sub">en producción</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pendientes</div>
+          <div class="stat-val" style="color:#d97706">2</div>
+          <div class="stat-sub">esperando credenciales</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Planificadas</div>
+          <div class="stat-val" style="color:#64748b">1</div>
+          <div class="stat-sub">en roadmap</div>
+        </div>
+      </div>
+
+      <!-- Integration cards -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+
+        <!-- IEL -->
+        <div class="card" style="border-left:4px solid #0891b2">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:15px;font-weight:600;color:var(--text)">IEL — Ingresantes En Línea</div>
+            <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:#d1fae5;color:#065f46">Activa</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Ministerio de Educación GCBA</div>
+          <div style="font-size:13px;color:var(--text);margin-bottom:12px">Vincula alumnos ingresantes del sistema IEL con los registros de AprendeBA usando <code style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px">id_iel_alumno_matricula = id_alumno</code>.</div>
+          <div style="background:#fff7ed;border-radius:6px;padding:10px 12px;margin-bottom:10px;border-left:3px solid #f59e0b">
+            <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:4px">⚠ Bug conocido (STG)</div>
+            <div style="font-size:12px;color:#78350f">El campo <code style="font-family:monospace">documento</code> de <code style="font-family:monospace">iel_casos_particulares</code> siempre llega <code style="font-family:monospace">NULL</code>. Solo 7 alumnos cargados vía IEL en STG.</div>
+          </div>
+          <div style="display:flex;gap:16px;font-size:11px;color:var(--text-muted)">
+            <span>🔗 Tipo: DB directa</span>
+            <span>📍 Tabla: iel_casos_particulares</span>
+          </div>
+        </div>
+
+        <!-- Keycloak / Identidad GCABA -->
+        <div class="card" style="border-left:4px solid #0891b2">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:15px;font-weight:600;color:var(--text)">Keycloak — Identidad GCABA</div>
+            <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:#d1fae5;color:#065f46">Activa</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">identidad-gcaba.apps.buenosaires.gob.ar</div>
+          <div style="font-size:13px;color:var(--text);margin-bottom:12px">Autenticación OAuth2 centralizada del GCBA. Todos los usuarios acceden con su cuenta <code style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px">@bue.edu.ar</code> a través de OpenID Connect.</div>
+          <div style="background:#f0fdf4;border-radius:6px;padding:10px 12px;margin-bottom:10px">
+            <div style="font-size:12px;color:#166534"><strong>Token URL:</strong> /realms/open-id/protocol/openid-connect/token</div>
+          </div>
+          <div style="display:flex;gap:16px;font-size:11px;color:var(--text-muted)">
+            <span>🔗 Tipo: OAuth2 / OpenID Connect</span>
+            <span>📍 Realm: open-id</span>
+          </div>
+        </div>
+
+        <!-- BA Colaborativa tickets -->
+        <div class="card" style="border-left:4px solid #f59e0b">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:15px;font-weight:600;color:var(--text)">BA Colaborativa — Tickets</div>
+            <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:#fef3c7;color:#b45309">Pendiente</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">bacolaborativa-backoffice.buenosaires.gob.ar</div>
+          <div style="font-size:13px;color:var(--text);margin-bottom:12px">Lectura de tickets de soporte de AprendeBA via API REST. Permitiría centralizar el seguimiento operativo sin acceso manual a la plataforma.</div>
+          <div style="background:#fffbeb;border-radius:6px;padding:10px 12px;margin-bottom:10px;border-left:3px solid #f59e0b">
+            <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:4px">🕐 Bloqueado: esperando credenciales</div>
+            <div style="font-size:12px;color:#78350f">client_id disponible. Falta <strong>client_secret</strong> del equipo técnico de BA Colaborativa para completar autenticación OAuth2.</div>
+          </div>
+          <div style="display:flex;gap:16px;font-size:11px;color:var(--text-muted)">
+            <span>🔗 Tipo: REST API + OAuth2</span>
+            <span>📍 Solo lectura</span>
+          </div>
+        </div>
+
+        <!-- BA Colaborativa mail -->
+        <div class="card" style="border-left:4px solid #f59e0b">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:15px;font-weight:600;color:var(--text)">BA Colaborativa — Mail</div>
+            <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:#fef3c7;color:#b45309">Pendiente</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Servicio de correo centralizado GCBA</div>
+          <div style="font-size:13px;color:var(--text);margin-bottom:12px">Envío de notificaciones por mail desde AprendeBA (cambios de estado en Matriculación, Pases, Presentismo, alertas operativas) usando el servicio compartido del GCBA.</div>
+          <div style="background:#fffbeb;border-radius:6px;padding:10px 12px;margin-bottom:10px;border-left:3px solid #f59e0b">
+            <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:4px">🕐 Pendiente de respuesta</div>
+            <div style="font-size:12px;color:#78350f">Solicitud enviada al equipo técnico de BA Colaborativa el 24/06/2026. Sin respuesta aún.</div>
+          </div>
+          <div style="display:flex;gap:16px;font-size:11px;color:var(--text-muted)">
+            <span>🔗 Tipo: API REST</span>
+            <span>📍 Casos: mat, pases, presentismo</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SiTED + SINIGEP en fila -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+
+        <!-- SiTED -->
+        <div class="card" style="border-left:4px solid #64748b">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:15px;font-weight:600;color:var(--text)">SiTED — Libro Matriz</div>
+            <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:#f1f5f9;color:#475569">Planificada</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Ministerio de Educación GCBA</div>
+          <div style="font-size:13px;color:var(--text);margin-bottom:12px">Exportación del Libro Matriz al sistema SiTED del Ministerio. Aplica a nivel secundario. Módulo <strong>LIBRO MATRIZ a SiTED</strong> en roadmap Phinx (actualmente pausado).</div>
+          <div style="display:flex;gap:16px;font-size:11px;color:var(--text-muted)">
+            <span>🔗 Tipo: exportación de datos</span>
+            <span>📍 Estado roadmap: Pausado</span>
+          </div>
+        </div>
+
+        <!-- SINIGEP -->
+        <div class="card" style="border-left:4px solid #64748b">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-size:15px;font-weight:600;color:var(--text)">SINIGEP — Escuelas Privadas</div>
+            <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:#f1f5f9;color:#475569">Planificada</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Ministerio de Educación GCBA</div>
+          <div style="font-size:13px;color:var(--text);margin-bottom:12px">Ingesta de datos de establecimientos privados desde SINIGEP para habilitar el módulo <strong>Privadas — Primaria</strong>. Bloqueador principal de ese desarrollo.</div>
+          <div style="display:flex;gap:16px;font-size:11px;color:var(--text-muted)">
+            <span>🔗 Tipo: ingesta de datos</span>
+            <span>📍 Estado roadmap: Pausado</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <div class="view" id="view-der">
       <div class="page-header">
         <h1>Diagrama Entidad-Relación</h1>
