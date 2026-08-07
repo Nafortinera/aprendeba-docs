@@ -257,6 +257,10 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
       Inventario documental
     </div>
+    <div class="nav-item" onclick="nav('faq',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      FAQ / Soporte
+    </div>
     <div class="nav-item" onclick="nav('hu',this)">
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       HU + CA (Hub)
@@ -3504,6 +3508,337 @@ flowchart TD
 
 
     <!-- ── HU + CA ── -->
+    <div class="view" id="view-faq">
+      <div class="page-header">
+        <h1>FAQ / Guía de soporte</h1>
+        <p>Preguntas frecuentes y respuestas para asesores y equipos de conducción de AprendeBA.</p>
+      </div>
+
+      <!-- Search + filter -->
+      <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center">
+        <div style="position:relative;flex:1;min-width:220px">
+          <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.4;pointer-events:none" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="faq-search" type="text" placeholder="Buscar pregunta..." oninput="faqSearch()" style="width:100%;padding:8px 10px 8px 34px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text);font-size:13px;box-sizing:border-box">
+        </div>
+        <div class="filter-bar" style="flex-wrap:wrap;gap:6px;margin-bottom:0;padding:0;border:none;background:none">
+          <button class="filter-btn on" data-fmod="todos" onclick="faqFilter(this)">Todos</button>
+          <button class="filter-btn" data-fmod="acceso" onclick="faqFilter(this)">Acceso y roles</button>
+          <button class="filter-btn" data-fmod="presentismo" onclick="faqFilter(this)">Presentismo</button>
+          <button class="filter-btn" data-fmod="calificaciones" onclick="faqFilter(this)">Calificaciones</button>
+          <button class="filter-btn" data-fmod="boletines" onclick="faqFilter(this)">Boletines</button>
+          <button class="filter-btn" data-fmod="matriculacion" onclick="faqFilter(this)">Matriculación</button>
+          <button class="filter-btn" data-fmod="pases" onclick="faqFilter(this)">Pases</button>
+          <button class="filter-btn" data-fmod="legajo" onclick="faqFilter(this)">Legajo</button>
+          <button class="filter-btn" data-fmod="soporte" onclick="faqFilter(this)">Soporte técnico</button>
+        </div>
+      </div>
+
+      <div id="faq-no-results" style="display:none;text-align:center;padding:32px;color:var(--text-muted);font-size:14px">No se encontraron preguntas para ese criterio.</div>
+
+      <!-- ── ACCESO Y ROLES ── -->
+      <div class="faq-section" data-mod="acceso">
+        <div style="font-size:11px;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px;padding-left:4px">Acceso y roles</div>
+
+        <div class="faq-item" data-mod="acceso" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#6366f1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">¿Cómo solicita un docente su rol en la plataforma?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            El docente ingresa a AprendeBA con su usuario @bue.edu.ar y accede al módulo de Roles. Desde allí completa la solicitud indicando su establecimiento y función. El Directivo del establecimiento recibe la solicitud y debe aprobarla desde el Back Office para que el acceso quede habilitado.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="acceso" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#6366f1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">Un usuario cambió de función. ¿Cómo se actualizan sus permisos?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            El Administrador (Directivo o equipo SSTEDU) accede al Back Office, busca al usuario y modifica su rol asignado. El cambio toma efecto en el próximo inicio de sesión del usuario. Si el usuario tiene sesión activa, el cambio aplica al volver a ingresar.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="acceso" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#6366f1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">¿Por qué un docente no ve el módulo que le corresponde?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            Las causas más frecuentes son: (1) el rol no fue aprobado por el Directivo; (2) el rol asignado no incluye ese módulo según la configuración del establecimiento; (3) el módulo está deshabilitado en la Agenda Educativa del Back Office para el período actual. Verificar primero el estado del rol en el Back Office.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PRESENTISMO ── -->
+      <div class="faq-section" data-mod="presentismo">
+        <div style="font-size:11px;font-weight:700;color:#0891b2;text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px;padding-left:4px">Presentismo</div>
+
+        <div class="faq-item" data-mod="presentismo" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#0891b2" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">Un alumno aparece como "No regular" pero tiene pocas inasistencias. ¿Por qué?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            La regularidad se calcula sobre inasistencias <strong>injustificadas</strong>. Verificar si las ausencias tienen justificación cargada. Si las justificaciones no fueron ingresadas, esas inasistencias computan. También puede darse si el presentismo del período no está completo (estado "Datos insuficientes"). Cargar las justificaciones faltantes y esperar la actualización automática del sistema (diaria).
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="presentismo" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#0891b2" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">El sistema pide cargar presentismo de fechas anteriores al inicio del ciclo lectivo.</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            Esto ocurre cuando un alumno tiene FEM (Fecha Efectiva de Matrícula) anterior al inicio real del ciclo. Es un bug conocido (Mantis 61741). El sistema habilita la carga de presentismo desde la FEM del alumno. Como solución temporal, ignorar esas fechas anteriores o consultar con el equipo SSTEDU para la corrección de FEM.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="presentismo" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#0891b2" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">¿Cómo se carga una justificación de inasistencia?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            El Operador accede al módulo Presentismo, selecciona la sección y la fecha, y hace clic sobre la inasistencia del alumno. Desde ahí puede agregar la justificación. El estado original (A) se conserva visualmente diferenciado, pero la inasistencia deja de computar para la regularidad. Las justificaciones deben cargarse antes del cierre del bimestre para que impacten en el cálculo.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="presentismo" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#0891b2" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">Se cargó mal la asistencia de una semana ya cerrada. ¿Cómo se corrige?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            Solo el Directivo puede reabrir una semana cerrada. Desde el módulo Presentismo, seleccionar la semana y hacer clic en "Abrir semana". El sistema registra la reapertura con fecha, hora y usuario. Una vez corregido el error, el Directivo vuelve a cerrar la semana y el sistema recalcula la regularidad.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="presentismo" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#0891b2" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">¿Cómo afecta el contraturno "No corresponde" (N/C) a la regularidad?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            Desde el deploy del 17/06/2026, el contraturno con estado "No corresponde" computa automáticamente como <strong>media asistencia</strong>. Esto aplica para todos los niveles. No requiere ninguna acción del docente: el sistema lo calcula de forma automática al cerrar la semana.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CALIFICACIONES ── -->
+      <div class="faq-section" data-mod="calificaciones">
+        <div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px;padding-left:4px">Calificaciones</div>
+
+        <div class="faq-item" data-mod="calificaciones" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#7c3aed" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">El docente no puede cargar notas: el módulo aparece bloqueado.</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            El período de calificaciones debe ser abierto por el Directivo desde la Agenda Educativa del Back Office. Si el módulo está en solo lectura, verificar con el Directivo que el bimestre esté habilitado. Para los bimestres 2°, 3° y 4° de secundaria, la habilitación fue implementada en el deploy del 17/06/2026.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="calificaciones" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#7c3aed" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">El sistema no deja guardar las calificaciones: ¿qué está faltando?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            El campo <strong>PPI (Proceso Pedagógico Individualizado)</strong> es obligatorio. Si algún alumno tiene el PPI en blanco, el sistema bloquea el guardado. Verificar que todos los alumnos de la sección tengan PPI completado. El sistema resalta en rojo los campos faltantes.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="calificaciones" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#7c3aed" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">El docente navegó a otra pantalla y perdió las notas que estaba cargando.</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            Desde el deploy del 17/06/2026 el sistema muestra una <strong>alerta de cambios sin guardar</strong> antes de abandonar la vista. Si el docente confirmó la navegación sin guardar, las notas no se recuperan automáticamente. Deben volver a cargarse. Recomendación: guardar de forma incremental antes de navegar.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── BOLETINES ── -->
+      <div class="faq-section" data-mod="boletines">
+        <div style="font-size:11px;font-weight:700;color:#d97706;text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px;padding-left:4px">Boletines</div>
+
+        <div class="faq-item" data-mod="boletines" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#d97706" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">El sistema no permite generar los boletines de una sección.</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            Verificar dos condiciones: (1) que todos los alumnos tengan calificaciones cargadas para el bimestre —el sistema lista exactamente qué alumno y qué materia faltan—; (2) que el presentismo del período esté completo y cerrado. Sin ambas condiciones cumplidas, la generación queda bloqueada.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="boletines" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#d97706" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">Un alumno tiene ECP (espacio curricular pendiente) y eso bloquea el boletín.</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            Si el ECP corresponde al plan de estudios del alumno, debe gestionarse desde el módulo Legajo. Si el espacio curricular no aplica al plan, el Operador debe marcarlo como <strong>"No corresponde"</strong> en la ficha del alumno. Con ese estado, el ECP no bloquea la generación del boletín.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MATRICULACIÓN ── -->
+      <div class="faq-section" data-mod="matriculacion">
+        <div style="font-size:11px;font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px;padding-left:4px">Matriculación</div>
+
+        <div class="faq-item" data-mod="matriculacion" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#0d9488" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">El módulo Inscriptos aparece bloqueado y no permite matricular alumnos.</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            El establecimiento debe ser <strong>efectivizado</strong> primero. El Directivo ejecuta el proceso PPE (Proceso de Pre-Efectivización) desde el módulo correspondiente. Sin efectivización, el módulo Inscriptos permanece bloqueado para todo el establecimiento.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="matriculacion" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#0d9488" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">Al descargar la matrícula de un JIN, el número de escuela es incorrecto.</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            Bug conocido activo en producción (Mantis 62025). Los JIN Anexos muestran el número de la escuela sede en lugar del anexo correspondiente. Impacta la trazabilidad del reporte. <strong>Solución temporal:</strong> verificar manualmente el número de escuela antes de usar el reporte. La corrección está en proceso con Phinxlab.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="matriculacion" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#0d9488" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">¿Cómo se cambia la sección de un alumno ya matriculado?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            El Administrador (Directivo) accede al módulo Matriculados, busca al alumno, y selecciona la opción "Cambiar sección". Solo se puede cambiar dentro del mismo nivel educativo. El cambio actualiza automáticamente el cupo de ambas secciones y reasigna el presentismo futuro a la nueva sección.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PASES ── -->
+      <div class="faq-section" data-mod="pases">
+        <div style="font-size:11px;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px;padding-left:4px">Pases</div>
+
+        <div class="faq-item" data-mod="pases" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#6366f1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">¿Quién inicia el trámite de pase: el establecimiento origen o el destino?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            El <strong>establecimiento destino</strong> es quien inicia la solicitud de pase entrante. Ingresa al módulo Pases, busca al alumno por DNI y completa la FEM destino y el turno. La solicitud llega al establecimiento origen, que debe aprobarla o rechazarla. Una vez aprobada, la transferencia es automática.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="pases" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#6366f1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">El historial del alumno se pierde después de un pase. ¿Es correcto?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            No. El historial académico del alumno (matrícula previa, asistencias, calificaciones del establecimiento anterior) se conserva completo en el legajo. El establecimiento destino puede consultarlo desde la solapa "Historial" en el legajo del alumno. Solo la carga activa de presentismo y calificaciones comienza desde la nueva FEM en el destino.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── LEGAJO ── -->
+      <div class="faq-section" data-mod="legajo">
+        <div style="font-size:11px;font-weight:700;color:#b45309;text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px;padding-left:4px">Legajo</div>
+
+        <div class="faq-item" data-mod="legajo" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#b45309" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">Al ingresar al legajo de un alumno, el sistema vuelve a la pantalla de secciones.</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            Bug activo en producción (Mantis 61942). Afecta alumnos puntuales. <strong>Solución temporal:</strong> intentar acceder al legajo desde el buscador global usando el DNI del alumno en lugar de navegar desde la lista de secciones. Si el problema persiste, reportar a la mesa de ayuda con el CUE del establecimiento y el DNI del alumno.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="legajo" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#b45309" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">¿Quién puede modificar la condición de regularidad de un alumno manualmente?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            Solo el <strong>Directivo o la Dirección de Área</strong> puede modificar manualmente la condición de regularidad. El cambio requiere una justificación obligatoria y queda registrado en el historial del alumno con fecha, usuario y motivo. Sin justificación, el sistema bloquea el guardado.
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SOPORTE TÉCNICO ── -->
+      <div class="faq-section" data-mod="soporte">
+        <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px;padding-left:4px">Soporte técnico</div>
+
+        <div class="faq-item" data-mod="soporte" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#64748b" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">¿Cómo reporto un error que no está en esta FAQ?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            Reportar a través de <strong>BA Colaborativa</strong> con: (1) CUE del establecimiento, (2) módulo afectado, (3) descripción del error y pasos para reproducirlo, (4) captura de pantalla si es posible. El equipo SSTEDU registra el ticket en Mantis y coordina con Phinxlab para la resolución.
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="soporte" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#64748b" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">¿Dónde veo los bugs conocidos activos en producción?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            En este hub, sección <strong>Proyecto → Mantis</strong>, con el filtro de estado "Activo en PROD". Al 08/07/2026 hay 19 tickets activos. Los más relevantes para operadores son: Mantis 62025 (matrícula JIN Anexos), Mantis 61942 (acceso al legajo) y Mantis 61741 (presentismo con FEM anterior al ciclo).
+          </div>
+        </div>
+
+        <div class="faq-item" data-mod="soporte" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
+          <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
+            <svg style="margin-top:1px;flex-shrink:0;color:#64748b" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:13px;font-weight:500">La plataforma no carga o responde muy lento. ¿Qué hago?</span>
+          </div>
+          <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
+            Primero verificar la conexión a internet del establecimiento. Si la conexión es normal, intentar con otro navegador (Chrome recomendado). Limpiar caché del navegador (Ctrl+Shift+Delete). Si el problema persiste en múltiples establecimientos, puede tratarse de un incidente de infraestructura: reportar a BA Colaborativa con hora de inicio del problema y módulo afectado.
+          </div>
+        </div>
+      </div>
+
+      <script>
+      var _faqMod = 'todos';
+      function faqFilter(btn) {
+        btn.closest('.filter-bar').querySelectorAll('[data-fmod]').forEach(function(b){b.classList.remove('on');});
+        btn.classList.add('on');
+        _faqMod = btn.getAttribute('data-fmod');
+        applyFaqFilters();
+      }
+      function faqSearch() {
+        applyFaqFilters();
+      }
+      function applyFaqFilters() {
+        var q = (document.getElementById('faq-search').value||'').toLowerCase().trim();
+        var visible = 0;
+        document.querySelectorAll('.faq-item').forEach(function(item) {
+          var modOk = _faqMod==='todos' || item.dataset.mod===_faqMod;
+          var textOk = !q || item.innerText.toLowerCase().includes(q);
+          item.style.display = (modOk && textOk) ? '' : 'none';
+          if (modOk && textOk) visible++;
+        });
+        document.querySelectorAll('.faq-section').forEach(function(sec) {
+          var hasVisible = Array.from(sec.querySelectorAll('.faq-item')).some(function(i){return i.style.display!=='none';});
+          sec.style.display = hasVisible ? '' : 'none';
+        });
+        document.getElementById('faq-no-results').style.display = visible===0 ? '' : 'none';
+      }
+      function toggleFAQ(header) {
+        var answer = header.nextElementSibling;
+        if (answer) answer.style.display = answer.style.display==='none' ? '' : 'none';
+      }
+      </script>
+
+    </div>
+
     <div class="view" id="view-casos">
       <div class="page-header">
         <h1>Casos de uso</h1>
