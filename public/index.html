@@ -257,6 +257,10 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
       Inventario documental
     </div>
+    <div class="nav-item" onclick="nav('rf',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      RF por módulo
+    </div>
     <div class="nav-item" onclick="nav('faq',this)">
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       FAQ / Soporte
@@ -3508,6 +3512,621 @@ flowchart TD
 
 
     <!-- ── HU + CA ── -->
+    <div class="view" id="view-rf">
+      <div class="page-header">
+        <h1>Requerimientos Funcionales por módulo</h1>
+        <p>Catálogo de 68 requerimientos funcionales derivados de las Historias de Usuario y la Especificación v2.0 · AprendeBA 2026.</p>
+      </div>
+
+      <div class="stat-grid" style="margin-bottom:20px">
+        <div class="stat-card" style="border-left:3px solid #0d9488"><div class="stat-n" style="color:#0d9488">13</div><div class="stat-l">Matriculación</div></div>
+<div class="stat-card" style="border-left:3px solid #6366f1"><div class="stat-n" style="color:#6366f1">5</div><div class="stat-l">Pases</div></div>
+<div class="stat-card" style="border-left:3px solid #b45309"><div class="stat-n" style="color:#b45309">10</div><div class="stat-l">Legajo y ECP</div></div>
+<div class="stat-card" style="border-left:3px solid #0891b2"><div class="stat-n" style="color:#0891b2">11</div><div class="stat-l">Presentismo</div></div>
+<div class="stat-card" style="border-left:3px solid #7c3aed"><div class="stat-n" style="color:#7c3aed">6</div><div class="stat-l">Calificaciones</div></div>
+<div class="stat-card" style="border-left:3px solid #d97706"><div class="stat-n" style="color:#d97706">4</div><div class="stat-l">Boletines</div></div>
+<div class="stat-card" style="border-left:3px solid #64748b"><div class="stat-n" style="color:#64748b">5</div><div class="stat-l">Roles</div></div>
+<div class="stat-card" style="border-left:3px solid #16a34a"><div class="stat-n" style="color:#16a34a">9</div><div class="stat-l">QR y Kiosco</div></div>
+<div class="stat-card" style="border-left:3px solid #ec4899"><div class="stat-n" style="color:#ec4899">5</div><div class="stat-l">Asistente Virtual</div></div>
+
+      </div>
+
+      <!-- Search + filter -->
+      <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;align-items:center">
+        <div style="position:relative;flex:1;min-width:220px">
+          <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.4;pointer-events:none" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="rf-search" type="text" placeholder="Buscar requerimiento..." oninput="applyRfFilters()" style="width:100%;padding:8px 10px 8px 34px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text);font-size:13px;box-sizing:border-box">
+        </div>
+        <div class="filter-bar" style="flex-wrap:wrap;gap:6px;margin-bottom:0;padding:0;border:none;background:none">
+          <button class="filter-btn on" data-rfmod="todos" onclick="rfFilter(this)">Todos</button>
+          <button class="filter-btn" data-rfmod="matriculacion" onclick="rfFilter(this)">Matriculación <span style="opacity:.6;font-size:11px">(13)</span></button>
+          <button class="filter-btn" data-rfmod="pases" onclick="rfFilter(this)">Pases <span style="opacity:.6;font-size:11px">(5)</span></button>
+          <button class="filter-btn" data-rfmod="legajo" onclick="rfFilter(this)">Legajo y ECP <span style="opacity:.6;font-size:11px">(10)</span></button>
+          <button class="filter-btn" data-rfmod="presentismo" onclick="rfFilter(this)">Presentismo <span style="opacity:.6;font-size:11px">(11)</span></button>
+          <button class="filter-btn" data-rfmod="calificaciones" onclick="rfFilter(this)">Calificaciones <span style="opacity:.6;font-size:11px">(6)</span></button>
+          <button class="filter-btn" data-rfmod="boletines" onclick="rfFilter(this)">Boletines <span style="opacity:.6;font-size:11px">(4)</span></button>
+          <button class="filter-btn" data-rfmod="roles" onclick="rfFilter(this)">Roles <span style="opacity:.6;font-size:11px">(5)</span></button>
+          <button class="filter-btn" data-rfmod="qr" onclick="rfFilter(this)">QR y Kiosco <span style="opacity:.6;font-size:11px">(9)</span></button>
+          <button class="filter-btn" data-rfmod="asistente" onclick="rfFilter(this)">Asistente Virtual <span style="opacity:.6;font-size:11px">(5)</span></button>
+
+        </div>
+      </div>
+
+      <div id="rf-no-results" style="display:none;text-align:center;padding:32px;color:var(--text-muted);font-size:14px">No se encontraron requerimientos para ese criterio.</div>
+
+      <div class="tbl-wrap">
+        <div class="tbl-head" style="grid-template-columns:70px 1fr 130px 110px 70px 90px">
+          <div>ID</div><div>Descripción</div><div>Módulo</div><div>Actor</div><div>Prioridad</div><div>HU origen</div>
+        </div>
+        <div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-001</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe listar todos los inscriptos del ciclo activo con columnas Nombre, DNI, Nivel, Turno y Sección a matricular.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-001</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-002</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir asignar sección a un inscripto mostrando solo secciones del mismo nivel educativo.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-002</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-003</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe solicitar y validar la Fecha Efectiva de Matriculación (FEM) como campo obligatorio al matricular. La FEM no puede ser futura.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-003</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-004</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir dar de baja a un inscripto con registro obligatorio de motivo.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-004</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-005</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe mostrar el listado de matriculados filtrable por nivel, sección, turno y condición.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-005</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-006</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir cambiar la sección de un matriculado dentro del mismo nivel educativo.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador/Admin</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-006/HU-027</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-007</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir imprimir el padrón de una sección con apellido, nombre, DNI, código único y cuenta_alu.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-007</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-008</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe habilitar la búsqueda de alumnos por DNI en todas las solapas del módulo.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-008</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-009</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir desmatricular un alumno registrando el motivo con campo obligatorio.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-009</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-010</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe bloquear el módulo Inscriptos hasta que el Administrador efectivice el establecimiento.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Administrador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-023</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-011</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir al Administrador crear y editar secciones del ciclo lectivo.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Administrador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-022</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-012</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe generar el código único de vinculación del alumno al matricularlo.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-026</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="pases" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-013</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe mostrar listado de pases entrantes y salientes con estado (Pendiente / Aprobado / Rechazado).</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#6366f1">Pases</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-012</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="pases" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-014</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir al establecimiento destino iniciar un pase entrante registrando FEM destino y turno.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#6366f1">Pases</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-012b</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="pases" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-015</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir al establecimiento origen aprobar o rechazar un pase entrante.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#6366f1">Pases</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-012c</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="pases" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-016</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe conservar el historial académico del alumno (asistencias y calificaciones previas) tras un pase.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#6366f1">Pases</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-018</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="pases" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-017</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe registrar la FEM origen y FEM destino en cada pase aprobado.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#6366f1">Pases</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-025</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="legajo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-018</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe mostrar los datos personales completos de un alumno en modo solo lectura.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#b45309">Legajo y ECP</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-013</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="legajo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-019</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir editar datos de identificación del alumno (nombre, DNI, CUIL, fechanac).</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#b45309">Legajo y ECP</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-014</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="legajo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-020</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir editar datos de residencia del alumno (domicilio, localidad, CP).</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#b45309">Legajo y ECP</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-015</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="legajo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-021</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir editar datos de responsables del alumno incluyendo teléfono y correo de contacto.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#b45309">Legajo y ECP</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-016</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="legajo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-022</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir editar datos de salud del alumno (alergias, medicación, obra social).</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#b45309">Legajo y ECP</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-017</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="legajo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-023</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe mostrar el historial de movimientos del alumno (matrículas, pases, secciones) en orden cronológico.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#b45309">Legajo y ECP</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-018</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="legajo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-024</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir actualizar datos del legajo del alumno desde el módulo ECP y Legajos.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#b45309">Legajo y ECP</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-043</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="legajo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-025</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir registrar espacios curriculares pendientes (ECP) de un alumno.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#b45309">Legajo y ECP</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-044</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="legajo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-026</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir marcar un ECP como 'No corresponde' cuando no aplica al plan de estudios del alumno.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#b45309">Legajo y ECP</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-045</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="legajo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-027</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe bloquear la generación de boletines si el alumno tiene ECPs sin estado ('No corresponde' o completado).</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#b45309">Legajo y ECP</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-045</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="presentismo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-028</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe mostrar la grilla de asistencia semanal por sección con columnas por día hábil.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0891b2">Presentismo</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-019/HU-028</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="presentismo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-029</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir registrar estado de asistencia (Presente / Ausente / Tardanza / No corresponde) por alumno y día.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0891b2">Presentismo</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-020</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="presentismo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-030</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir marcar una inasistencia como justificada conservando el estado original visualmente diferenciado.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0891b2">Presentismo</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-021/HU-031</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="presentismo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-031</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir la carga masiva de asistencia para un día completo.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0891b2">Presentismo</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-022</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="presentismo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-032</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir navegar entre semanas del ciclo lectivo para consultar o corregir registros.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0891b2">Presentismo</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-023</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="presentismo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-033</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir al Administrador cerrar una semana de presentismo para consolidar el registro.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0891b2">Presentismo</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Administrador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-029</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="presentismo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-034</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe registrar fecha, hora y usuario al cerrar o reabrir una semana de presentismo.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0891b2">Presentismo</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Administrador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-029/HU-030</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="presentismo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-035</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir al Administrador reabrir una semana cerrada para corrección de registros.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0891b2">Presentismo</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Administrador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-030</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="presentismo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-036</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe calcular automáticamente la condición de regularidad del alumno al cerrar cada semana.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0891b2">Presentismo</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-032</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="presentismo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-037</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir al Docente ver el reporte de asistencia de su sección con cómputo de regularidad.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0891b2">Presentismo</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Ciudadano</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-032</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="presentismo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-038</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe computar el contraturno 'No corresponde' como media asistencia automáticamente.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0891b2">Presentismo</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">Deploy 17/06</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="calificaciones" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-039</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe bloquear la carga de calificaciones hasta que el Administrador abra el período desde la Agenda Educativa.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#7c3aed">Calificaciones</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Administrador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-034</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="calificaciones" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-040</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir al Docente cargar calificaciones bimestrales por materia y alumno.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#7c3aed">Calificaciones</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Ciudadano</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-033</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="calificaciones" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-041</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe bloquear el guardado de calificaciones si el campo PPI de algún alumno está vacío.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#7c3aed">Calificaciones</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-035</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="calificaciones" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-042</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe mostrar alerta de cambios sin guardar al intentar abandonar la vista de calificaciones.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#7c3aed">Calificaciones</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">Deploy 17/06</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="calificaciones" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-043</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe mostrar al Operador el resumen de calificaciones por materia indicando qué alumnos están sin nota.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#7c3aed">Calificaciones</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-036</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="calificaciones" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-044</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe registrar fecha y usuario al guardar cada conjunto de calificaciones.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#7c3aed">Calificaciones</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-033</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="boletines" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-045</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe bloquear la generación de boletines hasta que todas las calificaciones y el presentismo del período estén completos.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#d97706">Boletines</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-037/HU-038</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="boletines" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-046</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe listar exactamente qué alumnos y materias faltan completar antes de generar boletines.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#d97706">Boletines</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-038</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="boletines" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-047</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir al Administrador generar boletines de una sección completa en una sola acción.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#d97706">Boletines</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Administrador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-037</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="boletines" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-048</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir descargar el boletín individual de un alumno en formato PDF.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#d97706">Boletines</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-039</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="roles" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-049</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir a los usuarios solicitar un rol indicando establecimiento y función.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#64748b">Roles</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Ciudadano</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-040</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="roles" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-050</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe notificar al Administrador cuando hay solicitudes de rol pendientes de aprobación.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#64748b">Roles</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-041</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="roles" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-051</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir al Administrador aprobar o rechazar solicitudes de rol desde el Back Office.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#64748b">Roles</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Administrador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-041</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="roles" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-052</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir al Administrador modificar el rol asignado de un usuario activo.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#64748b">Roles</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Administrador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-042</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="roles" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-053</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe aplicar el cambio de rol en el próximo inicio de sesión del usuario.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#64748b">Roles</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-042</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="qr" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-054</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe generar códigos QR individuales por alumno vinculados a su código único.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#16a34a">QR y Kiosco</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-024</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="qr" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-055</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir imprimir la hoja de QRs de un aula completa.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#16a34a">QR y Kiosco</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-025</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="qr" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-056</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe activar el kiosco de asistencia para escaneo de QRs en el panel de entrada.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#16a34a">QR y Kiosco</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-026</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="qr" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-057</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe registrar el ingreso del alumno al escanear su QR con marca de tiempo.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#16a34a">QR y Kiosco</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-035</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="qr" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-058</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe distinguir tardanza de presencia a tiempo según la hora de escaneo configurada.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#16a34a">QR y Kiosco</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-038</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="qr" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-059</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir el ingreso manual de DNI cuando el QR no puede leerse.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#16a34a">QR y Kiosco</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-037</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="qr" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-060</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe ofrecer la app Acceso Presentismo como PWA instalable en tablets y celulares.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#16a34a">QR y Kiosco</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-032</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="qr" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-061</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe mostrar contador de presentes sobre el total del aula en tiempo real durante el kiosco.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#16a34a">QR y Kiosco</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-036</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="qr" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-062</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe sincronizar establecimientos y secciones con AprendeBA vía localStorage para la PWA.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#16a34a">QR y Kiosco</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-039</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="asistente" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-063</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe ofrecer un asistente conversacional con base de conocimiento sobre los módulos del sistema.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#ec4899">Asistente Virtual</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-028/HU-031</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="asistente" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-064</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe responder en lenguaje natural sobre validaciones del sistema (DNI, CUIL, FEM, estados de asistencia).</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#ec4899">Asistente Virtual</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-031</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="asistente" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-065</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe ofrecer un panel lateral de FAQ con accesos rápidos a las respuestas más frecuentes.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#ec4899">Asistente Virtual</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-029</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="asistente" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-066</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir limpiar el historial del chat del asistente para iniciar una nueva conversación.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#ec4899">Asistente Virtual</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#64748b">Baja</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-030</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-067</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe mostrar el establecimiento activo en la cabecera y permitir cambiarlo desde un selector.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">HU-010/HU-011</div>
+        </div>
+<div class="rf-row tbl-row" data-rfmod="asistente" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
+          <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-068</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe mostrar la URL y versión de cada ambiente (PRD/STG/DEV) en el encabezado del panel técnico.</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#ec4899">Asistente Virtual</span></div>
+          <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Administrador</div>
+          <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#64748b">Baja</span></div>
+          <div class="tbl-cell" style="font-family:monospace;font-size:11px;color:var(--text-muted)">RF-TEC</div>
+        </div>
+
+      </div>
+
+      <script>
+      var _rfMod = 'todos';
+      function rfFilter(btn) {
+        btn.closest('.filter-bar').querySelectorAll('[data-rfmod]').forEach(function(b){b.classList.remove('on');});
+        btn.classList.add('on');
+        _rfMod = btn.getAttribute('data-rfmod');
+        applyRfFilters();
+      }
+      function applyRfFilters() {
+        var q = (document.getElementById('rf-search').value||'').toLowerCase().trim();
+        var visible = 0;
+        document.querySelectorAll('.rf-row').forEach(function(row) {
+          var modOk = _rfMod==='todos' || row.dataset.rfmod===_rfMod;
+          var textOk = !q || row.innerText.toLowerCase().includes(q);
+          row.style.display = (modOk && textOk) ? '' : 'none';
+          if (modOk && textOk) visible++;
+        });
+        document.getElementById('rf-no-results').style.display = visible===0 ? '' : 'none';
+      }
+      </script>
+    </div>
+
     <div class="view" id="view-faq">
       <div class="page-header">
         <h1>FAQ / Guía de soporte</h1>
