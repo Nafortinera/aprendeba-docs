@@ -798,7 +798,9 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       <div class="filter-bar" style="margin-bottom:18px">
         <button class="filter-btn on" data-etab="estado" onclick="estadoTab(this)">Estado de m&#xF3;dulos</button>
         <button class="filter-btn"    data-etab="historial" onclick="estadoTab(this)">Historial AprendeBA</button>
-        <button class="filter-btn"    data-etab="roadmap" onclick="estadoTab(this)">Roadmap Phinx 2026</button>
+                <button class="filter-btn"    data-etab="roadmap" onclick="estadoTab(this)">Roadmap Phinx 2026</button>
+        <button class="filter-btn"    data-etab="informes" onclick="estadoTab(this)">📄 Informes</button>
+        <button class="filter-btn"    data-etab="temario"  onclick="estadoTab(this)">🗒 Temario</button>
       </div>
 
       <!-- Tab 1: Estado de módulos + historial -->
@@ -2145,6 +2147,656 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           </span>
         </div>
         <div id="phinx-empty" style="display:none;text-align:center;padding:32px;color:var(--text-muted);font-size:13px">Sin resultados.</div>
+      </div>
+
+      <!-- Tab: Informes -->
+      <div id="etab-informes" style="display:none">
+        <h3 style="font-size:14px;font-weight:600;color:var(--text);margin:0 0 12px">Informes de deploy</h3>
+        <p style="font-size:13px;color:var(--text-muted);margin:0 0 16px">Documentación técnica por ciclo de deploy. Hacé clic en el 👁 para previsualizar o en ↓ para descargar.</p>
+
+        <!-- Informe PRD 17/06 -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:14px;padding:14px 18px">
+            <div style="width:40px;height:40px;background:#f0fdf4;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="20" height="20" fill="none" stroke="#16a34a" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Informe Deploy PRD — 17/06/2026</div>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                <span style="font-size:11px;color:var(--text-muted)">PDF · 86 KB</span>
+                <span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#dcfce7;color:#065f46">PRD</span>
+                <span style="font-size:11px;color:var(--text-muted)">Módulo Notificaciones · Cal. Bim II · BO Agenda · Mejora Config · Informe UX</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;flex-shrink:0">
+              <button onclick="document.getElementById('pdf-modal').style.display='flex';document.getElementById('pdf-frame').src='/informes/Informe_Deploy_17062026_v2.pdf'"
+                style="border:1px solid var(--border);background:#fff;border-radius:6px;padding:6px 12px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;color:var(--text)">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Ver
+              </button>
+              <a href="/informes/Informe_Deploy_17062026_v2.pdf" download
+                style="border:1px solid #16a34a;background:#f0fdf4;border-radius:6px;padding:6px 12px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;color:#16a34a;text-decoration:none">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Descargar
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Informe Novedades UI -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:14px;padding:14px 18px">
+            <div style="width:40px;height:40px;background:#eff6ff;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="20" height="20" fill="none" stroke="#3b82f6" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Novedades UI/UX Fase 1 + 2 — PRD 17/06/2026</div>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                <span style="font-size:11px;color:var(--text-muted)">Documento interno · 5 KB</span>
+                <span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#dbeafe;color:#1e40af">UX</span>
+                <span style="font-size:11px;color:var(--text-muted)">Buscador global · Validaciones FEM · Autoguardado · Indicadores capacidad</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;flex-shrink:0">
+              <button onclick="document.getElementById('doc-modal-title').textContent='Novedades UI/UX Fase 1 + 2';document.getElementById('doc-modal').style.display='flex'"
+                style="border:1px solid var(--border);background:#fff;border-radius:6px;padding:6px 12px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;color:var(--text)">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Ver
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Informe Mantis -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:14px;padding:14px 18px">
+            <div style="width:40px;height:40px;background:#fff7ed;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="20" height="20" fill="none" stroke="#ea580c" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">Informe Mantis Activos PROD — 08/07/2026</div>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                <span style="font-size:11px;color:var(--text-muted)">DOCX · 190 KB</span>
+                <span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#fff7ed;color:#c2410c">Mantis</span>
+                <span style="font-size:11px;color:var(--text-muted)">Tickets activos en producción al 08/07/2026</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;flex-shrink:0">
+              <span style="font-size:11px;color:var(--text-muted);align-self:center;font-style:italic">disponible en carpeta del proyecto</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal PDF viewer -->
+        <div id="pdf-modal" onclick="if(event.target===this){this.style.display='none';document.getElementById('pdf-frame').src=''}"
+          style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+          <div style="background:#fff;border-radius:12px;width:90%;max-width:900px;height:85vh;display:flex;flex-direction:column;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border)">
+              <span style="font-size:14px;font-weight:600">Informe Deploy PRD — 17/06/2026</span>
+              <button onclick="document.getElementById('pdf-modal').style.display='none';document.getElementById('pdf-frame').src=''"
+                style="border:none;background:none;font-size:20px;cursor:pointer;color:var(--text-muted);line-height:1">&times;</button>
+            </div>
+            <iframe id="pdf-frame" style="flex:1;border:none;width:100%"></iframe>
+          </div>
+        </div>
+
+        <!-- Modal doc viewer (placeholder for non-PDF) -->
+        <div id="doc-modal" onclick="if(event.target===this){this.style.display='none'}"
+          style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+          <div style="background:#fff;border-radius:12px;width:480px;padding:28px;text-align:center">
+            <div style="font-size:40px;margin-bottom:12px">📄</div>
+            <div id="doc-modal-title" style="font-size:15px;font-weight:600;margin-bottom:8px"></div>
+            <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px">Este documento está disponible en la carpeta del proyecto AprendeBA.</p>
+            <button onclick="document.getElementById('doc-modal').style.display='none'"
+              style="background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 20px;cursor:pointer;font-size:13px">Cerrar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Temario -->
+      <div id="etab-temario" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+          <div>
+            <h3 style="font-size:14px;font-weight:600;color:var(--text);margin:0 0 3px">Temario de seguimiento — AprendeBA</h3>
+            <p style="font-size:12px;color:var(--text-muted);margin:0">60 ítems en 11 reuniones · Extraído del temario ampliado del equipo</p>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font-size:10px;font-weight:600;padding:3px 9px;border-radius:10px;background:#f3f4f6;color:#374151">■ Informe</span>
+            <span style="font-size:10px;font-weight:600;padding:3px 9px;border-radius:10px;background:#fef3c7;color:#92400e">■ Decisión</span>
+            <span style="font-size:10px;font-weight:600;padding:3px 9px;border-radius:10px;background:#dbeafe;color:#1e40af">■ Desarrollo</span>
+          </div>
+        </div>
+        
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:12px;white-space:nowrap">18/05/2026</div>
+              <span style="font-size:11px;color:var(--text-muted)">9 ítems</span>
+              
+              
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA | Adultos</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Reclamos: BA Colaborativa. Ticket recibidos: 150 | Cerrados: 112 | Desarrollo: 20 | Espera respuesta usuario: 18 Bugs recurrentes: 1 | Falta plan de estudio 2 | Falta CUE o CUEs An…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA – Mantis 60688: Bug escuelas SecuAprende cargando datos en APBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Query aprobada y ejecutada en PRD el 11/05. Escuelas SecuAprende con acceso indebido a APBA fueron desactivadas temporalmente y se limpiaron los datos cargados en CL 2026.…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA – Pasaje a STG 13/05</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Phinx realizó el pasaje a STG el 13/05. Incluye tickets de gestión de pases y Adultos (59895, 60551, 60024). Pruebas en curso. Deploy a PRD previsto para el 20/05.…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA – Hotfix Mantis 60726: Error al guardar PPI</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Hotfix aprobado el 13/05. Phinx avisará cuando impacte en PRD.…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA – Hotfix carga de presentismo</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Fix implementado en PRD el 14/05.…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA – Mejora BO: Configuración Agenda Educativa aprobada</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Propuesta funcional aprobada el 15/05. Phinx coordinará demo en DEV.…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA – Solicitudes de áreas resueltas esta semana</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">• DEI (Leonardo Rivadeneira): regularización carga presentismo 1° bimestre – FEM modificada (15/05). • Cambio DNI alumna (13/05) y cambio de grado alumno Evan Catriel (14/05). • Al…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA – Nuevo requerimiento: botón SID en 'Otros accesos'</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Diego Cervera (SID) solicita agregar botón en la solapa 'Otros accesos' de APBA que redirija al Sistema de Intervención Digital. En análisis.…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA – Deploy a PRD 20/05</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Deploy a PRD con gestión de pases (Phinx + Quinttos) y tickets de Adultos. Módulo de pases disponible para escuelas desde el 20/05.…</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:12px;white-space:nowrap">26/05/2026</div>
+              <span style="font-size:11px;color:var(--text-muted)">11 ítems</span>
+              <span style="font-size:10px;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:8px">1 decisiones</span>
+              <span style="font-size:10px;color:#1e40af;background:#dbeafe;padding:2px 7px;border-radius:8px">1 desarrollo</span>
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#fef3c7;color:#92400e">Decisión</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">SA - Pases con APBA están en PRD</span>
+                  
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA | Adultos</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Reclamos: BA Colaborativa. Ticket recibidos: 163 | Cerrados: 137 | Desarrollo: 20 | Espera respuesta usuario: 6 Bugs recurrentes: 1 | Falta plan de estudio 2 | Falta CUE o CUEs Ane…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#dbeafe;color:#1e40af">Desarrollo</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Estimación: Situaciones Suspensión/Emergencia Otros accesos SATAE — Roles Preceptor y Equipo de Conducción</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 Phinx estimó 60 hs mejora de Situaciones + 20 hs agregado en Otros accesos = 80 hs totales. Aprobadas 🟡 Rol Preceptor y Eq de conducción (SATAE) = 105 hs totales. Pendiente de ap…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Deploy a PRD 20/05</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 Deploy a PRD realizado (corrido del 19/05 al 20/05). 🟢 4 desarrollos nuevos: Boletines Sec. Regularidad 1er bim, Tab Regularidad, Freezado Presentismo, Certificados 7° Adultos. 🟢…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Hotfixes del 20/05</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 MANTIS 60847: no generaba boletines por falta de presentismo — impactado en PRD. 🟢 MANTIS 60817: jornada extendida no debía bloquearse en presentismo — impactado en PRD.…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Boletines 1er bimestre</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Dif Ministerio vs Phinx (planilla 20/05) compartido por Drive — pendiente análisis fino. 🟡 Query enviada el 22/05 para regenerar boletines 🟢 Generación de boletines impactados ma…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Próximos pasos</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Continuar revisión Regularidad Datos+Phinx (cronograma MDH 26-28/05). 🔴 Definición pendiente de Gestión del Aprendizaje por conteo de NC en CT Presentismo 🟡 Definir prioridad SAT…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">App Familias: Definir cuando se desbloquean boletines APBA y SECUAP</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Habría que definir en qué fecha se permitiría por un lado que se vean los boletines provenientes de SecundariaAprende (migración de ECP terminada estimada para el viernes) y en qué…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA: Migración a Repos de GCBA del código fuente</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Proceso de pasar todo el código fuente a repositorios del Ministerio. PHINX debe confirmar en qué fecha termina de pasar todo.…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA: Implementación ambiente UNICABA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">El ambiente está implementado. PHINX va a dar de alta esta semana usuarios de prueba. Luego habría que ver cómo continuar con este proceso…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA: Tema cambio de dominio</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Pausado por el momento…</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:12px;white-space:nowrap">01/06/2026</div>
+              <span style="font-size:11px;color:var(--text-muted)">2 ítems</span>
+              <span style="font-size:10px;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:8px">1 decisiones</span>
+              
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA | Adultos</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Reclamos: BA Colaborativa. Ticket recibidos: 163 | Cerrados: 137 | Desarrollo: 20 | Espera respuesta usuario: 6 Bugs recurrentes: 1 | Falta plan de estudio 2 | Falta CUE o CUEs Ane…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#fef3c7;color:#92400e">Decisión</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 1) 300 estudiantes trabados que no pueden matricularse en Secundaria Aprende por falta de funcionalidad de pases para Inscriptos (Solo existe para matriculados): Hay que consegui…</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:12px;white-space:nowrap">08/06/2026</div>
+              <span style="font-size:11px;color:var(--text-muted)">7 ítems</span>
+              <span style="font-size:10px;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:8px">1 decisiones</span>
+              
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA | Adultos</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Reclamos: BA Colaborativa. Ticket recibidos: 174 | Cerrados: 156 | Desarrollo: 10 | Espera respuesta usuario: 8 Bugs recurrentes: 1 | Falta plan de estudio 2 | Falta CUE o CUEs Ane…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#fef3c7;color:#92400e">Decisión</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Migración a repositorios de código fuente del Ministerio: Hace un mes que PHINX dijo que lo iba a hacer y no lo hizo. No respondió los últimos reclamos al respecto. Esto bloquea …</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Presentismo - Querys/Hotfix</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 Hotfix Presentismo Duplicado 🟢 Query Fix Presentismo (alumnos Mistral)…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — MANTIS 0061139: Error desplegable ID_aulas</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢Hotfix implementado con la corrección…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — DEMO BO Agenda Educativa</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 Demo al equipo del avance en DEV…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Reunión Google Analytics en AprendeBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 Reunión presencial el 02/06 (convocada por Martín Miguez). 🟡 Avance en definición de métricas/integración con el equipo.…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Próximos pasos / Foco semana del 8/6</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟡 Próximo deploy a PRD: 10/06. 🟡 Cerrar estimación Pases multiplataforma + Receso de invierno. 🟡 Avanzar con Mejoras UX/UI Fase I (250 hs).…</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:12px;white-space:nowrap">17/06/2026</div>
+              <span style="font-size:11px;color:var(--text-muted)">5 ítems</span>
+              <span style="font-size:10px;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:8px">1 decisiones</span>
+              
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">SA- Gestión de pases con APBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">La semana pasada se detectó un error en gestión de pases con APBA. El error era que en SA se aprobaba el pase pero en APBA quedaba en pendiente. Phinx ya realizó el fix y se sube l…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#fef3c7;color:#92400e">Decisión</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Migración a repositorios de código fuente del Ministerio: Hace un mes que PHINX dijo que lo iba a hacer y no lo hizo. No respondió los últimos reclamos al respecto. Esto bloquea …</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA | Adultos</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Reclamos: BA Colaborativa. Ticket recibidos: 174 | Cerrados: 156 | Desarrollo: 10 | Espera respuesta usuario: 8 Bugs recurrentes: 1 | Falta plan de estudio 2 | Falta CUE o CUEs Ane…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 STG el 09/06 con aprobación en PROD del 17/06 🟡 7 desarrollos nuevos en el deploy: • Mejoras UX/UI (Fase I + II): Buscador global de alumnos, cambios el tooltip de presentismo. •…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">Calificaciones embeded - AprendeBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 vision DIRECTIVO: Pasamos información para la configuracion del lado de phinx, estamos terminando ajustes de la seguridad por filas…</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:12px;white-space:nowrap">22/06/2026</div>
+              <span style="font-size:11px;color:var(--text-muted)">3 ítems</span>
+              
+              
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Migración a repositorios de código fuente del Ministerio: Hace un mes que PHINX dijo que lo iba a hacer y no lo hizo. No respondió los últimos reclamos al respecto. Esto bloquea …</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA | Adultos</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Reclamos: BA Colaborativa. Ticket recibidos: 174 | Cerrados: 156 | Desarrollo: 10 | Espera respuesta usuario: 8 Bugs recurrentes: 1 | Falta plan de estudio 2 | Falta CUE o CUEs Ane…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA | Especial</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">1. MÉTRICAS DE OPERACIÓN — Tickets Sin variación respecto a la semana anterior. 2. ESTADO DE EJECUCIÓN 🟡 a- Legajos Especial: se actualizó información por mail. Phinx no cuenta con…</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:12px;white-space:nowrap">29/06/2026</div>
+              <span style="font-size:11px;color:var(--text-muted)">6 ítems</span>
+              
+              
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Migración a repositorios de código fuente del Ministerio 🟠 Debería incluirse en procesos de alta de alumno validación con API de búsqueda en Secundaria Aprende para no generar al…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Deploy a PRD 17/06</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 Deploy a PRD del 17/06 ejecutado 🟢 Incluye: 7 desarrollos nuevos (UX/UI Fase I+II, Notificaciones, BO Agenda Educativa, Cambio cálculo Regularidad, Situaciones Suspensión/Emergen…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Hotfixes post-deploy del período</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 18/06 — Hotfix Código de vinculación 🟢 22/06 — Hotfix Generación de boletines para alumnos con cambios de sección (CT/sin CT). 🟢 23/06 — Hotfix para reinscribir alumnos.…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Mejoras UX/UI: avances Fase III</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 25/06 — Sealizó presentación de avances de UX/UI APBA a UM (25/06 15hs). 🔴 Fase III (mejora UX sobre el modulo de presentismo para versión Movil) continúa en desarrollo (estimada…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Foco semana 29/6 al 4/7</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Cierre Regularidad APBA-SA (reunión 26/06) — definición pendiente. 🟡 30/6 APBA se reunirá con el nuevo Proveedor 🟡 8/7 Implementación en STAGE…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA | Adultos</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Reclamos: BA Colaborativa. Ticket recibidos: 184 | Cerrados: 163 | Desarrollo: 13 | Espera respuesta usuario: 8 Estado: Etapa de matriculación de CUE con cursada de Marzo a Marzo. …</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:12px;white-space:nowrap">13/07/2026</div>
+              <span style="font-size:11px;color:var(--text-muted)">5 ítems</span>
+              <span style="font-size:10px;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:8px">1 decisiones</span>
+              
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — STG actualizado con datos de PRD (pruebas Receso Invernal)</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 29/06 — Se solicitó a Phinx pisar BD de STG con versión actualizada de PRD para probar Receso Invernal con datos reales. 🟢 30/06 — Phinx confirmó bajada BD PRD → STG con todas la…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Hotfixes aprobados de la semana</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 29/06 — Hotfix MANTIS 61688: cambio de sección y gestión de pases 🟢 30/06 — Hotfix MANTIS 61828: en las ENS se mezcla la gestión de roles de los 3 niveles.…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#fef3c7;color:#92400e">Decisión</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA — Estimación MANTIS 0061722 (Externos) + Mantis en curso</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 Phinx envió estimación del MANTIS 0061722 — Mejoras en solapa Externos (baja/edición de legajo) 62hs. 🟡Pendiente aprobación interna y priorización para próximo release.…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Migración a repositorios de código fuente del Ministerio 🟠 Debería incluirse en procesos de alta de alumno validación con API de búsqueda en Secundaria Aprende para no generar al…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">Duplicidad de alumnos APBA-SA.</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Nos llegó el primer caso de alumno duplicado con carga de presentismo, calificaciones y boletín generado en ambas plataformas. Se procedió a dar de baja el registro que no correspo…</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:12px;white-space:nowrap">20/07/2026</div>
+              <span style="font-size:11px;color:var(--text-muted)">5 ítems</span>
+              
+              
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">Duplicidad de alumnos APBA-SA.</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Nos llegó el primer caso de alumno duplicado con carga de presentismo, calificaciones y boletín generado en ambas plataformas. Se procedió a dar desmatricular el estudiante en APBA…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA - Deploy a PRD 15/07</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 Pasaje a PRD del 15/07 ejecutado. 🟢 Novedades: calificaciones del 2do bimestre habilitadas (Primaria y Secundaria) + 1er cuatrimestre para informes de Nivel Inicial habilitado. 🟢…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA - Hotfixes de la semana</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟢 13/07 - Hotfix MANTIS 62079 - Faltaban criterios de evaluación de Jornada Extendida (JE) en Calificaciones Primaria. 🟢 14/07 - Hotfix MANTIS 62119 - Query de regularidad para cam…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA - Foco semana 21/7 al 25/7</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Cierre de casos raros de Regularidad 🟡 Definir avance de Alertas de Presentismo (125 hs) y Sobreescritura de Presentismo. 🟡 Ongoing: Gestión de Pases Especiales (80%) y Cuarto Bi…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Migración a repositorios de código fuente del Ministerio 🟠 Debería incluirse en procesos de alta de alumno validación con API de búsqueda en Secundaria Aprende para no generar al…</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:12px;white-space:nowrap">27/07/2026</div>
+              <span style="font-size:11px;color:var(--text-muted)">5 ítems</span>
+              <span style="font-size:10px;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:8px">2 decisiones</span>
+              
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">API histórico APBA/SA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Está en proceso por parte de phinx incluir el histórico de los estudiantes que vienen de APBA en SA…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA - Estado Proyecto UX (Modal de Satisfacción)</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟡 Nuevo requerimiento del equipo de Comunicación (8/7): Modal de Satisfacción a integrar en AprendeBA — encuesta al cierre de semana de asistencia y al cierre de bimestre de la esc…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#fef3c7;color:#92400e">Decisión</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">APBA - Presentismo según FEM / Priorización Mantis jul-ago</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🟡22/7 — Propuesta de Borrado lógico de Presentismo según FEM - entre Phinx y el equipo de datos, están definiendo como podrán abarcar los casos aislados que se presenten. 🟡 22/7 — …</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Migración a repositorios de código fuente del Ministerio 🟠 Debería incluirse en procesos de alta de alumno validación con API de búsqueda en Secundaria Aprende para no generar al…</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#fef3c7;color:#92400e">Decisión</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">Responsables en Aprende BA (comun y especial)</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Phinx consume una API nuestra para listar responsables via GET. se nos había pedido implementar un POST para poder editar y añadir nuevos. pasamos el contrato de datos y nunca lo…</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:12px;white-space:nowrap">03/08/2026</div>
+              <span style="font-size:11px;color:var(--text-muted)">2 ítems</span>
+              
+              
+            </div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">AprendeBA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">🔴 Migración a repositorios de código fuente del Ministerio 🔵 Procesos de alta de alumno validación con API de búsqueda en Secundaria Aprende para no generar alumnos duplicados. Se …</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:90px 1fr;gap:12px;padding:8px 14px;border-bottom:1px solid #f1f5f9;align-items:start">
+                <div style="padding-top:1px"><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#f3f4f6;color:#374151">Informe</span></div>
+                <div>
+                  <span style="font-size:12px;line-height:1.4;color:var(--text)">API histórico APBA/SA</span>
+                  <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Está en proceso por parte de phinx incluir el histórico de los estudiantes que vienen de APBA en SA…</div>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
 
       <p style="font-size:11px;color:var(--text-muted);margin-top:12px">
@@ -7168,6 +7820,10 @@ function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
     var eh = document.getElementById('etab-historial');
     if(eh) eh.style.display = key === 'historial' ? '' : 'none';
     document.getElementById('etab-roadmap').style.display  = key === 'roadmap'  ? '' : 'none';
+    var ei = document.getElementById('etab-informes');
+    if(ei) ei.style.display = key === 'informes' ? '' : 'none';
+    var et = document.getElementById('etab-temario');
+    if(et) et.style.display = key === 'temario'  ? '' : 'none';
     if (key === 'roadmap') { setTimeout(prdLoadState, 50); setTimeout(pausadoLoadState, 60); }
   }
 
