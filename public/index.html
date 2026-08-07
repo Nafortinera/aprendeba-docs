@@ -229,6 +229,10 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       HU + CA
     </div>
+    <div class="nav-item" onclick="nav('der',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="2" width="8" height="6" rx="1"/><rect x="14" y="2" width="8" height="6" rx="1"/><rect x="7" y="16" width="10" height="6" rx="1"/><path d="M6 8v4h12V8"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
+      DER / Entidades
+    </div>
 
   </div>
 
@@ -3485,6 +3489,16 @@ flowchart TD
 
 
     <!-- ── HU + CA ── -->
+    <div class="view" id="view-der">
+      <div class="page-header">
+        <h1>Diagrama Entidad-Relación</h1>
+        <p>Modelo de datos de AprendeBA por módulo — usuarios, establecimiento, matriculación, presentismo, calificaciones y boletines.</p>
+      </div>
+      <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:#fff;height:calc(100vh - 180px)">
+        <iframe src="aprendeba-der.html" style="width:100%;height:100%;border:none" title="DER AprendeBA" loading="lazy"></iframe>
+      </div>
+    </div>
+
     <div class="view" id="view-hu">
       <div class="page-header">
         <h1>Historias de Usuario</h1>
