@@ -3535,24 +3535,32 @@ flowchart TD
           <span>Épicas / Módulos principales</span>
         </div>
         <div class="tbl-wrap">
-          <div class="tbl-head" style="grid-template-columns:60px 200px 1fr">
-            <span>#</span><span>Épica / Módulo</span><span>Descripción</span>
+          <div class="tbl-head" style="grid-template-columns:60px 200px 1fr 60px">
+            <span>#</span><span>Épica / Módulo</span><span>Descripción</span><span>HUs</span>
           </div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E01</span><span style="font-weight:600">Gestión de Inscriptos</span><span style="font-size:13px">Alta, asignación de sección y matriculación de estudiantes inscriptos.</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E02</span><span style="font-weight:600">Gestión de Matriculados</span><span style="font-size:13px">Consulta, cambio de sección, búsqueda global y desmatriculación con motivo tipificado.</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E03</span><span style="font-weight:600">Cambio de Establecimiento</span><span style="font-size:13px">Selección y cambio del establecimiento activo dentro de la red escolar.</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E04</span><span style="font-weight:600">Gestión de Pases</span><span style="font-size:13px">Visualización y gestión de pases entrantes y salientes entre establecimientos.</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E05</span><span style="font-weight:600">Legajo del Estudiante</span><span style="font-size:13px">Ficha completa: datos personales, residencia, responsables, salud e historial de movimientos.</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E06</span><span style="font-weight:600">Toma de Asistencia</span><span style="font-size:13px">Registro individual y masivo, justificaciones, regularidad, autoguardado y navegación semanal.</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E07</span><span style="font-weight:600">Calificaciones y Boletines</span><span style="font-size:13px">Carga bimestral de notas, validaciones, generación y emisión de boletines por nivel.</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E08</span><span style="font-weight:600">Espacios Curriculares Pendientes</span><span style="font-size:13px">Gestión de materias adeudadas de ciclos anteriores (ECP).</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E09</span><span style="font-weight:600">Módulos Puente (PIP/PPS/PPE)</span><span style="font-size:13px">Informes pedagógicos de transición entre niveles y efectivización de matrícula.</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E10</span><span style="font-weight:600">Notificaciones y Comunicaciones</span><span style="font-size:13px">Domicilio electrónico escolar, adhesión, consentimientos y auditoría de comunicaciones.</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E11</span><span style="font-weight:600">QRs y Kiosco de Entrada</span><span style="font-size:13px">Generación de QR por alumno y autoregistro de asistencia por escaneo en kiosco.</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E12</span><span style="font-weight:600">Acceso Presentismo (PWA)</span><span style="font-size:13px">App instalable para tablets/celulares con registro de asistencia por cámara QR.</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E13</span><span style="font-weight:600">Asistente Virtual y Ayuda</span><span style="font-size:13px">Asistente conversacional con base de conocimiento, FAQ y accesos rápidos.</span></div>
-          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E14</span><span style="font-weight:600">Back Office / Administración</span><span style="font-size:13px">Gestión de establecimientos, roles, usuarios, agenda educativa y configuración jurisdiccional.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E01</span><span style="font-weight:600">Gestión de Inscriptos</span><span style="font-size:13px">Alta, asignación de sección y matriculación de estudiantes inscriptos.</span><span><a href="#" onclick="nav('hu-sistema',this);setTimeout(function(){husFilter('mod',document.querySelector('[data-hus-mod=\"matriculacion\"]'))},100);return false;" style="font-size:12px;color:#0891b2;text-decoration:none;font-weight:600">10 →</a></span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E02</span><span style="font-weight:600">Gestión de Matriculados</span><span style="font-size:13px">Consulta, cambio de sección, búsqueda global y desmatriculación con motivo tipificado.</span><span><a href="#" onclick="nav('hu-sistema',this);setTimeout(function(){husFilter('mod',document.querySelector('[data-hus-mod=\"matriculacion\"]'))},100);return false;" style="font-size:12px;color:#0891b2;text-decoration:none;font-weight:600">10 →</a></span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E03</span><span style="font-weight:600">Cambio de Establecimiento</span><span style="font-size:13px">Selección y cambio del establecimiento activo dentro de la red escolar.</span><span><a href="#" onclick="nav('hu-sistema',this);setTimeout(function(){husFilter('mod',document.querySelector('[data-hus-mod=\"matriculacion\"]'))},100);return false;" style="font-size:12px;color:#0891b2;text-decoration:none;font-weight:600">10 →</a></span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E04</span><span style="font-weight:600">Gestión de Pases</span><span style="font-size:13px">Visualización y gestión de pases entrantes y salientes entre establecimientos.</span><span><a href="#" onclick="nav('hu-sistema',this);setTimeout(function(){husFilter('mod',document.querySelector('[data-hus-mod=\"matriculacion\"]'))},100);return false;" style="font-size:12px;color:#0891b2;text-decoration:none;font-weight:600">10 →</a></span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E05</span><span style="font-weight:600">Legajo del Estudiante</span><span style="font-size:13px">Ficha completa: datos personales, residencia, responsables, salud e historial de movimientos.</span><span><a href="#" onclick="nav('hu-sistema',this);setTimeout(function(){husFilter('mod',document.querySelector('[data-hus-mod=\"legajo\"]'))},100);return false;" style="font-size:12px;color:#0891b2;text-decoration:none;font-weight:600">7 →</a></span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E06</span><span style="font-weight:600">Toma de Asistencia</span><span style="font-size:13px">Registro individual y masivo, justificaciones, regularidad, autoguardado y navegación semanal.</span><span><a href="#" onclick="nav('hu-sistema',this);setTimeout(function(){husFilter('mod',document.querySelector('[data-hus-mod=\"presentismo\"]'))},100);return false;" style="font-size:12px;color:#0891b2;text-decoration:none;font-weight:600">10 →</a></span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E07</span><span style="font-weight:600">Calificaciones y Boletines</span><span style="font-size:13px">Carga bimestral de notas, validaciones, generación y emisión de boletines por nivel.</span><span><a href="#" onclick="nav('hu-sistema',this);setTimeout(function(){husFilter('mod',document.querySelector('[data-hus-mod=\"calificaciones\"]'))},100);return false;" style="font-size:12px;color:#0891b2;text-decoration:none;font-weight:600">11 →</a></span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E08</span><span style="font-weight:600">Espacios Curriculares Pendientes</span><span style="font-size:13px">Gestión de materias adeudadas de ciclos anteriores (ECP).</span><span><a href="#" onclick="nav('hu-sistema',this);setTimeout(function(){husFilter('mod',document.querySelector('[data-hus-mod=\"legajo\"]'))},100);return false;" style="font-size:12px;color:#0891b2;text-decoration:none;font-weight:600">7 →</a></span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E09</span><span style="font-weight:600">Módulos Puente (PIP/PPS/PPE)</span><span style="font-size:13px">Informes pedagógicos de transición entre niveles y efectivización de matrícula.</span><span><a href="#" onclick="nav('hu-sistema',this);setTimeout(function(){husFilter('mod',document.querySelector('[data-hus-mod=\"puente\"]'))},100);return false;" style="font-size:12px;color:#0891b2;text-decoration:none;font-weight:600">4 →</a></span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E10</span><span style="font-weight:600">Notificaciones y Comunicaciones</span><span style="font-size:13px">Domicilio electrónico escolar, adhesión, consentimientos y auditoría de comunicaciones.</span><span style="font-size:11px;color:var(--text-muted)">—</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E11</span><span style="font-weight:600">QRs y Kiosco de Entrada</span><span style="font-size:13px">Generación de QR por alumno y autoregistro de asistencia por escaneo en kiosco.</span><span style="font-size:11px;color:var(--text-muted)">—</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E12</span><span style="font-weight:600">Acceso Presentismo (PWA)</span><span style="font-size:13px">App instalable para tablets/celulares con registro de asistencia por cámara QR.</span><span style="font-size:11px;color:var(--text-muted)">—</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E13</span><span style="font-weight:600">Asistente Virtual y Ayuda</span><span style="font-size:13px">Asistente conversacional con base de conocimiento, FAQ y accesos rápidos.</span><span style="font-size:11px;color:var(--text-muted)">—</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr 60px"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E14</span><span style="font-weight:600">Back Office / Administración</span><span style="font-size:13px">Gestión de establecimientos, roles, usuarios, agenda educativa y configuración jurisdiccional.</span><span><a href="#" onclick="nav('hu-sistema',this);setTimeout(function(){husFilter('mod',document.querySelector('[data-hus-mod=\"backoffice\"]'))},100);return false;" style="font-size:12px;color:#0891b2;text-decoration:none;font-weight:600">9 →</a></span></div>
         </div>
+      </div>
+
+      <!-- HU link banner -->
+      <div style="background:#e0f2fe;border:1px solid #bae6fd;border-radius:8px;padding:12px 16px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div style="font-size:13px;color:#0369a1">
+          <strong>51 Historias de Usuario</strong> con 14 Criterios de Aceptación documentados en Gherkin — organizadas por módulo, actor y fuente.
+        </div>
+        <button class="filter-btn on" style="white-space:nowrap" onclick="nav('hu-sistema',this)">Ver HU + CA →</button>
       </div>
 
       <!-- Section 3 — Riesgos -->
@@ -3755,10 +3763,10 @@ flowchart TD
 
       <!-- Stats -->
       <div class="stat-grid" style="grid-template-columns:repeat(5,1fr);margin-bottom:20px">
-        <div class="stat-card"><div class="stat-label">HUs totales</div><div class="stat-val" style="color:var(--accent)">27</div><div class="stat-sub">backlog sistema</div></div>
+        <div class="stat-card"><div class="stat-label">HUs totales</div><div class="stat-val" style="color:var(--accent)">51</div><div class="stat-sub">backlog sistema</div></div>
         <div class="stat-card"><div class="stat-label">Épicas</div><div class="stat-val" style="color:#0891b2">6</div><div class="stat-sub">módulos</div></div>
-        <div class="stat-card"><div class="stat-label">Con CAs</div><div class="stat-val" style="color:#065f46">7</div><div class="stat-sub">Gherkin documentado</div></div>
-        <div class="stat-card"><div class="stat-label">Prioridad alta</div><div class="stat-val" style="color:#991b1b">16</div><div class="stat-sub">del backlog</div></div>
+        <div class="stat-card"><div class="stat-label">Con CAs</div><div class="stat-val" style="color:#065f46">14</div><div class="stat-sub">Gherkin documentado</div></div>
+        <div class="stat-card"><div class="stat-label">Prioridad alta</div><div class="stat-val" style="color:#991b1b">33</div><div class="stat-sub">del backlog</div></div>
         <div class="stat-card"><div class="stat-label">Actores</div><div class="stat-val" style="color:#7c3aed">5</div><div class="stat-sub">Docente · Dir · Asesor · Prec · Admin</div></div>
       </div>
 
@@ -3777,7 +3785,12 @@ flowchart TD
         <button class="filter-btn" data-hus-act="docente" onclick="husFilter('act',this)">Docente</button>
         <button class="filter-btn" data-hus-act="director" onclick="husFilter('act',this)">Director</button>
         <button class="filter-btn" data-hus-act="asesor" onclick="husFilter('act',this)">Asesor</button>
+        <button class="filter-btn" data-hus-act="operador" onclick="husFilter('act',this)">Operador</button>
         <button class="filter-btn" data-hus-act="administrador" onclick="husFilter('act',this)">Administrador</button>
+        <span class="filter-label" style="margin-left:8px">Fuente</span>
+        <button class="filter-btn on" data-hus-src="todos" onclick="husFilter('src',this)">Todas</button>
+        <button class="filter-btn" data-hus-src="equipo" onclick="husFilter('src',this)">Generadas (equipo)</button>
+        <button class="filter-btn" data-hus-src="spec" onclick="husFilter('src',this)">Spec v2.0</button>
       </div>
 
       <!-- Table header -->
@@ -3787,7 +3800,7 @@ flowchart TD
         </div>
 
         <!-- E-S01 Presentismo -->
-        <div class="tbl-row hus-row" data-mod="presentismo" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="presentismo" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#0891b2">HUS-001</span>
           <span>Como <strong>Docente</strong>, quiero registrar la asistencia diaria de mis alumnos para cumplir con el relevamiento académico del ciclo lectivo.</span>
           <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Docente</span></span>
@@ -3817,7 +3830,7 @@ flowchart TD
           </div>
         </div>
 
-        <div class="tbl-row hus-row" data-mod="presentismo" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="presentismo" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#0891b2">HUS-002</span>
           <span>Como <strong>Docente</strong>, quiero ver el resumen de asistencias acumuladas de cada alumno para identificar quiénes están en riesgo de perder regularidad.</span>
           <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Docente</span></span>
@@ -3825,7 +3838,7 @@ flowchart TD
           <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="presentismo" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="presentismo" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#0891b2">HUS-003</span>
           <span>Como <strong>Docente</strong>, quiero cargar justificaciones de ausencia para que esas faltas no afecten la regularidad del alumno.</span>
           <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Docente</span></span>
@@ -3833,7 +3846,7 @@ flowchart TD
           <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="presentismo" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="presentismo" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#0891b2">HUS-004</span>
           <span>Como <strong>Director</strong>, quiero consultar el reporte de presentismo por sección para monitorear la asistencia del establecimiento sin acceder aula por aula.</span>
           <span><span class="badge" style="background:#fef3c7;color:#b45309">Director</span></span>
@@ -3841,7 +3854,7 @@ flowchart TD
           <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="presentismo" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="presentismo" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#0891b2">HUS-005</span>
           <span>Como <strong>Docente</strong>, quiero registrar el presentismo del comedor de forma separada para cumplir con el control de asistencia al servicio de alimentación.</span>
           <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Docente</span></span>
@@ -3851,7 +3864,7 @@ flowchart TD
         </div>
 
         <!-- E-S02 Calificaciones -->
-        <div class="tbl-row hus-row" data-mod="calificaciones" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="calificaciones" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#7c3aed">HUS-006</span>
           <span>Como <strong>Docente</strong>, quiero cargar las calificaciones bimestrales de mis alumnos para documentar el avance académico del período.</span>
           <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Docente</span></span>
@@ -3875,7 +3888,7 @@ flowchart TD
           </div>
         </div>
 
-        <div class="tbl-row hus-row" data-mod="calificaciones" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="calificaciones" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#7c3aed">HUS-007</span>
           <span>Como <strong>Docente</strong>, quiero generar el boletín de calificaciones de mis alumnos para compartir el informe de rendimiento con las familias.</span>
           <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Docente</span></span>
@@ -3883,7 +3896,7 @@ flowchart TD
           <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="calificaciones" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="calificaciones" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#7c3aed">HUS-008</span>
           <span>Como <strong>Director</strong>, quiero ver el estado de cierre de calificaciones por sección para verificar que todos los docentes completaron la carga antes del cierre bimestral.</span>
           <span><span class="badge" style="background:#fef3c7;color:#b45309">Director</span></span>
@@ -3891,7 +3904,7 @@ flowchart TD
           <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="calificaciones" data-act="asesor" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="calificaciones" data-act="asesor" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#7c3aed">HUS-009</span>
           <span>Como <strong>Asesor</strong>, quiero modificar manualmente la condición de regularidad de un alumno para corregir casos especiales contemplados en la normativa.</span>
           <span><span class="badge" style="background:#f3e8ff;color:#7c3aed">Asesor</span></span>
@@ -3916,7 +3929,7 @@ flowchart TD
         </div>
 
         <!-- E-S03 Matriculación -->
-        <div class="tbl-row hus-row" data-mod="matriculacion" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="matriculacion" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#0d9488">HUS-010</span>
           <span>Como <strong>Director</strong>, quiero inscribir un alumno nuevo en mi establecimiento para registrar su incorporación al sistema educativo.</span>
           <span><span class="badge" style="background:#fef3c7;color:#b45309">Director</span></span>
@@ -3924,7 +3937,7 @@ flowchart TD
           <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="matriculacion" data-act="asesor" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="matriculacion" data-act="asesor" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#0d9488">HUS-011</span>
           <span>Como <strong>Asesor</strong>, quiero gestionar un pase de alumno desde mi escuela hacia otra para formalizar el cambio de establecimiento.</span>
           <span><span class="badge" style="background:#f3e8ff;color:#7c3aed">Asesor</span></span>
@@ -3932,7 +3945,7 @@ flowchart TD
           <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="matriculacion" data-act="asesor" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="matriculacion" data-act="asesor" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#0d9488">HUS-012</span>
           <span>Como <strong>Asesor</strong>, quiero buscar un alumno por DNI o nombre en toda la plataforma para encontrar su historial sin conocer su establecimiento actual.</span>
           <span><span class="badge" style="background:#f3e8ff;color:#7c3aed">Asesor</span></span>
@@ -3955,7 +3968,7 @@ flowchart TD
             <strong>ENTONCES</strong> el sistema muestra "No se encontraron alumnos con ese criterio".</div>
           </div>
         </div>
-        <div class="tbl-row hus-row" data-mod="matriculacion" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="matriculacion" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#0d9488">HUS-013</span>
           <span>Como <strong>Director</strong>, quiero desmatricular un alumno que abandonó el establecimiento para mantener el padrón vigente.</span>
           <span><span class="badge" style="background:#fef3c7;color:#b45309">Director</span></span>
@@ -3965,7 +3978,7 @@ flowchart TD
         </div>
 
         <!-- E-S04 Legajo -->
-        <div class="tbl-row hus-row" data-mod="legajo" data-act="asesor" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="legajo" data-act="asesor" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#d97706">HUS-014</span>
           <span>Como <strong>Asesor</strong>, quiero consultar el legajo completo de un alumno para ver su historial académico, pases y regularidad en un solo lugar.</span>
           <span><span class="badge" style="background:#f3e8ff;color:#7c3aed">Asesor</span></span>
@@ -3973,7 +3986,7 @@ flowchart TD
           <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="legajo" data-act="asesor" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="legajo" data-act="asesor" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#d97706">HUS-015</span>
           <span>Como <strong>Asesor</strong>, quiero actualizar los datos del responsable del alumno para mantener la información de contacto vigente.</span>
           <span><span class="badge" style="background:#f3e8ff;color:#7c3aed">Asesor</span></span>
@@ -3981,7 +3994,7 @@ flowchart TD
           <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="legajo" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="legajo" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#d97706">HUS-016</span>
           <span>Como <strong>Docente</strong>, quiero ver los Espacios Curriculares Pendientes (ECP) de mis alumnos para conocer qué materias adeudan de años anteriores.</span>
           <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Docente</span></span>
@@ -3989,7 +4002,7 @@ flowchart TD
           <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="legajo" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="legajo" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#d97706">HUS-017</span>
           <span>Como <strong>Director</strong>, quiero consultar el listado de alumnos con materias pendientes para planificar el apoyo pedagógico necesario.</span>
           <span><span class="badge" style="background:#fef3c7;color:#b45309">Director</span></span>
@@ -3999,7 +4012,7 @@ flowchart TD
         </div>
 
         <!-- E-S05 Puente PIP/PPS/PPE -->
-        <div class="tbl-row hus-row" data-mod="puente" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="puente" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#6366f1">HUS-018</span>
           <span>Como <strong>Docente</strong> de sala de 5, quiero completar el informe PIP de cada alumno para acompañar su transición al nivel primario.</span>
           <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Docente</span></span>
@@ -4007,7 +4020,7 @@ flowchart TD
           <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="puente" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="puente" data-act="docente" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#6366f1">HUS-019</span>
           <span>Como <strong>Docente</strong> de 7° grado, quiero completar el informe PPS de cada alumno para facilitar su ingreso al nivel secundario.</span>
           <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Docente</span></span>
@@ -4030,7 +4043,7 @@ flowchart TD
             <strong>ENTONCES</strong> el sistema muestra el informe en modo solo lectura con indicación de la fecha de cierre.</div>
           </div>
         </div>
-        <div class="tbl-row hus-row" data-mod="puente" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="puente" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#6366f1">HUS-020</span>
           <span>Como <strong>Director</strong>, quiero ejecutar el proceso de efectivización (PPE) para confirmar el padrón del nuevo ciclo lectivo.</span>
           <span><span class="badge" style="background:#fef3c7;color:#b45309">Director</span></span>
@@ -4038,7 +4051,7 @@ flowchart TD
           <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="puente" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="puente" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#6366f1">HUS-021</span>
           <span>Como <strong>Director</strong>, quiero revisar la proyección de alumnos antes de efectivizar para detectar movimientos esperados y ajustar la planificación.</span>
           <span><span class="badge" style="background:#fef3c7;color:#b45309">Director</span></span>
@@ -4048,7 +4061,7 @@ flowchart TD
         </div>
 
         <!-- E-S06 Backoffice -->
-        <div class="tbl-row hus-row" data-mod="backoffice" data-act="administrador" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="backoffice" data-act="administrador" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#64748b">HUS-022</span>
           <span>Como <strong>Administrador</strong>, quiero dar de alta un nuevo establecimiento en la plataforma para habilitarlo en el sistema educativo.</span>
           <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
@@ -4056,7 +4069,7 @@ flowchart TD
           <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="backoffice" data-act="administrador" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="backoffice" data-act="administrador" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#64748b">HUS-023</span>
           <span>Como <strong>Administrador</strong>, quiero asignar roles a usuarios de un establecimiento para que accedan solo a las funcionalidades de su perfil.</span>
           <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
@@ -4079,7 +4092,7 @@ flowchart TD
             <strong>ENTONCES</strong> el sistema muestra "Los roles seleccionados no pueden coexistir en el mismo establecimiento".</div>
           </div>
         </div>
-        <div class="tbl-row hus-row" data-mod="backoffice" data-act="administrador" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="backoffice" data-act="administrador" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#64748b">HUS-024</span>
           <span>Como <strong>Administrador</strong>, quiero configurar el período de carga de calificaciones para habilitar o cerrar la ventana según el calendario escolar.</span>
           <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
@@ -4087,7 +4100,7 @@ flowchart TD
           <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="backoffice" data-act="administrador" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="backoffice" data-act="administrador" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#64748b">HUS-025</span>
           <span>Como <strong>Administrador</strong>, quiero consultar el historial de acciones de un usuario para auditar operaciones sensibles en el sistema.</span>
           <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
@@ -4095,7 +4108,7 @@ flowchart TD
           <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="backoffice" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="backoffice" data-act="director" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#64748b">HUS-026</span>
           <span>Como <strong>Director</strong>, quiero habilitar o deshabilitar módulos en mi establecimiento para adaptarlos al ciclo lectivo vigente.</span>
           <span><span class="badge" style="background:#fef3c7;color:#b45309">Director</span></span>
@@ -4103,7 +4116,7 @@ flowchart TD
           <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
-        <div class="tbl-row hus-row" data-mod="backoffice" data-act="administrador" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <div class="tbl-row hus-row" data-src="equipo" data-mod="backoffice" data-act="administrador" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
           <span style="font-family:monospace;font-size:12px;color:#64748b">HUS-027</span>
           <span>Como <strong>Administrador</strong>, quiero exportar el reporte de uso por módulo y establecimiento para analizar la adopción de la plataforma.</span>
           <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
@@ -4112,10 +4125,294 @@ flowchart TD
           <span style="font-size:11px;color:var(--text-muted)">—</span>
         </div>
 
+
+
+      <!-- ─── Spec v2.0 HUs ─── -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin:18px 0 10px;display:flex;align-items:center;gap:10px">
+        <svg width="16" height="16" fill="none" stroke="#0891b2" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span style="font-size:13px;color:var(--text)"><strong>Especificaciones v2.0 — mayo 2026</strong> · <span style="color:var(--text-muted)">AprendeBA_HU_CA_CasoDeUso.docx · 24 HUs · actores: Ciudadano (Docente/Preceptor) · Operador (Secretaria/Vice) · Administrador (Directivo/Supervisor)</span></span>
+      </div>
+
+      <!-- E07 Matriculación -->
+      <div class="tbl-row hus-row" data-mod="matriculacion" data-act="administrador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#0d9488">HU-022</span>
+        <span>Como <strong>Administrador</strong>, quiero crear y editar secciones del ciclo lectivo para organizar los grados antes de iniciar la matriculación.</span>
+        <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E07 Matriculación</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="matriculacion" data-act="administrador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#0d9488">HU-023</span>
+        <span>Como <strong>Administrador</strong>, quiero efectivizar el establecimiento para habilitar el proceso de matriculación de alumnos.</span>
+        <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E07 Matriculación</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="matriculacion" data-act="operador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#0d9488">HU-024</span>
+        <span>Como <strong>Operador</strong>, quiero matricular un alumno inscripto asignándolo a una sección para registrar su ingreso al ciclo lectivo.</span>
+        <span><span class="badge" style="background:#fef3c7;color:#b45309">Operador</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E07 Matriculación</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="matriculacion" data-act="operador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#0d9488">HU-025</span>
+        <span>Como <strong>Operador</strong>, quiero solicitar el pase de un alumno hacia otro establecimiento para registrar el cambio institucional.</span>
+        <span><span class="badge" style="background:#fef3c7;color:#b45309">Operador</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E07 Matriculación</span>
+        <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="matriculacion" data-act="operador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#0d9488">HU-026</span>
+        <span>Como <strong>Operador</strong>, quiero generar el código único de vinculación de un alumno para conectar su legajo con la plataforma.</span>
+        <span><span class="badge" style="background:#fef3c7;color:#b45309">Operador</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E07 Matriculación</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="matriculacion" data-act="administrador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#0d9488">HU-027</span>
+        <span>Como <strong>Administrador</strong>, quiero cambiar la sección de un alumno matriculado para corregir asignaciones incorrectas.</span>
+        <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E07 Matriculación</span>
+        <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+
+      <!-- E08 Presentismo -->
+      <div class="tbl-row hus-row" data-mod="presentismo" data-act="docente" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#0891b2">HU-028</span>
+        <span>Como <strong>Ciudadano</strong> (Docente/Preceptor), quiero registrar la asistencia diaria de los alumnos de mi sección para cumplir con el registro escolar.</span>
+        <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Ciudadano</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E08 Presentismo</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span><button class="filter-btn" style="font-size:11px;padding:3px 8px" onclick="toggleCA('ca-hu028')">4 CA ▾</button></span>
+      </div>
+      <div id="ca-hu028" style="display:none;background:#f8fafc;padding:14px 16px;border-bottom:1px solid var(--border);font-size:13px">
+        <div style="font-weight:600;margin-bottom:10px;color:var(--text)">Criterios de Aceptación · HU-028</div>
+        <div style="margin-bottom:10px;padding:10px;background:#fff;border-radius:6px;border-left:3px solid #0891b2">
+          <div style="font-size:11px;font-weight:700;color:#0369a1;margin-bottom:6px">CA-01 · Happy path</div>
+          <div><strong>DADO QUE</strong> el Docente/Preceptor ingresa a la plataforma con su usuario @bue.edu.ar y tiene asignada la sección<br>
+          <strong>CUANDO</strong> selecciona la sección y la fecha, registra el estado de cada alumno (P/A/IT/RA) y guarda<br>
+          <strong>ENTONCES</strong> el sistema confirma el guardado y la asistencia queda registrada para esa fecha.</div>
+        </div>
+        <div style="margin-bottom:10px;padding:10px;background:#fff;border-radius:6px;border-left:3px solid #f59e0b">
+          <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:6px">CA-02 · Cierre de día</div>
+          <div><strong>DADO QUE</strong> el Docente ha registrado la asistencia completa del día<br>
+          <strong>CUANDO</strong> hace clic en "Cerrar el día"<br>
+          <strong>ENTONCES</strong> el día queda cerrado y no permite modificaciones sin autorización del Directivo.</div>
+        </div>
+        <div style="margin-bottom:10px;padding:10px;background:#fff;border-radius:6px;border-left:3px solid #8b5cf6">
+          <div style="font-size:11px;font-weight:700;color:#6d28d9;margin-bottom:6px">CA-03 · Reapertura por error</div>
+          <div><strong>DADO QUE</strong> el Directivo detecta un error en la asistencia de una semana cerrada<br>
+          <strong>CUANDO</strong> hace clic en "Abrir semana"<br>
+          <strong>ENTONCES</strong> el sistema habilita la edición para esa semana y el Docente puede corregir la asistencia.</div>
+        </div>
+        <div style="padding:10px;background:#fff;border-radius:6px;border-left:3px solid #ef4444">
+          <div style="font-size:11px;font-weight:700;color:#b91c1c;margin-bottom:6px">CA-04 · Alumno no disponible</div>
+          <div><strong>DADO QUE</strong> el Preceptor intenta registrar asistencia de un alumno que fue cambiado de sección<br>
+          <strong>CUANDO</strong> accede al listado de su sección<br>
+          <strong>ENTONCES</strong> el alumno no aparece en la sección antigua y aparece correctamente en la nueva sección asignada.</div>
+        </div>
+      </div>
+
+      <div class="tbl-row hus-row" data-mod="presentismo" data-act="administrador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#0891b2">HU-029</span>
+        <span>Como <strong>Administrador</strong>, quiero cerrar la semana de presentismo para consolidar el registro y habilitar el cómputo de regularidad.</span>
+        <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E08 Presentismo</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="presentismo" data-act="administrador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#0891b2">HU-030</span>
+        <span>Como <strong>Administrador</strong>, quiero reabrir una semana cerrada de presentismo para que los docentes corrijan errores de carga.</span>
+        <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E08 Presentismo</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="presentismo" data-act="operador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#0891b2">HU-031</span>
+        <span>Como <strong>Operador</strong>, quiero cargar un justificativo de inasistencia para que no impacte en la condición de regularidad del alumno.</span>
+        <span><span class="badge" style="background:#fef3c7;color:#b45309">Operador</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E08 Presentismo</span>
+        <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="presentismo" data-act="docente" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#0891b2">HU-032</span>
+        <span>Como <strong>Ciudadano</strong> (Docente/Preceptor), quiero ver el reporte de asistencia de mi sección para monitorear la regularidad de los alumnos.</span>
+        <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Ciudadano</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E08 Presentismo</span>
+        <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+
+      <!-- E09 Calificaciones -->
+      <div class="tbl-row hus-row" data-mod="calificaciones" data-act="docente" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#7c3aed">HU-033</span>
+        <span>Como <strong>Ciudadano</strong> (Docente), quiero cargar las calificaciones bimestrales de mis alumnos para registrar el resultado académico del período.</span>
+        <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Ciudadano</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E09 Calificaciones</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span><button class="filter-btn" style="font-size:11px;padding:3px 8px" onclick="toggleCA('ca-hu033')">3 CA ▾</button></span>
+      </div>
+      <div id="ca-hu033" style="display:none;background:#f8fafc;padding:14px 16px;border-bottom:1px solid var(--border);font-size:13px">
+        <div style="font-weight:600;margin-bottom:10px;color:var(--text)">Criterios de Aceptación · HU-033</div>
+        <div style="margin-bottom:10px;padding:10px;background:#fff;border-radius:6px;border-left:3px solid #7c3aed">
+          <div style="font-size:11px;font-weight:700;color:#6d28d9;margin-bottom:6px">CA-01 · Happy path</div>
+          <div><strong>DADO QUE</strong> el Docente accede a Calificaciones con el período abierto por el Directivo<br>
+          <strong>CUANDO</strong> selecciona período, grado y sección, ingresa nota y PPI para cada alumno y guarda<br>
+          <strong>ENTONCES</strong> las calificaciones quedan registradas y el sistema confirma el guardado.</div>
+        </div>
+        <div style="margin-bottom:10px;padding:10px;background:#fff;border-radius:6px;border-left:3px solid #ef4444">
+          <div style="font-size:11px;font-weight:700;color:#b91c1c;margin-bottom:6px">CA-02 · Campo PPI vacío</div>
+          <div><strong>DADO QUE</strong> el Docente intenta guardar calificaciones con el campo PPI en blanco<br>
+          <strong>CUANDO</strong> hace clic en Guardar<br>
+          <strong>ENTONCES</strong> el sistema bloquea el guardado y muestra "El campo PPI es obligatorio".</div>
+        </div>
+        <div style="padding:10px;background:#fff;border-radius:6px;border-left:3px solid #f59e0b">
+          <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:6px">CA-03 · Período cerrado</div>
+          <div><strong>DADO QUE</strong> el período de calificaciones fue cerrado por el Directivo<br>
+          <strong>CUANDO</strong> el Docente intenta acceder a cargar notas<br>
+          <strong>ENTONCES</strong> el sistema muestra "El período de calificaciones está cerrado. Contactá al Directivo para reabrirlo".</div>
+        </div>
+      </div>
+
+      <div class="tbl-row hus-row" data-mod="calificaciones" data-act="administrador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#7c3aed">HU-034</span>
+        <span>Como <strong>Administrador</strong>, quiero abrir el período de calificaciones para que los docentes puedan ingresar las notas del bimestre.</span>
+        <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E09 Calificaciones</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="calificaciones" data-act="docente" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#7c3aed">HU-035</span>
+        <span>Como <strong>Ciudadano</strong> (Docente), quiero que el sistema me bloquee el guardado si el campo PPI está vacío para garantizar datos completos.</span>
+        <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Ciudadano</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E09 Calificaciones</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="calificaciones" data-act="operador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#7c3aed">HU-036</span>
+        <span>Como <strong>Operador</strong>, quiero ver el resumen de calificaciones por materia para detectar alumnos sin nota antes del cierre.</span>
+        <span><span class="badge" style="background:#fef3c7;color:#b45309">Operador</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E09 Calificaciones</span>
+        <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+
+      <!-- E10 Boletines -->
+      <div class="tbl-row hus-row" data-mod="calificaciones" data-act="administrador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#d97706">HU-037</span>
+        <span>Como <strong>Administrador</strong>, quiero generar los boletines de una sección completa en un clic para agilizar el proceso de entrega.</span>
+        <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E10 Boletines</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span><button class="filter-btn" style="font-size:11px;padding:3px 8px" onclick="toggleCA('ca-hu037')">3 CA ▾</button></span>
+      </div>
+      <div id="ca-hu037" style="display:none;background:#f8fafc;padding:14px 16px;border-bottom:1px solid var(--border);font-size:13px">
+        <div style="font-weight:600;margin-bottom:10px;color:var(--text)">Criterios de Aceptación · HU-037</div>
+        <div style="margin-bottom:10px;padding:10px;background:#fff;border-radius:6px;border-left:3px solid #d97706">
+          <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:6px">CA-01 · Happy path</div>
+          <div><strong>DADO QUE</strong> el Directivo verifica que todos los alumnos tienen calificaciones y presentismo completo<br>
+          <strong>CUANDO</strong> selecciona la sección y el bimestre y hace clic en "Generar boletines"<br>
+          <strong>ENTONCES</strong> el sistema genera los boletines en PDF para todos los alumnos y los deja disponibles para descarga.</div>
+        </div>
+        <div style="margin-bottom:10px;padding:10px;background:#fff;border-radius:6px;border-left:3px solid #ef4444">
+          <div style="font-size:11px;font-weight:700;color:#b91c1c;margin-bottom:6px">CA-02 · Calificaciones incompletas</div>
+          <div><strong>DADO QUE</strong> algún alumno no tiene calificaciones cargadas en una o más materias<br>
+          <strong>CUANDO</strong> el Directivo intenta generar boletines<br>
+          <strong>ENTONCES</strong> el sistema muestra "No se pueden generar boletines: falta calificación en [alumno] — [materia]".</div>
+        </div>
+        <div style="padding:10px;background:#fff;border-radius:6px;border-left:3px solid #f59e0b">
+          <div style="font-size:11px;font-weight:700;color:#b45309;margin-bottom:6px">CA-03 · Presentismo incompleto</div>
+          <div><strong>DADO QUE</strong> el presentismo del período no está completo<br>
+          <strong>CUANDO</strong> el Directivo intenta generar boletines<br>
+          <strong>ENTONCES</strong> el sistema muestra "No se pueden generar boletines: falta presentismo en el período".</div>
+        </div>
+      </div>
+
+      <div class="tbl-row hus-row" data-mod="calificaciones" data-act="administrador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#d97706">HU-038</span>
+        <span>Como <strong>Administrador</strong>, quiero que el sistema me informe qué alumnos o materias faltan completar antes de generar boletines para evitar errores.</span>
+        <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E10 Boletines</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="calificaciones" data-act="operador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#d97706">HU-039</span>
+        <span>Como <strong>Operador</strong>, quiero descargar el boletín individual de un alumno en PDF para entregarlo a la familia.</span>
+        <span><span class="badge" style="background:#fef3c7;color:#b45309">Operador</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E10 Boletines</span>
+        <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+
+      <!-- E11 Roles -->
+      <div class="tbl-row hus-row" data-mod="backoffice" data-act="docente" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#64748b">HU-040</span>
+        <span>Como <strong>Ciudadano</strong> (Docente), quiero solicitar un rol en la plataforma para acceder a los módulos que me corresponden según mi función.</span>
+        <span><span class="badge" style="background:#e0f2fe;color:#0369a1">Ciudadano</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E11 Roles</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="backoffice" data-act="administrador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#64748b">HU-041</span>
+        <span>Como <strong>Administrador</strong>, quiero aprobar o rechazar solicitudes de rol para controlar quién accede a cada módulo del sistema.</span>
+        <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E11 Roles</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="backoffice" data-act="administrador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#64748b">HU-042</span>
+        <span>Como <strong>Administrador</strong>, quiero gestionar los roles asignados de un usuario para actualizar sus permisos cuando cambia su función.</span>
+        <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E11 Roles</span>
+        <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+
+      <!-- E12 ECP y Legajos -->
+      <div class="tbl-row hus-row" data-mod="legajo" data-act="operador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#d97706">HU-043</span>
+        <span>Como <strong>Operador</strong>, quiero actualizar los datos del legajo de un alumno para mantener la información personal vigente.</span>
+        <span><span class="badge" style="background:#fef3c7;color:#b45309">Operador</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E12 ECP y Legajos</span>
+        <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="legajo" data-act="operador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#d97706">HU-044</span>
+        <span>Como <strong>Operador</strong>, quiero registrar un espacio curricular pendiente de un alumno para llevar el seguimiento de materias adeudadas.</span>
+        <span><span class="badge" style="background:#fef3c7;color:#b45309">Operador</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E12 ECP y Legajos</span>
+        <span><span class="badge badge-stg" style="font-size:10px">Media</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+      <div class="tbl-row hus-row" data-mod="legajo" data-act="operador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
+        <span style="font-family:monospace;font-size:12px;color:#d97706">HU-045</span>
+        <span>Como <strong>Operador</strong>, quiero marcar "No corresponde" en un ECP cuando el espacio no aplica al plan de estudios para evitar que bloquee la generación de boletines.</span>
+        <span><span class="badge" style="background:#fef3c7;color:#b45309">Operador</span></span>
+        <span style="font-size:12px;color:var(--text-muted)">E12 ECP y Legajos</span>
+        <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
+        <span style="font-size:11px;color:var(--text-muted)">—</span>
+      </div>
+
       </div><!-- /tbl-wrap -->
 
       <script>
-      var _husF = {mod:'todos', act:'todos'};
+      var _husF = {mod:'todos', act:'todos', src:'todos'};
       function husFilter(type, btn) {
         btn.closest('.filter-bar').querySelectorAll('[data-hus-'+type+']').forEach(function(b){b.classList.remove('on');});
         btn.classList.add('on');
