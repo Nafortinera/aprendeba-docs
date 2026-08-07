@@ -1513,6 +1513,8 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
         <button class="filter-btn"    data-pf-est="en_analisis" onclick="phinxFilter('est',this)">En an&aacute;lisis</button>
         <button class="filter-btn"    data-pf-est="sin_iniciar" onclick="phinxFilter('est',this)">Sin iniciar</button>
         <button class="filter-btn"    data-pf-est="pausado"     onclick="phinxFilter('est',this)">&#9208; Pausado</button>
+        <button class="filter-btn"    data-pf-est="prd"        onclick="phinxFilter('est',this)">PRD ✓</button>
+        <button class="filter-btn"    data-pf-est="propuesta"  onclick="phinxFilter('est',this)">Propuesta</button>
         <span class="filter-label" style="margin-left:8px">Mes PRD</span>
         <button class="filter-btn on" data-pf-mes="todos"  onclick="phinxFilter('mes',this)">Todos</button>
         <button class="filter-btn"    data-pf-mes="mayo"   onclick="phinxFilter('mes',this)">Mayo</button>
@@ -1533,39 +1535,39 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span style="text-align:center">En PRD</span>
         </div>
         <div id="phinx-tbody">
-        <div class="phinx-row" data-pausado="false" data-estado="en_proceso" data-mes="mayo">
+        <div class="phinx-row" data-pausado="false" data-estado="prd" data-mes="mayo">
           <span style="font-size:13px;line-height:1.4">Módulo Notificaciones</span>
-          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#d1fae5;color:#065f46">En proceso</span></span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#065f46">PRD ✓</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
               <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
-                <div style="width:90%;height:100%;background:#0891b2;border-radius:3px"></div>
+                <div style="width:100%;height:100%;background:#22c55e;border-radius:3px"></div>
               </div>
-              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">90%</span>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">100%</span>
             </div></div>
           <span style="font-size:12px;color:#64748b">Mayo 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">150 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">150 hs</span>
           <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
-            <input type="checkbox" id="prd-m01" class="prd-check" onchange="prdToggle('m01',this.checked)"
+            <input type="checkbox" id="prd-m01" class="prd-check" checked onchange="prdToggle('m01',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
             <button id="pause-m01" onclick="pausadoToggle('m01')" title="Pausar / reanudar"
               style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-pausado="false" data-estado="en_proceso" data-mes="junio">
+        <div class="phinx-row" data-pausado="false" data-estado="prd" data-mes="junio">
           <span style="font-size:13px;line-height:1.4">BO - Agenda educativa</span>
-          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#d1fae5;color:#065f46">En proceso</span></span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#065f46">PRD ✓</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
               <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
-                <div style="width:70%;height:100%;background:#0891b2;border-radius:3px"></div>
+                <div style="width:100%;height:100%;background:#22c55e;border-radius:3px"></div>
               </div>
-              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">70%</span>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">100%</span>
             </div></div>
           <span style="font-size:12px;color:#64748b">Junio 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">200 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">200 hs</span>
           <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
-            <input type="checkbox" id="prd-m02" class="prd-check" onchange="prdToggle('m02',this.checked)"
+            <input type="checkbox" id="prd-m02" class="prd-check" checked onchange="prdToggle('m02',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
             <button id="pause-m02" onclick="pausadoToggle('m02')" title="Pausar / reanudar"
               style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
@@ -1590,58 +1592,58 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
               style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-pausado="false" data-estado="en_proceso" data-mes="junio">
+        <div class="phinx-row" data-pausado="false" data-estado="prd" data-mes="junio">
           <span style="font-size:13px;line-height:1.4">Informe funcional y UX (Fase 1 + 2 y 3)</span>
-          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#d1fae5;color:#065f46">En proceso</span></span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#065f46">PRD ✓</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
               <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
-                <div style="width:40%;height:100%;background:#d97706;border-radius:3px"></div>
+                <div style="width:100%;height:100%;background:#22c55e;border-radius:3px"></div>
               </div>
-              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">40%</span>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">100%</span>
             </div></div>
           <span style="font-size:12px;color:#64748b">Junio 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">550 hs</span>
-          <span style="font-size:12px;color:#64748b;text-align:right">250 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">550 hs</span>
           <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
-            <input type="checkbox" id="prd-m04" class="prd-check" onchange="prdToggle('m04',this.checked)"
+            <input type="checkbox" id="prd-m04" class="prd-check" checked onchange="prdToggle('m04',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
             <button id="pause-m04" onclick="pausadoToggle('m04')" title="Pausar / reanudar"
               style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="mayo">
+        <div class="phinx-row" data-pausado="false" data-estado="prd" data-mes="mayo">
           <span style="font-size:13px;line-height:1.4">Cal. y Boletines — Regularidad Bimestre II</span>
-          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#065f46">PRD ✓</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
               <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
-                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+                <div style="width:100%;height:100%;background:#22c55e;border-radius:3px"></div>
               </div>
-              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">100%</span>
             </div></div>
           <span style="font-size:12px;color:#64748b">13 Mayo 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">300 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">300 hs</span>
           <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
-            <input type="checkbox" id="prd-m05" class="prd-check" onchange="prdToggle('m05',this.checked)"
+            <input type="checkbox" id="prd-m05" class="prd-check" checked onchange="prdToggle('m05',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
             <button id="pause-m05" onclick="pausadoToggle('m05')" title="Pausar / reanudar"
               style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-pausado="false" data-estado="en_analisis" data-mes="mayo">
+        <div class="phinx-row" data-pausado="false" data-estado="prd" data-mes="mayo">
           <span style="font-size:13px;line-height:1.4">Mejora config. períodos boletines y calificaciones</span>
-          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef3c7;color:#92400e">En analisis</span></span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#065f46">PRD ✓</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
               <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
-                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+                <div style="width:100%;height:100%;background:#22c55e;border-radius:3px"></div>
               </div>
-              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">100%</span>
             </div></div>
           <span style="font-size:12px;color:#64748b">13 Mayo 2026</span>
           <span style="font-size:12px;color:#64748b;text-align:right">180 hs</span>
           <span style="font-size:12px;color:#64748b;text-align:right">180 hs</span>
           <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
-            <input type="checkbox" id="prd-m06" class="prd-check" onchange="prdToggle('m06',this.checked)"
+            <input type="checkbox" id="prd-m06" class="prd-check" checked onchange="prdToggle('m06',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
             <button id="pause-m06" onclick="pausadoToggle('m06')" title="Pausar / reanudar"
               style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
@@ -1989,25 +1991,158 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
               style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
-        <div class="phinx-row" data-pausado="false" data-estado="sin_iniciar" data-mes="">
+        <div class="phinx-row" data-pausado="false" data-estado="prd" data-mes="junio">
           <span style="font-size:13px;line-height:1.4">N/C contraturno — cómputo asistencia</span>
-          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b">Sin iniciar</span></span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#065f46">PRD ✓</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:100%;height:100%;background:#22c55e;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">100%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b"></span>
+          <span style="font-size:12px;color:#64748b;text-align:right">40 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <input type="checkbox" id="prd-m25" class="prd-check" checked onchange="prdToggle('m25',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m25" onclick="pausadoToggle('m25')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
+          </span>
+        </div>
+        </div>
+        <div class="phinx-row" data-pausado="false" data-estado="prd" data-mes="junio">
+          <span style="font-size:13px;line-height:1.4">Habilitación selectores períodos</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#065f46">PRD ✓</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:100%;height:100%;background:#22c55e;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">100%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Junio 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">30 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">30 hs</span>
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <input type="checkbox" id="prd-m26" class="prd-check" checked onchange="prdToggle('m26',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m26" onclick="pausadoToggle('m26')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
+          </span>
+        </div>
+        <div class="phinx-row" data-pausado="false" data-estado="prd" data-mes="junio">
+          <span style="font-size:13px;line-height:1.4">QA y DevOps — Equipo Cross</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#dcfce7;color:#065f46">PRD ✓</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:100%;height:100%;background:#22c55e;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">100%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">Junio 2026</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">80 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">80 hs</span>
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <input type="checkbox" id="prd-m27" class="prd-check" checked onchange="prdToggle('m27',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m27" onclick="pausadoToggle('m27')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
+          </span>
+        </div>
+        <div class="phinx-row" data-pausado="false" data-estado="propuesta" data-mes="">
+          <span style="font-size:13px;line-height:1.4">Back Office 2.0</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef9c3;color:#854d0e">Propuesta</span></span>
           <div><div style="display:flex;align-items:center;gap:6px">
               <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
                 <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
               </div>
               <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
             </div></div>
-          <span style="font-size:12px;color:#64748b"></span>
-          <span style="font-size:12px;color:#64748b;text-align:right">40 hs</span>
-          <span style="font-size:12px;color:#64748b;text-align:right">—</span>
+          <span style="font-size:12px;color:#64748b">—</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">2500 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">0 hs</span>
           <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
-            <input type="checkbox" id="prd-m25" class="prd-check" onchange="prdToggle('m25',this.checked)"
+            <input type="checkbox" id="prd-m28" class="prd-check" onchange="prdToggle('m28',this.checked)"
               style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
-            <button id="pause-m25" onclick="pausadoToggle('m25')" title="Pausar / reanudar"
+            <button id="pause-m28" onclick="pausadoToggle('m28')" title="Pausar / reanudar"
               style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
           </span>
         </div>
+        <div class="phinx-row" data-pausado="false" data-estado="propuesta" data-mes="">
+          <span style="font-size:13px;line-height:1.4">Home y UX/UI 2.0</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef9c3;color:#854d0e">Propuesta</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">—</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">1000 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">0 hs</span>
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <input type="checkbox" id="prd-m29" class="prd-check" onchange="prdToggle('m29',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m29" onclick="pausadoToggle('m29')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
+          </span>
+        </div>
+        <div class="phinx-row" data-pausado="false" data-estado="propuesta" data-mes="">
+          <span style="font-size:13px;line-height:1.4">Matriculación 2.0</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef9c3;color:#854d0e">Propuesta</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">—</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">2500 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">0 hs</span>
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <input type="checkbox" id="prd-m30" class="prd-check" onchange="prdToggle('m30',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m30" onclick="pausadoToggle('m30')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
+          </span>
+        </div>
+        <div class="phinx-row" data-pausado="false" data-estado="propuesta" data-mes="">
+          <span style="font-size:13px;line-height:1.4">Presentismo y Calificaciones 2.0</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef9c3;color:#854d0e">Propuesta</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">—</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">2500 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">0 hs</span>
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <input type="checkbox" id="prd-m31" class="prd-check" onchange="prdToggle('m31',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m31" onclick="pausadoToggle('m31')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
+          </span>
+        </div>
+        <div class="phinx-row" data-pausado="false" data-estado="propuesta" data-mes="">
+          <span style="font-size:13px;line-height:1.4">Legajo 2.0</span>
+          <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#fef9c3;color:#854d0e">Propuesta</span></span>
+          <div><div style="display:flex;align-items:center;gap:6px">
+              <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+                <div style="width:0%;height:100%;background:#94a3b8;border-radius:3px"></div>
+              </div>
+              <span style="font-size:11px;color:#64748b;width:28px;text-align:right">0%</span>
+            </div></div>
+          <span style="font-size:12px;color:#64748b">—</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">1000 hs</span>
+          <span style="font-size:12px;color:#64748b;text-align:right">0 hs</span>
+          <span style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <input type="checkbox" id="prd-m32" class="prd-check" onchange="prdToggle('m32',this.checked)"
+              style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+            <button id="pause-m32" onclick="pausadoToggle('m32')" title="Pausar / reanudar"
+              style="border:none;background:none;cursor:pointer;font-size:13px;color:#cbd5e1;padding:0;line-height:1">&#9208;</button>
+          </span>
         </div>
         <div id="phinx-empty" style="display:none;text-align:center;padding:32px;color:var(--text-muted);font-size:13px">Sin resultados.</div>
       </div>
