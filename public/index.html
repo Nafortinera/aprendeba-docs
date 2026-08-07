@@ -213,6 +213,10 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       HU + CA Sistema
     </div>
+    <div class="nav-item" onclick="nav('casos',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Casos de uso
+    </div>
     <div class="nav-item" onclick="nav('reglas',this)">
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
       Reglas de negocio
@@ -3500,6 +3504,369 @@ flowchart TD
 
 
     <!-- ── HU + CA ── -->
+    <div class="view" id="view-casos">
+      <div class="page-header">
+        <h1>Casos de uso</h1>
+        <p>Flujos principales y casos borde por módulo del sistema AprendeBA.</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+        <div class="stat-card"><div class="stat-label">Casos de uso</div><div class="stat-val" style="color:var(--accent)">7</div><div class="stat-sub">flujos documentados</div></div>
+        <div class="stat-card"><div class="stat-label">Módulos</div><div class="stat-val" style="color:#0891b2">6</div><div class="stat-sub">cubiertos</div></div>
+        <div class="stat-card"><div class="stat-label">Casos borde</div><div class="stat-val" style="color:#991b1b">28</div><div class="stat-sub">escenarios alternativos</div></div>
+        <div class="stat-card"><div class="stat-label">Actores</div><div class="stat-val" style="color:#7c3aed">4</div><div class="stat-sub">Ciudadano · Operador · Admin · Sistema</div></div>
+      </div>
+
+      <!-- Filter -->
+      <div class="filter-bar" style="margin-bottom:16px;flex-wrap:wrap;gap:6px 12px">
+        <span class="filter-label">Módulo</span>
+        <button class="filter-btn on" data-cu-mod="todos" onclick="cuFilter(this)">Todos</button>
+        <button class="filter-btn" data-cu-mod="matriculacion" onclick="cuFilter(this)">Matriculación</button>
+        <button class="filter-btn" data-cu-mod="presentismo" onclick="cuFilter(this)">Presentismo</button>
+        <button class="filter-btn" data-cu-mod="calificaciones" onclick="cuFilter(this)">Calificaciones</button>
+        <button class="filter-btn" data-cu-mod="boletines" onclick="cuFilter(this)">Boletines</button>
+        <button class="filter-btn" data-cu-mod="pases" onclick="cuFilter(this)">Pases</button>
+        <button class="filter-btn" data-cu-mod="legajo" onclick="cuFilter(this)">Legajo</button>
+      </div>
+
+      <!-- ── CU-01 Matriculación ── -->
+      <div class="cu-card" data-mod="matriculacion" style="border:1px solid var(--border);border-radius:10px;margin-bottom:14px;overflow:hidden">
+        <div class="cu-header" onclick="toggleCU('cu01')" style="cursor:pointer;padding:14px 16px;background:var(--surface);display:flex;align-items:center;gap:12px">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:#0d9488;min-width:48px">CU-01</span>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:14px">Matriculación de alumno inscripto</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Matriculación · Operador · Alta prioridad</div>
+          </div>
+          <span style="font-size:12px;color:var(--text-muted)">4 casos borde ▾</span>
+        </div>
+        <div id="cu01" style="display:none;padding:16px;border-top:1px solid var(--border)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Actores</div>
+              <div style="font-size:13px">Operador (Secretaria/Vicedirector), Administrador (Directivo)</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Precondiciones</div>
+              <div style="font-size:13px">El alumno figura como inscripto en el padrón. El establecimiento fue efectivizado. Existen secciones creadas para el nivel.</div>
+            </div>
+          </div>
+          <div style="margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;color:#0d9488;text-transform:uppercase;margin-bottom:8px">Flujo principal</div>
+            <ol style="margin:0;padding-left:20px;font-size:13px;line-height:2">
+              <li>El Operador accede al módulo Inscriptos y visualiza el listado filtrado por nivel y turno.</li>
+              <li>Selecciona al alumno inscripto y hace clic en "Asignar sección".</li>
+              <li>El sistema muestra las secciones disponibles con indicador de capacidad.</li>
+              <li>El Operador selecciona la sección y completa la Fecha Efectiva de Matriculación (FEM).</li>
+              <li>El sistema valida la FEM y confirma la operación.</li>
+              <li>El alumno pasa al estado Matriculado y aparece en la nómina de la sección asignada.</li>
+            </ol>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#991b1b;text-transform:uppercase;margin-bottom:8px">Casos borde</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>Sección sin cupo disponible:</strong> el sistema muestra el indicador en rojo y deshabilita la opción de asignar a esa sección. El Operador debe seleccionar otra o solicitar al Directivo la ampliación del cupo.</div>
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>FEM fuera de rango válido:</strong> el sistema rechaza la fecha y muestra alerta con el rango permitido para el ciclo lectivo activo.</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Alumno ya matriculado en otro establecimiento:</strong> el sistema advierte que el alumno tiene matrícula activa y requiere confirmación del Directivo para continuar.</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Establecimiento no efectivizado:</strong> el módulo Inscriptos aparece bloqueado. El Directivo debe ejecutar primero el proceso PPE.</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--text-muted)"><strong>Postcondición:</strong> el alumno tiene estado Matriculado, sección asignada y FEM registrada. El cupo de la sección se actualiza automáticamente.</div>
+        </div>
+      </div>
+
+      <!-- ── CU-02 Presentismo — Registro diario ── -->
+      <div class="cu-card" data-mod="presentismo" style="border:1px solid var(--border);border-radius:10px;margin-bottom:14px;overflow:hidden">
+        <div class="cu-header" onclick="toggleCU('cu02')" style="cursor:pointer;padding:14px 16px;background:var(--surface);display:flex;align-items:center;gap:12px">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:#0891b2;min-width:48px">CU-02</span>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:14px">Registro diario de asistencia</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Presentismo · Ciudadano (Docente/Preceptor) · Alta prioridad</div>
+          </div>
+          <span style="font-size:12px;color:var(--text-muted)">5 casos borde ▾</span>
+        </div>
+        <div id="cu02" style="display:none;padding:16px;border-top:1px solid var(--border)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Actores</div>
+              <div style="font-size:13px">Ciudadano (Docente/Preceptor), Administrador (Directivo para cierre/reapertura)</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Precondiciones</div>
+              <div style="font-size:13px">El Docente tiene sesión activa con usuario @bue.edu.ar. Tiene sección asignada. El período de presentismo está abierto.</div>
+            </div>
+          </div>
+          <div style="margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;color:#0891b2;text-transform:uppercase;margin-bottom:8px">Flujo principal</div>
+            <ol style="margin:0;padding-left:20px;font-size:13px;line-height:2">
+              <li>El Docente accede al módulo Presentismo y selecciona su sección.</li>
+              <li>El sistema muestra la grilla semanal con los alumnos de la sección y los días de la semana.</li>
+              <li>El Docente selecciona la fecha de hoy y registra el estado de cada alumno: P (Presente), A (Ausente), IT (Ingreso Tardío), RA (Retiro Anticipado).</li>
+              <li>El sistema activa el autoguardado y persiste cada cambio en tiempo real.</li>
+              <li>El Docente confirma con "Cerrar el día".</li>
+              <li>El sistema marca el día como cerrado y calcula el impacto en la regularidad de cada alumno.</li>
+            </ol>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#991b1b;text-transform:uppercase;margin-bottom:8px">Casos borde</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>Día ya cerrado:</strong> el sistema muestra el registro en modo solo lectura con indicación de cierre. Solo el Directivo puede reabrir la semana.</div>
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>Período no habilitado:</strong> el módulo muestra el mensaje "Período de presentismo cerrado" y bloquea la carga. El Directivo debe abrir el período desde la Agenda Educativa del Back Office.</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Alumno no aparece en la sección:</strong> el alumno fue cambiado de sección. Ya no figura en la lista antigua y aparece en la nueva sección asignada.</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Suspensión o emergencia declarada:</strong> el sistema identifica el día como no lectivo según la configuración del Back Office y aplica el estado correspondiente automáticamente, diferenciando evento planificado de imprevisto.</div>
+              <div style="padding:10px 12px;background:#f0fdf4;border-radius:6px;border-left:3px solid #16a34a;font-size:13px"><strong>Justificación de inasistencia:</strong> el Operador carga un justificativo posterior. El estado original (A) se conserva visualmente distinguido pero no computa como inasistencia en la regularidad.</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--text-muted)"><strong>Postcondición:</strong> el día queda cerrado, la regularidad de cada alumno se recalcula y el registro queda disponible para el reporte semanal del Directivo.</div>
+        </div>
+      </div>
+
+      <!-- ── CU-03 Presentismo — Cierre y reapertura de semana ── -->
+      <div class="cu-card" data-mod="presentismo" style="border:1px solid var(--border);border-radius:10px;margin-bottom:14px;overflow:hidden">
+        <div class="cu-header" onclick="toggleCU('cu03')" style="cursor:pointer;padding:14px 16px;background:var(--surface);display:flex;align-items:center;gap:12px">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:#0891b2;min-width:48px">CU-03</span>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:14px">Cierre y reapertura de semana de presentismo</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Presentismo · Administrador (Directivo) · Alta prioridad</div>
+          </div>
+          <span style="font-size:12px;color:var(--text-muted)">3 casos borde ▾</span>
+        </div>
+        <div id="cu03" style="display:none;padding:16px;border-top:1px solid var(--border)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Actores</div>
+              <div style="font-size:13px">Administrador (Directivo), Sistema (cómputo automático de regularidad)</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Precondiciones</div>
+              <div style="font-size:13px">La semana tiene al menos un día de asistencia cargado. El Directivo tiene permisos de cierre.</div>
+            </div>
+          </div>
+          <div style="margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;color:#0891b2;text-transform:uppercase;margin-bottom:8px">Flujo principal — Cierre</div>
+            <ol style="margin:0;padding-left:20px;font-size:13px;line-height:2">
+              <li>El Directivo accede a Presentismo y selecciona la semana a cerrar.</li>
+              <li>El sistema muestra el resumen de días cargados y alumnos con asistencia pendiente.</li>
+              <li>El Directivo hace clic en "Cerrar semana".</li>
+              <li>El sistema consolida los registros, calcula la regularidad acumulada y bloquea la edición para docentes.</li>
+            </ol>
+          </div>
+          <div style="margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;color:#8b5cf6;text-transform:uppercase;margin-bottom:8px">Flujo alternativo — Reapertura</div>
+            <ol style="margin:0;padding-left:20px;font-size:13px;line-height:2">
+              <li>El Directivo detecta un error en una semana cerrada.</li>
+              <li>Accede a la semana y hace clic en "Abrir semana".</li>
+              <li>El sistema registra la reapertura con fecha, hora y usuario responsable.</li>
+              <li>Los docentes pueden corregir la asistencia. Al volver a cerrar, el sistema recalcula la regularidad.</li>
+            </ol>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#991b1b;text-transform:uppercase;margin-bottom:8px">Casos borde</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>Días sin cargar:</strong> el sistema advierte que hay días sin asistencia registrada antes del cierre y permite al Directivo continuar o cancelar.</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Contraturno con estado N/C:</strong> el sistema computa automáticamente el contraturno no correspondiente como media asistencia, según la regla de negocio vigente desde el deploy 17/06.</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Semana con Jornada Extendida:</strong> el sistema aplica restricciones por rol para la modificación de asistencias de jornada extendida, diferenciando del turno regular.</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--text-muted)"><strong>Postcondición:</strong> la semana queda cerrada y consolidada. La regularidad acumulada de cada alumno se actualiza. La reapertura queda auditada.</div>
+        </div>
+      </div>
+
+      <!-- ── CU-04 Calificaciones ── -->
+      <div class="cu-card" data-mod="calificaciones" style="border:1px solid var(--border);border-radius:10px;margin-bottom:14px;overflow:hidden">
+        <div class="cu-header" onclick="toggleCU('cu04')" style="cursor:pointer;padding:14px 16px;background:var(--surface);display:flex;align-items:center;gap:12px">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:#7c3aed;min-width:48px">CU-04</span>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:14px">Carga de calificaciones bimestrales</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Calificaciones · Ciudadano (Docente) · Alta prioridad</div>
+          </div>
+          <span style="font-size:12px;color:var(--text-muted)">5 casos borde ▾</span>
+        </div>
+        <div id="cu04" style="display:none;padding:16px;border-top:1px solid var(--border)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Actores</div>
+              <div style="font-size:13px">Ciudadano (Docente), Administrador (Directivo para apertura/cierre del período)</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Precondiciones</div>
+              <div style="font-size:13px">El Directivo abrió el período de calificaciones para el bimestre. El Docente tiene materias asignadas. Los alumnos están matriculados en la sección.</div>
+            </div>
+          </div>
+          <div style="margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;margin-bottom:8px">Flujo principal</div>
+            <ol style="margin:0;padding-left:20px;font-size:13px;line-height:2">
+              <li>El Docente accede a Calificaciones y selecciona período, grado y sección.</li>
+              <li>El sistema muestra el listado de alumnos con campos editables para nota y PPI.</li>
+              <li>El Docente ingresa la calificación (1–10 en secundario; Iniciado/En proceso/Logrado en primario) y el PPI para cada alumno.</li>
+              <li>El sistema valida cada campo en tiempo real (rango, obligatoriedad del PPI).</li>
+              <li>El Docente guarda. El sistema confirma y marca la sección como "Cargada" para ese bimestre.</li>
+            </ol>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#991b1b;text-transform:uppercase;margin-bottom:8px">Casos borde</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>PPI vacío al guardar:</strong> el sistema bloquea el guardado y resalta en rojo los campos PPI sin completar. Mensaje: "El campo PPI es obligatorio".</div>
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>Nota fuera de rango (secundario):</strong> el sistema rechaza el valor y muestra "La nota debe estar entre 1 y 10".</div>
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>Período cerrado:</strong> el módulo aparece en solo lectura con el mensaje "El período de calificaciones está cerrado. Contactá al Directivo para reabrirlo".</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Cambios sin guardar al navegar:</strong> el sistema detecta cambios pendientes y muestra alerta antes de abandonar la vista para evitar pérdida de datos.</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Alumno con ECP:</strong> el sistema indica visualmente que el alumno tiene espacios curriculares pendientes de ciclos anteriores, sin bloquear la carga del bimestre actual.</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--text-muted)"><strong>Postcondición:</strong> las calificaciones quedan registradas para el bimestre. El estado de la sección se actualiza a "Cargado". El Directivo puede verificar el estado de cierre por sección.</div>
+        </div>
+      </div>
+
+      <!-- ── CU-05 Boletines ── -->
+      <div class="cu-card" data-mod="boletines" style="border:1px solid var(--border);border-radius:10px;margin-bottom:14px;overflow:hidden">
+        <div class="cu-header" onclick="toggleCU('cu05')" style="cursor:pointer;padding:14px 16px;background:var(--surface);display:flex;align-items:center;gap:12px">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:#d97706;min-width:48px">CU-05</span>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:14px">Generación y entrega de boletines</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Boletines · Administrador (Directivo) · Alta prioridad</div>
+          </div>
+          <span style="font-size:12px;color:var(--text-muted)">4 casos borde ▾</span>
+        </div>
+        <div id="cu05" style="display:none;padding:16px;border-top:1px solid var(--border)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Actores</div>
+              <div style="font-size:13px">Administrador (Directivo para generar), Operador (para descarga individual), Sistema (generación PDF)</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Precondiciones</div>
+              <div style="font-size:13px">Todos los alumnos de la sección tienen calificaciones cargadas para el bimestre. El presentismo del período está completo y cerrado.</div>
+            </div>
+          </div>
+          <div style="margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;color:#d97706;text-transform:uppercase;margin-bottom:8px">Flujo principal</div>
+            <ol style="margin:0;padding-left:20px;font-size:13px;line-height:2">
+              <li>El Directivo accede al módulo Boletines y selecciona sección y bimestre.</li>
+              <li>El sistema valida que todos los alumnos tienen calificaciones y presentismo completo.</li>
+              <li>El Directivo hace clic en "Generar boletines".</li>
+              <li>El sistema genera los PDFs para todos los alumnos de la sección y los deja disponibles para descarga.</li>
+              <li>El Operador descarga el boletín individual de cada alumno para entregarlo a la familia.</li>
+            </ol>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#991b1b;text-transform:uppercase;margin-bottom:8px">Casos borde</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>Calificaciones incompletas:</strong> el sistema bloquea la generación y lista exactamente qué alumnos y materias faltan: "No se pueden generar boletines: falta calificación en [alumno] — [materia]".</div>
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>Presentismo incompleto:</strong> el sistema bloquea con el mensaje "No se pueden generar boletines: falta presentismo en el período".</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Alumno con ECP sin resolver:</strong> el sistema genera el boletín pero indica visualmente los espacios curriculares pendientes. Si el ECP está marcado como "No corresponde", no bloquea la generación.</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Bimestre no habilitado:</strong> el bimestre no está abierto en el Back Office. El módulo muestra el estado del calendario y el Directivo debe habilitar el bimestre desde la Agenda Educativa.</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--text-muted)"><strong>Postcondición:</strong> los boletines en PDF están disponibles para descarga individual. El estado de la sección se actualiza a "Boletines generados" para el bimestre.</div>
+        </div>
+      </div>
+
+      <!-- ── CU-06 Pases ── -->
+      <div class="cu-card" data-mod="pases" style="border:1px solid var(--border);border-radius:10px;margin-bottom:14px;overflow:hidden">
+        <div class="cu-header" onclick="toggleCU('cu06')" style="cursor:pointer;padding:14px 16px;background:var(--surface);display:flex;align-items:center;gap:12px">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:#6366f1;min-width:48px">CU-06</span>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:14px">Pase de alumno entre establecimientos</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Pases · Operador · Media prioridad</div>
+          </div>
+          <span style="font-size:12px;color:var(--text-muted)">4 casos borde ▾</span>
+        </div>
+        <div id="cu06" style="display:none;padding:16px;border-top:1px solid var(--border)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Actores</div>
+              <div style="font-size:13px">Operador origen (solicita), Operador destino (aprueba/rechaza), Sistema (notificación)</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Precondiciones</div>
+              <div style="font-size:13px">El alumno está matriculado en el establecimiento origen. El establecimiento destino existe en la red. Ambos operadores tienen acceso activo.</div>
+            </div>
+          </div>
+          <div style="margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;color:#6366f1;text-transform:uppercase;margin-bottom:8px">Flujo principal</div>
+            <ol style="margin:0;padding-left:20px;font-size:13px;line-height:2">
+              <li>El Operador del establecimiento destino accede al módulo Pases y selecciona "Solicitar pase entrante".</li>
+              <li>Busca al alumno por DNI y confirma que es el alumno correcto.</li>
+              <li>Completa la FEM destino y el turno de destino.</li>
+              <li>El sistema envía la solicitud al establecimiento origen con estado "Pendiente".</li>
+              <li>El Operador origen visualiza el pase entrante y hace clic en "Aprobar".</li>
+              <li>El sistema transfiere al alumno: desmatriculación en origen y matriculación en destino con el historial conservado.</li>
+              <li>Ambos establecimientos reciben confirmación con el mensaje contextual del estado final.</li>
+            </ol>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#991b1b;text-transform:uppercase;margin-bottom:8px">Casos borde</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>Pase rechazado por el establecimiento origen:</strong> el sistema notifica al destino con el mensaje contextual de rechazo. El alumno permanece matriculado en origen. El Operador destino puede iniciar una nueva solicitud o escalar.</div>
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>Alumno con estado bloqueante (ej. deuda de ECP):</strong> el sistema advierte del estado y requiere confirmación del Directivo origen para proceder con el pase.</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Pase fuera de período habilitado:</strong> el sistema advierte que el período de pases no está abierto según la Agenda Educativa y bloquea la solicitud.</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Sección destino sin cupo:</strong> el sistema muestra el indicador de capacidad en rojo para la sección elegida. El Operador destino debe seleccionar otra sección o esperar ampliación.</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--text-muted)"><strong>Postcondición:</strong> el alumno está desmatriculado en origen y matriculado en destino. Su historial de movimientos incluye el pase con fecha, establecimientos y usuarios responsables.</div>
+        </div>
+      </div>
+
+      <!-- ── CU-07 Legajo ── -->
+      <div class="cu-card" data-mod="legajo" style="border:1px solid var(--border);border-radius:10px;margin-bottom:14px;overflow:hidden">
+        <div class="cu-header" onclick="toggleCU('cu07')" style="cursor:pointer;padding:14px 16px;background:var(--surface);display:flex;align-items:center;gap:12px">
+          <span style="font-family:monospace;font-size:12px;font-weight:700;color:#d97706;min-width:48px">CU-07</span>
+          <div style="flex:1">
+            <div style="font-weight:600;font-size:14px">Consulta y edición del legajo del alumno</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Legajo · Operador · Alta prioridad</div>
+          </div>
+          <span style="font-size:12px;color:var(--text-muted)">3 casos borde ▾</span>
+        </div>
+        <div id="cu07" style="display:none;padding:16px;border-top:1px solid var(--border)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Actores</div>
+              <div style="font-size:13px">Operador (edita datos), Administrador (modifica regularidad con justificación), Sistema (sincronización con SiTED)</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Precondiciones</div>
+              <div style="font-size:13px">El alumno está matriculado o figura en el padrón histórico. El Operador tiene permisos de lectura/escritura sobre el establecimiento.</div>
+            </div>
+          </div>
+          <div style="margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;color:#d97706;text-transform:uppercase;margin-bottom:8px">Flujo principal</div>
+            <ol style="margin:0;padding-left:20px;font-size:13px;line-height:2">
+              <li>El Operador busca al alumno por DNI o nombre en el buscador global.</li>
+              <li>Accede al legajo y visualiza las solapas: Identificación, Residencia, Responsables, Salud, Historial.</li>
+              <li>Selecciona la solapa a editar y modifica los campos necesarios.</li>
+              <li>El sistema valida los datos y guarda. Los cambios quedan registrados en el historial de modificaciones.</li>
+            </ol>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#991b1b;text-transform:uppercase;margin-bottom:8px">Casos borde</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="padding:10px 12px;background:#fef2f2;border-radius:6px;border-left:3px solid #ef4444;font-size:13px"><strong>Alumno no encontrado:</strong> la búsqueda no arroja resultados. El sistema muestra "No se encontraron alumnos con ese criterio". El Operador puede buscar en otro establecimiento si tiene acceso multi-sede.</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Conflicto de datos con SiTED:</strong> si los datos editados difieren del registro en SiTED, el sistema marca el campo con una advertencia y requiere confirmación antes de guardar. El cambio queda auditado.</div>
+              <div style="padding:10px 12px;background:#fef9c3;border-radius:6px;border-left:3px solid #f59e0b;font-size:13px"><strong>Modificación manual de regularidad:</strong> requiere justificación obligatoria. El sistema registra el cambio en el historial con fecha, usuario y motivo. Sin justificación, el guardado es bloqueado.</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--text-muted)"><strong>Postcondición:</strong> el legajo refleja los datos actualizados. El historial de modificaciones queda disponible para auditoría. Si aplica, la sincronización con SiTED se registra.</div>
+        </div>
+      </div>
+
+      <script>
+      var _cuActiveMod = 'todos';
+      function cuFilter(btn) {
+        btn.closest('.filter-bar').querySelectorAll('[data-cu-mod]').forEach(function(b){b.classList.remove('on');});
+        btn.classList.add('on');
+        _cuActiveMod = btn.getAttribute('data-cu-mod');
+        document.querySelectorAll('.cu-card').forEach(function(card){
+          card.style.display = (_cuActiveMod==='todos' || card.dataset.mod===_cuActiveMod) ? '' : 'none';
+        });
+      }
+      function toggleCU(id) {
+        var el = document.getElementById(id);
+        if (el) el.style.display = el.style.display==='none' ? '' : 'none';
+      }
+      </script>
+
+    </div>
+
     <div class="view" id="view-prd">
       <div class="page-header">
         <h1>PRD — AprendeBA</h1>
