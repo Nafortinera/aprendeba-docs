@@ -233,6 +233,10 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       HU Sistema AprendeBA
     </div>
+    <div class="nav-item" onclick="nav('prd',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      PRD / Objetivos
+    </div>
     <div class="nav-item" onclick="nav('der',this)">
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="2" width="8" height="6" rx="1"/><rect x="14" y="2" width="8" height="6" rx="1"/><rect x="7" y="16" width="10" height="6" rx="1"/><path d="M6 8v4h12V8"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
       DER / Entidades
@@ -3497,6 +3501,252 @@ flowchart TD
 
 
     <!-- ── HU + CA ── -->
+    <div class="view" id="view-prd">
+      <div class="page-header">
+        <h1>PRD — AprendeBA</h1>
+        <p>Product Requirements Document · Objetivos, OKRs y Métricas de éxito del proyecto.</p>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Versión 1.0 · Agosto 2026 · SSTEDU / Ministerio de Educación GCBA</div>
+      </div>
+
+      <!-- Meta strip -->
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+        <div class="stat-card" style="flex:1;min-width:140px"><div class="stat-label">Organización</div><div style="font-size:13px;font-weight:600;color:var(--text);margin-top:4px">SSTEDU · Ministerio Ed. GCBA</div></div>
+        <div class="stat-card" style="flex:1;min-width:140px"><div class="stat-label">Equipo</div><div style="font-size:13px;font-weight:600;color:var(--text);margin-top:4px">Célula 5 — Cristina Castellar · Nadia Delu</div></div>
+        <div class="stat-card" style="flex:1;min-width:120px"><div class="stat-label">Proveedor</div><div style="font-size:13px;font-weight:600;color:var(--text);margin-top:4px">Phinxlab</div></div>
+        <div class="stat-card" style="flex:1;min-width:120px"><div class="stat-label">Horizonte</div><div style="font-size:13px;font-weight:600;color:var(--text);margin-top:4px">Ciclo Lectivo 2026</div></div>
+        <div class="stat-card" style="flex:1;min-width:120px"><div class="stat-label">Estado</div><div style="font-size:13px;font-weight:600;color:#0891b2;margin-top:4px">En desarrollo</div></div>
+      </div>
+
+      <!-- Section 1 — Problema -->
+      <div class="card-section" style="margin-bottom:18px">
+        <div class="section-title" style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span style="background:#fee2e2;color:#991b1b;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px">01</span>
+          <span>Problema</span>
+        </div>
+        <p style="font-size:14px;line-height:1.7;color:var(--text);margin:0">
+          La gestión académica de los establecimientos educativos de la Ciudad de Buenos Aires opera, hasta la implementación de AprendeBA, de manera fragmentada: los procesos de matriculación, registro de asistencia, carga de calificaciones y gestión del legajo del alumno se realizan en sistemas separados, en papel o mediante planillas no integradas entre sí. Esta fragmentación impacta directamente sobre el personal de conducción y los equipos administrativos de cada establecimiento —directivos, asesores, preceptores y secretarios—, que dedican tiempo significativo a la reconciliación manual de datos y a la generación de reportes para satisfacer requerimientos jurisdiccionales. La ausencia de un legajo digital centralizado impide conocer la trayectoria académica completa de un alumno sin consultar múltiples fuentes, y la falta de trazabilidad en los procesos de pases entre establecimientos genera demoras y errores en el padrón activo. AprendeBA responde a este problema concentrando en una única plataforma todos los módulos operativos del ciclo lectivo —desde la inscripción hasta la emisión de boletines— bajo roles y permisos diferenciados, con validaciones en tiempo real y visibilidad jurisdiccional para el equipo de la SSTEDU.
+        </p>
+      </div>
+
+      <!-- Section 2 — Épicas -->
+      <div class="card-section" style="margin-bottom:18px">
+        <div class="section-title" style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span style="background:#dbeafe;color:#1d4ed8;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px">02</span>
+          <span>Épicas / Módulos principales</span>
+        </div>
+        <div class="tbl-wrap">
+          <div class="tbl-head" style="grid-template-columns:60px 200px 1fr">
+            <span>#</span><span>Épica / Módulo</span><span>Descripción</span>
+          </div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E01</span><span style="font-weight:600">Gestión de Inscriptos</span><span style="font-size:13px">Alta, asignación de sección y matriculación de estudiantes inscriptos.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E02</span><span style="font-weight:600">Gestión de Matriculados</span><span style="font-size:13px">Consulta, cambio de sección, búsqueda global y desmatriculación con motivo tipificado.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E03</span><span style="font-weight:600">Cambio de Establecimiento</span><span style="font-size:13px">Selección y cambio del establecimiento activo dentro de la red escolar.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E04</span><span style="font-weight:600">Gestión de Pases</span><span style="font-size:13px">Visualización y gestión de pases entrantes y salientes entre establecimientos.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E05</span><span style="font-weight:600">Legajo del Estudiante</span><span style="font-size:13px">Ficha completa: datos personales, residencia, responsables, salud e historial de movimientos.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E06</span><span style="font-weight:600">Toma de Asistencia</span><span style="font-size:13px">Registro individual y masivo, justificaciones, regularidad, autoguardado y navegación semanal.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E07</span><span style="font-weight:600">Calificaciones y Boletines</span><span style="font-size:13px">Carga bimestral de notas, validaciones, generación y emisión de boletines por nivel.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E08</span><span style="font-weight:600">Espacios Curriculares Pendientes</span><span style="font-size:13px">Gestión de materias adeudadas de ciclos anteriores (ECP).</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E09</span><span style="font-weight:600">Módulos Puente (PIP/PPS/PPE)</span><span style="font-size:13px">Informes pedagógicos de transición entre niveles y efectivización de matrícula.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E10</span><span style="font-weight:600">Notificaciones y Comunicaciones</span><span style="font-size:13px">Domicilio electrónico escolar, adhesión, consentimientos y auditoría de comunicaciones.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E11</span><span style="font-weight:600">QRs y Kiosco de Entrada</span><span style="font-size:13px">Generación de QR por alumno y autoregistro de asistencia por escaneo en kiosco.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E12</span><span style="font-weight:600">Acceso Presentismo (PWA)</span><span style="font-size:13px">App instalable para tablets/celulares con registro de asistencia por cámara QR.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E13</span><span style="font-weight:600">Asistente Virtual y Ayuda</span><span style="font-size:13px">Asistente conversacional con base de conocimiento, FAQ y accesos rápidos.</span></div>
+          <div class="tbl-row" style="grid-template-columns:60px 200px 1fr"><span style="font-family:monospace;font-size:12px;color:#1d4ed8">E14</span><span style="font-weight:600">Back Office / Administración</span><span style="font-size:13px">Gestión de establecimientos, roles, usuarios, agenda educativa y configuración jurisdiccional.</span></div>
+        </div>
+      </div>
+
+      <!-- Section 3 — Riesgos -->
+      <div class="card-section" style="margin-bottom:18px">
+        <div class="section-title" style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span style="background:#fef3c7;color:#b45309;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px">03</span>
+          <span>Riesgos</span>
+        </div>
+        <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:12px 14px;font-size:13px;color:#92400e;margin-bottom:12px">
+          Esta sección será completada en la instancia de análisis de riesgos del proyecto.<br>
+          Incluirá: riesgos identificados, probabilidad estimada, impacto y plan de mitigación.
+        </div>
+        <div class="tbl-wrap">
+          <div class="tbl-head" style="grid-template-columns:1fr 100px 100px 1fr">
+            <span>Riesgo</span><span>Probabilidad</span><span>Impacto</span><span>Mitigación</span>
+          </div>
+          <div class="tbl-row" style="grid-template-columns:1fr 100px 100px 1fr;color:var(--text-muted);font-style:italic;font-size:13px">
+            <span>(pendiente)</span><span>—</span><span>—</span><span>—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4 — Referencias -->
+      <div class="card-section" style="margin-bottom:18px">
+        <div class="section-title" style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span style="background:#f0fdf4;color:#166534;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px">04</span>
+          <span>Referencias</span>
+        </div>
+        <ul style="margin:0;padding-left:20px;font-size:13px;line-height:2;color:var(--text)">
+          <li><code>AprendeBA_Especificaciones_v2.docx</code> — Épicas, HUs, CAs y especificaciones técnicas v2.0 (mayo 2026)</li>
+          <li><code>Informe_Novedades_UI_Fase1_Fase2_PRD_17062026.md</code> — Deploy PRD 17/06/2026: mejoras UX/UI Fase I y II</li>
+          <li><code>AprendeBA_Arquitectura_Tecnica.md</code> — Arquitectura técnica: frontend, backend, BD, integraciones</li>
+          <li>Hub <code>view-estado</code> — Roadmap Phinx 2026: 25 módulos, historial de deploys</li>
+          <li>Hub <code>view-roles</code> — Catálogo de roles y permisos por módulo y nivel</li>
+          <li>Hub <code>view-reglas</code> — Reglas de negocio documentadas del sistema</li>
+        </ul>
+      </div>
+
+      <!-- Section 5 — OKRs -->
+      <div class="card-section" style="margin-bottom:18px">
+        <div class="section-title" style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+          <span style="background:#ede9fe;color:#5b21b6;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px">05</span>
+          <span>Objetivos y OKRs</span>
+        </div>
+
+        <!-- O1 -->
+        <div style="margin-bottom:20px">
+          <div style="background:#ede9fe;border-left:4px solid #7c3aed;padding:10px 14px;border-radius:0 6px 6px 0;margin-bottom:10px">
+            <div style="font-size:11px;font-weight:700;color:#5b21b6;margin-bottom:2px">OBJETIVO 1</div>
+            <div style="font-size:14px;color:#1e1b4b;font-weight:600">Digitalizar completamente los procesos administrativos del ciclo lectivo, eliminando la dependencia de registros en papel y sistemas fragmentados.</div>
+          </div>
+          <div class="tbl-wrap">
+            <div class="tbl-head" style="grid-template-columns:60px 1fr 140px 140px 130px 130px">
+              <span>#</span><span>Key Result</span><span>Baseline actual</span><span>Meta</span><span>Horizonte</span><span>Fuente</span>
+            </div>
+            <div class="tbl-row" style="grid-template-columns:60px 1fr 140px 140px 130px 130px">
+              <span style="font-family:monospace;font-size:12px;color:#7c3aed">KR-01</span>
+              <span style="font-size:13px">% de establecimientos con al menos un módulo operativo en PRD</span>
+              <span style="font-size:12px;color:var(--text-muted)">A establecer (baseline Q1 2026)</span>
+              <span style="font-size:12px"><strong>100%</strong> establecimientos conectados</span>
+              <span style="font-size:12px">Cierre CL 2026</span>
+              <span style="font-size:12px;color:var(--text-muted)">Back Office — establecimientos activos</span>
+            </div>
+            <div class="tbl-row" style="grid-template-columns:60px 1fr 140px 140px 130px 130px">
+              <span style="font-family:monospace;font-size:12px;color:#7c3aed">KR-02</span>
+              <span style="font-size:13px">% de módulos core del roadmap Phinx en estado PRD</span>
+              <span style="font-size:12px;color:var(--text-muted)">~40% (est. · 10/25 módulos a jul 2026)</span>
+              <span style="font-size:12px"><strong>≥ 80%</strong> módulos core en PRD</span>
+              <span style="font-size:12px">Dic 2026</span>
+              <span style="font-size:12px;color:var(--text-muted)">Hub view-estado · Roadmap Phinx</span>
+            </div>
+            <div class="tbl-row" style="grid-template-columns:60px 1fr 140px 140px 130px 130px">
+              <span style="font-family:monospace;font-size:12px;color:#7c3aed">KR-03</span>
+              <span style="font-size:13px">Deploys a producción con 0 incidentes bloqueantes en STG</span>
+              <span style="font-size:12px;color:var(--text-muted)">0 incidentes en deploy 17/06 (referencia)</span>
+              <span style="font-size:12px"><strong>0</strong> incidentes bloqueantes por release</span>
+              <span style="font-size:12px">Cada deploy CL 2026</span>
+              <span style="font-size:12px;color:var(--text-muted)">Historial deploys · Mantis</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- O2 -->
+        <div style="margin-bottom:20px">
+          <div style="background:#e0f2fe;border-left:4px solid #0891b2;padding:10px 14px;border-radius:0 6px 6px 0;margin-bottom:10px">
+            <div style="font-size:11px;font-weight:700;color:#0369a1;margin-bottom:2px">OBJETIVO 2</div>
+            <div style="font-size:14px;color:#0c4a6e;font-weight:600">Brindar a los equipos de conducción trazabilidad completa sobre la trayectoria académica de cada alumno, desde la inscripción hasta la emisión del boletín.</div>
+          </div>
+          <div class="tbl-wrap">
+            <div class="tbl-head" style="grid-template-columns:60px 1fr 140px 140px 130px 130px">
+              <span>#</span><span>Key Result</span><span>Baseline actual</span><span>Meta</span><span>Horizonte</span><span>Fuente</span>
+            </div>
+            <div class="tbl-row" style="grid-template-columns:60px 1fr 140px 140px 130px 130px">
+              <span style="font-family:monospace;font-size:12px;color:#0891b2">KR-04</span>
+              <span style="font-size:13px">% de alumnos matriculados con legajo digital completo</span>
+              <span style="font-size:12px;color:var(--text-muted)">A establecer en 3er bimestre 2026</span>
+              <span style="font-size:12px"><strong>≥ 90%</strong> alumnos con legajo activo</span>
+              <span style="font-size:12px">Cierre 3er bim. 2026</span>
+              <span style="font-size:12px;color:var(--text-muted)">Módulo Legajo — completitud de ficha</span>
+            </div>
+            <div class="tbl-row" style="grid-template-columns:60px 1fr 140px 140px 130px 130px">
+              <span style="font-family:monospace;font-size:12px;color:#0891b2">KR-05</span>
+              <span style="font-size:13px">% de pases gestionados íntegramente en plataforma (sin intervención manual)</span>
+              <span style="font-size:12px;color:var(--text-muted)">Sin baseline (proceso previo en papel)</span>
+              <span style="font-size:12px"><strong>≥ 85%</strong> pases en plataforma</span>
+              <span style="font-size:12px">Cierre CL 2026</span>
+              <span style="font-size:12px;color:var(--text-muted)">Módulo Pases — estados completados</span>
+            </div>
+            <div class="tbl-row" style="grid-template-columns:60px 1fr 140px 140px 130px 130px">
+              <span style="font-family:monospace;font-size:12px;color:#0891b2">KR-06</span>
+              <span style="font-size:13px">% de boletines generados desde plataforma sobre alumnos con calificaciones cargadas</span>
+              <span style="font-size:12px;color:var(--text-muted)">0% antes del CL 2026</span>
+              <span style="font-size:12px"><strong>≥ 95%</strong> por bimestre habilitado</span>
+              <span style="font-size:12px">Por bimestre</span>
+              <span style="font-size:12px;color:var(--text-muted)">Módulo Boletines — emisiones registradas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- O3 -->
+        <div>
+          <div style="background:#f0fdf4;border-left:4px solid #16a34a;padding:10px 14px;border-radius:0 6px 6px 0;margin-bottom:10px">
+            <div style="font-size:11px;font-weight:700;color:#166534;margin-bottom:2px">OBJETIVO 3</div>
+            <div style="font-size:14px;color:#14532d;font-weight:600">Reducir la carga operativa de los equipos administrativos, disminuyendo el tiempo dedicado a tareas de reconciliación manual de datos.</div>
+          </div>
+          <div class="tbl-wrap">
+            <div class="tbl-head" style="grid-template-columns:60px 1fr 140px 140px 130px 130px">
+              <span>#</span><span>Key Result</span><span>Baseline actual</span><span>Meta</span><span>Horizonte</span><span>Fuente</span>
+            </div>
+            <div class="tbl-row" style="grid-template-columns:60px 1fr 140px 140px 130px 130px">
+              <span style="font-family:monospace;font-size:12px;color:#16a34a">KR-07</span>
+              <span style="font-size:13px">Tiempo promedio de carga de asistencia por sección</span>
+              <span style="font-size:12px;color:var(--text-muted)">A establecer en primeros 30 días de uso</span>
+              <span style="font-size:12px"><strong>Reducción ≥ 30%</strong> vs. baseline</span>
+              <span style="font-size:12px">Fin 2do bimestre</span>
+              <span style="font-size:12px;color:var(--text-muted)">Logs sesión Presentismo (estimado)</span>
+            </div>
+            <div class="tbl-row" style="grid-template-columns:60px 1fr 140px 140px 130px 130px">
+              <span style="font-family:monospace;font-size:12px;color:#16a34a">KR-08</span>
+              <span style="font-size:13px">Tickets Mantis de tipo "error de carga / pérdida de datos" por release</span>
+              <span style="font-size:12px;color:var(--text-muted)">28 tickets resueltos deploy 17/06 (ref.)</span>
+              <span style="font-size:12px"><strong>Reducción ≥ 50%</strong> entre releases consecutivos</span>
+              <span style="font-size:12px">Por release</span>
+              <span style="font-size:12px;color:var(--text-muted)">Mantis — categoría error funcional</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 6 — Métricas -->
+      <div class="card-section" style="margin-bottom:18px">
+        <div class="section-title" style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span style="background:#fef9c3;color:#854d0e;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px">06</span>
+          <span>Métricas de éxito</span>
+        </div>
+        <div class="tbl-wrap">
+          <div class="tbl-head" style="grid-template-columns:180px 1fr 1fr 120px">
+            <span>Métrica</span><span>Descripción</span><span>Cómo se mide</span><span>Fuente</span>
+          </div>
+          <div class="tbl-row" style="grid-template-columns:180px 1fr 1fr 120px">
+            <span style="font-weight:600;font-size:13px">Adopción de Presentismo</span>
+            <span style="font-size:13px">% de secciones que registran asistencia en plataforma sobre total de secciones habilitadas</span>
+            <span style="font-size:13px">Secciones con al menos 1 registro en la semana / total secciones activas</span>
+            <span style="font-size:12px;color:var(--text-muted)">Módulo Presentismo</span>
+          </div>
+          <div class="tbl-row" style="grid-template-columns:180px 1fr 1fr 120px">
+            <span style="font-weight:600;font-size:13px">Cobertura de calificaciones</span>
+            <span style="font-size:13px">% de secciones con calificaciones cargadas al cierre de cada bimestre</span>
+            <span style="font-size:13px">Secciones con notas confirmadas / total secciones habilitadas por nivel</span>
+            <span style="font-size:12px;color:var(--text-muted)">Módulo Calificaciones</span>
+          </div>
+          <div class="tbl-row" style="grid-template-columns:180px 1fr 1fr 120px">
+            <span style="font-weight:600;font-size:13px">Resolución de tickets Mantis</span>
+            <span style="font-size:13px">% de tickets resueltos sobre total abiertos en el período entre releases</span>
+            <span style="font-size:13px">Tickets cerrados / (abiertos + cerrados) en el período</span>
+            <span style="font-size:12px;color:var(--text-muted)">Mantis</span>
+          </div>
+          <div class="tbl-row" style="grid-template-columns:180px 1fr 1fr 120px">
+            <span style="font-weight:600;font-size:13px">Completitud del legajo</span>
+            <span style="font-size:13px">% de campos obligatorios completos sobre total de legajos activos</span>
+            <span style="font-size:13px">Campos completados / campos requeridos × 100, por establecimiento</span>
+            <span style="font-size:12px;color:var(--text-muted)">Módulo Legajo</span>
+          </div>
+          <div class="tbl-row" style="grid-template-columns:180px 1fr 1fr 120px">
+            <span style="font-weight:600;font-size:13px">Tiempo de efectivización (PPE)</span>
+            <span style="font-size:13px">Tiempo promedio entre inicio y confirmación del proceso de efectivización por establecimiento</span>
+            <span style="font-size:13px">Timestamp inicio PPE → confirmación, promedio por establecimiento</span>
+            <span style="font-size:12px;color:var(--text-muted)">Módulo PPE</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
     <div class="view" id="view-hu-sistema">
       <div class="page-header">
         <h1>HU + CA — Sistema AprendeBA</h1>
