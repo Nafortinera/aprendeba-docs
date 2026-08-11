@@ -7684,17 +7684,19 @@ var rnMod = 'todos', rnNiv = 'todos';
 function nav(id, el) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  // Si no se pasó el, buscar el nav-item correspondiente
+  // Si no se pasó el (ej. desde home cards), buscar nav-item por contenido onclick
   if (!el) {
-    el = document.querySelector('.nav-item[onclick*="nav(\'"+id+"\'"]') ||
-         document.querySelector('.nav-item[onclick*='nav(\"'+id+'\"']');
+    var allNav = Array.from(document.querySelectorAll('.nav-item'));
+    el = allNav.find(function(n) {
+      return (n.getAttribute('onclick') || '').indexOf("nav('" + id + "'") >= 0;
+    }) || null;
   }
   // Expandir el grupo padre si estaba colapsado
   if (el) {
     var grp = el.closest('.nav-group');
     if (grp && grp.classList.contains('collapsed')) grp.classList.remove('collapsed');
   }
-  var v = document.getElementById('view-'+id);
+    var v = document.getElementById('view-'+id);
   if (id === 'mantis' && !document.querySelector('#mantis-rows .tbl-row')) { cargarMantisDash(); }
   if (v) v.classList.add('active');
   if (el) el.classList.add('active');
