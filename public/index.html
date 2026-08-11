@@ -253,6 +253,14 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
       Manuales
     </div>
+    <div class="nav-item" onclick="nav('instructivos-gcba',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Instructivos GCBA
+    </div>
+    <div class="nav-item" onclick="nav('testing',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0H5m4 0h4m0 0V3m0 11h4M5 7h14"/><circle cx="12" cy="19" r="2"/></svg>
+      Testing automatizado
+    </div>
     <div class="nav-item" onclick="nav('docinv',this)">
       <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
       Inventario documental
@@ -415,6 +423,34 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <div class="mc-title">Manual Secundario 2026</div>
           <div class="mc-links">
             <a class="mc-link" href="manuales/Manual_Matriculados_Secundario_2026_v3.docx">DOCX</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-title" style="font-size:13px;color:var(--text-muted);margin-bottom:12px">Instructivos (equipo SSTEDU)</div>
+      <div class="manuales-grid" style="margin-bottom:20px">
+        <div class="manual-card">
+          <div class="mc-mod">Matriculación</div>
+          <div class="mc-title">Instructivo 2026</div>
+          <div class="mc-links">
+            <a class="mc-link" href="manuales/Instructivo_Matriculacion_2026.pdf" target="_blank">PDF</a>
+            <a class="mc-link" href="manuales/Instructivo_Matriculacion_2026.docx">DOCX</a>
+          </div>
+        </div>
+        <div class="manual-card">
+          <div class="mc-mod">Presentismo</div>
+          <div class="mc-title">Instructivo 2026</div>
+          <div class="mc-links">
+            <a class="mc-link" href="manuales/Instructivo_Presentismo_2026.pdf" target="_blank">PDF</a>
+            <a class="mc-link" href="manuales/Instructivo_Presentismo_2026.docx">DOCX</a>
+          </div>
+        </div>
+        <div class="manual-card">
+          <div class="mc-mod">Pases</div>
+          <div class="mc-title">Instructivo 2026</div>
+          <div class="mc-links">
+            <a class="mc-link" href="manuales/Instructivo_Pases_2026.pdf" target="_blank">PDF</a>
+            <a class="mc-link" href="manuales/Instructivo_Pases_2026.docx">DOCX</a>
           </div>
         </div>
       </div>
@@ -7275,6 +7311,149 @@ flowchart TD
         </div>
         </div>
         <div id="hu-empty" style="display:none;text-align:center;padding:32px;color:var(--text-muted);font-size:13px">No se encontraron historias con esos filtros.</div>
+      </div>
+    </div>
+
+    <!-- ── INSTRUCTIVOS GCBA ── -->
+    <div class="view" id="view-instructivos-gcba">
+      <div class="page-header">
+        <h1>Instructivos oficiales GCBA</h1>
+        <p>Fuente: <a href="https://buenosaires.gob.ar/gcaba_historico/supervisores-directivos-y-equipos-de-conduccion/instructivos-0" target="_blank">buenosaires.gob.ar</a> · Para supervisores, directivos y equipos de conducción.</p>
+      </div>
+      <table>
+        <thead><tr><th>Módulo</th><th>Instructivo</th><th>Nivel</th><th>Descargar</th></tr></thead>
+        <tbody>
+          <tr><td><strong>📊 Tablero</strong></td><td>Cómo interactuar con el Tablero AprendeBA</td><td>Inicial</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20interactuar%20con%20el%20Tablero%20%20AprendeBA%20-%20Nivel%20Inicial.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📊 Tablero</strong></td><td>Cómo interactuar con el Tablero AprendeBA</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20interactuar%20con%20el%20Tablero%20%20AprendeBA%20-%20Nivel%20Primario.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📊 Tablero</strong></td><td>Cómo interactuar con el Tablero AprendeBA</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20interactuar%20con%20el%20Tablero%20AprendeBA%20-%20Nivel%20Secundario.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📊 Tablero</strong></td><td>Dispositivos tecnológicos</td><td>Inicial</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-06/Tablero%20-%20Dispositivos%20tecnologicos%20-%20Nivel%20inicial.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📊 Tablero</strong></td><td>Dispositivos tecnológicos</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-06/Tablero%20-%20Dispositivos%20tecnologicos%20-%20Nivel%20primario%20.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📊 Tablero</strong></td><td>Presentismo escolar en el Tablero</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-08/Tablero%20de%20presentismo%20escolar%20en%20AprendeBA.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📒 Libro Matriz Digital</strong></td><td>Instructivo Libro Matriz Digital</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-02/Instructivo%20LMD%20para%20equipos%20de%20conducci%C3%B3n%2024-02.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>👤 Roles</strong></td><td>Cómo aprobar roles</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20aprobar%20roles%20%282%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>👤 Roles</strong></td><td>Cómo solicitar un rol</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/Como%20solicitar%20un%20rol.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>👤 Roles</strong></td><td>Autoregistración</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/Autoregistraci%C3%B3n%20%282%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo matricular a un estudiante</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20matricular%20a%20un%20estudiante%20%282%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo modificar la condición (Supervisores)</td><td>Inicial</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20modificar%20la%20condici%C3%B3n%20a%20los%20estudiantes%20%28Supervisores%20Nivel%20Inicial%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo modificar la condición (Supervisores)</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20modificar%20la%20condici%C3%B3n%20a%20los%20estudiantes%20%28Supervisores%20Nivel%20Primario%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo modificar la condición (Supervisores)</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20modificar%20la%20condici%C3%B3n%20a%20los%20estudiantes%20%28Supervisores%20Nivel%20Secundario%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo solicitar o aprobar un pase</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20solicitar%20o%20aprobar%20un%20pase%20%282%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo realizar la promoción</td><td>Inicial</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizar%20la%20promoci%C3%B3n%20-%20Nivel%20Inicial.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo realizar la promoción</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/Como%20realizar%20la%20promoci%C3%B3n%20-%20Nivel%20Primario.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo realizar la promoción</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizar%20la%20promoci%C3%B3n%20-%20Nivel%20Secundario%20%282%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🎓 Matriculación</strong></td><td>Generación Certificado 7mo</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-11/AprendeBA_Generaci%C3%B3n%20Certificado%207mo_%20Primario.docx.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📋 Asistencia</strong></td><td>Cómo realizar la toma de asistencia</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizar%20la%20toma%20de%20asistencia%20-%20Todos%20los%20niveles%20%282%29_0.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📋 Asistencia</strong></td><td>Cómo dar de alta una situación de emergencia o suspensión de clases</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-04/Como%20dar%20de%20alta%20una%20situaci%C3%B3n%20de%20emergencia%20o%20suspensi%C3%B3n%20de%20Clases%20-%20Jornada%20Completa%20-%20todos%20los%20niveles.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📋 Asistencia</strong></td><td>Cómo realizar la configuración de Jornada Extendida</td><td>Prim./Sec.</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizar%20la%20configuraci%C3%B3n%20de%20Jornada%20Extendida%20-%20Nivel%20Primario%20y%20Secundario.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📋 Asistencia</strong></td><td>Cómo cargar presentismo en comedor</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20cargar%20presentismo%20en%20comedor.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📄 Boletines</strong></td><td>Cómo generar los boletines</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-06/C%C3%B3mo%20generar%20los%20boletines%20-%20Nivel%20Primario.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📄 Boletines</strong></td><td>Cómo generar los boletines</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-04/Como%20generar%20los%20boletines-%20Secundario.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📝 Calificaciones</strong></td><td>Cómo cargar informe cuatrimestral</td><td>Inicial</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-07/2023%20-%20Inicial%20-%20C%C3%B3mo%20cargar%20el%20informe%20cuatrimestral.docx.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📝 Calificaciones</strong></td><td>Cómo cargar calificaciones primer bimestre</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-07/C%C3%B3mo%20cargar%20calificaciones%20primer%20bimestre%20-%20Nivel%20Primaria%20%281%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📝 Calificaciones</strong></td><td>Cómo cargar calificaciones 1er y 3er bimestre</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-06/C%C3%B3mo%20cargar%20calificaciones%20primer%20y%20tercer%20bimestre%20-Nivel%20Secundario.docx.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📝 Calificaciones</strong></td><td>Cómo cargar calificaciones cuarto bimestre</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2026-04/Co%CC%81mo%20cargar%20calificaciones%20cuarto%20bimestre%20-Nivel%20Secundario.docx.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📝 Calificaciones</strong></td><td>Cómo cargar los ECP (Espacios Curriculares Pendientes)</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-02/C%C3%B3mo%20cargar%20los%20espacios%20curriculares%20pendientes%20-%20Nivel%20secundario_0.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🏫 ACAP</strong></td><td>Cómo ingresar a las ACAP como referente de acción</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20ingresar%20a%20las%20ACAP%20como%20referente%20de%20acci%C3%B3n.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🏫 ACAP</strong></td><td>Cómo ingreso al módulo ACAP como referente de organización</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20ingreso%20al%20m%C3%B3dulo%20ACAP%20como%20referente%20de%20organizaci%C3%B3n.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🏫 ACAP</strong></td><td>Cómo realizar la inscripción a una Actividad de Aproximación</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizo%20la%20inscripci%C3%B3n%20a%20%20una%20Actividad%20%20de%20Aproximaci%C3%B3n%20%28ACAP%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>🏫 ACAP</strong></td><td>Cómo seleccionar una Actividad de Aproximación</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20seleccionar%20una%20Actividad%20%20de%20Aproximaci%C3%B3n%20%28ACAP%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📌 Otros</strong></td><td>Cómo obtener el código de un estudiante</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20obtener%20el%20c%C3%B3digo%20de%20un%20estudiante%20en%20la%20plataforma.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📌 Otros</strong></td><td>Cómo cargar el Puente Inicial Primaria (PIP)</td><td>Inicial</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-11/2025%20-%20Inicial%20-%20%C2%BFC%C3%B3mo%20cargar%20el%20Puente%20Inicial%20Primaria%20%28PIP%29_.docx%20%281%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+          <tr><td><strong>📌 Otros</strong></td><td>Cómo cargar el Puente Primaria Secundaria (PPS)</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20cargar%20el%20Puente%20%20Primaria%20Secundaria%20%28PPS%29.pdf" target="_blank">⬇ PDF</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── TESTING ── -->
+    <div class="view" id="view-testing">
+      <div class="page-header">
+        <h1>Testing Automatizado</h1>
+        <p>Registro de corridas semanales sobre el entorno <strong>stg.miescuela2.phinxlab.com</strong> · Escuela de prueba: Esc. Primaria Nº 13 DE 21 Dr. Alfredo Lanari · CUE 20026800</p>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+        <div class="card" style="flex:1;min-width:120px;text-align:center;padding:16px">
+          <div style="font-size:28px;font-weight:700;color:var(--teal)">2</div>
+          <div style="font-size:12px;color:var(--text-muted)">Tests ejecutados</div>
+        </div>
+        <div class="card" style="flex:1;min-width:120px;text-align:center;padding:16px">
+          <div style="font-size:28px;font-weight:700;color:#2e7d32">1</div>
+          <div style="font-size:12px;color:var(--text-muted)">✓ Exitosos</div>
+        </div>
+        <div class="card" style="flex:1;min-width:120px;text-align:center;padding:16px">
+          <div style="font-size:28px;font-weight:700;color:#f57c00">1</div>
+          <div style="font-size:12px;color:var(--text-muted)">⚠ Parciales</div>
+        </div>
+        <div class="card" style="flex:1;min-width:120px;text-align:center;padding:16px">
+          <div style="font-size:28px;font-weight:700;color:#c62828">0</div>
+          <div style="font-size:12px;color:var(--text-muted)">✗ Con errores</div>
+        </div>
+      </div>
+
+      <div class="nota nota-v" style="margin-bottom:20px">
+        <strong>📅 Programación:</strong> Ambos tests corren automáticamente cada <strong>lunes a las 9:00 AM</strong>.
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)">
+          <span style="font-size:13px;color:var(--text-muted)">📅 08/05/2026 13:15 · <strong>Presentismo</strong></span>
+          <span class="badge badge-stg" style="background:#fff8e1;color:#f57c00;border:1px solid #f57c00">⚠ PARCIAL</span>
+        </div>
+        <div style="padding:14px 16px">
+          <table style="margin-bottom:12px">
+            <tbody>
+              <tr><th>Escuela (CUE)</th><td>Esc. Primaria Nº 13 DE 21 Dr. Alfredo Lanari — 20026800</td></tr>
+              <tr><th>Módulo</th><td>Presentismo · Toma de asistencia</td></tr>
+              <tr><th>Semana testeada</th><td>Lunes 11 al Viernes 15 de mayo 2026</td></tr>
+              <tr><th>Sección</th><td>1° grado Mañana Simple A</td></tr>
+              <tr><th>Alumno ausente</th><td>AVILES VELA, KATHERINE NAIRA — justificación realizada manualmente</td></tr>
+            </tbody>
+          </table>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+            <span class="badge badge-prd">✓ Login Google SSO</span>
+            <span class="badge badge-prd">✓ CUE 20026800 → Directivo</span>
+            <span class="badge badge-prd">✓ Módulo Presentismo cargado</span>
+            <span class="badge badge-prd">✓ Semana anterior navegada</span>
+            <span class="badge badge-prd">✓ Sección seleccionada</span>
+            <span class="badge badge-prd">✓ Asistencia cargada</span>
+            <span class="badge badge-prd">✓ Guardado exitoso</span>
+            <span class="badge badge-stg" style="background:#fff8e1;color:#f57c00">⚠ Justificación: bug en staging</span>
+            <span class="badge badge-prd">✓ Justificación manual completada</span>
+          </div>
+          <div class="nota nota-t">
+            <strong>Bug identificado:</strong> El formulario de Justificación en staging devuelve
+            <code>SyntaxError: Unexpected token '&lt;', "!doctype"...</code>
+            cuando se abre desde el browser automatizado. Se justifica manualmente hasta que Phinx corrija el endpoint.
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)">
+          <span style="font-size:13px;color:var(--text-muted)">📅 08/05/2026 12:47 · <strong>Calificaciones</strong></span>
+          <span class="badge badge-prd">✓ EXITOSO</span>
+        </div>
+        <div style="padding:14px 16px">
+          <table style="margin-bottom:12px">
+            <tbody>
+              <tr><th>Escuela (CUE)</th><td>Esc. Primaria Nº 13 DE 21 Dr. Alfredo Lanari — 20026800</td></tr>
+              <tr><th>Módulo</th><td>Calificaciones · Primer Bimestre</td></tr>
+              <tr><th>Sección</th><td>1° grado Mañana Simple A</td></tr>
+              <tr><th>Alumno testeado</th><td>ALAMO, MATÍAS EZEQUIEL (DNI 58143527) — índ. rotativo #0</td></tr>
+              <tr><th>Valor cargado</th><td>Carga masiva "Alcanzado" · Observación de prueba</td></tr>
+            </tbody>
+          </table>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="badge badge-prd">✓ Login Google SSO</span>
+            <span class="badge badge-prd">✓ CUE 20026800</span>
+            <span class="badge badge-prd">✓ Rol Directivo</span>
+            <span class="badge badge-prd">✓ Módulo Calificaciones</span>
+            <span class="badge badge-prd">✓ Filtros: 1er Bimestre / 1° grado</span>
+            <span class="badge badge-prd">✓ Carga masiva "Alcanzado"</span>
+            <span class="badge badge-prd">✓ Observaciones guardadas</span>
+            <span class="badge badge-prd">✓ Estado alumno: "En proceso"</span>
+          </div>
+        </div>
       </div>
     </div>
   </div><!-- /content -->
