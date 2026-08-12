@@ -1435,7 +1435,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <span class="dtl-e stg">STG</span>
           <ul class="dtl-l">
             <li><strong>Mejoras UX/UI Fase I:</strong> Consulta estado matriculación jurisdiccional, validaciones FEM con alertas, autoguardado en Presentismo</li>
-            <li><strong>Mejoras UX/UI Fase II:</strong> Gestión de pases con mensajes contextuales, indicadores capacidad secciones, desmatriculación con motivos tipificados</li>
+            <li><strong>Mejoras UX/UI Fase II:</strong> Gestión de pases con mensajes contextuales, indicadores capacidad secciónes, desmatriculación con motivos tipificados</li>
             <li><strong>Módulo Notificaciones:</strong> Domicilio electrónico escolar, adhesión y consentimientos, auditoría de comunicaciones</li>
             <li><strong>Back Office – Agenda Educativa:</strong> Parametrización de fechas operativas sin intervención técnica</li>
             <li><strong>Regularidad:</strong> Contraturno N/C = media asistencia · Tab condición vigente por bimestre</li>
@@ -1502,7 +1502,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
           <div class="dtl-t">Deploy 19/02</div>
           <span class="dtl-e prd">PRD</span>
           <ul class="dtl-l">
-            <li>Secu Aprende: Proyección a secciones · Habilitar botón de proyecciones</li>
+            <li>Secu Aprende: Proyección a secciónes · Habilitar botón de proyecciones</li>
           </ul>
         </div>
 
@@ -4004,7 +4004,7 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
       </div>
       <div id="flujo-container">
           <div class="flujo-card" id="flujo-mat" style="">
-            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Flujo completo: secciones → proyección → inscriptos → matriculado.</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Flujo completo: secciónes → proyección → inscriptos → matriculado.</div>
             <div class="diagram-card">
         <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#f5f3ff','primaryTextColor':'#3b0764','primaryBorderColor':'#c4b5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
 flowchart TD
@@ -4025,8 +4025,8 @@ flowchart TD
     PA4 --&gt;|&quot;Si&quot;| PA6[&quot;✔️ Escuela de origen&lt;br/&gt;aprueba el pase&quot;]
     PA6 --&gt; OK1([&quot;✅ Alumno disponible&lt;br/&gt;para matricular&quot;])
 
-    Q1 --&gt;|&quot;Otra jurisdiccion&lt;br/&gt;o escuela privada&quot;| IN1{&quot;¿Tiene inscripcion?&quot;}
-    IN1 --&gt;|&quot;No&quot;| IN2[&quot;📢 Indicar que debe realizar&lt;br/&gt;inscripcion y solicitar vacante&quot;]
+    Q1 --&gt;|&quot;Otra jurisdiccion&lt;br/&gt;o escuela privada&quot;| IN1{&quot;¿Tiene inscripción?&quot;}
+    IN1 --&gt;|&quot;No&quot;| IN2[&quot;📢 Indicar que debe realizar&lt;br/&gt;inscripción y solicitar vacante&quot;]
     IN2 --&gt; WARN
     IN1 --&gt;|&quot;Vacante asignada&quot;| OK2([&quot;✅ Figura como inscripto&lt;br/&gt;Proceder a matricular&quot;])
     IN1 --&gt;|&quot;Lista de espera&quot;| IN5[&quot;📣 Avisar a supervision&quot;]
@@ -4183,16 +4183,16 @@ flowchart TD
             <div class="diagram-card">
         <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#fffbeb','primaryTextColor':'#451a03','primaryBorderColor':'#fcd34d','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'14px'}}}%%
 flowchart TD
-    A([&quot;📝 Apertura del periodo de calificaciones&quot;]) --&gt; B
+    A([&quot;📝 Apertura del período de calificaciones&quot;]) --&gt; B
     B[&quot;👩‍🏫 Docente carga calificaciones&lt;br/&gt;SIEMPRE sin importar la regularidad&quot;] --&gt; C
     C{&quot;¿Qué período?&quot;}
     C --&gt;|&quot;1er y 3er Bimestre&quot;| C1[&quot;Calificaciones CONCEPTUALES&quot;]
     C --&gt;|&quot;Cuatrimestral&lt;br/&gt;2do o 4to Bimestre&quot;| C2[&quot;Calificaciones NUMÉRICAS&quot;]
-    C1 --&gt; D[&quot;📋 Directivo genera boletin por seccion&quot;]
+    C1 --&gt; D[&quot;📋 Directivo genera boletin por sección&quot;]
     C2 --&gt; D
     D --&gt; E[&quot;👁️ Preceptor valida&lt;br/&gt;vista previa del boletin&quot;]
     E --&gt; F{&quot;¿El alumno es REGULAR&lt;br/&gt;en el bimestre?&quot;}
-    F --&gt;|&quot;✅ Regular&quot;| G[&quot;Boletin muestra&lt;br/&gt;CALIFICACIONES del periodo&quot;]
+    F --&gt;|&quot;✅ Regular&quot;| G[&quot;Boletin muestra&lt;br/&gt;CALIFICACIONES del período&quot;]
     F --&gt;|&quot;❌ No regular&quot;| H[&quot;Boletin muestra&lt;br/&gt;NO REGULAR en todos&lt;br/&gt;los espacios curriculares&quot;]
     G --&gt; I[&quot;📁 Boletin impactado&lt;br/&gt;en el legajo del alumno&quot;]
     H --&gt; I
@@ -4200,8 +4200,8 @@ flowchart TD
     J --&gt; P1[&quot;📊 Revisión condición&lt;br/&gt;de regularidad anual&quot;]
     P1 --&gt; P2{&quot;¿Regular en el año?&quot;}
     P2 --&gt;|&quot;Si&quot;| P3([&quot;🎓 PROMOVIDO&lt;br/&gt;al año siguiente&quot;])
-    P2 --&gt;|&quot;No&quot;| P4[&quot;📖 Instancia de recuperacion&lt;br/&gt;de aprendizajes&quot;]
-    P4 --&gt; P5{&quot;¿Aprueba&lt;br/&gt;recuperacion?&quot;}
+    P2 --&gt;|&quot;No&quot;| P4[&quot;📖 Instancia de recuperación&lt;br/&gt;de aprendizajes&quot;]
+    P4 --&gt; P5{&quot;¿Aprueba&lt;br/&gt;recuperación?&quot;}
     P5 --&gt;|&quot;Si&quot;| P3
     P5 --&gt;|&quot;No&quot;| P6([&quot;🔁 REPITE el anio&quot;])
     classDef inicio fill:#fffbeb,stroke:#f59e0b,color:#451a03,font-weight:bold
@@ -4303,12 +4303,12 @@ flowchart TD
     CONT[&quot;Conteo de ECP por alumno&quot;] --&gt; AUTO
     AUTO{&quot;Estado automatico&lt;br/&gt;segun año cursado + cantidad ECP&quot;}
     AUTO --&gt;|&quot;0 ECP&quot;| PD([&quot;✅ PROMOCION DIRECTA&lt;br/&gt;Pasa al año siguiente&quot;])
-    AUTO --&gt;|&quot;1-4 ECP (1er año)&lt;br/&gt;1-5 ECP (2do+)&quot;| EPRO[&quot;⏳ EN PROCESO&lt;br/&gt;Resolución manual requerida&lt;br/&gt;por equipo de conduccion&quot;]
+    AUTO --&gt;|&quot;1-4 ECP (1er año)&lt;br/&gt;1-5 ECP (2do+)&quot;| EPRO[&quot;⏳ EN PROCESO&lt;br/&gt;Resolución manual requerida&lt;br/&gt;por equipo de conducción&quot;]
     AUTO --&gt;|&quot;5+ ECP (1er año)&lt;br/&gt;6+ ECP (2do+)&quot;| PERM([&quot;🔁 PERMANECE&lt;br/&gt;Repite el año&quot;])
     AUTO --&gt;|&quot;Último año del plan&quot;| ULTO{&quot;¿Completó el plan de estudios?&quot;}
     ULTO --&gt;|&quot;Si&quot;| CPE([&quot;🎓 COMPLETO&lt;br/&gt;EL PLAN DE ESTUDIOS&quot;])
     ULTO --&gt;|&quot;No&quot;| NCPE([&quot;📋 NO COMPLETO&lt;br/&gt;EL PLAN DE ESTUDIOS&quot;])
-    EPRO --&gt; RES{&quot;Resolucion manual:&lt;br/&gt;¿puede pasar de año?&quot;}
+    EPRO --&gt; RES{&quot;Resolución manual:&lt;br/&gt;¿puede pasar de año?&quot;}
     RES --&gt;|&quot;Si, con acompañamiento&quot;| PCA([&quot;📚 PROMOCIÓN CON APOYO&lt;br/&gt;Pasa al año siguiente con ECP&quot;])
     RES --&gt;|&quot;No puede avanzar&quot;| PERM
     PD --&gt; FPR
@@ -4429,14 +4429,14 @@ flowchart TD
           <span style="font-size:12px;color:var(--text-muted)">id, cue, nombre, comuna, tipo, ciclo_lectivo</span>
         </div>
         <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
-          <span style="font-family:monospace;font-size:12px">secciones</span>
+          <span style="font-family:monospace;font-size:12px">secciónes</span>
           <span>Divisiones por a&ntilde;o/turno</span>
           <span style="font-size:12px;color:var(--text-muted)">id, establecimiento_id, ciclo_lectivo, nivel, division, turno, jornada</span>
         </div>
         <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
           <span style="font-family:monospace;font-size:12px">matriculaciones</span>
           <span>Inscripci&oacute;n alumno/secci&oacute;n</span>
-          <span style="font-size:12px;color:var(--text-muted)">id, alumno_id, seccion_id, estado, motivo_baja, plan_id, nivel_cursando</span>
+          <span style="font-size:12px;color:var(--text-muted)">id, alumno_id, sección_id, estado, motivo_baja, plan_id, nivel_cursando</span>
         </div>
         <div class="tbl-row" style="grid-template-columns:160px 1fr 2fr">
           <span style="font-family:monospace;font-size:12px">asistencias</span>
@@ -4493,7 +4493,7 @@ flowchart TD
         <div class="stat-card">
           <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:8px;text-transform:uppercase">Tablero &amp; QRs</div>
           <div style="font-size:12px;font-family:monospace;line-height:1.8;color:var(--text-muted)">
-            GET /tablero?establecimiento_id=<br>GET /tablero/asistencia-semana<br>GET /tablero/calificaciones<br>GET /qrs/:matriculacion_id<br>GET /qrs/seccion/:seccion_id<br>POST /asistencias/qr-scan
+            GET /tablero?establecimiento_id=<br>GET /tablero/asistencia-semana<br>GET /tablero/calificaciones<br>GET /qrs/:matriculacion_id<br>GET /qrs/sección/:sección_id<br>POST /asistencias/qr-scan
           </div>
         </div>
       </div>
@@ -4594,7 +4594,7 @@ flowchart TD
         </div>
 <div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
           <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-002</div>
-          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir asignar sección a un inscripto mostrando solo secciones del mismo nivel educativo.</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir asignar sección a un inscripto mostrando solo secciónes del mismo nivel educativo.</div>
           <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
           <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
           <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
@@ -4666,7 +4666,7 @@ flowchart TD
         </div>
 <div class="rf-row tbl-row" data-rfmod="matriculacion" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
           <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-011</div>
-          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir al Administrador crear y editar secciones del ciclo lectivo.</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe permitir al Administrador crear y editar secciónes del ciclo lectivo.</div>
           <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#0d9488">Matriculación</span></div>
           <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Administrador</div>
           <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
@@ -4762,7 +4762,7 @@ flowchart TD
         </div>
 <div class="rf-row tbl-row" data-rfmod="legajo" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
           <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-023</div>
-          <div class="tbl-cell" style="font-size:13px">El sistema debe mostrar el historial de movimientos del alumno (matrículas, pases, secciones) en orden cronológico.</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe mostrar el historial de movimientos del alumno (matrículas, pases, secciónes) en orden cronológico.</div>
           <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#b45309">Legajo y ECP</span></div>
           <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Operador</div>
           <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#d97706">Media</span></div>
@@ -5074,7 +5074,7 @@ flowchart TD
         </div>
 <div class="rf-row tbl-row" data-rfmod="qr" style="grid-template-columns:70px 1fr 130px 110px 70px 90px;gap:0">
           <div class="tbl-cell" style="font-family:monospace;font-size:12px;color:var(--text-muted)">RF-062</div>
-          <div class="tbl-cell" style="font-size:13px">El sistema debe sincronizar establecimientos y secciones con AprendeBA vía localStorage para la PWA.</div>
+          <div class="tbl-cell" style="font-size:13px">El sistema debe sincronizar establecimientos y secciónes con AprendeBA vía localStorage para la PWA.</div>
           <div class="tbl-cell"><span style="font-size:11px;font-weight:600;color:#16a34a">QR y Kiosco</span></div>
           <div class="tbl-cell" style="font-size:12px;color:var(--text-muted)">Sistema</div>
           <div class="tbl-cell"><span style="font-size:11px;font-weight:700;color:#dc2626">Alta</span></div>
@@ -5360,7 +5360,7 @@ flowchart TD
             <span style="font-size:13px;font-weight:500">¿Cómo se cambia la sección de un alumno ya matriculado?</span>
           </div>
           <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
-            El Administrador (Directivo) accede al módulo Matriculados, busca al alumno, y selecciona la opción "Cambiar sección". Solo se puede cambiar dentro del mismo nivel educativo. El cambio actualiza automáticamente el cupo de ambas secciones y reasigna el presentismo futuro a la nueva sección.
+            El Administrador (Directivo) accede al módulo Matriculados, busca al alumno, y selecciona la opción "Cambiar sección". Solo se puede cambiar dentro del mismo nivel educativo. El cambio actualiza automáticamente el cupo de ambas secciónes y reasigna el presentismo futuro a la nueva sección.
           </div>
         </div>
       </div>
@@ -5397,10 +5397,10 @@ flowchart TD
         <div class="faq-item" data-mod="legajo" style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden">
           <div onclick="toggleFAQ(this)" style="cursor:pointer;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--surface)">
             <svg style="margin-top:1px;flex-shrink:0;color:#b45309" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            <span style="font-size:13px;font-weight:500">Al ingresar al legajo de un alumno, el sistema vuelve a la pantalla de secciones.</span>
+            <span style="font-size:13px;font-weight:500">Al ingresar al legajo de un alumno, el sistema vuelve a la pantalla de secciónes.</span>
           </div>
           <div class="faq-answer" style="display:none;padding:12px 14px 14px 40px;border-top:1px solid var(--border);font-size:13px;line-height:1.7">
-            Bug activo en producción (Mantis 61942). Afecta alumnos puntuales. <strong>Solución temporal:</strong> intentar acceder al legajo desde el buscador global usando el DNI del alumno en lugar de navegar desde la lista de secciones. Si el problema persiste, reportar a la mesa de ayuda con el CUE del establecimiento y el DNI del alumno.
+            Bug activo en producción (Mantis 61942). Afecta alumnos puntuales. <strong>Solución temporal:</strong> intentar acceder al legajo desde el buscador global usando el DNI del alumno en lugar de navegar desde la lista de secciónes. Si el problema persiste, reportar a la mesa de ayuda con el CUE del establecimiento y el DNI del alumno.
           </div>
         </div>
 
@@ -5528,7 +5528,7 @@ flowchart TD
             </div>
             <div>
               <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Precondiciones</div>
-              <div style="font-size:13px">El alumno figura como inscripto en el padrón. El establecimiento fue efectivizado. Existen secciones creadas para el nivel.</div>
+              <div style="font-size:13px">El alumno figura como inscripto en el padrón. El establecimiento fue efectivizado. Existen secciónes creadas para el nivel.</div>
             </div>
           </div>
           <div style="margin-bottom:14px">
@@ -5536,7 +5536,7 @@ flowchart TD
             <ol style="margin:0;padding-left:20px;font-size:13px;line-height:2">
               <li>El Operador accede al módulo Inscriptos y visualiza el listado filtrado por nivel y turno.</li>
               <li>Selecciona al alumno inscripto y hace clic en "Asignar sección".</li>
-              <li>El sistema muestra las secciones disponibles con indicador de capacidad.</li>
+              <li>El sistema muestra las secciónes disponibles con indicador de capacidad.</li>
               <li>El Operador selecciona la sección y completa la Fecha Efectiva de Matriculación (FEM).</li>
               <li>El sistema valida la FEM y confirma la operación.</li>
               <li>El alumno pasa al estado Matriculado y aparece en la nómina de la sección asignada.</li>
@@ -6068,14 +6068,14 @@ flowchart TD
           </div>
           <div class="tbl-row" style="grid-template-columns:180px 1fr 1fr 120px">
             <span style="font-weight:600;font-size:13px">Adopción de Presentismo</span>
-            <span style="font-size:13px">% de secciones que registran asistencia en plataforma sobre total de secciones habilitadas</span>
-            <span style="font-size:13px">Secciones con al menos 1 registro en la semana / total secciones activas</span>
+            <span style="font-size:13px">% de secciónes que registran asistencia en plataforma sobre total de secciónes habilitadas</span>
+            <span style="font-size:13px">Secciones con al menos 1 registro en la semana / total secciónes activas</span>
             <span style="font-size:12px;color:var(--text-muted)">Módulo Presentismo</span>
           </div>
           <div class="tbl-row" style="grid-template-columns:180px 1fr 1fr 120px">
             <span style="font-weight:600;font-size:13px">Cobertura de calificaciones</span>
-            <span style="font-size:13px">% de secciones con calificaciones cargadas al cierre de cada bimestre</span>
-            <span style="font-size:13px">Secciones con notas confirmadas / total secciones habilitadas por nivel</span>
+            <span style="font-size:13px">% de secciónes con calificaciones cargadas al cierre de cada bimestre</span>
+            <span style="font-size:13px">Secciones con notas confirmadas / total secciónes habilitadas por nivel</span>
             <span style="font-size:12px;color:var(--text-muted)">Módulo Calificaciones</span>
           </div>
           <div class="tbl-row" style="grid-template-columns:180px 1fr 1fr 120px">
@@ -6482,7 +6482,7 @@ flowchart TD
       <!-- E07 Matriculación -->
       <div class="tbl-row hus-row" data-mod="matriculacion" data-act="administrador" data-src="spec" style="grid-template-columns:80px 1fr 100px 160px 80px 60px">
         <span style="font-family:monospace;font-size:12px;color:#0d9488">HU-022</span>
-        <span>Como <strong>Administrador</strong>, quiero crear y editar secciones del ciclo lectivo para organizar los grados antes de iniciar la matriculación.</span>
+        <span>Como <strong>Administrador</strong>, quiero crear y editar secciónes del ciclo lectivo para organizar los grados antes de iniciar la matriculación.</span>
         <span><span class="badge" style="background:#f1f5f9;color:#475569">Admin</span></span>
         <span style="font-size:12px;color:var(--text-muted)">E07 Matriculación</span>
         <span><span class="badge badge-prd" style="font-size:10px">Alta</span></span>
@@ -7222,7 +7222,7 @@ flowchart TD
         </div>
         <div class="hu-row" data-sis="sis" data-mod="mat" data-prio="alta" data-actor="administrador">
           <span style="font-family:monospace;font-size:12px;font-weight:700;color:var(--accent)">HU-022</span>
-          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Administrador, quiero crear y editar secciones del ciclo lectivo para organizar los grados antes de iniciar la matriculación.</span>
+          <span style="font-size:13px;line-height:1.5;color:var(--text)">Como Administrador, quiero crear y editar secciónes del ciclo lectivo para organizar los grados antes de iniciar la matriculación.</span>
           <span><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:#e0f9ff;color:#0891b2">miEscuela</span></span>
           <span style="font-size:12px;color:var(--text-soft)">Matriculación</span>
           <span style="font-size:12px;color:var(--text-soft)">Administrador</span>
@@ -7518,7 +7518,7 @@ flowchart TD
     <div class="view" id="view-instructivos-gcba">
       <div class="page-header">
         <h1>Instructivos oficiales GCBA</h1>
-        <p>Fuente: <a href="https://buenosaires.gob.ar/gcaba_historico/supervisores-directivos-y-equipos-de-conduccion/instructivos-0" target="_blank">buenosaires.gob.ar</a> · Para supervisores, directivos y equipos de conducción.</p>
+        <p>Fuente: <a href="https://buenosaires.gob.ar/gcaba_historico/supervisores-directivos-y-equipos-de-conducción/instructivos-0" target="_blank">buenosaires.gob.ar</a> · Para supervisores, directivos y equipos de conducción.</p>
       </div>
       <table>
         <thead><tr><th>Módulo</th><th>Instructivo</th><th>Nivel</th><th>Descargar</th></tr></thead>
@@ -7930,7 +7930,7 @@ function docinvRefresh() {
   var ctr = document.getElementById('docinv-count');
   if (ctr) ctr.textContent = visible + ' documento' + (visible!==1?'s':'');
 }
-var _flujoScale = 1;
+var _flujoScale = 0.9;
 
 function _flujoApplyScale(card, scale) {
   card.querySelectorAll('.mermaid').forEach(function(m) {
@@ -7993,7 +7993,6 @@ function flujoSelect(btn) {
 function flujoZoomSet(val) {
   _flujoScale = Math.max(0.35, Math.min(2.5, val));
   var pct = Math.round(_flujoScale * 100);
-  document.getElementById('flujo-range').value = _flujoScale;
   document.getElementById('flujo-zoom-label').textContent = pct + '%';
   var active = document.querySelector('#flujo-container .flujo-card:not([style*="display: none"]):not([style*="display:none"])');
   if (!active) active = document.querySelector('#flujo-container .flujo-card');
