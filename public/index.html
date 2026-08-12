@@ -202,6 +202,16 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
     .hc-
     .hc-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:3px; }
     .hc-desc { font-size:12px; color:var(--text-muted); line-height:1.4; }
+
+/* Tabla de permisos por rol */
+.permisos-table-wrap{overflow-x:auto;margin-top:16px}
+.permisos-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.permisos-tbl th{background:var(--accent);color:#fff;padding:8px 12px;text-align:center;font-weight:600;white-space:nowrap}
+.permisos-tbl th:first-child{text-align:left}
+.permisos-tbl td{padding:7px 12px;border-bottom:1px solid var(--border);text-align:center}
+.permisos-tbl td:first-child{text-align:left;color:var(--text);font-size:12px}
+.permisos-tbl tr:hover td{background:var(--accent-light)}
+.permisos-tbl .ptbl-mod td{background:#f1f5f9;font-weight:600;font-size:12px;color:var(--text-soft);text-align:left;padding:6px 12px;letter-spacing:.02em}
 </style>
 </head>
 <body>
@@ -4380,7 +4390,44 @@ flowchart TD
           
 <div class="flujo-card" id="actor-roles" style="display:none">
             <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">Qué puede hacer cada rol en cada módulo (Matriculación, Presentismo, Calificaciones, Boletines).</div>
-            <div class="mermaid" data-def="%%{init: {'theme': 'base', 'themeVariables': {'primaryColor':'#eff6ff','primaryTextColor':'#1e3a8a','primaryBorderColor':'#93c5fd','lineColor':'#64748b','edgeLabelBackground':'#f8fafc','fontSize':'13px'}}}%%&#10;flowchart LR&#10;    subgraph ROLES[&quot;Roles&quot;]&#10;        R1[&quot;Directivo&quot;]&#10;        R2[&quot;Eq. de Conducción&quot;]&#10;        R3[&quot;Docente&quot;]&#10;        R4[&quot;Preceptor&quot;]&#10;        R5[&quot;Supervisor&quot;]&#10;        R6[&quot;Dir. de Área&quot;]&#10;    end&#10;    subgraph MAT[&quot;Matriculación&quot;]&#10;        M1[Secciones]&#10;        M2[Matricular inscriptos]&#10;        M3[Ver/Descargar]&#10;        M4[Pases]&#10;        M5[Agregar alumno nuevo]&#10;    end&#10;    subgraph PRE[&quot;Presentismo&quot;]&#10;        P1[Tomar asistencia]&#10;        P2[Cerrar semana/día]&#10;        P3[Abrir semana/día]&#10;        P4[Cargar justificativo]&#10;        P5[Ver reporte]&#10;    end&#10;    subgraph CAL[&quot;Calificaciones&quot;]&#10;        C1[Ver calificaciones]&#10;        C2[Cargar calificaciones]&#10;        C3[Abrir período]&#10;        C4[Cerrar período]&#10;    end&#10;    subgraph BOL[&quot;Boletines&quot;]&#10;        B1[Ver boletín]&#10;        B2[Generar boletín]&#10;        B3[Abrir calificaciones]&#10;    end&#10;    R1 -->|SI| M1 & M2 & M3 & M4&#10;    R2 -->|SI| M1 & M2 & M3 & M4&#10;    R6 -->|SI| M1 & M2 & M3 & M4 & M5&#10;    R5 -->|SI| M1 & M2 & M3 & M4&#10;    R1 -->|SI| P1 & P2 & P3 & P4 & P5&#10;    R2 -->|SI| P1 & P2 & P3 & P4 & P5&#10;    R3 -->|SI| P1 & P4 & P5&#10;    R4 -->|SI| P1 & P4 & P5&#10;    R1 & R2 & R3 & R4 & R5 -->|SI| C1 & C2 & C4&#10;    R1 & R2 -->|SI| C3&#10;    R1 & R2 & R5 -->|SI| B1 & B2 & B3&#10;    R6 -->|SI| B1 & B2&#10;    style ROLES fill:#1A3C5E,color:#fff,stroke:#1A3C5E&#10;    style MAT fill:#DBEAFE,stroke:#2563EB&#10;    style PRE fill:#D1FAE5,stroke:#059669&#10;    style CAL fill:#FEF3C7,stroke:#D97706&#10;    style BOL fill:#FCE7F3,stroke:#DB2777"></div>
+            <div class="permisos-table-wrap">
+<table class="permisos-tbl">
+  <thead>
+    <tr>
+      <th>Función</th>
+      <th>Directivo</th>
+      <th>Eq.&nbsp;Cond.</th>
+      <th>Docente</th>
+      <th>Preceptor</th>
+      <th>Supervisor</th>
+      <th>Dir.&nbsp;Área</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="ptbl-mod"><td colspan="7">📋 Matriculación</td></tr>
+    <tr><td>Secciones</td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Matricular inscriptos</td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Ver / Descargar</td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Pases</td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Agregar alumno nuevo</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>✅</td></tr>
+    <tr class="ptbl-mod"><td colspan="7">📅 Presentismo</td></tr>
+    <tr><td>Tomar asistencia</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+    <tr><td>Cerrar semana / día</td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>Abrir semana / día</td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>Cargar justificativo</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+    <tr><td>Ver reporte</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+    <tr class="ptbl-mod"><td colspan="7">📝 Calificaciones</td></tr>
+    <tr><td>Ver calificaciones</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>—</td></tr>
+    <tr><td>Cargar calificaciones</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>—</td></tr>
+    <tr><td>Abrir período</td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>Cerrar período</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>—</td></tr>
+    <tr class="ptbl-mod"><td colspan="7">📄 Boletines</td></tr>
+    <tr><td>Ver boletín</td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Generar boletín</td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Abrir calificaciones</td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>✅</td><td>—</td></tr>
+  </tbody>
+</table>
+</div>
           </div>
           
       </div>
@@ -8044,7 +8091,7 @@ function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
 
 
   // ── ACTORES ──────────────────────────────
-  var _actorScale = 1;
+  var _actorScale = 0.9;
 
   function _actorApplyScale(card, scale) {
     var m = card.querySelector('.mermaid');
