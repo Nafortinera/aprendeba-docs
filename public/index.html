@@ -7977,7 +7977,7 @@ function docinvRefresh() {
   var ctr = document.getElementById('docinv-count');
   if (ctr) ctr.textContent = visible + ' documento' + (visible!==1?'s':'');
 }
-var _flujoScale = 0.9;
+var _flujoScale = 0.8;
 
 function _flujoApplyScale(card, scale) {
   card.querySelectorAll('.mermaid').forEach(function(m) {
@@ -8091,7 +8091,7 @@ function flujoZoom(delta) { flujoZoomSet(_flujoScale + delta); }
 
 
   // ── ACTORES ──────────────────────────────
-  var _actorScale = 0.9;
+  var _actorScale = 0.8;
 
   function _actorApplyScale(card, scale) {
     var m = card.querySelector('.mermaid');
