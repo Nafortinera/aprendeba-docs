@@ -212,6 +212,25 @@ body{font-family:"Segoe UI",Arial,sans-serif;background:var(--content-bg);color:
 .permisos-tbl td:first-child{text-align:left;color:var(--text);font-size:12px}
 .permisos-tbl tr:hover td{background:var(--accent-light)}
 .permisos-tbl .ptbl-mod td{background:#f1f5f9;font-weight:600;font-size:12px;color:var(--text-soft);text-align:left;padding:6px 12px;letter-spacing:.02em}
+
+/* Instructivos GCBA cards */
+.inst-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;margin-top:8px}
+.inst-card{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.inst-card-header{padding:10px 16px;font-weight:700;font-size:13px;letter-spacing:.01em}
+.inst-list{padding:4px 0}
+.inst-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:9px 16px;border-bottom:1px solid #f1f5f9;font-size:12.5px}
+.inst-row:last-child{border-bottom:none}
+.inst-row:hover{background:#f8fafc}
+.inst-title{flex:1;color:var(--text);line-height:1.4}
+.inst-meta{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.lvl-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;white-space:nowrap}
+.lvl-ini{background:#e0f2fe;color:#0369a1}
+.lvl-pri{background:#dcfce7;color:#15803d}
+.lvl-sec{background:#ede9fe;color:#6d28d9}
+.lvl-all{background:#f1f5f9;color:#475569}
+.lvl-ps{background:#fef3c7;color:#92400e}
+.pdf-btn{font-size:11px;font-weight:600;color:var(--accent);text-decoration:none;white-space:nowrap;padding:3px 8px;border:1px solid var(--accent);border-radius:5px}
+.pdf-btn:hover{background:var(--accent);color:#fff}
 </style>
 </head>
 <body>
@@ -7567,50 +7586,101 @@ flowchart TD
         <h1>Instructivos oficiales GCBA</h1>
         <p>Fuente: <a href="https://buenosaires.gob.ar/gcaba_historico/supervisores-directivos-y-equipos-de-conducción/instructivos-0" target="_blank">buenosaires.gob.ar</a> · Para supervisores, directivos y equipos de conducción.</p>
       </div>
-      <table>
-        <thead><tr><th>Módulo</th><th>Instructivo</th><th>Nivel</th><th>Descargar</th></tr></thead>
-        <tbody>
-          <tr><td><strong>📊 Tablero</strong></td><td>Cómo interactuar con el Tablero AprendeBA</td><td>Inicial</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20interactuar%20con%20el%20Tablero%20%20AprendeBA%20-%20Nivel%20Inicial.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📊 Tablero</strong></td><td>Cómo interactuar con el Tablero AprendeBA</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20interactuar%20con%20el%20Tablero%20%20AprendeBA%20-%20Nivel%20Primario.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📊 Tablero</strong></td><td>Cómo interactuar con el Tablero AprendeBA</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20interactuar%20con%20el%20Tablero%20AprendeBA%20-%20Nivel%20Secundario.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📊 Tablero</strong></td><td>Dispositivos tecnológicos</td><td>Inicial</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-06/Tablero%20-%20Dispositivos%20tecnologicos%20-%20Nivel%20inicial.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📊 Tablero</strong></td><td>Dispositivos tecnológicos</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-06/Tablero%20-%20Dispositivos%20tecnologicos%20-%20Nivel%20primario%20.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📊 Tablero</strong></td><td>Presentismo escolar en el Tablero</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-08/Tablero%20de%20presentismo%20escolar%20en%20AprendeBA.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📒 Libro Matriz Digital</strong></td><td>Instructivo Libro Matriz Digital</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-02/Instructivo%20LMD%20para%20equipos%20de%20conducci%C3%B3n%2024-02.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>👤 Roles</strong></td><td>Cómo aprobar roles</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20aprobar%20roles%20%282%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>👤 Roles</strong></td><td>Cómo solicitar un rol</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/Como%20solicitar%20un%20rol.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>👤 Roles</strong></td><td>Autoregistración</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/Autoregistraci%C3%B3n%20%282%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo matricular a un estudiante</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20matricular%20a%20un%20estudiante%20%282%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo modificar la condición (Supervisores)</td><td>Inicial</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20modificar%20la%20condici%C3%B3n%20a%20los%20estudiantes%20%28Supervisores%20Nivel%20Inicial%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo modificar la condición (Supervisores)</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20modificar%20la%20condici%C3%B3n%20a%20los%20estudiantes%20%28Supervisores%20Nivel%20Primario%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo modificar la condición (Supervisores)</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20modificar%20la%20condici%C3%B3n%20a%20los%20estudiantes%20%28Supervisores%20Nivel%20Secundario%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo solicitar o aprobar un pase</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20solicitar%20o%20aprobar%20un%20pase%20%282%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo realizar la promoción</td><td>Inicial</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizar%20la%20promoci%C3%B3n%20-%20Nivel%20Inicial.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo realizar la promoción</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/Como%20realizar%20la%20promoci%C3%B3n%20-%20Nivel%20Primario.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🎓 Matriculación</strong></td><td>Cómo realizar la promoción</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizar%20la%20promoci%C3%B3n%20-%20Nivel%20Secundario%20%282%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🎓 Matriculación</strong></td><td>Generación Certificado 7mo</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-11/AprendeBA_Generaci%C3%B3n%20Certificado%207mo_%20Primario.docx.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📋 Asistencia</strong></td><td>Cómo realizar la toma de asistencia</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizar%20la%20toma%20de%20asistencia%20-%20Todos%20los%20niveles%20%282%29_0.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📋 Asistencia</strong></td><td>Cómo dar de alta una situación de emergencia o suspensión de clases</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-04/Como%20dar%20de%20alta%20una%20situaci%C3%B3n%20de%20emergencia%20o%20suspensi%C3%B3n%20de%20Clases%20-%20Jornada%20Completa%20-%20todos%20los%20niveles.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📋 Asistencia</strong></td><td>Cómo realizar la configuración de Jornada Extendida</td><td>Prim./Sec.</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizar%20la%20configuraci%C3%B3n%20de%20Jornada%20Extendida%20-%20Nivel%20Primario%20y%20Secundario.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📋 Asistencia</strong></td><td>Cómo cargar presentismo en comedor</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20cargar%20presentismo%20en%20comedor.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📄 Boletines</strong></td><td>Cómo generar los boletines</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-06/C%C3%B3mo%20generar%20los%20boletines%20-%20Nivel%20Primario.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📄 Boletines</strong></td><td>Cómo generar los boletines</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-04/Como%20generar%20los%20boletines-%20Secundario.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📝 Calificaciones</strong></td><td>Cómo cargar informe cuatrimestral</td><td>Inicial</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-07/2023%20-%20Inicial%20-%20C%C3%B3mo%20cargar%20el%20informe%20cuatrimestral.docx.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📝 Calificaciones</strong></td><td>Cómo cargar calificaciones primer bimestre</td><td>Primario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-07/C%C3%B3mo%20cargar%20calificaciones%20primer%20bimestre%20-%20Nivel%20Primaria%20%281%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📝 Calificaciones</strong></td><td>Cómo cargar calificaciones 1er y 3er bimestre</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-06/C%C3%B3mo%20cargar%20calificaciones%20primer%20y%20tercer%20bimestre%20-Nivel%20Secundario.docx.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📝 Calificaciones</strong></td><td>Cómo cargar calificaciones cuarto bimestre</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2026-04/Co%CC%81mo%20cargar%20calificaciones%20cuarto%20bimestre%20-Nivel%20Secundario.docx.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📝 Calificaciones</strong></td><td>Cómo cargar los ECP (Espacios Curriculares Pendientes)</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-02/C%C3%B3mo%20cargar%20los%20espacios%20curriculares%20pendientes%20-%20Nivel%20secundario_0.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🏫 ACAP</strong></td><td>Cómo ingresar a las ACAP como referente de acción</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20ingresar%20a%20las%20ACAP%20como%20referente%20de%20acci%C3%B3n.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🏫 ACAP</strong></td><td>Cómo ingreso al módulo ACAP como referente de organización</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20ingreso%20al%20m%C3%B3dulo%20ACAP%20como%20referente%20de%20organizaci%C3%B3n.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🏫 ACAP</strong></td><td>Cómo realizar la inscripción a una Actividad de Aproximación</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizo%20la%20inscripci%C3%B3n%20a%20%20una%20Actividad%20%20de%20Aproximaci%C3%B3n%20%28ACAP%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>🏫 ACAP</strong></td><td>Cómo seleccionar una Actividad de Aproximación</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20seleccionar%20una%20Actividad%20%20de%20Aproximaci%C3%B3n%20%28ACAP%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📌 Otros</strong></td><td>Cómo obtener el código de un estudiante</td><td>Todos</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20obtener%20el%20c%C3%B3digo%20de%20un%20estudiante%20en%20la%20plataforma.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📌 Otros</strong></td><td>Cómo cargar el Puente Inicial Primaria (PIP)</td><td>Inicial</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-11/2025%20-%20Inicial%20-%20%C2%BFC%C3%B3mo%20cargar%20el%20Puente%20Inicial%20Primaria%20%28PIP%29_.docx%20%281%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-          <tr><td><strong>📌 Otros</strong></td><td>Cómo cargar el Puente Primaria Secundaria (PPS)</td><td>Secundario</td><td><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20cargar%20el%20Puente%20%20Primaria%20Secundaria%20%28PPS%29.pdf" target="_blank">⬇ PDF</a></td></tr>
-        </tbody>
-      </table>
-    </div>
+      <div class="inst-grid">
 
+        <div class="inst-card">
+          <div class="inst-card-header" style="background:#e0f2fe;color:#0369a1">📊 Tablero</div>
+          <div class="inst-list">
+            <div class="inst-row"><span class="inst-title">Cómo interactuar con el Tablero AprendeBA</span><div class="inst-meta"><span class="lvl-badge lvl-ini">Inicial</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20interactuar%20con%20el%20Tablero%20%20AprendeBA%20-%20Nivel%20Inicial.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo interactuar con el Tablero AprendeBA</span><div class="inst-meta"><span class="lvl-badge lvl-pri">Primario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20interactuar%20con%20el%20Tablero%20%20AprendeBA%20-%20Nivel%20Primario.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo interactuar con el Tablero AprendeBA</span><div class="inst-meta"><span class="lvl-badge lvl-sec">Secundario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20interactuar%20con%20el%20Tablero%20AprendeBA%20-%20Nivel%20Secundario.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Dispositivos tecnológicos</span><div class="inst-meta"><span class="lvl-badge lvl-ini">Inicial</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-06/Tablero%20-%20Dispositivos%20tecnologicos%20-%20Nivel%20inicial.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Dispositivos tecnológicos</span><div class="inst-meta"><span class="lvl-badge lvl-pri">Primario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-06/Tablero%20-%20Dispositivos%20tecnologicos%20-%20Nivel%20primario%20.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Presentismo escolar en el Tablero</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-08/Tablero%20de%20presentismo%20escolar%20en%20AprendeBA.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+          </div>
+        </div>
+
+        <div class="inst-card">
+          <div class="inst-card-header" style="background:#fef9c3;color:#854d0e">📒 Libro Matriz Digital</div>
+          <div class="inst-list">
+            <div class="inst-row"><span class="inst-title">Instructivo Libro Matriz Digital</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-02/Instructivo%20LMD%20para%20equipos%20de%20conducci%C3%B3n%2024-02.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+          </div>
+        </div>
+
+        <div class="inst-card">
+          <div class="inst-card-header" style="background:#ede9fe;color:#5b21b6">👤 Roles</div>
+          <div class="inst-list">
+            <div class="inst-row"><span class="inst-title">Cómo aprobar roles</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20aprobar%20roles%20%282%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo solicitar un rol</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/Como%20solicitar%20un%20rol.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Autoregistración</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/Autoregistraci%C3%B3n%20%282%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+          </div>
+        </div>
+
+        <div class="inst-card">
+          <div class="inst-card-header" style="background:#d1fae5;color:#064e3b">🎓 Matriculación</div>
+          <div class="inst-list">
+            <div class="inst-row"><span class="inst-title">Cómo matricular a un estudiante</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20matricular%20a%20un%20estudiante%20%282%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo modificar la condición (Supervisores)</span><div class="inst-meta"><span class="lvl-badge lvl-ini">Inicial</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20modificar%20la%20condici%C3%B3n%20a%20los%20estudiantes%20%28Supervisores%20Nivel%20Inicial%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo modificar la condición (Supervisores)</span><div class="inst-meta"><span class="lvl-badge lvl-pri">Primario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20modificar%20la%20condici%C3%B3n%20a%20los%20estudiantes%20%28Supervisores%20Nivel%20Primario%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo modificar la condición (Supervisores)</span><div class="inst-meta"><span class="lvl-badge lvl-sec">Secundario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20modificar%20la%20condici%C3%B3n%20a%20los%20estudiantes%20%28Supervisores%20Nivel%20Secundario%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo solicitar o aprobar un pase</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20solicitar%20o%20aprobar%20un%20pase%20%282%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo realizar la promoción</span><div class="inst-meta"><span class="lvl-badge lvl-ini">Inicial</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizar%20la%20promoci%C3%B3n%20-%20Nivel%20Inicial.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo realizar la promoción</span><div class="inst-meta"><span class="lvl-badge lvl-pri">Primario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/Como%20realizar%20la%20promoci%C3%B3n%20-%20Nivel%20Primario.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo realizar la promoción</span><div class="inst-meta"><span class="lvl-badge lvl-sec">Secundario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizar%20la%20promoci%C3%B3n%20-%20Nivel%20Secundario%20%282%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Generación Certificado 7mo</span><div class="inst-meta"><span class="lvl-badge lvl-pri">Primario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-11/AprendeBA_Generaci%C3%B3n%20Certificado%207mo_%20Primario.docx.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+          </div>
+        </div>
+
+        <div class="inst-card">
+          <div class="inst-card-header" style="background:#fce7f3;color:#9d174d">📋 Asistencia</div>
+          <div class="inst-list">
+            <div class="inst-row"><span class="inst-title">Cómo realizar la toma de asistencia</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizar%20la%20toma%20de%20asistencia%20-%20Todos%20los%20niveles%20%282%29_0.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo dar de alta una situación de emergencia o suspensión de clases</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-04/Como%20dar%20de%20alta%20una%20situaci%C3%B3n%20de%20emergencia%20o%20suspensi%C3%B3n%20de%20Clases%20-%20Jornada%20Completa%20-%20todos%20los%20niveles.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo realizar la configuración de Jornada Extendida</span><div class="inst-meta"><span class="lvl-badge lvl-ps">Prim./Sec.</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizar%20la%20configuraci%C3%B3n%20de%20Jornada%20Extendida%20-%20Nivel%20Primario%20y%20Secundario.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo cargar presentismo en comedor</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20cargar%20presentismo%20en%20comedor.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+          </div>
+        </div>
+
+        <div class="inst-card">
+          <div class="inst-card-header" style="background:#fef3c7;color:#92400e">📄 Boletines</div>
+          <div class="inst-list">
+            <div class="inst-row"><span class="inst-title">Cómo generar los boletines</span><div class="inst-meta"><span class="lvl-badge lvl-pri">Primario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-06/C%C3%B3mo%20generar%20los%20boletines%20-%20Nivel%20Primario.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo generar los boletines</span><div class="inst-meta"><span class="lvl-badge lvl-sec">Secundario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-04/Como%20generar%20los%20boletines-%20Secundario.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+          </div>
+        </div>
+
+        <div class="inst-card">
+          <div class="inst-card-header" style="background:#dcfce7;color:#14532d">📝 Calificaciones</div>
+          <div class="inst-list">
+            <div class="inst-row"><span class="inst-title">Cómo cargar informe cuatrimestral</span><div class="inst-meta"><span class="lvl-badge lvl-ini">Inicial</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-07/2023%20-%20Inicial%20-%20C%C3%B3mo%20cargar%20el%20informe%20cuatrimestral.docx.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo cargar calificaciones primer bimestre</span><div class="inst-meta"><span class="lvl-badge lvl-pri">Primario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-07/C%C3%B3mo%20cargar%20calificaciones%20primer%20bimestre%20-%20Nivel%20Primaria%20%281%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo cargar calificaciones 1er y 3er bimestre</span><div class="inst-meta"><span class="lvl-badge lvl-sec">Secundario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-06/C%C3%B3mo%20cargar%20calificaciones%20primer%20y%20tercer%20bimestre%20-Nivel%20Secundario.docx.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo cargar calificaciones cuarto bimestre</span><div class="inst-meta"><span class="lvl-badge lvl-sec">Secundario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2026-04/Co%CC%81mo%20cargar%20calificaciones%20cuarto%20bimestre%20-Nivel%20Secundario.docx.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo cargar los ECP (Espacios Curriculares Pendientes)</span><div class="inst-meta"><span class="lvl-badge lvl-sec">Secundario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-02/C%C3%B3mo%20cargar%20los%20espacios%20curriculares%20pendientes%20-%20Nivel%20secundario_0.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+          </div>
+        </div>
+
+        <div class="inst-card">
+          <div class="inst-card-header" style="background:#ffedd5;color:#7c2d12">🏫 ACAP</div>
+          <div class="inst-list">
+            <div class="inst-row"><span class="inst-title">Cómo ingresar a las ACAP como referente de acción</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20ingresar%20a%20las%20ACAP%20como%20referente%20de%20acci%C3%B3n.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo ingresar al módulo ACAP como referente de organización</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20ingreso%20al%20m%C3%B3dulo%20ACAP%20como%20referente%20de%20organizaci%C3%B3n.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo realizar la inscripción a una Actividad de Aproximación</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20realizo%20la%20inscripci%C3%B3n%20a%20%20una%20Actividad%20%20de%20Aproximaci%C3%B3n%20%28ACAP%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo seleccionar una Actividad de Aproximación</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20seleccionar%20una%20Actividad%20%20de%20Aproximaci%C3%B3n%20%28ACAP%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+          </div>
+        </div>
+
+        <div class="inst-card">
+          <div class="inst-card-header" style="background:#f1f5f9;color:#334155">📌 Otros</div>
+          <div class="inst-list">
+            <div class="inst-row"><span class="inst-title">Cómo obtener el código de un estudiante</span><div class="inst-meta"><span class="lvl-badge lvl-all">Todos</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20obtener%20el%20c%C3%B3digo%20de%20un%20estudiante%20en%20la%20plataforma.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo cargar el Puente Inicial Primaria (PIP)</span><div class="inst-meta"><span class="lvl-badge lvl-ini">Inicial</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-11/2025%20-%20Inicial%20-%20%C2%BFC%C3%B3mo%20cargar%20el%20Puente%20Inicial%20Primaria%20%28PIP%29_.docx%20%281%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+            <div class="inst-row"><span class="inst-title">Cómo cargar el Puente Primaria Secundaria (PPS)</span><div class="inst-meta"><span class="lvl-badge lvl-sec">Secundario</span><a href="https://static.buenosaires.gob.ar/sites/default/files/2025-09/C%C3%B3mo%20cargar%20el%20Puente%20%20Primaria%20Secundaria%20%28PPS%29.pdf" target="_blank" class="pdf-btn">⬇ PDF</a></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
     <!-- ── TESTING ── -->
     <div class="view" id="view-testing">
       <div class="page-header">
